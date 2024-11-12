@@ -2,15 +2,15 @@
 DROP TABLE IF EXISTS tbl_qna_answer;
 DROP TABLE IF EXISTS tbl_qna;
 
-DROP TABLE IF EXISTS tbl_offer_member_data;
-DROP TABLE IF EXISTS tbl_local_match;
+DROP TABLE IF EXISTS tbl_buddy_match_data;
+DROP TABLE IF EXISTS tbl_buddy;
 DROP TABLE IF EXISTS tbl_member_schedule_data;
 
-DROP TABLE IF EXISTS tbl_local_match_member_type;
+DROP TABLE IF EXISTS tbl_buddy_type;
 
 
 DROP TABLE IF EXISTS tbl_notice;
-DROP TABLE IF EXISTS tbl_manual;
+DROP TABLE IF EXISTS tbl_useinfo;
 
 
 DROP TABLE IF EXISTS tbl_schedule;
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS tbl_authority;
 
 
 DROP TABLE IF EXISTS tbl_faq;
-DROP TABLE IF EXISTS tbl_question_type;
+DROP TABLE IF EXISTS tbl_fq_type;
 
 
 
@@ -36,7 +36,7 @@ DROP TABLE IF EXISTS tbl_question_type;
 
 
 
-CREATE TABLE IF NOT EXISTS tbl_question_type (
+CREATE TABLE IF NOT EXISTS tbl_fq_type (
     fq_type_code INT NOT NULL AUTO_INCREMENT COMMENT '문의유형코드',
     fq_type_name VARCHAR(30) NOT NULL COMMENT '문의유형이름',
     PRIMARY KEY (fq_type_code)
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS tbl_faq (
     faq_contents VARCHAR(500) NOT NULL COMMENT 'faq내용',
     faq_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
     PRIMARY KEY (faq_code),
-    FOREIGN KEY (fq_type_code) REFERENCES tbl_question_type(fq_type_code) ON DELETE CASCADE
+    FOREIGN KEY (fq_type_code) REFERENCES tbl_fq_type(fq_type_code) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT='FAQ 테이블';
 
 CREATE TABLE IF NOT EXISTS tbl_authority (
@@ -97,29 +97,29 @@ CREATE TABLE IF NOT EXISTS tbl_region (
     PRIMARY KEY (region_code)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT='지역 테이블';
 
-CREATE TABLE IF NOT EXISTS tbl_local_match_member_type (
-    match_member_type_code INT NOT NULL AUTO_INCREMENT COMMENT '매칭유형코드',
-    match_member_type_name VARCHAR(50) NOT NULL COMMENT '매칭사용자유형이름',
-    PRIMARY KEY (match_member_type_code)
-) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT='매칭 사용자 유형 테이블';
+CREATE TABLE IF NOT EXISTS tbl_buddy_type (
+    buddy_type_code INT NOT NULL AUTO_INCREMENT COMMENT '버디유형코드',
+    buddy_type_name VARCHAR(50) NOT NULL COMMENT '버디유형이름',
+    PRIMARY KEY (buddy_type_code)
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT='버디 유형 테이블';
 
-CREATE TABLE IF NOT EXISTS tbl_local_match (
-    match_code INT NOT NULL AUTO_INCREMENT COMMENT '매칭코드',
+CREATE TABLE IF NOT EXISTS tbl_buddy (
+    buddy_code INT NOT NULL AUTO_INCREMENT COMMENT '버디코드',
     member_code INT NOT NULL COMMENT '회원코드',
     region_code INT NOT NULL COMMENT '지역코드',
-    match_member_type_code INT NOT NULL COMMENT '매칭유형코드',
-    match_title VARCHAR(50) NOT NULL COMMENT '게시글제목',
-    match_contents VARCHAR(500) NOT NULL COMMENT '결제코드',
-    match_create DATETIME NOT NULL COMMENT '게시글작성일',
-    match_status VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '게시글상태',
-    match_img TEXT NULL COMMENT '게시글이미지',
-    match_count INT NOT NULL COMMENT '조회수',
-    match_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
-    match_apply VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '매칭신청',
-    PRIMARY KEY (match_code),
+    buddy_type_code INT NOT NULL COMMENT '버디유형코드',
+    buddy_title VARCHAR(50) NOT NULL COMMENT '게시글제목',
+    buddy_contents VARCHAR(500) NOT NULL COMMENT '게시글내용',
+    buddy_create DATETIME NOT NULL COMMENT '게시글작성일',
+    buddy_status VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '게시글상태',
+    buddy_img TEXT NULL COMMENT '게시글이미지',
+    buddy_count INT NOT NULL COMMENT '조회수',
+    buddy_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
+    buddy_apply VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '버디신청',
+    PRIMARY KEY (buddy_code),
     FOREIGN KEY (member_code) REFERENCES tbl_account(member_code) ON DELETE CASCADE,
     FOREIGN KEY (region_code) REFERENCES tbl_region(region_code) ON DELETE CASCADE,
-    FOREIGN KEY (match_member_type_code) REFERENCES tbl_local_match_member_type(match_member_type_code) ON DELETE CASCADE
+    FOREIGN KEY (buddy_type_code) REFERENCES tbl_buddy_type(buddy_type_code) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT='지역 매칭 테이블';
 
 
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS tbl_qna (
     qna_contents VARCHAR(500) NOT NULL COMMENT '문의내용',
     qna_create DATETIME NOT NULL COMMENT '문의생성일',
     PRIMARY KEY (qna_code),
-    FOREIGN KEY (fq_type_code) REFERENCES tbl_question_type(fq_type_code) ON DELETE CASCADE
+    FOREIGN KEY (fq_type_code) REFERENCES tbl_fq_type(fq_type_code) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT='QnA 테이블';
 
 
@@ -150,31 +150,31 @@ CREATE TABLE IF NOT EXISTS tbl_notice (
 CREATE TABLE IF NOT EXISTS tbl_qna_answer (
     ans_code INT NOT NULL AUTO_INCREMENT COMMENT '답변코드',
     qna_code INT NOT NULL COMMENT '문의코드',
-    answer_contents VARCHAR(500) NULL COMMENT '답변내용',
-    answer_create DATETIME NULL COMMENT '답변날짜',
+    ans_contents VARCHAR(500) NULL COMMENT '답변내용',
+    ans_create DATETIME NULL COMMENT '답변날짜',
     PRIMARY KEY (ans_code),
     FOREIGN KEY (qna_code) REFERENCES tbl_qna(qna_code) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT='QnA 답변 테이블';
 
 
 
-CREATE TABLE IF NOT EXISTS tbl_manual (
-    manual_code INT NOT NULL AUTO_INCREMENT COMMENT '설명서코드',
-    manual_title VARCHAR(50) NOT NULL COMMENT '설명서제목',
-    manual_contents TEXT NOT NULL COMMENT '설명서내용',
-    manual_create DATETIME NOT NULL COMMENT '등록일시',
-    manual_count INT NOT NULL DEFAULT 0 COMMENT '조회수',
-    manual_img VARCHAR(300) NULL COMMENT '이미지경로',
-    manual_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
-    PRIMARY KEY (manual_code)
+CREATE TABLE IF NOT EXISTS tbl_useinfo (
+    useinfo_code INT NOT NULL AUTO_INCREMENT COMMENT '설명서코드',
+    useinfo_title VARCHAR(50) NOT NULL COMMENT '설명서제목',
+    useinfo_contents TEXT NOT NULL COMMENT '설명서내용',
+    useinfo_create DATETIME NOT NULL COMMENT '등록일시',
+    useinfo_count INT NOT NULL DEFAULT 0 COMMENT '조회수',
+    useinfo_img VARCHAR(300) NULL COMMENT '이미지경로',
+    useinfo_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
+    PRIMARY KEY (useinfo_code)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT='설명서 테이블';
 
-CREATE TABLE IF NOT EXISTS tbl_offer_member_data (
-    match_member_code INT NOT NULL AUTO_INCREMENT COMMENT '회원매칭코드',
-    match_code INT NOT NULL COMMENT '매칭코드',
+CREATE TABLE IF NOT EXISTS tbl_buddy_match_data (
+    buddy_match_code INT NOT NULL AUTO_INCREMENT COMMENT '회원매칭코드',
+    buddy_code INT NOT NULL COMMENT '버디코드',
     apply_id VARCHAR(30) NULL COMMENT '신청자아이디',
-    PRIMARY KEY (match_member_code),
-    FOREIGN KEY (match_code) REFERENCES tbl_local_match(match_code) ON DELETE CASCADE
+    PRIMARY KEY (buddy_match_code),
+    FOREIGN KEY (buddy_code) REFERENCES tbl_buddy(buddy_code) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT='회원 매칭 데이터 테이블';
 
 
@@ -203,13 +203,13 @@ CREATE TABLE IF NOT EXISTS tbl_answer (
 
 CREATE TABLE IF NOT EXISTS tbl_member_answer (
     member_answer_code INT NOT NULL AUTO_INCREMENT COMMENT '회원답변코드',
-	quest_code INT NOT NULL COMMENT '질문지코드',
+   quest_code INT NOT NULL COMMENT '질문지코드',
     answer_code INT NOT NULL COMMENT '답변코드',
-	member_code INT NOT NULL COMMENT '회원코드',
+   member_code INT NOT NULL COMMENT '회원코드',
     PRIMARY KEY (member_answer_code),
     FOREIGN KEY (answer_code) REFERENCES tbl_answer(answer_code) ON DELETE CASCADE,
-	FOREIGN KEY (quest_code) REFERENCES tbl_questionnaire(quest_code) ON DELETE CASCADE,
-	FOREIGN KEY (member_code) REFERENCES tbl_account(member_code) ON DELETE CASCADE
+   FOREIGN KEY (quest_code) REFERENCES tbl_questionnaire(quest_code) ON DELETE CASCADE,
+   FOREIGN KEY (member_code) REFERENCES tbl_account(member_code) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT='회원답변 테이블';
 
 CREATE TABLE IF NOT EXISTS tbl_schedule (
@@ -224,10 +224,10 @@ CREATE TABLE IF NOT EXISTS tbl_schedule (
     accom_img TEXT NULL COMMENT '여행숙소사진',
     travel_time VARCHAR(100) NOT NULL COMMENT '이동시간',
     sche_time VARCHAR(100) NOT NULL COMMENT '스케줄시간',
-	member_answer_code INT NOT NULL COMMENT '회원답변코드',
+   member_answer_code INT NOT NULL COMMENT '회원답변코드',
     PRIMARY KEY (sche_code),
     FOREIGN KEY (region_code) REFERENCES tbl_region(region_code) ON DELETE CASCADE,
-	FOREIGN KEY (member_answer_code) REFERENCES tbl_member_answer(member_answer_code) ON DELETE CASCADE
+   FOREIGN KEY (member_answer_code) REFERENCES tbl_member_answer(member_answer_code) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT='스케줄 테이블';
 
 CREATE TABLE IF NOT EXISTS tbl_member_schedule_data (
@@ -241,7 +241,7 @@ CREATE TABLE IF NOT EXISTS tbl_member_schedule_data (
 
 
 -- tbl_question_type
-INSERT INTO tbl_question_type (fq_type_code, fq_type_name) VALUES
+INSERT INTO tbl_fq_type (fq_type_code, fq_type_name) VALUES
 (1, '일정'),
 (2, '숙소'),
 (3, '지역'),
@@ -284,7 +284,7 @@ INSERT INTO tbl_notice (notice_code, notice_title, notice_contents, notice_creat
 (2, '추석 연휴 휴무 안내', '추석 연휴로 인해 고객센터 운영이 중단됩니다. 불편을 드려 죄송합니다.', NOW(), 2500, 'notice2.jpg', 'Y');
 
 -- tbl_manual
-INSERT INTO tbl_manual (manual_code, manual_title, manual_contents, manual_create, manual_count, manual_img, manual_at) VALUES
+INSERT INTO tbl_useinfo (useinfo_code, useinfo_title, useinfo_contents, useinfo_create, useinfo_count, useinfo_img, useinfo_at) VALUES
 (1, '회원가입 매뉴얼', '회원가입 절차와 필요한 정보를 안내합니다.', NOW(), 200, 'manual1.jpg', 'N'),
 (2, '비밀번호 변경 매뉴얼', '비밀번호 변경 방법과 절차를 안내합니다.', NOW(), 150, 'manual2.jpg', 'Y');
 
@@ -295,25 +295,25 @@ INSERT INTO tbl_qna (qna_code, fq_type_code, qna_title, qna_contents, qna_create
 (3, 1, '비밀번호를 변경하려면 어떻게 해야 하나요?', '비밀번호 변경은 계정 설정에서 할 수 있습니다.', NOW());
 
 -- tbl_qna_answer
-INSERT INTO tbl_qna_answer (ans_code, qna_code, answer_contents, answer_create) VALUES
+INSERT INTO tbl_qna_answer (ans_code, qna_code, ans_contents, ans_create) VALUES
 (1, 1, '회원가입은 간단한 절차로 이메일과 비밀번호를 입력한 후 가입을 완료할 수 있습니다.', NOW()),
 (2, 2, '결제 오류 시 고객센터에서 결제내역을 확인하고 문제를 해결해드립니다.', NOW()),
 (3, 3, '비밀번호는 계정 설정에서 언제든지 변경 가능합니다.', NOW());
 
 
 -- tbl_LocalMatchMemberType
-INSERT INTO tbl_local_match_member_type (match_member_type_code, match_member_type_name) VALUES
+INSERT INTO tbl_buddy_type (buddy_type_code, buddy_type_name) VALUES
 (1, '버디'),
 (2, '여행객');
 
--- tbl_LocalMatch
-INSERT INTO tbl_local_match (member_code, region_code, match_member_type_code, match_title, match_contents, match_create, match_status, match_img, match_count, match_at, match_apply) VALUES
+-- tbl_buddy
+INSERT INTO tbl_buddy (member_code, region_code, buddy_type_code, buddy_title, buddy_contents, buddy_create, buddy_status, buddy_img, buddy_count, buddy_at, buddy_apply) VALUES
 (1001, 101, 1, '서울에서의 만남', '서울 지역에서 함께 할 여행 파트너를 찾고 있습니다.', NOW(), 'N', 'image1.jpg', 150, 'N', 'Y'),
 (1002, 102, 2, '부산 여행 모집', '부산 지역에서 일주일간 함께 여행할 사람을 모집합니다. 경험자 우대.', NOW(), 'N', 'image2.jpg', 230, 'N', 'Y'),
 (1003, 101, 1, '서울에서의 힐링', '서울에서 편안하게 쉴 수 있는 여행 동반자를 찾습니다.', NOW(), 'Y', 'image3.jpg', 75, 'Y', 'N');
 
 -- tbl_OfferMemberData
-INSERT INTO tbl_offer_member_data (match_member_code, match_code, apply_id) VALUES
+INSERT INTO tbl_buddy_match_data (buddy_match_code, buddy_code, apply_id) VALUES
 (1, 1, 'john_doe'),
 (2, 2, 'jane_smith'),
 (3, 3, 'alex_kim');

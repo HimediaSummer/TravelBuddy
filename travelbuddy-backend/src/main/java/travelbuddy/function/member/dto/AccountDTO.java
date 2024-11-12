@@ -15,30 +15,45 @@ public class AccountDTO {
     private String memberDeletion;
     private int memberLike;
     private String memberImg;
-    private List<AuthorityDTO> authorityCode;
+    private AuthorityDTO authority;
     private String memberCreate;
     private String memberLeave;
 
     public AccountDTO() {
     }
 
-    public AccountDTO(int memberCode, String memberName, String memberPassword, String memberFullName, String memberBirthday, String memberEmail, String memberPhone, String memberSuspension, String memberDeletion, int memberLike, String memberImg, List<AuthorityDTO> authorityCode, String memberCreate, String memberLeave) {
+    public AccountDTO(AuthorityDTO authority, String memberBirthday, int memberCode, String memberCreate, String memberDeletion, String memberEmail, String memberFullName, String memberImg, String memberLeave, int memberLike, String memberName, String memberPassword, String memberPhone, String memberSuspension) {
+        this.authority = authority;
+        this.memberBirthday = memberBirthday;
         this.memberCode = memberCode;
+        this.memberCreate = memberCreate;
+        this.memberDeletion = memberDeletion;
+        this.memberEmail = memberEmail;
+        this.memberFullName = memberFullName;
+        this.memberImg = memberImg;
+        this.memberLeave = memberLeave;
+        this.memberLike = memberLike;
         this.memberName = memberName;
         this.memberPassword = memberPassword;
-        this.memberFullName = memberFullName;
-        this.memberBirthday = memberBirthday;
-        this.memberEmail = memberEmail;
         this.memberPhone = memberPhone;
         this.memberSuspension = memberSuspension;
-        this.memberDeletion = memberDeletion;
-        this.memberLike = memberLike;
-        this.memberImg = memberImg;
-        this.authorityCode = authorityCode;
-        this.memberCreate = memberCreate;
-        this.memberLeave = memberLeave;
     }
 
+    public AuthorityDTO getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(AuthorityDTO authority) {
+        this.authority = authority;
+    }
+
+    public String getMemberBirthday() {
+        return memberBirthday;
+    }
+
+    public void setMemberBirthday(String memberBirthday) {
+        this.memberBirthday = memberBirthday;
+    }
 
     public int getMemberCode() {
         return memberCode;
@@ -46,6 +61,62 @@ public class AccountDTO {
 
     public void setMemberCode(int memberCode) {
         this.memberCode = memberCode;
+    }
+
+    public String getMemberCreate() {
+        return memberCreate;
+    }
+
+    public void setMemberCreate(String memberCreate) {
+        this.memberCreate = memberCreate;
+    }
+
+    public String getMemberDeletion() {
+        return memberDeletion;
+    }
+
+    public void setMemberDeletion(String memberDeletion) {
+        this.memberDeletion = memberDeletion;
+    }
+
+    public String getMemberEmail() {
+        return memberEmail;
+    }
+
+    public void setMemberEmail(String memberEmail) {
+        this.memberEmail = memberEmail;
+    }
+
+    public String getMemberFullName() {
+        return memberFullName;
+    }
+
+    public void setMemberFullName(String memberFullName) {
+        this.memberFullName = memberFullName;
+    }
+
+    public String getMemberImg() {
+        return memberImg;
+    }
+
+    public void setMemberImg(String memberImg) {
+        this.memberImg = memberImg;
+    }
+
+    public String getMemberLeave() {
+        return memberLeave;
+    }
+
+    public void setMemberLeave(String memberLeave) {
+        this.memberLeave = memberLeave;
+    }
+
+    public int getMemberLike() {
+        return memberLike;
+    }
+
+    public void setMemberLike(int memberLike) {
+        this.memberLike = memberLike;
     }
 
     public String getMemberName() {
@@ -64,30 +135,6 @@ public class AccountDTO {
         this.memberPassword = memberPassword;
     }
 
-    public String getMemberFullName() {
-        return memberFullName;
-    }
-
-    public void setMemberFullName(String memberFullName) {
-        this.memberFullName = memberFullName;
-    }
-
-    public String getMemberBirthday() {
-        return memberBirthday;
-    }
-
-    public void setMemberBirthday(String memberBirthday) {
-        this.memberBirthday = memberBirthday;
-    }
-
-    public String getMemberEmail() {
-        return memberEmail;
-    }
-
-    public void setMemberEmail(String memberEmail) {
-        this.memberEmail = memberEmail;
-    }
-
     public String getMemberPhone() {
         return memberPhone;
     }
@@ -104,58 +151,11 @@ public class AccountDTO {
         this.memberSuspension = memberSuspension;
     }
 
-    public String getMemberDeletion() {
-        return memberDeletion;
-    }
-
-    public void setMemberDeletion(String memberDeletion) {
-        this.memberDeletion = memberDeletion;
-    }
-
-    public int getMemberLike() {
-        return memberLike;
-    }
-
-    public void setMemberLike(int memberLike) {
-        this.memberLike = memberLike;
-    }
-
-    public String getMemberImg() {
-        return memberImg;
-    }
-
-    public void setMemberImg(String memberImg) {
-        this.memberImg = memberImg;
-    }
-
-    public List<AuthorityDTO> getAuthorityCode() {
-        return authorityCode;
-    }
-
-    public void setAuthorityCode(List<AuthorityDTO> authorityCode) {
-        this.authorityCode = authorityCode;
-    }
-
-    public String getMemberCreate() {
-        return memberCreate;
-    }
-
-    public void setMemberCreate(String memberCreate) {
-        this.memberCreate = memberCreate;
-    }
-
-    public String getMemberLeave() {
-        return memberLeave;
-    }
-
-    public void setMemberLeave(String memberLeave) {
-        this.memberLeave = memberLeave;
-    }
-
     @Override
     public String toString() {
         return "AccountDTO{" +
-                "memberCode=" + memberCode +
+                "authority=" + authority +
+                ", memberCode=" + memberCode +
                 ", memberName='" + memberName + '\'' +
                 ", memberPassword='" + memberPassword + '\'' +
                 ", memberFullName='" + memberFullName + '\'' +
@@ -166,7 +166,6 @@ public class AccountDTO {
                 ", memberDeletion='" + memberDeletion + '\'' +
                 ", memberLike=" + memberLike +
                 ", memberImg='" + memberImg + '\'' +
-                ", authorityCode=" + authorityCode +
                 ", memberCreate='" + memberCreate + '\'' +
                 ", memberLeave='" + memberLeave + '\'' +
                 '}';

@@ -15,7 +15,7 @@ public class BuddyMatchData {
   @JoinColumn(name = "buddy_code")
   private Buddy buddy;
 
-  @Column(name = "buddy_match_code")
+  @Column(name = "apply_id")
   private String applyId;
 
   public BuddyMatchData() {

@@ -9,8 +9,34 @@ public class VerificationDTO {
   private int verificationNumber;
   private Boolean isVerified;
   private String  verificationTime;
-  private List<AccountDTO> memberCode;
+  private AccountDTO Account;
 
+  public VerificationDTO() {
+  }
+
+  public VerificationDTO(AccountDTO account, Boolean isVerified, int verificationCode, int verificationNumber, String verificationTime) {
+    Account = account;
+    this.isVerified = isVerified;
+    this.verificationCode = verificationCode;
+    this.verificationNumber = verificationNumber;
+    this.verificationTime = verificationTime;
+  }
+
+  public AccountDTO getAccount() {
+    return Account;
+  }
+
+  public void setAccount(AccountDTO account) {
+    Account = account;
+  }
+
+  public Boolean getVerified() {
+    return isVerified;
+  }
+
+  public void setVerified(Boolean verified) {
+    isVerified = verified;
+  }
 
   public int getVerificationCode() {
     return verificationCode;
@@ -20,7 +46,6 @@ public class VerificationDTO {
     this.verificationCode = verificationCode;
   }
 
-
   public int getVerificationNumber() {
     return verificationNumber;
   }
@@ -28,16 +53,6 @@ public class VerificationDTO {
   public void setVerificationNumber(int verificationNumber) {
     this.verificationNumber = verificationNumber;
   }
-
-
-  public Boolean getIsVerified() {
-    return isVerified;
-  }
-
-  public void setIsVerified(Boolean isVerified) {
-    this.isVerified = isVerified;
-  }
-
 
   public String getVerificationTime() {
     return verificationTime;
@@ -47,13 +62,14 @@ public class VerificationDTO {
     this.verificationTime = verificationTime;
   }
 
-
-  public List<AccountDTO> getMemberCode() {
-    return memberCode;
+  @Override
+  public String toString() {
+    return "VerificationDTO{" +
+            "Account=" + Account +
+            ", verificationCode=" + verificationCode +
+            ", verificationNumber=" + verificationNumber +
+            ", isVerified=" + isVerified +
+            ", verificationTime='" + verificationTime + '\'' +
+            '}';
   }
-
-  public void setMemberCode(List<AccountDTO> memberCode) {
-    this.memberCode = memberCode;
-  }
-
 }

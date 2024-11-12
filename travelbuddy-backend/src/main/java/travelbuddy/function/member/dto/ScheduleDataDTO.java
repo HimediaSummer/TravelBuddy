@@ -1,4 +1,4 @@
-package travelbuddy.function.schedule.dto;
+package travelbuddy.function.member.dto;
 
 public class ScheduleDataDTO {
     private int memberScheCode;

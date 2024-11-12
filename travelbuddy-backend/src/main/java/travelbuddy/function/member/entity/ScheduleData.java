@@ -1,4 +1,4 @@
-package travelbuddy.function.schedule.entity;
+package travelbuddy.function.member.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

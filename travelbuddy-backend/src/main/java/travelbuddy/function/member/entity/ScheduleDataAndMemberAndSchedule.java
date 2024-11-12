@@ -1,15 +1,27 @@
-package travelbuddy.function.schedule.dto;
+package travelbuddy.function.member.entity;
 
-public class ScheduleDataAndMemberAndScheduleDTO {
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "tbl_member_schedule_data")
+public class ScheduleDataAndMemberAndSchedule {
+
+    @Id
+    @Column(name = "member_sche_code")
     private int memberScheCode;
+
+    @ManyToOne
+    @JoinColumn(name = "member_code")
     private Member memberCode;
+
+    @ManyToOne
+    @JoinColumn(name = "sche_code")
     private Schedule scheCode;
 
-    public ScheduleDataAndMemberAndScheduleDTO() {
+    public ScheduleDataAndMemberAndSchedule() {
     }
 
-    public ScheduleDataAndMemberAndScheduleDTO(int memberScheCode, Member memberCode, Schedule scheCode) {
+    public ScheduleDataAndMemberAndSchedule(int memberScheCode, Member memberCode, Schedule scheCode) {
         this.memberScheCode = memberScheCode;
         this.memberCode = memberCode;
         this.scheCode = scheCode;
@@ -41,7 +53,7 @@ public class ScheduleDataAndMemberAndScheduleDTO {
 
     @Override
     public String toString() {
-        return "ScheduleDataAndMemberAndScheduleDTO{" +
+        return "ScheduleDataAndMemberAndSchedule{" +
                 "memberScheCode=" + memberScheCode +
                 ", memberCode=" + memberCode +
                 ", scheCode=" + scheCode +

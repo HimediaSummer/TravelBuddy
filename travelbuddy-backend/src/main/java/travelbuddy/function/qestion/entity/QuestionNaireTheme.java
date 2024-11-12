@@ -1,9 +1,6 @@
 package travelbuddy.function.qestion.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="tbl_question_naire_theme")
@@ -11,6 +8,7 @@ public class QuestionNaireTheme {
 
   @Id
   @Column(name="theme_code")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int themeCode;
 
   @Column(name="question_theme")

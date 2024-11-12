@@ -8,10 +8,12 @@ public class BuddyMatchData {
 
   @Id
   @Column(name = "buddy_match_code")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int buddyMatchCode;
 
-  @Column(name = "buddy_code")
-  private int buddyCode;
+  @ManyToOne
+  @JoinColumn(name = "buddy_code")
+  private Buddy buddy;
 
   @Column(name = "buddy_match_code")
   private String applyId;
@@ -19,26 +21,10 @@ public class BuddyMatchData {
   public BuddyMatchData() {
   }
 
-  public BuddyMatchData(int buddyMatchCode, int buddyCode, String applyId) {
-    this.buddyMatchCode = buddyMatchCode;
-    this.buddyCode = buddyCode;
+  public BuddyMatchData(String applyId, Buddy buddy, int buddyMatchCode) {
     this.applyId = applyId;
-  }
-
-  public int getBuddyMatchCode() {
-    return buddyMatchCode;
-  }
-
-  public void setBuddyMatchCode(int buddyMatchCode) {
+    this.buddy = buddy;
     this.buddyMatchCode = buddyMatchCode;
-  }
-
-  public int getBuddyCode() {
-    return buddyCode;
-  }
-
-  public void setBuddyCode(int buddyCode) {
-    this.buddyCode = buddyCode;
   }
 
   public String getApplyId() {
@@ -49,12 +35,28 @@ public class BuddyMatchData {
     this.applyId = applyId;
   }
 
+  public Buddy getBuddy() {
+    return buddy;
+  }
+
+  public void setBuddy(Buddy buddy) {
+    this.buddy = buddy;
+  }
+
+  public int getBuddyMatchCode() {
+    return buddyMatchCode;
+  }
+
+  public void setBuddyMatchCode(int buddyMatchCode) {
+    this.buddyMatchCode = buddyMatchCode;
+  }
+
   @Override
   public String toString() {
     return "BuddyMatchData{" +
-            "buddyMatchCode=" + buddyMatchCode +
-            ", buddyCode=" + buddyCode +
-            ", applyId='" + applyId + '\'' +
+            "applyId='" + applyId + '\'' +
+            ", buddyMatchCode=" + buddyMatchCode +
+            ", buddy=" + buddy +
             '}';
   }
 }

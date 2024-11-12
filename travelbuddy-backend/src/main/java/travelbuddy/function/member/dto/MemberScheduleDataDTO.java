@@ -1,14 +1,14 @@
 package travelbuddy.function.member.dto;
 
-public class ScheduleDataDTO {
+public class MemberScheduleDataDTO {
     private int memberScheCode;
     private int memberCode;
     private int scheCode;
 
-    public ScheduleDataDTO() {
+    public MemberScheduleDataDTO() {
     }
 
-    public ScheduleDataDTO(int memberScheCode, int memberCode, int scheCode) {
+    public MemberScheduleDataDTO(int memberScheCode, int memberCode, int scheCode) {
         this.memberScheCode = memberScheCode;
         this.memberCode = memberCode;
         this.scheCode = scheCode;

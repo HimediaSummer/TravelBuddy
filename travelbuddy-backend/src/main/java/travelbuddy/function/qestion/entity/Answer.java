@@ -8,13 +8,14 @@ public class Answer {
 
   @Id
   @Column(name ="answer_code")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int answerCode;
 
   @Column(name="answer")
   private String answer;
 
   @ManyToOne
-  @Column(name="quest_code")
+  @JoinColumn(name="quest_code")
   private Questionnaire questionnaire;
 
   public Answer() {

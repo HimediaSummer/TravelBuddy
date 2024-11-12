@@ -8,6 +8,7 @@ public class BuddyType {
 
     @Id
     @Column(name = "buddy_type_code")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int buddyTypeCode;
 
     @Column(name = "buddy_type_name")

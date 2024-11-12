@@ -1,6 +1,8 @@
 package travelbuddy.function.schedule.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
+import travelbuddy.function.member.entity.MemberAnswer;
 
 import java.sql.Time;
 import java.util.Date;
@@ -11,6 +13,7 @@ public class Schedule {
 
     @Id
     @Column(name="sche_code")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int scheCode;
 
     @ManyToOne
@@ -21,16 +24,16 @@ public class Schedule {
     private String question;
 
     @Column(name="sche_date")
-    private Date scheDate;
+    private String scheDate;
 
     @Column(name="sche_list")
     private String scheList;
 
     @Column(name="sche_start_date")
-    private Time scheStartDate;
+    private String scheStartDate;
 
     @Column(name="sche_end_date")
-    private Time scheEndDate;
+    private String scheEndDate;
 
     @Column(name="accom")
     private String accom;
@@ -44,81 +47,26 @@ public class Schedule {
     @Column(name="sche_time")
     private String scheTime;
 
-    @Column(name="member_answer_code")
-    private int memberAnswerCode;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="member_answer_code")
+    private MemberAnswer memberAnswer;
 
     public Schedule() {
     }
 
-    public Schedule(int scheCode, Region region, String question, Date scheDate, String scheList, Time scheStartDate, Time scheEndDate, String accom, String accomImg, String travelTime, String scheTime, int memberAnswerCode) {
-        this.scheCode = scheCode;
-        this.region = region;
-        this.question = question;
-        this.scheDate = scheDate;
-        this.scheList = scheList;
-        this.scheStartDate = scheStartDate;
-        this.scheEndDate = scheEndDate;
+    public Schedule(String accom, String accomImg, MemberAnswer memberAnswer, String question, Region region, int scheCode, String scheDate, String scheEndDate, String scheList, String scheStartDate, String scheTime, String travelTime) {
         this.accom = accom;
         this.accomImg = accomImg;
-        this.travelTime = travelTime;
-        this.scheTime = scheTime;
-        this.memberAnswerCode = memberAnswerCode;
-    }
-
-    public int getScheCode() {
-        return scheCode;
-    }
-
-    public void setScheCode(int scheCode) {
-        this.scheCode = scheCode;
-    }
-
-    public Region getRegionCode() {
-        return region;
-    }
-
-    public void setRegionCode(Region regionCode) {
-        this.region = regionCode;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
+        this.memberAnswer = memberAnswer;
         this.question = question;
-    }
-
-    public Date getScheDate() {
-        return scheDate;
-    }
-
-    public void setScheDate(Date scheDate) {
+        this.region = region;
+        this.scheCode = scheCode;
         this.scheDate = scheDate;
-    }
-
-    public String getScheList() {
-        return scheList;
-    }
-
-    public void setScheList(String scheList) {
-        this.scheList = scheList;
-    }
-
-    public Time getScheStartDate() {
-        return scheStartDate;
-    }
-
-    public void setScheStartDate(Time scheStartDate) {
-        this.scheStartDate = scheStartDate;
-    }
-
-    public Time getScheEndDate() {
-        return scheEndDate;
-    }
-
-    public void setScheEndDate(Time scheEndDate) {
         this.scheEndDate = scheEndDate;
+        this.scheList = scheList;
+        this.scheStartDate = scheStartDate;
+        this.scheTime = scheTime;
+        this.travelTime = travelTime;
     }
 
     public String getAccom() {
@@ -137,12 +85,68 @@ public class Schedule {
         this.accomImg = accomImg;
     }
 
-    public String getTravelTime() {
-        return travelTime;
+    public MemberAnswer getMemberAnswer() {
+        return memberAnswer;
     }
 
-    public void setTravelTime(String travelTime) {
-        this.travelTime = travelTime;
+    public void setMemberAnswer(MemberAnswer memberAnswer) {
+        this.memberAnswer = memberAnswer;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    public int getScheCode() {
+        return scheCode;
+    }
+
+    public void setScheCode(int scheCode) {
+        this.scheCode = scheCode;
+    }
+
+    public String getScheDate() {
+        return scheDate;
+    }
+
+    public void setScheDate(String scheDate) {
+        this.scheDate = scheDate;
+    }
+
+    public String getScheEndDate() {
+        return scheEndDate;
+    }
+
+    public void setScheEndDate(String scheEndDate) {
+        this.scheEndDate = scheEndDate;
+    }
+
+    public String getScheList() {
+        return scheList;
+    }
+
+    public void setScheList(String scheList) {
+        this.scheList = scheList;
+    }
+
+    public String getScheStartDate() {
+        return scheStartDate;
+    }
+
+    public void setScheStartDate(String scheStartDate) {
+        this.scheStartDate = scheStartDate;
     }
 
     public String getScheTime() {
@@ -153,29 +157,29 @@ public class Schedule {
         this.scheTime = scheTime;
     }
 
-    public int getMemberAnswerCode() {
-        return memberAnswerCode;
+    public String getTravelTime() {
+        return travelTime;
     }
 
-    public void setMemberAnswerCode(int memberAnswerCode) {
-        this.memberAnswerCode = memberAnswerCode;
+    public void setTravelTime(String travelTime) {
+        this.travelTime = travelTime;
     }
 
     @Override
     public String toString() {
-        return "ScheduleDTO{" +
-                "scheCode=" + scheCode +
+        return "Schedule{" +
+                "accom='" + accom + '\'' +
+                ", scheCode=" + scheCode +
                 ", region=" + region +
                 ", question='" + question + '\'' +
-                ", scheDate=" + scheDate +
+                ", scheDate='" + scheDate + '\'' +
                 ", scheList='" + scheList + '\'' +
-                ", scheStartDate=" + scheStartDate +
-                ", scheEndDate=" + scheEndDate +
-                ", accom='" + accom + '\'' +
+                ", scheStartDate='" + scheStartDate + '\'' +
+                ", scheEndDate='" + scheEndDate + '\'' +
                 ", accomImg='" + accomImg + '\'' +
                 ", travelTime='" + travelTime + '\'' +
                 ", scheTime='" + scheTime + '\'' +
-                ", memberAnswerCode=" + memberAnswerCode +
+                ", memberAnswer=" + memberAnswer +
                 '}';
     }
 }

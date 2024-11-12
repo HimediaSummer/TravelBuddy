@@ -160,6 +160,9 @@
     &quot;accountId&quot;: &quot;cc11b2a7-6e8e-442d-a98a-e4edecd71504&quot;
   }
 }</component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true

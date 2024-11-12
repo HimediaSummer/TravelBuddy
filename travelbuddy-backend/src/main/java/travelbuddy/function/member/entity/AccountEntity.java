@@ -50,28 +50,44 @@ public class AccountEntity {
     @Column(name = "member_leave")
     private String memberLeave;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name ="authority_code")
-    private List<AuthorityEntity> authorityCode;
+    private AuthorityEntity authority;
 
     public AccountEntity() {
     }
 
-    public AccountEntity(int memberCode, String memberName, String memberPassword, String memberFullName, String memberBirthday, String memberEmail, String memberPhone, String memberSuspension, String memberDeletion, int memberLike, String memberImg, String memberCreate, String memberLeave, List<AuthorityEntity> authorityCode) {
+    public AccountEntity(AuthorityEntity authority, String memberBirthday, int memberCode, String memberCreate, String memberDeletion, String memberEmail, String memberFullName, String memberImg, String memberLeave, int memberLike, String memberName, String memberPassword, String memberPhone, String memberSuspension) {
+        this.authority = authority;
+        this.memberBirthday = memberBirthday;
         this.memberCode = memberCode;
+        this.memberCreate = memberCreate;
+        this.memberDeletion = memberDeletion;
+        this.memberEmail = memberEmail;
+        this.memberFullName = memberFullName;
+        this.memberImg = memberImg;
+        this.memberLeave = memberLeave;
+        this.memberLike = memberLike;
         this.memberName = memberName;
         this.memberPassword = memberPassword;
-        this.memberFullName = memberFullName;
-        this.memberBirthday = memberBirthday;
-        this.memberEmail = memberEmail;
         this.memberPhone = memberPhone;
         this.memberSuspension = memberSuspension;
-        this.memberDeletion = memberDeletion;
-        this.memberLike = memberLike;
-        this.memberImg = memberImg;
-        this.memberCreate = memberCreate;
-        this.memberLeave = memberLeave;
-        this.authorityCode = authorityCode;
+    }
+
+    public AuthorityEntity getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(AuthorityEntity authority) {
+        this.authority = authority;
+    }
+
+    public String getMemberBirthday() {
+        return memberBirthday;
+    }
+
+    public void setMemberBirthday(String memberBirthday) {
+        this.memberBirthday = memberBirthday;
     }
 
     public int getMemberCode() {
@@ -80,6 +96,62 @@ public class AccountEntity {
 
     public void setMemberCode(int memberCode) {
         this.memberCode = memberCode;
+    }
+
+    public String getMemberCreate() {
+        return memberCreate;
+    }
+
+    public void setMemberCreate(String memberCreate) {
+        this.memberCreate = memberCreate;
+    }
+
+    public String getMemberDeletion() {
+        return memberDeletion;
+    }
+
+    public void setMemberDeletion(String memberDeletion) {
+        this.memberDeletion = memberDeletion;
+    }
+
+    public String getMemberEmail() {
+        return memberEmail;
+    }
+
+    public void setMemberEmail(String memberEmail) {
+        this.memberEmail = memberEmail;
+    }
+
+    public String getMemberFullName() {
+        return memberFullName;
+    }
+
+    public void setMemberFullName(String memberFullName) {
+        this.memberFullName = memberFullName;
+    }
+
+    public String getMemberImg() {
+        return memberImg;
+    }
+
+    public void setMemberImg(String memberImg) {
+        this.memberImg = memberImg;
+    }
+
+    public String getMemberLeave() {
+        return memberLeave;
+    }
+
+    public void setMemberLeave(String memberLeave) {
+        this.memberLeave = memberLeave;
+    }
+
+    public int getMemberLike() {
+        return memberLike;
+    }
+
+    public void setMemberLike(int memberLike) {
+        this.memberLike = memberLike;
     }
 
     public String getMemberName() {
@@ -98,30 +170,6 @@ public class AccountEntity {
         this.memberPassword = memberPassword;
     }
 
-    public String getMemberFullName() {
-        return memberFullName;
-    }
-
-    public void setMemberFullName(String memberFullName) {
-        this.memberFullName = memberFullName;
-    }
-
-    public String getMemberBirthday() {
-        return memberBirthday;
-    }
-
-    public void setMemberBirthday(String memberBirthday) {
-        this.memberBirthday = memberBirthday;
-    }
-
-    public String getMemberEmail() {
-        return memberEmail;
-    }
-
-    public void setMemberEmail(String memberEmail) {
-        this.memberEmail = memberEmail;
-    }
-
     public String getMemberPhone() {
         return memberPhone;
     }
@@ -138,58 +186,11 @@ public class AccountEntity {
         this.memberSuspension = memberSuspension;
     }
 
-    public String getMemberDeletion() {
-        return memberDeletion;
-    }
-
-    public void setMemberDeletion(String memberDeletion) {
-        this.memberDeletion = memberDeletion;
-    }
-
-    public int getMemberLike() {
-        return memberLike;
-    }
-
-    public void setMemberLike(int memberLike) {
-        this.memberLike = memberLike;
-    }
-
-    public String getMemberImg() {
-        return memberImg;
-    }
-
-    public void setMemberImg(String memberImg) {
-        this.memberImg = memberImg;
-    }
-
-    public String getMemberCreate() {
-        return memberCreate;
-    }
-
-    public void setMemberCreate(String memberCreate) {
-        this.memberCreate = memberCreate;
-    }
-
-    public String getMemberLeave() {
-        return memberLeave;
-    }
-
-    public void setMemberLeave(String memberLeave) {
-        this.memberLeave = memberLeave;
-    }
-
-    public List<AuthorityEntity> getAuthorityCode() {
-        return authorityCode;
-    }
-
-    public void setAuthorityCode(List<AuthorityEntity> authorityCode) {
-        this.authorityCode = authorityCode;
-    }
-
     @Override
     public String toString() {
         return "AccountEntity{" +
-                "memberCode=" + memberCode +
+                "authority=" + authority +
+                ", memberCode=" + memberCode +
                 ", memberName='" + memberName + '\'' +
                 ", memberPassword='" + memberPassword + '\'' +
                 ", memberFullName='" + memberFullName + '\'' +
@@ -202,7 +203,6 @@ public class AccountEntity {
                 ", memberImg='" + memberImg + '\'' +
                 ", memberCreate='" + memberCreate + '\'' +
                 ", memberLeave='" + memberLeave + '\'' +
-                ", authorityCode=" + authorityCode +
                 '}';
     }
 }

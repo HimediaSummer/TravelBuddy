@@ -1,9 +1,8 @@
 package travelbuddy.function.member.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import travelbuddy.function.qestion.entity.Answer;
+import travelbuddy.function.qestion.entity.Questionnaire;
 
 @Entity
 @Table(name="tbl_member_answer")
@@ -11,25 +10,45 @@ public class MemberAnswer {
 
   @Id
   @Column(name="member_answer_code")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int memberAnswerCode;
 
-  @Column(name="quest_code")
-  private int questCode;
+  @ManyToOne
+  @JoinColumn(name="quest_code")
+  private Questionnaire questionnaire;
 
-  @Column(name="answer_code")
-  private int answerCode;
+  @ManyToOne
+  @JoinColumn(name="answer_code")
+  private Answer answer;
 
-  @Column(name="member_code")
-  private int memberCode;
+  @ManyToOne
+  @JoinColumn(name="member_code")
+  private AccountEntity Account;
 
   public MemberAnswer() {
   }
 
-  public MemberAnswer(int memberAnswerCode, int questCode, int answerCode, int memberCode) {
+  public MemberAnswer(AccountEntity account, Answer answer, int memberAnswerCode, Questionnaire questionnaire) {
+    Account = account;
+    this.answer = answer;
     this.memberAnswerCode = memberAnswerCode;
-    this.questCode = questCode;
-    this.answerCode = answerCode;
-    this.memberCode = memberCode;
+    this.questionnaire = questionnaire;
+  }
+
+  public AccountEntity getAccount() {
+    return Account;
+  }
+
+  public void setAccount(AccountEntity account) {
+    Account = account;
+  }
+
+  public Answer getAnswer() {
+    return answer;
+  }
+
+  public void setAnswer(Answer answer) {
+    this.answer = answer;
   }
 
   public int getMemberAnswerCode() {
@@ -40,40 +59,21 @@ public class MemberAnswer {
     this.memberAnswerCode = memberAnswerCode;
   }
 
-
-  public int getQuestCode() {
-    return questCode;
+  public Questionnaire getQuestionnaire() {
+    return questionnaire;
   }
 
-  public void setQuestCode(int questCode) {
-    this.questCode = questCode;
-  }
-
-
-  public int getAnswerCode() {
-    return answerCode;
-  }
-
-  public void setAnswerCode(int answerCode) {
-    this.answerCode = answerCode;
-  }
-
-
-  public int getMemberCode() {
-    return memberCode;
-  }
-
-  public void setMemberCode(int memberCode) {
-    this.memberCode = memberCode;
+  public void setQuestionnaire(Questionnaire questionnaire) {
+    this.questionnaire = questionnaire;
   }
 
   @Override
   public String toString() {
-    return "MemberAnswerDTO{" +
-            "memberAnswerCode=" + memberAnswerCode +
-            ", questCode=" + questCode +
-            ", answerCode=" + answerCode +
-            ", memberCode=" + memberCode +
+    return "MemberAnswer{" +
+            "Account=" + Account +
+            ", memberAnswerCode=" + memberAnswerCode +
+            ", questionnaire=" + questionnaire +
+            ", answer=" + answer +
             '}';
   }
 }

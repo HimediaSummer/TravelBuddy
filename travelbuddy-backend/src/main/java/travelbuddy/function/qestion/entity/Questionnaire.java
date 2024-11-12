@@ -8,6 +8,7 @@ public class Questionnaire {
 
     @Id
     @Column(name="quest_code")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int questCode;
 
     @Column(name="question")

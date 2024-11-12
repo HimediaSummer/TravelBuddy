@@ -23,19 +23,35 @@ public class VerificationEntity {
     @Column(name = "verification_time")
     private String  verificationTime;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "member_code")
-    private List<AccountEntity> memberCode;
+    private AccountEntity account;
 
     public VerificationEntity() {
     }
 
-    public VerificationEntity(int verificationCode, int verificationNumber, Boolean isVerified, String verificationTime, List<AccountEntity> memberCode) {
+    public VerificationEntity(AccountEntity account, Boolean isVerified, int verificationCode, int verificationNumber, String verificationTime) {
+        this.account = account;
+        this.isVerified = isVerified;
         this.verificationCode = verificationCode;
         this.verificationNumber = verificationNumber;
-        this.isVerified = isVerified;
         this.verificationTime = verificationTime;
-        this.memberCode = memberCode;
+    }
+
+    public AccountEntity getAccount() {
+        return account;
+    }
+
+    public void setAccount(AccountEntity account) {
+        this.account = account;
+    }
+
+    public Boolean getVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(Boolean verified) {
+        isVerified = verified;
     }
 
     public int getVerificationCode() {
@@ -54,14 +70,6 @@ public class VerificationEntity {
         this.verificationNumber = verificationNumber;
     }
 
-    public Boolean getVerified() {
-        return isVerified;
-    }
-
-    public void setVerified(Boolean verified) {
-        isVerified = verified;
-    }
-
     public String getVerificationTime() {
         return verificationTime;
     }
@@ -70,22 +78,14 @@ public class VerificationEntity {
         this.verificationTime = verificationTime;
     }
 
-    public List<AccountEntity> getMemberCode() {
-        return memberCode;
-    }
-
-    public void setMemberCode(List<AccountEntity> memberCode) {
-        this.memberCode = memberCode;
-    }
-
     @Override
     public String toString() {
         return "VerificationEntity{" +
-                "verificationCode=" + verificationCode +
+                "account=" + account +
+                ", verificationCode=" + verificationCode +
                 ", verificationNumber=" + verificationNumber +
                 ", isVerified=" + isVerified +
                 ", verificationTime='" + verificationTime + '\'' +
-                ", memberCode=" + memberCode +
                 '}';
     }
 }

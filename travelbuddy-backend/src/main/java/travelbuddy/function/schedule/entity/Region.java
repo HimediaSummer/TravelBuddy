@@ -1,9 +1,6 @@
 package travelbuddy.function.schedule.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="tbl_region")
@@ -11,6 +8,7 @@ public class Region {
 
     @Id
     @Column(name="region_code")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int regionCode;
 
     @Column(name="region_name")

@@ -1,4 +1,4 @@
-package com.ohgiraffers.jwtrestapi.config;
+package travelbuddy.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package com.ohgiraffers.jwtrestapi.common;
+package travelbuddy.common;
 
 import org.springframework.http.HttpStatus;
 

@@ -1,4 +1,4 @@
-package com.ohgiraffers.jwtrestapi.config;
+package travelbuddy.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

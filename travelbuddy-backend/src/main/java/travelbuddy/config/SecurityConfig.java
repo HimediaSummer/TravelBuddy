@@ -1,9 +1,5 @@
-package com.ohgiraffers.jwtrestapi.config;
+package travelbuddy.config;
 
-import com.ohgiraffers.jwtrestapi.jwt.JwtAccessDeniedHandler;
-import com.ohgiraffers.jwtrestapi.jwt.JwtAuthenticationEntryPoint;
-import com.ohgiraffers.jwtrestapi.jwt.JwtFilter;
-import com.ohgiraffers.jwtrestapi.jwt.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +15,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import travelbuddy.jwt.JwtAccessDeniedHandler;
+import travelbuddy.jwt.JwtAuthenticationEntryPoint;
+import travelbuddy.jwt.JwtFilter;
+import travelbuddy.jwt.TokenProvider;
 
 import java.util.Arrays;
 

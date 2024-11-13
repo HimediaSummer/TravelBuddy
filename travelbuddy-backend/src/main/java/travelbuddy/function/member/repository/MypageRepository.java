@@ -1,17 +1,20 @@
 package travelbuddy.function.member.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import travelbuddy.function.community.buddy.entity.Buddy;
-import travelbuddy.function.member.entity.AccountEntity;
-import travelbuddy.function.member.entity.MemberBuddyData;
+import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
+import travelbuddy.function.member.entity.MemberBuddyData;
 
 public interface MypageRepository extends JpaRepository<MemberBuddyData, Integer> {
 
+    @Query("SELECT m FROM MemberBuddyData m WHERE m.memberCode = ?1")
     List<MemberBuddyData> findByMemberCode(int memberCode);
 
-    Page<MemberBuddyData> findByMemberCode(int i, Pageable paging);
+    @Query("SELECT m FROM MemberBuddyData m WHERE m.memberCode = ?1")
+    Page<MemberBuddyData> findByMemberCode(int memberCode, Pageable paging);
 }
+

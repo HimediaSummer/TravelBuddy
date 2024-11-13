@@ -11,7 +11,7 @@ public class AuthorityEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int authorityCode;
 
-    @Column(name = "authority_code")
+    @Column(name = "authority_code_name")
     private String authorityCodeName;
 
     public AuthorityEntity() {

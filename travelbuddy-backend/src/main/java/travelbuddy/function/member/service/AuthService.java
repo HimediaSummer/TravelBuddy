@@ -14,7 +14,6 @@ import travelbuddy.function.member.dto.TokenDTO;
 import travelbuddy.function.member.entity.AccountEntity;
 import travelbuddy.function.member.entity.AuthorityEntity;
 import travelbuddy.function.member.repository.MemberRepository;
-//import travelbuddy.function.member.repository.MemberRoleRepository;
 import travelbuddy.jwt.TokenProvider;
 
 @Service
@@ -25,7 +24,6 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final ModelMapper modelMapper;
-//    private final MemberRoleRepository memberRoleRepository;
 
     @Autowired
     public AuthService(MemberRepository memberRepository, PasswordEncoder passwordEncoder,
@@ -34,7 +32,6 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;
         this.modelMapper = modelMapper;
-//        this.memberRoleRepository = memberRoleRepository;
     }
 
     public Object login(AccountDTO accountDTO) {
@@ -89,26 +86,21 @@ public class AuthService {
          *      (하지만 jpql에 의해 앞선 save와 jpql이 flush()로 쿼리와 함께 날아가고 회원이 이미 sequence객체 값
          *       증가와 함께 insert가 되 버린다. -> 결론은, maxMemberCode가 현재 가입하는 회원의 번호이다.)
          * */
-        int maxMemberCode = memberRepository.maxMemberCode();	// 설명. JPQL을 사용해 회원번호 max값 추출
+//        int maxMemberCode = memberRepository.maxMemberCode();	// 설명. JPQL을 사용해 회원번호 max값 추출
 
         // 기본 권한 코드 설정
         AuthorityEntity defaultAuthority = new AuthorityEntity();
         defaultAuthority.setAuthorityCode(2);
 
 
-        AccountEntity accountEntity = new AccountEntity();
-        accountEntity.setMemberCode(maxMemberCode);
-        accountEntity.setAuthority(defaultAuthority);
+        registMember.setAuthority(defaultAuthority);
 
-        AccountEntity result2 = memberRepository.save(accountEntity);
-
-
-
-
+        AccountEntity result2 = memberRepository.save(registMember);
 
         /* 설명. 위의 두 가지 save()가 모두 성공해야 해당 트랜잭션이 성공했다고 판단. */
         log.info("[AuthService] Member Insert Result {}",
-                (result1 != null && result2 != null) ? "회원 가입 성공" : "회원 가입 실패");
+//                (result1 != null && result2 != null) ? "회원 가입 성공" : "회원 가입 실패");
+                (result2 != null) ? "회원 가입 성공" : "회원 가입 실패");
 
         log.info("[AuthService] signup() End.");
 

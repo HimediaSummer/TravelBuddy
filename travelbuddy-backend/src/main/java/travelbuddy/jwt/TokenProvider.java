@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import travelbuddy.exception.TokenException;
+import travelbuddy.function.member.dto.TokenDTO;
+import travelbuddy.function.member.entity.AccountEntity;
+import travelbuddy.function.member.entity.AuthorityEntity;
 
 import java.security.Key;
 import java.util.*;
@@ -85,42 +88,46 @@ public class TokenProvider {
     }
 
     /* 목차. 1. 토큰 생성 메서드 */
-//    public TokenDTO generateTokenDTO(Member member) {
-//
-//        log.info("[TokenProvider] generateTokenDTO() Start");
-//
+    public TokenDTO generateTokenDTO(AccountEntity accountEntity) {
+
+        log.info("[TokenProvider] generateTokenDTO() Start");
+
+        // 단읠 권한을 바로 사용
+        String role = accountEntity.getAuthority().getAuthorityCodeName();
+
 //        // 매개변수로 전달된 회원의 권한을 담기 위한 리스트 생성
 //        List<String> roles = new ArrayList<>();
 //        // 회원의 권한을 모두 추출해 리스트에 추가
-//        for(MemberRole memberRole : member.getMemberRole()) {
-//            roles.add(memberRole.getAuthority().getAuthorityName());
+//        for(AuthorityEntity authorityEntity : accountEntity.getAuthority()) {
+////            roles.add(memberRole.getAuthority().getAuthorityName());
+//            roles.add(authorityEntity.getAuthorityCodeName());
 //        }
-//
-//        log.info("[TokenProvider] authorized authorities {}", roles);
-//
-//        // 현재 시간(msec)
-//        int now = System.currentTimeMillis();
-//        // 위에서 밀리초로 구해놓은 현재 시간에 토큰 만료 시간을 더해 유효 기간을 설정
-//        Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
-//
-//        // JWT 토큰 생성
-//        String accessToken = Jwts.builder()
-//                // 회원 아이디를 "sub"이라는 클레임으로 토큰에 추가
-//                .setSubject(member.getMemberId())
-//                // 회원의 권한들을 "auth"라는 클레임으로 토큰에 추가
-//                .claim(AUTHORITIES_KEY, roles)
-//                // 만료 시간 설정
-//                .setExpiration(accessTokenExpiresIn)
-//                // 서명 및 알고리즘 설정
-//                .signWith(key, SignatureAlgorithm.HS512)
-//                // 압축 = header + payload + signature
-//                .compact();
-//        System.out.println("조립된 accessToken 확인 = " + accessToken);
-//
-//        log.info("[TokenProvider] generateTokenDTO() End");
-//
-//        return new TokenDTO(BEARER_TYPE, member.getMemberName(), accessToken, accessTokenExpiresIn.getTime());
-//    }
+
+        log.info("[TokenProvider] authorized authorities {}", role);
+
+        // 현재 시간(msec)
+        long now = System.currentTimeMillis();
+        // 위에서 밀리초로 구해놓은 현재 시간에 토큰 만료 시간을 더해 유효 기간을 설정
+        Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+
+        // JWT 토큰 생성
+        String accessToken = Jwts.builder()
+                // 회원 아이디를 "sub"이라는 클레임으로 토큰에 추가
+                .setSubject(accountEntity.getMemberName())
+                // 회원의 권한들을 "auth"라는 클레임으로 토큰에 추가
+                .claim(AUTHORITIES_KEY, role)
+                // 만료 시간 설정
+                .setExpiration(accessTokenExpiresIn)
+                // 서명 및 알고리즘 설정
+                .signWith(key, SignatureAlgorithm.HS512)
+                // 압축 = header + payload + signature
+                .compact();
+        System.out.println("조립된 accessToken 확인 = " + accessToken);
+
+        log.info("[TokenProvider] generateTokenDTO() End");
+
+        return new TokenDTO(BEARER_TYPE, accountEntity.getMemberName(), accessToken, accessTokenExpiresIn.getTime());
+    }
 
     /* 목차. 2. 토큰에 등록된 클레임의 sub에서 해당 회원의 아이디를 추출 */
     public String getUserId(String token) {

@@ -53,11 +53,11 @@ public class AuthController {
          * */
     }
 
-//    @Operation(summary = "회원 가입 요청", description = "회원 가입이 진행됩니다.", tags = {"AuthController"})
-//    @PostMapping("/signup")
-//    public ResponseEntity<ResponseDTO> signup(@RequestBody AccountDTO accountDTO) {	// 회원 가입 정보를 받아 냄
-//        return ResponseEntity
-//                .ok()
-//                .body(new ResponseDTO(HttpStatus.CREATED, "회원가입 성공", authService.signup(accountDTO)));
-//    }
+    @Operation(summary = "회원 가입 요청", description = "회원 가입이 진행됩니다.", tags = {"AuthController"})
+    @PostMapping("/signup")
+    public ResponseEntity<ResponseDTO> signup(@RequestBody AccountDTO accountDTO) {	// 회원 가입 정보를 받아 냄
+        return ResponseEntity
+                .ok()
+                .body(new ResponseDTO(HttpStatus.CREATED, "회원가입 성공", authService.signup(accountDTO)));
+    }
 }

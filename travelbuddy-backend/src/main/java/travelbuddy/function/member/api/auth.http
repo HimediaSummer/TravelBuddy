@@ -5,7 +5,7 @@ Accept:*/*
 Access-Control-Allow-Origin:*
 
 {
-  "memberId": "admin",
+  "memberName": "admin",
   "memberPassword": "1234"
 }
 
@@ -16,6 +16,6 @@ Accept:*/*
 Access-Control-Allow-Origin:*
 
 {
-  "memberId": "user01",
+  "memberName": "user01",
   "memberPassword": "1234"
 }

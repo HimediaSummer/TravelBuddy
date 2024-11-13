@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS tbl_authority (
 CREATE TABLE IF NOT EXISTS tbl_account (
     member_code INT NOT NULL AUTO_INCREMENT COMMENT '회원코드',
     member_name VARCHAR(20) NOT NULL COMMENT '회원아이디',
-    member_password VARCHAR(20) NOT NULL COMMENT '회원비밀번호',
+    member_password VARCHAR(255) NOT NULL COMMENT '회원비밀번호',
     member_full_name VARCHAR(20) NOT NULL COMMENT '회원이름',
     member_birthday DATE NOT NULL COMMENT '회원생년월일',
     member_email VARCHAR(50) NOT NULL COMMENT '회원이메일',
@@ -262,8 +262,8 @@ INSERT INTO tbl_authority (authority_code, authority_code_name) VALUES
 
 -- tbl_Account
 INSERT INTO tbl_account (member_code, member_name, member_password, member_full_name, member_birthday, member_email, member_phone, member_suspension, member_deletion, member_like, member_img, authority_code, member_create, member_leave) VALUES
-(1001, 'john_doe', 'qwerty1234', 'John Doe', '1985-06-15', 'john.doe@example.com', '010-1111-2222', 'N', 'N', 42, 'profile1.jpg', 1, '2024-12-25', NULL),
-(1002, 'jane_smith', 'abcd1234', 'Jane Smith', '1990-09-25', 'jane.smith@example.com', '010-3333-4444', 'N', 'N', 37, 'profile2.jpg', 2, '2024-12-25', NULL),
+(1001, 'admin', '$2a$10$COvazywgZPXseeKaYhruh.pAYYfcSeGO5aSrHOsLZN0X8joNwW2dW', 'John Doe', '1985-06-15', 'john.doe@example.com', '010-1111-2222', 'N', 'N', 42, 'profile1.jpg', 1, '2024-12-25', NULL),
+(1002, 'user01', '$2a$10$COvazywgZPXseeKaYhruh.pAYYfcSeGO5aSrHOsLZN0X8joNwW2dW', 'Jane Smith', '1990-09-25', 'jane.smith@example.com', '010-3333-4444', 'N', 'N', 37, 'profile2.jpg', 2, '2024-12-25', NULL),
 (1003, 'alex_kim', 'password5678', 'Alex Kim', '1992-04-05', 'alex.kim@example.com', '010-5555-6666', 'N', 'N', 58, 'profile3.jpg', 2, '2024-12-25', '2025-01-30');
 
 -- tbl_verification

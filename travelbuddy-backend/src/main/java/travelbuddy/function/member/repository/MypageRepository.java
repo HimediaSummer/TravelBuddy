@@ -9,9 +9,9 @@ import travelbuddy.function.member.entity.MemberBuddyData;
 
 import java.util.List;
 
-public interface MypageRepository extends JpaRepository<Buddy, Integer> {
+public interface MypageRepository extends JpaRepository<MemberBuddyData, Integer> {
 
-    List<MemberBuddyData> findByMemberCode(int account);
+    List<MemberBuddyData> findByMemberCode(int memberCode);
 
     Page<MemberBuddyData> findByMemberCode(int i, Pageable paging);
 }

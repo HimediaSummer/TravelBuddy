@@ -15,7 +15,7 @@ public class Buddy {
 
     @ManyToOne
     @JoinColumn(name = "member_code")
-    private AccountEntity account;
+    private AccountEntity memberCode;
 
     @ManyToOne
     @JoinColumn(name = "region_code")
@@ -52,8 +52,8 @@ public class Buddy {
     public Buddy() {
     }
 
-    public Buddy(AccountEntity account, String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
-        this.account = account;
+    public Buddy(AccountEntity memberCode, String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
+        this.memberCode = memberCode;
         this.buddyApply = buddyApply;
         this.buddyAt = buddyAt;
         this.buddyCode = buddyCode;
@@ -67,12 +67,12 @@ public class Buddy {
         this.region = region;
     }
 
-    public AccountEntity getAccount() {
-        return account;
+    public AccountEntity getMemberCode() {
+        return memberCode;
     }
 
-    public void setAccount(AccountEntity account) {
-        this.account = account;
+    public void setMemberCode(AccountEntity memberCode) {
+        this.memberCode = memberCode;
     }
 
     public String getBuddyApply() {
@@ -166,7 +166,7 @@ public class Buddy {
     @Override
     public String toString() {
         return "Buddy{" +
-                "account=" + account +
+                "memberCode=" + memberCode +
                 ", buddyCode=" + buddyCode +
                 ", region=" + region +
                 ", buddyType=" + buddyType +

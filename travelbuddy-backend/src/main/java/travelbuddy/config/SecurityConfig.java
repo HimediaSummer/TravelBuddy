@@ -1,13 +1,13 @@
-package com.ohgiraffers.jwtrestapi.config;
+package travelbuddy.config;
 
-import com.ohgiraffers.jwtrestapi.jwt.JwtAccessDeniedHandler;
-import com.ohgiraffers.jwtrestapi.jwt.JwtAuthenticationEntryPoint;
-import com.ohgiraffers.jwtrestapi.jwt.JwtFilter;
-import com.ohgiraffers.jwtrestapi.jwt.TokenProvider;
+
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,7 +20,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
+import travelbuddy.jwt.JwtAccessDeniedHandler;
+import travelbuddy.jwt.JwtAuthenticationEntryPoint;
+import travelbuddy.jwt.JwtFilter;
+import travelbuddy.jwt.TokenProvider;
 
 @Configuration
 @EnableWebSecurity
@@ -34,6 +37,7 @@ public class SecurityConfig {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Autowired
+    @Lazy
     public SecurityConfig(TokenProvider tokenProvider,
                           JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
                           JwtAccessDeniedHandler jwtAccessDeniedHandler) {
@@ -82,7 +86,7 @@ public class SecurityConfig {
                     // CORS Preflight 요청 허용
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     // root 경로는 인증 필요
-                    auth.requestMatchers("/").authenticated();
+                     auth.requestMatchers("/").authenticated();
                     // 특정 경로는 무조건 허용
                     auth.requestMatchers("/auth/**", "/api/v1/products/**", "/api/v1/reviews/**").permitAll();
                     // Swagger API 문서 허용
@@ -91,7 +95,8 @@ public class SecurityConfig {
                     auth.requestMatchers("/api/**").hasAnyRole("USER", "ADMIN");
                     /* 설명. 아래는 프로젝트 초기 구현시, Security 기능을 약화시켜 개발을 진행하게 끔 해주는 내용들이다. */
                     // 어떤 요청이든 허용 -> Security를 활용한 로그인이 모두 완성되지 않았을 때 사용할 것
-//            auth.anyRequest().permitAll();
+                    auth.anyRequest().permitAll();
+                    // 이거 주석 묶으면 권한별로 페이지 볼수있음 주석을 풀어서 모두 접근가능하게 된것
                 })
                 // 4. 세션 방식을 사용하지 않음
                 .sessionManagement(session ->

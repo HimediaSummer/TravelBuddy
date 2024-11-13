@@ -1,10 +1,11 @@
-package com.ohgiraffers.jwtrestapi.exception;
+package travelbuddy.exception;
 
-import com.ohgiraffers.jwtrestapi.exception.dto.ApiExceptionDTO;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import travelbuddy.exception.dto.ApiExceptionDTO;
 
 /* 설명. 예외 처리 전용 어드바이스 추가
  *  @RestControllerAdvice = @ControllerAdvice + @ResponseBody

@@ -1,23 +1,8 @@
 # server config
 server:
-port: 8080
+  port: 8080
 
 spring:
-# DB config
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-# LocalDev
-    url: jdbc:mysql://localhost:3306/tbdb
-# Local Dev & Docker(AWS) deploy
-#url: jdbc:mysql://database-server:3306/tbdb
-    username: travelbuddy
-    password: travelbuddy
-# fileupload config
-  servlet:
-    multipart:
-      enabled: true
-      max-request-size: 10MB
-      max-file-size: 1MB
   # DB config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -37,9 +22,9 @@ web:
   resources:
     static-locations: classpath:/productimgs/
 # JPA config
-jpa:
-  generate-ddl: false
-  database: mysql
+  jpa:
+    generate-ddl: false
+    database: mysql
 properties:
   hibernate:
     format_sql: true
@@ -50,11 +35,11 @@ properties:
 ## ???? ??? ??? ??? ? ??? ?? ??
 image:
  # Local Dev
- add-resource-locations: classpath:/static/productimgs/
- add-resource-handler: /productimgs/**
+  add-resource-locations: classpath:/static/productimgs/
+  add-resource-handler: /productimgs/**
  # Local Dev
- image-dir: src/main/resources/static/productimgs
- image-url: http://localhost:8080/productimgs/
+  image-dir: src/main/resources/static/productimgs
+  image-url: http://localhost:8080/productimgs/
 #Docker(Local)
 # add-resource-locations: file:///springboot-app/productimgs/
 # add-resource-handler: /productimgs/**

@@ -77,4 +77,14 @@ public class AdminAccountService {
 
         return modelMapper.map(member, AccountEntity.class);
     }
+
+    public Object checkMemberStatus() {
+
+        log.info("[AdminAccountService] checkMemberStatus() start");
+
+
+        log.info("[AdminAccountService] checkMemberStatus() end");
+
+        return null;
+    }
 }

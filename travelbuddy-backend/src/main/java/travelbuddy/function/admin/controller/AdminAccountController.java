@@ -68,12 +68,5 @@ public class AdminAccountController {
     }
 
 
-    @Operation(summary = "관리자페이지 회원 상세 정보 중 버튼 정보 요청", description = "회원의 버디,일정,상세 상태를 나타냅니다.", tags = {"AdminAccountController"})
-    @PostMapping("/members")
-    public ResponseEntity<ResponseDTO> updateMemberButton(@ModelAttribute AccountDTO accountDTO) {
-
-        return null;
-
-    }
 
 }

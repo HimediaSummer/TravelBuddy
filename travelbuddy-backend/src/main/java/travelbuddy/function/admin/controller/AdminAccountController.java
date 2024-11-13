@@ -67,6 +67,20 @@ public class AdminAccountController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"회원 상세정보 조회 성공",adminAccountService.selectMember(memberCode)));
     }
 
+    @Operation(summary = "회원 정지 상태 변경", description = "정지 여부를 Y와 N으로 전환합니다.", tags = {"AdminAccountController"})
+    @PostMapping("/members/{memberCode}/toggle-suspension")
+    public ResponseEntity<ResponseDTO> toggleMemberSuspension(@PathVariable int memberCode){
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"정지 여부 변경 성공", adminAccountService.toggleMemberSuspension(memberCode)));
+    }
+
+    @Operation(summary = "회원 탈퇴 상태 변경", description = "탈퇴 여부를 Y와 N으로 전환합니다.", tags = {"AdminAccountController"})
+    @PostMapping("/members/{memberCode}/toggle-deletion")
+    public ResponseEntity<ResponseDTO> toggleMemberDelesion(@PathVariable int memberCode){
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"탈퇴 여부 변경 성공", adminAccountService.toggleMemberDelesion(memberCode)));
+    }
+
 
 
 }

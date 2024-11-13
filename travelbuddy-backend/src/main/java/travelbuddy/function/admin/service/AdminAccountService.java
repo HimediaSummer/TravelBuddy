@@ -30,6 +30,7 @@ public class AdminAccountService {
         this.modelMapper = modelMapper;
     }
 
+
     /*회원의 총 수를 찾는다.*/
     public int selectMemberTotal() {
         log.info("[AdminAccountService] selectMemberTotal() Start");
@@ -78,6 +79,7 @@ public class AdminAccountService {
         return modelMapper.map(member, AccountEntity.class);
     }
 
+    /*상태정보들을 가져오려고 만들었는데 아직 미정상태.*/
     public Object checkMemberStatus() {
 
         log.info("[AdminAccountService] checkMemberStatus() start");
@@ -86,5 +88,46 @@ public class AdminAccountService {
         log.info("[AdminAccountService] checkMemberStatus() end");
 
         return null;
+    }
+    /* 상세페이지 안의 [정지] 버튼을 눌렀을때  Y , N  변화시킬 메소드 */
+    public  Object toggleMemberSuspension(int memberCode) {
+
+        log.info("[AdminAccountService] selectMemberSuspension() start");
+
+        AccountEntity member = adminAccountRepository.findById(memberCode).orElse(null);
+
+        /*update 를 위한 엔티티 값 수정*/
+        if (member != null) {
+            if ("Y".equals((member.getMemberSuspension()))) {
+                member.setMemberSuspension("N");
+            } else {
+                member.setMemberSuspension("Y");
+            }
+            adminAccountRepository.save(member);
+        }
+        log.info("[AdminAccountService] selectMemberSuspension() end");
+
+        return modelMapper.map(member, AccountEntity.class);
+    }
+
+    /* 상세페이지 안의 [탈퇴] 버튼을 눌렀을때 Y , N  변화시킬 메소드 */
+    public Object toggleMemberDelesion(int memberCode) {
+
+        log.info("[AdminAccountService] selectMemberDelesion() start");
+
+        AccountEntity member = adminAccountRepository.findById(memberCode).orElse(null);
+
+        /*update 를 위한 엔티티 값 수정*/
+        if (member != null) {
+            if ("Y".equals((member.getMemberDeletion()))) {
+                member.setMemberDeletion("N");
+            } else {
+                member.setMemberDeletion("Y");
+            }
+            adminAccountRepository.save(member);
+        }
+        log.info("[AdminAccountService] toggleMemberDelesion() end");
+
+        return modelMapper.map(member, AccountEntity.class);
     }
 }

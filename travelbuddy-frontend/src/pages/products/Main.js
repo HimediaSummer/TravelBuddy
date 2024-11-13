@@ -15,7 +15,7 @@ function Main() {
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
-    const products = useSelector(state => state.productReducer); 
+    const products = useSelector(state => state.productReducer);
     const productList = products.data;
 
     const pageInfo = products.pageInfo;
@@ -33,7 +33,7 @@ function Main() {
         () => {
             dispatch(callProductListAPI({
                 currentPage: currentPage
-            }));            
+            }));
         }
         ,[currentPage]
     );
@@ -41,38 +41,38 @@ function Main() {
     return (
         <>
             <div className={ MainCSS.productDiv }>
-            { 
-                Array.isArray(productList) && productList.map((product) => (<Product key={ product.productCode } product={ product } />))
-            }
+                {
+                    Array.isArray(productList) && productList.map((product) => (<Product key={ product.productCode } product={ product } />))
+                }
             </div>
             <div style={{ listStyleType: "none", display: "flex" }}>
                 { Array.isArray(productList) &&
-                <button 
-                    onClick={() => setCurrentPage(currentPage - 1)} 
-                    disabled={currentPage === 1}
-                    className={ MainCSS.pagingBtn }
-                >
-                    &lt;
-                </button>
-                }
-                {pageNumber.map((num) => (
-                <li key={num} onClick={() => setCurrentPage(num)}>
                     <button
-                        style={ currentPage === num ? {backgroundColor : 'orange' } : null}
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        disabled={currentPage === 1}
                         className={ MainCSS.pagingBtn }
                     >
-                        {num}
+                        &lt;
                     </button>
-                </li>
+                }
+                {pageNumber.map((num) => (
+                    <li key={num} onClick={() => setCurrentPage(num)}>
+                        <button
+                            style={ currentPage === num ? {backgroundColor : 'orange' } : null}
+                            className={ MainCSS.pagingBtn }
+                        >
+                            {num}
+                        </button>
+                    </li>
                 ))}
                 { Array.isArray(productList) &&
-                <button 
-                    className={ MainCSS.pagingBtn }
-                    onClick={() => setCurrentPage(currentPage + 1)} 
-                    disabled={currentPage === pageInfo.pageEnd  || pageInfo.total == 0}
-                >
-                    &gt;
-                </button>
+                    <button
+                        className={ MainCSS.pagingBtn }
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        disabled={currentPage === pageInfo.pageEnd  || pageInfo.total == 0}
+                    >
+                        &gt;
+                    </button>
                 }
             </div>
         </>

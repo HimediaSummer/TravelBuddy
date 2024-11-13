@@ -1,5 +1,6 @@
 package travelbuddy.function.admin.controller;
 
+import travelbuddy.common.Criteria;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

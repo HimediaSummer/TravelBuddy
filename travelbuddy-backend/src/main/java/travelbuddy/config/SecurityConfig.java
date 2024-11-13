@@ -1,10 +1,13 @@
 package travelbuddy.config;
 
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,32 +19,32 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-//import travelbuddy.jwt.JwtAccessDeniedHandler;
-//import travelbuddy.jwt.JwtAuthenticationEntryPoint;
-//import travelbuddy.jwt.JwtFilter;
-//import travelbuddy.jwt.TokenProvider;
 
-import java.util.Arrays;
+import travelbuddy.jwt.JwtAccessDeniedHandler;
+import travelbuddy.jwt.JwtAuthenticationEntryPoint;
+import travelbuddy.jwt.JwtFilter;
+import travelbuddy.jwt.TokenProvider;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-//    // JWT 토큰을 발급하고 검증하는 Token Provider
-//    private final TokenProvider tokenProvider;
-//    // 인증 실패 관련 예외
-//    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-//    // 접근 거부 관련 예외
-//    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-//
-//    @Autowired
-//    public SecurityConfig(TokenProvider tokenProvider,
-//                          JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-//                          JwtAccessDeniedHandler jwtAccessDeniedHandler) {
-//        this.tokenProvider = tokenProvider;
-//        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-//        this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
-//    }
+    // JWT 토큰을 발급하고 검증하는 Token Provider
+    private final TokenProvider tokenProvider;
+    // 인증 실패 관련 예외
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    // 접근 거부 관련 예외
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
+    @Autowired
+    @Lazy
+    public SecurityConfig(TokenProvider tokenProvider,
+                          JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+                          JwtAccessDeniedHandler jwtAccessDeniedHandler) {
+        this.tokenProvider = tokenProvider;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+        this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
+    }
 
     /* 목차. 1. 암호화 처리를 위한 PasswordEncoder를 빈으로 설정(빈을 등록 시 메소드 이름 오타 없도록 주의!) */
     @Bean
@@ -67,9 +70,9 @@ public class SecurityConfig {
                 // 2. 예외 처리
                 .exceptionHandling(exception -> {
                     // 필요한 권한이 없을 때 403(Forbidden)을 반환
-//                    exception.authenticationEntryPoint(jwtAuthenticationEntryPoint);
+                    exception.authenticationEntryPoint(jwtAuthenticationEntryPoint);
                     // 인증되지 않은 접근 시 401(Unauthorized)를 반환
-//                    exception.accessDeniedHandler(jwtAccessDeniedHandler);
+                    exception.accessDeniedHandler(jwtAccessDeniedHandler);
                 })
                 // 3. HTTP 요청에 대한 접근 권한 설정
                 .authorizeHttpRequests(auth -> {
@@ -80,29 +83,28 @@ public class SecurityConfig {
                      *  요청 할 url이 외부 도메인일 경우 웹 브라우저에서 자체 실행되며 options 메소드로 사전 요청을 보내게 된다.
                      *  사전에 요청이 안전한지 확인하기 위함(유효한지 서버에 미리 파악할 수 있도록 보내는 수단이다.)
                      * */
-                    // 임시 모든 요청을 허용 이 아래부분은 나중에 뺄것.
-                    auth.anyRequest().permitAll();
                     // CORS Preflight 요청 허용
-//                    auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
-//                    // root 경로는 인증 필요
-//                    auth.requestMatchers("/").authenticated();
-//                    // 특정 경로는 무조건 허용
-//                    auth.requestMatchers("/auth/**","/admin/members", "/api/v1/products/**", "/api/v1/reviews/**").permitAll();
-//                    // Swagger API 문서 허용
-//                    auth.requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll();
-//                    // API 경로는 USER 또는 ADMIN 역할을 가진 사용자만 접근 가능
-//                    auth.requestMatchers("/api/**").hasAnyRole("USER", "ADMIN");
+                    auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
+                    // root 경로는 인증 필요
+                     auth.requestMatchers("/").authenticated();
+                    // 특정 경로는 무조건 허용
+                    auth.requestMatchers("/auth/**", "/api/v1/products/**", "/api/v1/reviews/**").permitAll();
+                    // Swagger API 문서 허용
+                    auth.requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll();
+                    // API 경로는 USER 또는 ADMIN 역할을 가진 사용자만 접근 가능
+                    auth.requestMatchers("/api/**").hasAnyRole("USER", "ADMIN");
                     /* 설명. 아래는 프로젝트 초기 구현시, Security 기능을 약화시켜 개발을 진행하게 끔 해주는 내용들이다. */
                     // 어떤 요청이든 허용 -> Security를 활용한 로그인이 모두 완성되지 않았을 때 사용할 것
-//            auth.anyRequest().permitAll();
+                    auth.anyRequest().permitAll();
+                    // 이거 주석 묶으면 권한별로 페이지 볼수있음 주석을 풀어서 모두 접근가능하게 된것
                 })
                 // 4. 세션 방식을 사용하지 않음
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // 5. 기본 CORS 설정 사용
-                .cors(cors -> {});
+                .cors(cors -> {})
                 // 6. 우리가 직접 작성한 커스텀 필터인 JwtFilter를 필터 체인에 추가
-//                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

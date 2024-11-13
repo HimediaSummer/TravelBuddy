@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS tbl_account (
     member_like INT NULL COMMENT '좋아요',
     member_img TEXT NULL COMMENT '프로필사진',
     authority_code INT NOT NULL COMMENT '권한코드',
-    member_create DATE NOT NULL COMMENT '가입일',
+    member_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '가입일',
     member_leave DATE NULL COMMENT '탈퇴일',
     PRIMARY KEY (member_code),
     FOREIGN KEY (authority_code) REFERENCES tbl_authority(authority_code) ON DELETE CASCADE

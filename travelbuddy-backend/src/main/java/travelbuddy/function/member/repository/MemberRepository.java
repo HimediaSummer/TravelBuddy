@@ -17,4 +17,6 @@ public interface MemberRepository extends JpaRepository<AccountEntity, Integer> 
     /* 설명. purchase 도메인 추가하면서 추가한 메소드 */
     @Query("SELECT m.memberCode FROM AccountEntity m WHERE m.memberName = ?1")
     int findMemberCodeByMemberName(String orderMemberId);
+
+
 }

@@ -2,6 +2,7 @@ package travelbuddy.function.member.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -45,7 +46,9 @@ public class AccountEntity {
     private String memberImg;
 
     @Column(name = "member_create")
-    private String memberCreate;
+//    private String memberCreate;
+    private LocalDateTime memberCreate;
+
 
     @Column(name = "member_leave")
     private String memberLeave;
@@ -57,7 +60,7 @@ public class AccountEntity {
     public AccountEntity() {
     }
 
-    public AccountEntity(AuthorityEntity authority, String memberBirthday, int memberCode, String memberCreate, String memberDeletion, String memberEmail, String memberFullName, String memberImg, String memberLeave, int memberLike, String memberName, String memberPassword, String memberPhone, String memberSuspension) {
+    public AccountEntity(AuthorityEntity authority, String memberBirthday, int memberCode, LocalDateTime memberCreate, String memberDeletion, String memberEmail, String memberFullName, String memberImg, String memberLeave, int memberLike, String memberName, String memberPassword, String memberPhone, String memberSuspension) {
         this.authority = authority;
         this.memberBirthday = memberBirthday;
         this.memberCode = memberCode;
@@ -98,11 +101,11 @@ public class AccountEntity {
         this.memberCode = memberCode;
     }
 
-    public String getMemberCreate() {
+    public LocalDateTime getMemberCreate() {
         return memberCreate;
     }
 
-    public void setMemberCreate(String memberCreate) {
+    public void setMemberCreate(LocalDateTime memberCreate) {
         this.memberCreate = memberCreate;
     }
 

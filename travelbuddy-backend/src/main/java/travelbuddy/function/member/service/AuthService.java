@@ -10,11 +10,15 @@ import org.springframework.stereotype.Service;
 import travelbuddy.exception.DuplicatedMemberNameException;
 import travelbuddy.exception.LoginFailedException;
 import travelbuddy.function.member.dto.AccountDTO;
+import travelbuddy.function.member.dto.AuthorityDTO;
 import travelbuddy.function.member.dto.TokenDTO;
 import travelbuddy.function.member.entity.AccountEntity;
 import travelbuddy.function.member.entity.AuthorityEntity;
+import travelbuddy.function.member.repository.AuthorityRepository;
 import travelbuddy.function.member.repository.MemberRepository;
 import travelbuddy.jwt.TokenProvider;
+
+import java.time.LocalDateTime;
 
 @Service
 public class AuthService {
@@ -24,14 +28,16 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final ModelMapper modelMapper;
+    private final AuthorityRepository authorityRepository;
 
     @Autowired
     public AuthService(MemberRepository memberRepository, PasswordEncoder passwordEncoder,
-                       TokenProvider tokenProvider, ModelMapper modelMapper) {
+                       TokenProvider tokenProvider, ModelMapper modelMapper, AuthorityRepository authorityRepository) {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;
         this.modelMapper = modelMapper;
+        this.authorityRepository = authorityRepository;
     }
 
     public Object login(AccountDTO accountDTO) {
@@ -77,7 +83,8 @@ public class AuthService {
         /* 목차. 1. tbl_member 테이블에 회원 INSERT */
         /* 설명. 비밀번호 암호화 후 insert */
         registMember.setMemberPassword(passwordEncoder.encode(registMember.getMemberPassword()));
-        AccountEntity result1 = memberRepository.save(registMember);		// 설명. 반환형은 int값이 아닌 엔티티임.
+        System.out.println("registMember = " + registMember);
+//        AccountEntity result1 = memberRepository.save(registMember);		// 설명. 반환형은 int값이 아닌 엔티티임.
 
         /* 목차. 2. tbl_member_role 테이블에 회원별 권한 INSERT (현재 엔티티에는 회원가입 후 pk값이 없다!) */
         /* 목차. 2-1. 우선 일반 권한(AuthorityCode값이 2번)의 회원을 추가(일종의 디폴트 권한을 지정해주면 됨) */
@@ -89,13 +96,33 @@ public class AuthService {
 //        int maxMemberCode = memberRepository.maxMemberCode();	// 설명. JPQL을 사용해 회원번호 max값 추출
 
         // 기본 권한 코드 설정
-        AuthorityEntity defaultAuthority = new AuthorityEntity();
-        defaultAuthority.setAuthorityCode(2);
+//        AuthorityEntity defaultAuthority = new AuthorityEntity();
+//        defaultAuthority.setAuthorityCode(2);
+//        System.out.println("defaultAuthority = " + defaultAuthority);
 
+        registMember.setMemberCreate(LocalDateTime.now());
+        registMember.setMemberDeletion("N");
+        registMember.setMemberSuspension("N");
 
-        registMember.setAuthority(defaultAuthority);
+        AuthorityEntity existingAuthority = authorityRepository.findByAuthorityCode(2);
+
+        if(existingAuthority != null) {
+            registMember.setAuthority(existingAuthority);
+        } else {
+            AuthorityEntity defaultAuthority = new AuthorityEntity();
+            defaultAuthority.setAuthorityCode(2);
+            defaultAuthority.setAuthorityCodeName("일반 사용자");
+            authorityRepository.save(defaultAuthority);
+            registMember.setAuthority(defaultAuthority);
+        }
+
 
         AccountEntity result2 = memberRepository.save(registMember);
+        System.out.println("result2 = " + result2);
+
+//        registMember.setAuthority(defaultAuthority);
+//
+//        AccountEntity result2 = memberRepository.save(registMember);
 
         /* 설명. 위의 두 가지 save()가 모두 성공해야 해당 트랜잭션이 성공했다고 판단. */
         log.info("[AuthService] Member Insert Result {}",

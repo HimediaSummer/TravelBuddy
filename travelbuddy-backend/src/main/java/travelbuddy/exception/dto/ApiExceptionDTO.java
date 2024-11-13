@@ -1,4 +1,4 @@
-package com.ohgiraffers.jwtrestapi.exception.dto;
+package travelbuddy.exception.dto;
 
 import org.springframework.http.HttpStatus;
 

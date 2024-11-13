@@ -1,11 +1,11 @@
-package com.ohgiraffers.jwtrestapi.config;
+package travelbuddy.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("com.ohgiraffers.jwtrestapi")
+@ComponentScan("travelbuddy")
 public class RestApiServerApplication {
 
     public static void main(String[] args) {

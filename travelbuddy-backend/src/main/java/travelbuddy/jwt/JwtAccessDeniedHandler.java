@@ -1,4 +1,4 @@
-package com.ohgiraffers.jwtrestapi.jwt;
+package travelbuddy.jwt;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

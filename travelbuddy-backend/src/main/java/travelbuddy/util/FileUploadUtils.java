@@ -1,4 +1,4 @@
-package com.ohgiraffers.jwtrestapi.util;
+package travelbuddy.util;
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;

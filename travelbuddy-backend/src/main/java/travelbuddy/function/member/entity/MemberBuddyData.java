@@ -14,7 +14,7 @@ public class MemberBuddyData {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "member_code")
-    private AccountEntity account;
+    private AccountEntity memberCode;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "buddy_code")
@@ -23,9 +23,9 @@ public class MemberBuddyData {
     public MemberBuddyData() {
     }
 
-    public MemberBuddyData(int memberBuddyCode, AccountEntity account, Buddy buddy) {
+    public MemberBuddyData(int memberBuddyCode, AccountEntity memberCode, Buddy buddy) {
         this.memberBuddyCode = memberBuddyCode;
-        this.account = account;
+        this.memberCode = memberCode;
         this.buddy = buddy;
     }
 
@@ -37,12 +37,12 @@ public class MemberBuddyData {
         this.memberBuddyCode = memberBuddyCode;
     }
 
-    public AccountEntity getAccount() {
-        return account;
+    public AccountEntity getMemberCode() {
+        return memberCode;
     }
 
-    public void setAccount(AccountEntity account) {
-        this.account = account;
+    public void setMemberCode(AccountEntity memberCode) {
+        this.memberCode = memberCode;
     }
 
     public Buddy getBuddy() {
@@ -57,7 +57,7 @@ public class MemberBuddyData {
     public String toString() {
         return "MemberBuddyData{" +
                 "memberBuddyCode=" + memberBuddyCode +
-                ", account=" + account +
+                ", memberCode=" + memberCode +
                 ", buddy=" + buddy +
                 '}';
     }

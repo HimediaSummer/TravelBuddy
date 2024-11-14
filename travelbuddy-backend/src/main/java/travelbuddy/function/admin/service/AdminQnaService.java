@@ -12,8 +12,12 @@ import org.springframework.stereotype.Service;
 import travelbuddy.common.Criteria;
 import travelbuddy.function.admin.controller.AdminQnaController;
 import travelbuddy.function.admin.repository.AdminQnaRepository;
+import travelbuddy.function.admin.repository.AdminqnaAnswerRepository;
+import travelbuddy.function.community.qnafaq.dto.QnaAnswerDTO;
 import travelbuddy.function.community.qnafaq.dto.QnaDTO;
+import travelbuddy.function.community.qnafaq.dto.QnaDetailDTO;
 import travelbuddy.function.community.qnafaq.entity.Qna;
+import travelbuddy.function.community.qnafaq.entity.QnaAnswer;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,10 +27,12 @@ public class AdminQnaService {
 
     private static Logger log = LoggerFactory.getLogger(AdminQnaService.class);
     private AdminQnaRepository adminQnaRepository;
+    private AdminqnaAnswerRepository adminqnaAnswerRepository;
     private ModelMapper modelMapper;
 
     @Autowired
-    public AdminQnaService(AdminQnaRepository adminQnaRepository, ModelMapper modelMapper) {
+    public AdminQnaService(AdminqnaAnswerRepository adminqnaAnswerRepository, AdminQnaRepository adminQnaRepository, ModelMapper modelMapper) {
+        this.adminqnaAnswerRepository = adminqnaAnswerRepository;
         this.adminQnaRepository = adminQnaRepository;
         this.modelMapper = modelMapper;
     }
@@ -74,9 +80,17 @@ public class AdminQnaService {
         log.info("[AdminQnaService] selectQna() start");
 
         Qna qna = adminQnaRepository.findById(qnaCode).get();
+        QnaAnswer qnaAnswer = adminqnaAnswerRepository.findById(qnaCode).get();
+
+        qnaAnswer.setQna(qna);
+
+        QnaDTO qnaDTO = modelMapper.map(qna , QnaDTO.class);
+        QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
+
+        QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO,qnaDTO);
 
         log.info("[AdminQnaService] selectQna() end");
 
-        return modelMapper.map(qna, QnaDTO.class);
+        return qnaDetailDTO;
     }
 }

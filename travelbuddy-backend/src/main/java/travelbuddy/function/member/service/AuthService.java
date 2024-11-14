@@ -12,8 +12,8 @@ import travelbuddy.exception.LoginFailedException;
 import travelbuddy.function.member.dto.AccountDTO;
 import travelbuddy.function.member.dto.AuthorityDTO;
 import travelbuddy.function.member.dto.TokenDTO;
-import travelbuddy.function.member.entity.AccountEntity;
-import travelbuddy.function.member.entity.AuthorityEntity;
+import travelbuddy.function.member.entity.Account;
+import travelbuddy.function.member.entity.Authority;
 import travelbuddy.function.member.repository.AuthorityRepository;
 import travelbuddy.function.member.repository.MemberRepository;
 import travelbuddy.jwt.TokenProvider;
@@ -46,7 +46,7 @@ public class AuthService {
         log.info("[AuthService] {}", accountDTO);
 
         /* 목차. 1. 아이디 조회 */
-        AccountEntity member = memberRepository.findByMemberName(accountDTO.getMemberName());
+        Account member = memberRepository.findByMemberName(accountDTO.getMemberName());
 
         if(member == null) {
             log.info("[AuthService] login() Required User Not Found!");
@@ -78,14 +78,14 @@ public class AuthService {
         }
 
         /* 설명. 우선 Repository로 쿼리를 작성하기 전에 DTO를 Entity로 매핑. */
-        AccountEntity registMember = modelMapper.map(accountDTO, AccountEntity.class);
+        Account registMember = modelMapper.map(accountDTO, Account.class);
 
         /* 목차. 1. tbl_member 테이블에 회원 INSERT */
         /* 설명. 비밀번호 암호화 후 insert */
         System.out.println("registMember = " + registMember);
         registMember.setMemberPassword(passwordEncoder.encode(registMember.getMemberPassword()));
         System.out.println("registMember = " + registMember);
-//        AccountEntity result1 = memberRepository.save(registMember);		// 설명. 반환형은 int값이 아닌 엔티티임.
+//        Account result1 = memberRepository.save(registMember);		// 설명. 반환형은 int값이 아닌 엔티티임.
 
         /* 목차. 2. tbl_member_role 테이블에 회원별 권한 INSERT (현재 엔티티에는 회원가입 후 pk값이 없다!) */
         /* 목차. 2-1. 우선 일반 권한(AuthorityCode값이 2번)의 회원을 추가(일종의 디폴트 권한을 지정해주면 됨) */
@@ -97,7 +97,7 @@ public class AuthService {
 //        int maxMemberCode = memberRepository.maxMemberCode();	// 설명. JPQL을 사용해 회원번호 max값 추출
 
         // 기본 권한 코드 설정
-//        AuthorityEntity defaultAuthority = new AuthorityEntity();
+//        Authority defaultAuthority = new Authority();
 //        defaultAuthority.setAuthorityCode(2);
 //        System.out.println("defaultAuthority = " + defaultAuthority);
 
@@ -105,12 +105,12 @@ public class AuthService {
 //        registMember.setMemberDeletion("N");
 //        registMember.setMemberSuspension("N");
 
-        AuthorityEntity existingAuthority = authorityRepository.findByAuthorityCode(2);
+        Authority existingAuthority = authorityRepository.findByAuthorityCode(2);
 
         if(existingAuthority != null) {
             registMember.setAuthority(existingAuthority);
         } else {
-            AuthorityEntity defaultAuthority = new AuthorityEntity();
+            Authority defaultAuthority = new Authority();
             defaultAuthority.setAuthorityCode(2);
 //            defaultAuthority.setAuthorityCodeName("일반 사용자");
             authorityRepository.save(defaultAuthority);
@@ -118,12 +118,12 @@ public class AuthService {
         }
 
 
-        AccountEntity result2 = memberRepository.save(registMember);
+        Account result2 = memberRepository.save(registMember);
         System.out.println("result2 = " + result2);
 
 //        registMember.setAuthority(defaultAuthority);
 //
-//        AccountEntity result2 = memberRepository.save(registMember);
+//        Account result2 = memberRepository.save(registMember);
 
         /* 설명. 위의 두 가지 save()가 모두 성공해야 해당 트랜잭션이 성공했다고 판단. */
         log.info("[AuthService] Member Insert Result {}",

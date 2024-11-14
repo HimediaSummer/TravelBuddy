@@ -25,12 +25,12 @@ public class VerificationEntity {
 
     @ManyToOne
     @JoinColumn(name = "member_code")
-    private AccountEntity account;
+    private Account account;
 
     public VerificationEntity() {
     }
 
-    public VerificationEntity(AccountEntity account, Boolean isVerified, int verificationCode, int verificationNumber, String verificationTime) {
+    public VerificationEntity(Account account, Boolean isVerified, int verificationCode, int verificationNumber, String verificationTime) {
         this.account = account;
         this.isVerified = isVerified;
         this.verificationCode = verificationCode;
@@ -38,11 +38,11 @@ public class VerificationEntity {
         this.verificationTime = verificationTime;
     }
 
-    public AccountEntity getAccount() {
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(AccountEntity account) {
+    public void setAccount(Account account) {
         this.account = account;
     }
 

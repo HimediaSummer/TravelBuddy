@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import travelbuddy.function.member.dto.AccountDTO;
-import travelbuddy.function.member.entity.AccountEntity;
+import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.repository.MemberRepository;
 
 @Service
@@ -25,7 +25,7 @@ public class MemberService {
 	public AccountDTO selectMyInfo(String memberName) {
 		log.info("[MemberService] getMyInfo Start =======================");
 		
-		AccountEntity member = memberRepository.findByMemberName(memberName);
+		Account member = memberRepository.findByMemberName(memberName);
 		log.info("[MemberService] {}", member);
 		log.info("[MemberService] getMyInfo End =========================");
 		

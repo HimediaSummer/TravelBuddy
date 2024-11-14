@@ -4,22 +4,22 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tbl_authority")
-public class AuthorityEntity {
+public class Authority {
 
     @Id
     @Column(name = "authority_code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int authorityCode;
 
-    @Column(name = "authority_code_name")
-    private String authorityCodeName;
+    @Column(name = "authority_name")
+    private String authorityName;
 
-    public AuthorityEntity() {
+    public Authority() {
     }
 
-    public AuthorityEntity(int authorityCode, String authorityCodeName) {
+    public Authority(int authorityCode, String authorityName) {
         this.authorityCode = authorityCode;
-        this.authorityCodeName = authorityCodeName;
+        this.authorityName = authorityName;
     }
 
     public int getAuthorityCode() {
@@ -30,19 +30,19 @@ public class AuthorityEntity {
         this.authorityCode = authorityCode;
     }
 
-    public String getAuthorityCodeName() {
-        return authorityCodeName;
+    public String getAuthorityName() {
+        return authorityName;
     }
 
-    public void setAuthorityCodeName(String authorityCodeName) {
-        this.authorityCodeName = authorityCodeName;
+    public void setAuthorityName(String authorityName) {
+        this.authorityName = authorityName;
     }
 
     @Override
     public String toString() {
-        return "AuthorityEntity{" +
+        return "Authority{" +
                 "authorityCode=" + authorityCode +
-                ", authorityCodeName='" + authorityCodeName + '\'' +
+                ", authorityName='" + authorityName + '\'' +
                 '}';
     }
 }

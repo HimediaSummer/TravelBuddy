@@ -1,7 +1,7 @@
 package travelbuddy.function.community.buddy.entity;
 
 import jakarta.persistence.*;
-import travelbuddy.function.member.entity.AccountEntity;
+import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.schedule.entity.Region;
 
 @Entity
@@ -15,7 +15,7 @@ public class Buddy {
 
     @ManyToOne
     @JoinColumn(name = "member_code")
-    private AccountEntity account;
+    private Account account;
 
     @ManyToOne
     @JoinColumn(name = "region_code")
@@ -52,7 +52,7 @@ public class Buddy {
     public Buddy() {
     }
 
-    public Buddy(AccountEntity account, String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
+    public Buddy(Account account, String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
         this.account = account;
         this.buddyApply = buddyApply;
         this.buddyAt = buddyAt;
@@ -67,11 +67,11 @@ public class Buddy {
         this.region = region;
     }
 
-    public AccountEntity getAccount() {
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(AccountEntity account) {
+    public void setAccount(Account account) {
         this.account = account;
     }
 

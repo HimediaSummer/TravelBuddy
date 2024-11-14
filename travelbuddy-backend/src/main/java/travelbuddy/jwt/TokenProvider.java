@@ -16,8 +16,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import travelbuddy.exception.TokenException;
 import travelbuddy.function.member.dto.TokenDTO;
-import travelbuddy.function.member.entity.AccountEntity;
-import travelbuddy.function.member.entity.AuthorityEntity;
+import travelbuddy.function.member.entity.Account;
+import travelbuddy.function.member.entity.Authority;
 
 import java.security.Key;
 import java.util.*;
@@ -88,12 +88,12 @@ public class TokenProvider {
     }
 
     /* 목차. 1. 토큰 생성 메서드 */
-    public TokenDTO generateTokenDTO(AccountEntity accountEntity) {
+    public TokenDTO generateTokenDTO(Account accountEntity) {
 
         log.info("[TokenProvider] generateTokenDTO() Start");
 
         // 단읠 권한을 바로 사용
-        String role = accountEntity.getAuthority().getAuthorityCodeName();
+        String role = accountEntity.getAuthority().getAuthorityName();
 
 //        // 매개변수로 전달된 회원의 권한을 담기 위한 리스트 생성
 //        List<String> roles = new ArrayList<>();

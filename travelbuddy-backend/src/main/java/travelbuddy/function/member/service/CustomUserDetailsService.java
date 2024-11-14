@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelbuddy.function.member.dto.AccountDTO;
-import travelbuddy.function.member.entity.AccountEntity;
-import travelbuddy.function.member.entity.AuthorityEntity;
+import travelbuddy.function.member.entity.Account;
+import travelbuddy.function.member.entity.Authority;
 import travelbuddy.function.member.repository.MemberRepository;
 
 import java.util.ArrayList;
@@ -39,11 +39,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         // 사용자 ID로 데이터베이스에서 사용자 엔티티 조회
-        AccountEntity accountEntity = memberRepository.findByMemberName(username);
+        Account account = memberRepository.findByMemberName(username);
 
         // 조회된 사용자 엔티티를 DTO로 매핑.
         // 이 AccountDTO는 엔티티를 옮겨 담는 DTO역할도 수행하지만, 결국 내부적으로 UserDetails가 구현되어 있다.
-        AccountDTO accountDTO = modelMapper.map(accountEntity, AccountDTO.class);
+        AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
 
         /* 처음 조회한 엔티티 째로는 사용자에게 할당된 권한 정보를 얻어낼 수 없다.
          * MemberDTO에 추가한 Collection<GrantedAuthority> authorities 필드 변수를 사용해야 한다.
@@ -57,9 +57,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 //            authorities.add(new SimpleGrantedAuthority(authorityName));
 //        }
 
-        AuthorityEntity authorityEntity = accountEntity.getAuthority();
-        if(authorityEntity != null ) {
-            authorities.add(new SimpleGrantedAuthority(authorityEntity.getAuthorityCodeName()));
+        Authority authority = account.getAuthority();
+        if(authority != null ) {
+            authorities.add(new SimpleGrantedAuthority(authority.getAuthorityName()));
         }
 
         // 모두 옮겨담은 권한 리스트를 MemberDTO에 주입해준다.

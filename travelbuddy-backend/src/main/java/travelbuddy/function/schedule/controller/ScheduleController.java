@@ -25,24 +25,9 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
-    private final ScheduleRepository scheduleRepository;
-
-    private final RegionRepository regionRepository;
-
-    private final AccommodationRepository accommodationRepository;
-
-    private final AccountRepository accountRepository;
-
-    private final MemberAnswerRepository memberAnswerRepository;
-
     @Autowired
-    public ScheduleController(ScheduleService scheduleService, ScheduleRepository scheduleRepository, RegionRepository regionRepository, AccommodationRepository accommodationRepository, AccountRepository accountRepository, MemberAnswerRepository memberAnswerRepository) {
+    public ScheduleController(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
-        this.scheduleRepository = scheduleRepository;
-        this.regionRepository = regionRepository;
-        this.accommodationRepository = accommodationRepository;
-        this.accountRepository = accountRepository;
-        this.memberAnswerRepository = memberAnswerRepository;
     }
 
     @GetMapping("/hello")
@@ -53,54 +38,14 @@ public class ScheduleController {
     }
 
     @Operation(summary = "일정 생성", description = "사용자 정보 입력 받아 일정 생성", tags = { "ScheduleController" })
-    @PostMapping("/hello")
+    @PostMapping("/scheduling")
     public ResponseEntity<ResponseDTO> scheduling(@RequestBody ScheduleDTO scheduleDTO) {
 
         System.out.println("[ScheduleController] 왓니?");
 
-        System.out.println("머 받았어 = " + scheduleDTO);
+        System.out.println("머 갖고잇어" + scheduleDTO);
 
-        // 코드로 지역 찾기
-        Region region = regionRepository.findByRegionCode(scheduleDTO.getRegionCode());
-        if(region == null) {
-            return ResponseEntity.badRequest().body(new ResponseDTO(HttpStatus.BAD_REQUEST, "region not found for code", null));
-        }
-
-        // 코드로 숙소 찾기
-        Accommodation accom = accommodationRepository.findByAccomCode(scheduleDTO.getAccomCode());
-        if(accom == null) {
-            return ResponseEntity.badRequest().body(new ResponseDTO(HttpStatus.BAD_REQUEST, "accom not found for code", null));
-        }
-
-        Account account = accountRepository.findByMemberCode(scheduleDTO.getMemberCode());
-//        if(account == null) {
-//            return ResponseEntity.badRequest().body(new ResponseDTO(HttpStatus.BAD_REQUEST, "account not found for code", null));
-//        }
-
-        // 코드로 회원대답 찾기
-        MemberAnswer memberAnswer = memberAnswerRepository.findByMemberAnswerCode(scheduleDTO.getMemberAnswerCode());
-        if(memberAnswer == null) {
-            return ResponseEntity.badRequest().body(new ResponseDTO(HttpStatus.BAD_REQUEST, "memberAnswer not found for code", null));
-        }
-
-        // 새로운 스케줄 엔티티 생성
-        Schedule newSche = new Schedule();
-        newSche.setRegion(region);
-        newSche.setAccommodation(accom);
-        newSche.setAccount(account);
-        newSche.setMemberAnswer(memberAnswer);
-        newSche.setScheStartDate(scheduleDTO.getScheStartDate());
-        newSche.setScheEndDate(scheduleDTO.getScheEndDate());
-        newSche.setScheStartTime(scheduleDTO.getScheStartTime());
-        newSche.setScheEndTime(scheduleDTO.getScheEndTime());
-
-        // 스케줄생성 AI 호출바리
-
-        // 최종 DB 저장
-
-        // 성공 응답 반환
-        return null;
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정 생성을 위한 데이터 수집 성공!",));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정 생성을 위한 데이터 수집 성공!", scheduleService.scheduling(scheduleDTO)));
     }
 
 }

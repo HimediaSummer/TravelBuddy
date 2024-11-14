@@ -18,7 +18,7 @@ import travelbuddy.function.community.qnafaq.service.QnaService;
 
 
 @RestController
-@RequestMapping("/qna")
+@RequestMapping("/cs")
 public class QnaController {
 
     private static final Logger log = LoggerFactory.getLogger(QnaController.class);
@@ -30,25 +30,29 @@ public class QnaController {
         this.qnaService = qnaService;
     }
 
-    @Operation(summary = "QnA 리스트 조회 요청", description = "QnA 조회 및 페이징 처리가 진행됩니다.", tags={"QnaController"})
+//    @Operation(summary = "QnA 리스트 조회 요청", description = "QnA 조회 및 페이징 처리가 진행됩니다.", tags={"QnaController"})
+//    @GetMapping("/qnas")
+//    public ResponseEntity<ResponseDTO> selectQnaListWithPaging(
+//            @RequestParam(name="offset", defaultValue = "1") String offset) {
+//
+//        log.info("[QnaController] selectQnaListWithPaging : " + offset);
+//
+//        int total = qnaService.selectQnaTotal();
+//
+//        Criteria cri = new Criteria(Integer.valueOf(offset), 10);
+//        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
+//
+//        pagingResponseDTO.setData(qnaService.selectQnaListWithPaging(cri));
+//
+//        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
+//
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", pagingResponseDTO));
+//    }
+
+    /*값만 잘 추출되는지 확인하기 위해 만든 메소드 (추후 없애도 됨)*/
     @GetMapping("/qnas")
-    public ResponseEntity<ResponseDTO> selectQnaListWithPaging(
-            @RequestParam(name="offset", defaultValue = "1") String offset) {
-
-        log.info("[QnaController] selectQnaListWithPaging : " + offset);
-
-        int total = qnaService.selectQnaTotal();
-
-        Criteria cri = new Criteria(Integer.valueOf(offset), 10);
-        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
-
-        pagingResponseDTO.setData(qnaService.selectQnaListWithPaging(cri));
-
-        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
-
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", pagingResponseDTO));
-
-
+    public ResponseEntity<ResponseDTO> selectQnaList() {
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", qnaService.selectQnaList()));
     }
 
 }

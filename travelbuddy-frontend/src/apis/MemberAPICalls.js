@@ -70,7 +70,7 @@ export const callRegisterAPI = ({ form }) => {
 				Accept: '*/*'
 			},
 			body: JSON.stringify({
-				memberId: form.memberId,
+				memberName: form.memberName,
 				memberPassword: form.memberPassword,
 				memberName: form.memberName,
 				memberEmail: form.memberEmail

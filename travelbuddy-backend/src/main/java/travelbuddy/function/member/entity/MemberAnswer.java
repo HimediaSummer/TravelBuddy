@@ -23,23 +23,23 @@ public class MemberAnswer {
 
   @ManyToOne
   @JoinColumn(name="member_code")
-  private AccountEntity Account;
+  private travelbuddy.function.member.entity.Account Account;
 
   public MemberAnswer() {
   }
 
-  public MemberAnswer(AccountEntity account, Answer answer, int memberAnswerCode, Questionnaire questionnaire) {
+  public MemberAnswer(travelbuddy.function.member.entity.Account account, Answer answer, int memberAnswerCode, Questionnaire questionnaire) {
     Account = account;
     this.answer = answer;
     this.memberAnswerCode = memberAnswerCode;
     this.questionnaire = questionnaire;
   }
 
-  public AccountEntity getAccount() {
+  public travelbuddy.function.member.entity.Account getAccount() {
     return Account;
   }
 
-  public void setAccount(AccountEntity account) {
+  public void setAccount(travelbuddy.function.member.entity.Account account) {
     Account = account;
   }
 

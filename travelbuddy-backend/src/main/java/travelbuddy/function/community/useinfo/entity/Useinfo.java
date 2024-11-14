@@ -1,9 +1,12 @@
 package travelbuddy.function.community.useinfo.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Table(name="tbl_useinfo")  // 테이블명
+@DynamicInsert
 public class Useinfo {
 
     @Id
@@ -27,6 +30,7 @@ public class Useinfo {
     private String useinfoImg;      // 이미지경로
 
     @Column(name = "useinfo_at")
+    @ColumnDefault("N")
     private String useinfoAt;       // 은폐여부
 
     public Useinfo() {

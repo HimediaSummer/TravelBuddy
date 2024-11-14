@@ -2,9 +2,12 @@ package travelbuddy.function.community.notice.entity;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Table(name = "tbl_notice") // 테이블명
+@DynamicInsert
 public class Notice {
 
     @Id
@@ -28,6 +31,7 @@ public class Notice {
     private String noticeImg;       //이미지경로
 
     @Column(name = "notice_at")
+    @ColumnDefault("N")
     private String noticeAt;        //은폐여부
 
     public Notice() {

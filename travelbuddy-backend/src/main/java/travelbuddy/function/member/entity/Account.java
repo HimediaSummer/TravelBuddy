@@ -1,18 +1,19 @@
 package travelbuddy.function.member.entity;
 
 import jakarta.persistence.*;
-
-import java.util.List;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 
 @Entity
-@Table(name = "tbl_account")
-public class AccountEntity {
+@Table(name = "tbl_account")    // 테이블명
+@DynamicInsert
+public class Account {
 
     @Id
     @Column(name = "member_code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int memberCode;
+    private int memberCode;     // 멤버코드
 
     @Column(name = "member_name")
     private String memberName;
@@ -33,9 +34,11 @@ public class AccountEntity {
     private String memberPhone;
 
     @Column(name = "member_suspension")
+    @ColumnDefault("N")
     private String memberSuspension;
 
     @Column(name = "member_deletion")
+    @ColumnDefault("N")
     private String memberDeletion;
 
     @Column(name = "member_like")
@@ -52,12 +55,12 @@ public class AccountEntity {
 
     @ManyToOne
     @JoinColumn(name ="authority_code")
-    private AuthorityEntity authority;
+    private Authority authority;
 
-    public AccountEntity() {
+    public Account() {
     }
 
-    public AccountEntity(AuthorityEntity authority, String memberBirthday, int memberCode, String memberCreate, String memberDeletion, String memberEmail, String memberFullName, String memberImg, String memberLeave, int memberLike, String memberName, String memberPassword, String memberPhone, String memberSuspension) {
+    public Account(Authority authority, String memberBirthday, int memberCode, String memberCreate, String memberDeletion, String memberEmail, String memberFullName, String memberImg, String memberLeave, int memberLike, String memberName, String memberPassword, String memberPhone, String memberSuspension) {
         this.authority = authority;
         this.memberBirthday = memberBirthday;
         this.memberCode = memberCode;
@@ -74,11 +77,11 @@ public class AccountEntity {
         this.memberSuspension = memberSuspension;
     }
 
-    public AuthorityEntity getAuthority() {
+    public Authority getAuthority() {
         return authority;
     }
 
-    public void setAuthority(AuthorityEntity authority) {
+    public void setAuthority(Authority authority) {
         this.authority = authority;
     }
 
@@ -188,7 +191,7 @@ public class AccountEntity {
 
     @Override
     public String toString() {
-        return "AccountEntity{" +
+        return "Account{" +
                 "authority=" + authority +
                 ", memberCode=" + memberCode +
                 ", memberName='" + memberName + '\'' +

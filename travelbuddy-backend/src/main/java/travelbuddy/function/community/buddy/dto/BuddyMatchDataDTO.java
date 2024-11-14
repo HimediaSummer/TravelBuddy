@@ -2,9 +2,9 @@ package travelbuddy.function.community.buddy.dto;
 
 public class BuddyMatchDataDTO {
 
-  private int buddyMatchCode;
-  private int buddyCode;
-  private String applyId;
+  private int buddyMatchCode;   // 버디매칭코드
+  private int buddyCode;        // 버디코드
+  private String applyId;       // 신청자 아이디
 
   public BuddyMatchDataDTO() {
   }

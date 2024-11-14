@@ -16,6 +16,7 @@ import travelbuddy.function.community.buddy.entity.Buddy;
 import travelbuddy.function.member.service.MypageService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/mypage")
@@ -73,12 +74,13 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글목록조회성공", mypageService.selectBuddyList()));
     }
 
-//    @Operation(summary = "게시글상세조회요청", description = "내가쓴글상세조회", tags = {"MypageController"})
-//    @GetMapping("/mybuddypost/{buddyCode}")
-//    public ResponseEntity<ResponseDTO> getBuddyDetail(@PathVariable("buddyCode") int buddyCode) {
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글상세조회성공", mypageService.getBuddyDetail(buddyCode)));
-//    }
+    @Operation(summary = "게시글상세조회요청", description = "내가쓴글상세조회", tags = {"MypageController"})
+    @GetMapping("/mybuddypost/{buddyCode}")
+    public ResponseEntity<ResponseDTO> getBuddyDetail(@PathVariable("buddyCode") int buddyCode) {
+        Map<String, Object> getBuddyDetail = mypageService.getBuddyDetail(buddyCode);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글세부내용및신청회원조회성공", mypageService.getBuddyDetail(buddyCode)));
+    }
 
 
 }

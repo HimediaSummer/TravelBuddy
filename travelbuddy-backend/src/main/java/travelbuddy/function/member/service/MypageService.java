@@ -12,10 +12,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelbuddy.common.Criteria;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
+import travelbuddy.function.community.buddy.dto.BuddyMatchDataDTO;
 import travelbuddy.function.community.buddy.entity.Buddy;
+import travelbuddy.function.community.buddy.entity.BuddyMatchData;
+import travelbuddy.function.member.repository.BuddyMatchRepository;
 import travelbuddy.function.member.repository.MypageRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -24,11 +29,13 @@ public class MypageService {
 
     private static final Logger log = LoggerFactory.getLogger(MypageService.class);
     private final MypageRepository mypageRepository;
+    private final BuddyMatchRepository buddyMatchRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public MypageService(MypageRepository mypageRepository, ModelMapper modelMapper) {
+    public MypageService(MypageRepository mypageRepository, BuddyMatchRepository buddyMatchRepository, ModelMapper modelMapper) {
         this.mypageRepository = mypageRepository;
+        this.buddyMatchRepository = buddyMatchRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -76,11 +83,34 @@ public class MypageService {
         return buddyList;
     }
 
-//    public Object getBuddyDetail(int buddyCode) {
-//        log.info("[MypageService] getBuddyDetail() Start");
-//
-//        Buddy buddy = mypageRepository.findById(buddyCode).get();
-//
-//        return 0;
-//    }
+    public Map<String, Object> getBuddyDetail(int buddyCode) {
+        log.info("[MypageService] getBuddyDetail() Start");
+
+        Buddy getBuddyDetail = mypageRepository.findById(buddyCode).get();
+//        buddy.setBuddyImageUrl(IMAGE_URL + buddy.getBuddyImageUrl());
+        List<BuddyMatchData> buddyMatchDataList = buddyMatchRepository.findByBuddyCode(buddyCode);
+
+        BuddyDTO buddyDTO = modelMapper.map(getBuddyDetail, BuddyDTO.class);
+        if (getBuddyDetail.getAccount() != null) {
+            buddyDTO.setMemberCode(getBuddyDetail.getAccount().getMemberCode());
+        }
+
+        List<BuddyMatchDataDTO> buddyMatchDataDTOList = buddyMatchDataList.stream().map(matchData -> {
+            BuddyMatchDataDTO bmdd = new BuddyMatchDataDTO();
+            bmdd.setBuddyMatchCode(matchData.getBuddyMatchCode());
+            bmdd.setApplyId(matchData.getApplyId());
+            if (matchData.getBuddy() != null) {
+                bmdd.setBuddyCode(matchData.getBuddy().getBuddyCode());
+            }
+            return bmdd;
+        }).collect(Collectors.toList());
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("getBuddyDetail", buddyDTO);
+        result.put("getBuddyMatchList", buddyMatchDataDTOList);
+
+        log.info("[MypageService] getBuddyDetail() END");
+
+        return result;
+    }
 }

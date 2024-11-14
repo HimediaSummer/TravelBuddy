@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Main from './components/products/Main';
+import Login from './pages/member/Login';
 
 function App() {
 
@@ -11,6 +12,10 @@ function App() {
                 <Route path="/">
                     <Route index element={ <Main/> }/>
                 </Route>
+
+
+
+                <Route path="/login" element={ <Login/> } />
             </Routes>
         </BrowserRouter>
     );

@@ -1,22 +1,29 @@
 package travelbuddy.function.community.buddy.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tbl_buddy_match_data")
+@Table(name = "tbl_buddy_match_data")   // 테이블명
 public class BuddyMatchData {
 
   @Id
   @Column(name = "buddy_match_code")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int buddyMatchCode;
+  private int buddyMatchCode;     // 버디매칭코드
 
   @ManyToOne
   @JoinColumn(name = "buddy_code")
-  private Buddy buddy;
+  private Buddy buddy;            // 버디코드
 
   @Column(name = "apply_id")
-  private String applyId;
+  private String applyId;         // 신청자아이디
 
   public BuddyMatchData() {
   }

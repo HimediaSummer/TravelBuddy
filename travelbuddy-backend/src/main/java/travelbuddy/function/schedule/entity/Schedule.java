@@ -1,11 +1,15 @@
 package travelbuddy.function.schedule.entity;
 
-import jakarta.persistence.*;
-import org.hibernate.annotations.Cascade;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.entity.MemberAnswer;
-
-import java.sql.Time;
-import java.util.Date;
 
 @Entity
 @Table(name="tbl_schedule")
@@ -20,11 +24,17 @@ public class Schedule {
     @JoinColumn(name="region_code")
     private Region region;
 
-    @Column(name="question")
-    private String question;
+    @ManyToOne
+    @JoinColumn(name="accom_code")
+    private Accommodation accommodation;
 
-    @Column(name="sche_date")
-    private String scheDate;
+    @ManyToOne
+    @JoinColumn(name="member_code")
+    private Account account;
+
+    @ManyToOne
+    @JoinColumn(name="member_answer_code")
+    private MemberAnswer memberAnswer;
 
     @Column(name="sche_list")
     private String scheList;
@@ -35,11 +45,11 @@ public class Schedule {
     @Column(name="sche_end_date")
     private String scheEndDate;
 
-    @Column(name="accom")
-    private String accom;
+    @Column(name="sche_start_time")
+    private String scheStartTime;
 
-    @Column(name="accom_img")
-    private String accomImg;
+    @Column(name="sche_end_time")
+    private String scheEndTime;
 
     @Column(name="travel_time")
     private String travelTime;
@@ -47,66 +57,22 @@ public class Schedule {
     @Column(name="sche_time")
     private String scheTime;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="member_answer_code")
-    private MemberAnswer memberAnswer;
-
     public Schedule() {
     }
 
-    public Schedule(String accom, String accomImg, MemberAnswer memberAnswer, String question, Region region, int scheCode, String scheDate, String scheEndDate, String scheList, String scheStartDate, String scheTime, String travelTime) {
-        this.accom = accom;
-        this.accomImg = accomImg;
-        this.memberAnswer = memberAnswer;
-        this.question = question;
-        this.region = region;
+    public Schedule(int scheCode, Region region, Accommodation accommodation, Account account, MemberAnswer memberAnswer, String scheList, String scheStartDate, String scheEndDate, String scheStartTime, String scheEndTime, String travelTime, String scheTime) {
         this.scheCode = scheCode;
-        this.scheDate = scheDate;
-        this.scheEndDate = scheEndDate;
+        this.region = region;
+        this.accommodation = accommodation;
+        this.account = account;
+        this.memberAnswer = memberAnswer;
         this.scheList = scheList;
         this.scheStartDate = scheStartDate;
-        this.scheTime = scheTime;
+        this.scheEndDate = scheEndDate;
+        this.scheStartTime = scheStartTime;
+        this.scheEndTime = scheEndTime;
         this.travelTime = travelTime;
-    }
-
-    public String getAccom() {
-        return accom;
-    }
-
-    public void setAccom(String accom) {
-        this.accom = accom;
-    }
-
-    public String getAccomImg() {
-        return accomImg;
-    }
-
-    public void setAccomImg(String accomImg) {
-        this.accomImg = accomImg;
-    }
-
-    public MemberAnswer getMemberAnswer() {
-        return memberAnswer;
-    }
-
-    public void setMemberAnswer(MemberAnswer memberAnswer) {
-        this.memberAnswer = memberAnswer;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public Region getRegion() {
-        return region;
-    }
-
-    public void setRegion(Region region) {
-        this.region = region;
+        this.scheTime = scheTime;
     }
 
     public int getScheCode() {
@@ -117,20 +83,36 @@ public class Schedule {
         this.scheCode = scheCode;
     }
 
-    public String getScheDate() {
-        return scheDate;
+    public Region getRegion() {
+        return region;
     }
 
-    public void setScheDate(String scheDate) {
-        this.scheDate = scheDate;
+    public void setRegion(Region region) {
+        this.region = region;
     }
 
-    public String getScheEndDate() {
-        return scheEndDate;
+    public Accommodation getAccommodation() {
+        return accommodation;
     }
 
-    public void setScheEndDate(String scheEndDate) {
-        this.scheEndDate = scheEndDate;
+    public void setAccommodation(Accommodation accommodation) {
+        this.accommodation = accommodation;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public MemberAnswer getMemberAnswer() {
+        return memberAnswer;
+    }
+
+    public void setMemberAnswer(MemberAnswer memberAnswer) {
+        this.memberAnswer = memberAnswer;
     }
 
     public String getScheList() {
@@ -149,12 +131,28 @@ public class Schedule {
         this.scheStartDate = scheStartDate;
     }
 
-    public String getScheTime() {
-        return scheTime;
+    public String getScheEndDate() {
+        return scheEndDate;
     }
 
-    public void setScheTime(String scheTime) {
-        this.scheTime = scheTime;
+    public void setScheEndDate(String scheEndDate) {
+        this.scheEndDate = scheEndDate;
+    }
+
+    public String getScheStartTime() {
+        return scheStartTime;
+    }
+
+    public void setScheStartTime(String scheStartTime) {
+        this.scheStartTime = scheStartTime;
+    }
+
+    public String getScheEndTime() {
+        return scheEndTime;
+    }
+
+    public void setScheEndTime(String scheEndTime) {
+        this.scheEndTime = scheEndTime;
     }
 
     public String getTravelTime() {
@@ -165,21 +163,29 @@ public class Schedule {
         this.travelTime = travelTime;
     }
 
+    public String getScheTime() {
+        return scheTime;
+    }
+
+    public void setScheTime(String scheTime) {
+        this.scheTime = scheTime;
+    }
+
     @Override
     public String toString() {
         return "Schedule{" +
-                "accom='" + accom + '\'' +
-                ", scheCode=" + scheCode +
+                "scheCode=" + scheCode +
                 ", region=" + region +
-                ", question='" + question + '\'' +
-                ", scheDate='" + scheDate + '\'' +
+                ", accommodation=" + accommodation +
+                ", account=" + account +
+                ", memberAnswer=" + memberAnswer +
                 ", scheList='" + scheList + '\'' +
                 ", scheStartDate='" + scheStartDate + '\'' +
                 ", scheEndDate='" + scheEndDate + '\'' +
-                ", accomImg='" + accomImg + '\'' +
+                ", scheStartTime='" + scheStartTime + '\'' +
+                ", scheEndTime='" + scheEndTime + '\'' +
                 ", travelTime='" + travelTime + '\'' +
                 ", scheTime='" + scheTime + '\'' +
-                ", memberAnswer=" + memberAnswer +
                 '}';
     }
 }

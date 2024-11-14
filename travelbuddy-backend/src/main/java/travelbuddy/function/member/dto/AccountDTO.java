@@ -1,23 +1,21 @@
 package travelbuddy.function.member.dto;
 
-import java.util.List;
-
 public class AccountDTO {
 
-    private int memberCode;
-    private String memberName;
-    private String memberPassword;
-    private String memberFullName;
-    private String  memberBirthday;
-    private String memberEmail;
-    private String memberPhone;
-    private String memberSuspension;
-    private String memberDeletion;
-    private int memberLike;
-    private String memberImg;
-    private AuthorityDTO authority;
-    private String memberCreate;
-    private String memberLeave;
+    private int memberCode;         // 회원코드
+    private String memberName;      // 회원아이디
+    private String memberPassword;  // 회원비밀번호
+    private String memberFullName;  // 회원이름
+    private String  memberBirthday; // 회원생년월일
+    private String memberEmail;     // 회원이메일
+    private String memberPhone;     // 회원연락처
+    private String memberSuspension;    // 회원정지상태여부
+    private String memberDeletion;      // 회원탈퇴상태여부
+    private int memberLike;         // 좋아요
+    private String memberImg;        // 이미지경로
+    private AuthorityDTO authority;     // 권한
+    private String memberCreate;        // 회원생성일
+    private String memberLeave;         // 회원탈퇴일
 
     public AccountDTO() {
     }

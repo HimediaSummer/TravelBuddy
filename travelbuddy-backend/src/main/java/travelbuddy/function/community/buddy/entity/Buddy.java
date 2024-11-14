@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import travelbuddy.function.member.entity.AccountEntity;
+import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.schedule.entity.Region;
 
 @Entity
@@ -22,7 +22,7 @@ public class Buddy {
 
     @ManyToOne
     @JoinColumn(name = "member_code")
-    private AccountEntity memberCode;
+    private Account memberCode;
 
     @ManyToOne
     @JoinColumn(name = "region_code")
@@ -59,7 +59,7 @@ public class Buddy {
     public Buddy() {
     }
 
-    public Buddy(AccountEntity memberCode, String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
+    public Buddy(Account memberCode, String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
         this.memberCode = memberCode;
         this.buddyApply = buddyApply;
         this.buddyAt = buddyAt;
@@ -74,11 +74,11 @@ public class Buddy {
         this.region = region;
     }
 
-    public AccountEntity getMemberCode() {
+    public Account getMemberCode() {
         return memberCode;
     }
 
-    public void setMemberCode(AccountEntity memberCode) {
+    public void setMemberCode(Account memberCode) {
         this.memberCode = memberCode;
     }
 

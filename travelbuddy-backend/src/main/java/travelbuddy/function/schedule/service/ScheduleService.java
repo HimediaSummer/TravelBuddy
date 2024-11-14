@@ -6,5 +6,7 @@ import travelbuddy.function.schedule.dto.ScheduleDTO;
 @Service
 public class ScheduleService {
     public Object scheduling(ScheduleDTO scheduleDTO) {
+
+        return null;
     }
 }

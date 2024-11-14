@@ -4,14 +4,14 @@ package travelbuddy.function.member.dto;
 public class AuthorityDTO {
 
   private int authorityCode;
-  private String authorityCodeName;
+  private String authorityName;
 
   public AuthorityDTO() {
   }
 
-  public AuthorityDTO(int authorityCode, String authorityCodeName) {
+  public AuthorityDTO(int authorityCode, String authorityName) {
     this.authorityCode = authorityCode;
-    this.authorityCodeName = authorityCodeName;
+    this.authorityName = authorityName;
   }
 
   public int getAuthorityCode() {
@@ -22,20 +22,19 @@ public class AuthorityDTO {
     this.authorityCode = authorityCode;
   }
 
-
-  public String getAuthorityCodeName() {
-    return authorityCodeName;
+  public String getAuthorityName() {
+    return authorityName;
   }
 
-  public void setAuthorityCodeName(String authorityCodeName) {
-    this.authorityCodeName = authorityCodeName;
+  public void setAuthorityName(String authorityName) {
+    this.authorityName = authorityName;
   }
 
   @Override
   public String toString() {
     return "AuthorityDTO{" +
             "authorityCode=" + authorityCode +
-            ", authorityCodeName='" + authorityCodeName + '\'' +
+            ", authorityName='" + authorityName + '\'' +
             '}';
   }
 }

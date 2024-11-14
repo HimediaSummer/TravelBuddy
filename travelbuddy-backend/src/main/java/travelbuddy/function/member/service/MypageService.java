@@ -99,6 +99,7 @@ public class MypageService {
             BuddyMatchDataDTO bmdd = new BuddyMatchDataDTO();
             bmdd.setBuddyMatchCode(matchData.getBuddyMatchCode());
             bmdd.setApplyId(matchData.getApplyId());
+            bmdd.setApplyStatus(Integer.parseInt(matchData.getApplyStatus()));
             if (matchData.getBuddy() != null) {
                 bmdd.setBuddyCode(matchData.getBuddy().getBuddyCode());
             }

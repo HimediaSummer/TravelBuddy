@@ -51,16 +51,11 @@ public class Buddy {
     @ColumnDefault("N")
     private String buddyAt;         // 은폐여부
 
-    @Column(name = "buddy_apply")
-    @ColumnDefault("N")
-    private String buddyApply;      // 버디신청
-
     public Buddy() {
     }
 
-    public Buddy(Account account, String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
+    public Buddy(Account account, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
         this.account = account;
-        this.buddyApply = buddyApply;
         this.buddyAt = buddyAt;
         this.buddyCode = buddyCode;
         this.buddyContents = buddyContents;
@@ -79,14 +74,6 @@ public class Buddy {
 
     public void setAccount(Account account) {
         this.account = account;
-    }
-
-    public String getBuddyApply() {
-        return buddyApply;
-    }
-
-    public void setBuddyApply(String buddyApply) {
-        this.buddyApply = buddyApply;
     }
 
     public String getBuddyAt() {
@@ -183,7 +170,6 @@ public class Buddy {
                 ", buddyImg='" + buddyImg + '\'' +
                 ", buddyCount=" + buddyCount +
                 ", buddyAt='" + buddyAt + '\'' +
-                ", buddyApply='" + buddyApply + '\'' +
                 '}';
     }
 }

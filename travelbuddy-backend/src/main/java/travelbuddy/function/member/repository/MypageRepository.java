@@ -4,8 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import travelbuddy.function.community.buddy.entity.Buddy;
-import travelbuddy.function.member.entity.AccountEntity;
 import travelbuddy.function.member.entity.MemberBuddyData;
 
 import java.util.List;

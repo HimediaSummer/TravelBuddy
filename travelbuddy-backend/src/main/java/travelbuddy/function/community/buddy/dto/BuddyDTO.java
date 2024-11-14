@@ -1,22 +1,6 @@
 package travelbuddy.function.community.buddy.dto;
 
-import travelbuddy.function.schedule.dto.RegionDTO;
-
 public class BuddyDTO {
-<<<<<<< HEAD
-    private int buddyCode;
-    private int memberCode;
-    private int regionCode;
-    private int buddyTypeCode;
-    private String buddyTitle;
-    private String buddyContents;
-    private String buddyCreate;
-    private String buddyStatus;
-    private String buddyImg;
-    private int buddyCount;
-    private String buddyAt;
-    private String buddyApply;
-=======
     private int buddyCode;          // 버디코드
     private int memberCode;         // 회원코드
     private int regionCode;         // 지역코드
@@ -29,7 +13,6 @@ public class BuddyDTO {
     private int buddyCount;         // 조회수
     private String buddyAt;         // 은폐여부
     private String buddyApply;      // 버디신청
->>>>>>> 7081ca2d595396ef74426ec94509e0bb6f524371
 
     public BuddyDTO() {
     }

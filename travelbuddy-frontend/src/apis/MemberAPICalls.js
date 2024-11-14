@@ -1,4 +1,4 @@
-import { GET_MEMBER, POST_LOGIN, POST_REGISTER } from '../modules/MemberModule';
+import { GET_MEMBER, POST_LOGIN, POST_REGISTER, POST_SIGNUP } from '../modules/MemberModule';
 
 export const callGetMemberAPI = ({ memberName }) => {
 	const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/api/v1/members/${memberName}`;
@@ -34,7 +34,7 @@ export const callLoginAPI = ({ form }) => {
 			headers: {
 				'Content-Type': 'application/json',
 				Accept: '*/*',
-				'Access-Control-Allow-Origin': '*'
+				// 'Access-Control-Allow-Origin': '*'
 			},
 			body: JSON.stringify({
 				memberName: form.memberName,
@@ -72,15 +72,19 @@ export const callRegisterAPI = ({ form }) => {
 			body: JSON.stringify({
 				memberName: form.memberName,
 				memberPassword: form.memberPassword,
-				memberName: form.memberName,
-				memberEmail: form.memberEmail
+				memberFullName: form.memberFullName,
+				memberEmail: form.memberEmail,
+				memberBirthday: form.memberBirthday,
+				memberPhone: form.memberPhone
 			})
 		}).then((response) => response.json());
 
 		console.log('[MemberAPICalls] callRegisterAPI RESULT : ', result);
 
 		if (result.status === 201) {
-			dispatch({ type: POST_REGISTER, payload: result });
+			dispatch({ type: POST_SIGNUP, payload: result });
+		} else if (result.status === 400) {
+			alert(result.message);
 		}
 	};
 };

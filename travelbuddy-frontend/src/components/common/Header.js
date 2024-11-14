@@ -26,7 +26,7 @@ function Header() {
 	};
 
 	const onEnterkeyHandler = (e) => {
-		if (e.key == 'Enter') {
+		if (e.key === 'Enter') {
 			console.log('Enter key', search);
 
 			navigate(`/search?value=${search}`, { replace: false });
@@ -70,7 +70,7 @@ function Header() {
 		return (
 			<div>
 				<NavLink to="/login">로그인</NavLink> |{' '}
-				<NavLink to="/register">회원가입</NavLink>
+				<NavLink to="/signup">회원가입</NavLink>
 			</div>
 		);
 	}

@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Main from './components/products/Main';
 import Login from './pages/member/Login';
 import Layout from './layouts/Layout';
+import Register from './pages/member/Register';
+import Error from './pages/Error';
 
 function App() {
 
@@ -17,6 +19,8 @@ function App() {
 
 
                 <Route path="/login" element={ <Login/> } />
+                <Route path="/signup" element={ <Register/> } />
+                <Route path="*" element={ <Error/> }/>
             </Routes>
         </BrowserRouter>
     );

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate } from "react-router-dom";
-import { POST_REGISTER } from '../../modules/MemberModule';
+import { POST_SIGNUP } from '../../modules/MemberModule';
 import {
     callLoginAPI
 } from '../../apis/MemberAPICalls'
@@ -19,7 +19,7 @@ function Login() {
     
     /* 폼 데이터 한번에 변경 및 State에 저장 */   
     const [form, setForm] = useState({
-        memberId: '',
+        memberName: '',
         memberPassword: ''
     });
 
@@ -34,7 +34,7 @@ function Login() {
         if(loginMember.status === 201){
 
             loginMember.status = 100  // Continue
-            dispatch({ type: POST_REGISTER,  payload: loginMember });
+            dispatch({ type: POST_SIGNUP,  payload: loginMember });
         }  
     }
     ,[loginMember]);
@@ -53,7 +53,7 @@ function Login() {
     };
 
     const onClickRegisterHandler = () => { 
-        navigate("/register", { replace: true })
+        navigate("/signup", { replace: true })
     }
 
     /* 로그인 버튼 클릭시 디스패처 실행 및 메인 페이지로 이동 */
@@ -69,7 +69,7 @@ function Login() {
                 <h1>로그인</h1>
                 <input 
                     type="text" 
-                    name='memberId'
+                    name='memberName'
                     placeholder="아이디" 
                     autoComplete='off'
                     onChange={ onChangeHandler }

@@ -3,6 +3,8 @@ package travelbuddy.function.member.controller;
 
 
 import io.swagger.v3.oas.annotations.Operation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import travelbuddy.function.member.service.AuthService;
 public class AuthController {
 
     private final AuthService authService;
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     public AuthController(AuthService authService) {
@@ -36,6 +39,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> login(@RequestBody AccountDTO accountDTO) {
 
+        logger.info("로그인요청", accountDTO);
         /* 설명. ResponseEntity
          *  HTTP 응답 몸체와 헤더, 그리고 상태 코드를 제어할 수 있는 Spring Framework의 클래스다.
          * 	응답으로 변환될 정보가 담긴 모든 요소들을 해당 객체로 만들어서 반환해 준다.(body + header + status)

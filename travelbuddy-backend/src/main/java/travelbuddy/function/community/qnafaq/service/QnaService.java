@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelbuddy.common.Criteria;
+import travelbuddy.function.community.qnafaq.dto.QnaAnswerDTO;
 import travelbuddy.function.community.qnafaq.dto.QnaDTO;
+import travelbuddy.function.community.qnafaq.dto.QnaDetailDTO;
 import travelbuddy.function.community.qnafaq.entity.FqType;
 import travelbuddy.function.community.qnafaq.entity.Qna;
+import travelbuddy.function.community.qnafaq.entity.QnaAnswer;
 import travelbuddy.function.community.qnafaq.repository.FqTypeRepository;
+import travelbuddy.function.community.qnafaq.repository.QnaAnswerRepository;
 import travelbuddy.function.community.qnafaq.repository.QnaRepository;
 
 import java.util.List;
@@ -21,11 +25,14 @@ public class QnaService {
     private final static Logger log = LoggerFactory.getLogger(QnaService.class);
     private QnaRepository qnaRepository;
     private FqTypeRepository fqTypeRepository;
+    private QnaAnswerRepository qnaAnswerRepository;
     private final ModelMapper modelMapper;
 
-    public QnaService(ModelMapper modelMapper, FqTypeRepository fqTypeRepository, QnaRepository qnaRepository) {
+    @Autowired
+    public QnaService(ModelMapper modelMapper, FqTypeRepository fqTypeRepository, QnaAnswerRepository qnaAnswerRepository, QnaRepository qnaRepository) {
         this.modelMapper = modelMapper;
         this.fqTypeRepository = fqTypeRepository;
+        this.qnaAnswerRepository = qnaAnswerRepository;
         this.qnaRepository = qnaRepository;
     }
 
@@ -48,10 +55,18 @@ public class QnaService {
         log.info("[QnaService] selectQna start");
 
         Qna qna = qnaRepository.findById(qnaCode).get();
+        QnaAnswer qnaAnswer = qnaAnswerRepository.findById(qnaCode).get();
 
+        qnaAnswer.setQna(qna);
+
+        QnaDTO qnaDTO = modelMapper.map(qna , QnaDTO.class);
+        QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
+
+        QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO, qnaDTO);
         log.info("[QnaService] selectQna end");
 
-        return modelMapper.map(qna, QnaDTO.class);
+        return qnaDetailDTO;
+
     }
 
     @Transactional

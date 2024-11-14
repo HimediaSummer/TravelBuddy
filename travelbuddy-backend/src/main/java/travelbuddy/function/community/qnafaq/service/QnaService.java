@@ -35,4 +35,10 @@ public class QnaService {
         List<Qna> qnaList = qnaRepository.findAll();
         return qnaList.stream().map((Qna) -> modelMapper.map(Qna, QnaDTO.class));
     }
+
+    /*공지 1개의 세부 정보를 확인한다.*/
+    public Object selectQna(int qnaCode) {
+
+        return null;
+    }
 }

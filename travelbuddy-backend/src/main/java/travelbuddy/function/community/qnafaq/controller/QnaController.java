@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import travelbuddy.common.Criteria;
 import travelbuddy.common.PageDTO;
 import travelbuddy.common.PagingResponseDTO;
@@ -53,6 +50,13 @@ public class QnaController {
     @GetMapping("/qnas")
     public ResponseEntity<ResponseDTO> selectQnaList() {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", qnaService.selectQnaList()));
+    }
+
+    @Operation(summary = "cs 페이지 qna 상세 조회 요청", description = "QnA의 상세 페이지 처리가 진행됩니다.", tags = {"QnaController"})
+    @GetMapping("/qna/{qnaCode}")
+    public ResponseEntity<ResponseDTO> selectQnaDetail(@PathVariable int qnaCode){
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnA 상세정보 조회 성공",qnaService.selectQna(qnaCode)));
     }
 
 }

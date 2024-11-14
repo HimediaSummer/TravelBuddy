@@ -19,6 +19,8 @@ import travelbuddy.function.schedule.repository.RegionRepository;
 import travelbuddy.function.schedule.repository.ScheduleRepository;
 import travelbuddy.function.schedule.service.ScheduleService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/schedule")
 public class ScheduleController {
@@ -30,10 +32,10 @@ public class ScheduleController {
         this.scheduleService = scheduleService;
     }
     
-    @GetMapping
-    public List<Schedule> getAllSchedules() {
-        return scheduleService.getAllSchedules();
-    }
+//    @GetMapping
+//    public List<Schedule> getAllSchedules() {
+//        return scheduleService.getAllSchedules();
+//    }
 
     @GetMapping("/hello")
     public String hello() {

@@ -13,6 +13,8 @@ import travelbuddy.function.schedule.repository.AccommodationRepository;
 import travelbuddy.function.schedule.repository.RegionRepository;
 import travelbuddy.function.schedule.repository.ScheduleRepository;
 
+import java.util.List;
+
 @Service
 public class ScheduleService {
 
@@ -33,6 +35,10 @@ public class ScheduleService {
         this.accountRepository = accountRepository;
         this.memberAnswerRepository = memberAnswerRepository;
         this.modelMapper = modelMapper;
+    }
+
+    public List<Schedule> getAllSchedules() {
+        return scheduleRepository.findAll();
     }
 
     public Object scheduling(ScheduleDTO scheduleDTO) {

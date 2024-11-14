@@ -1,26 +1,63 @@
-package travelbuddy.function.member.dto;
+package travelbuddy.function.member.entity;
 
-public class AccountDTO {
+import jakarta.persistence.*;
 
-    private int memberCode;         // 회원코드
-    private String memberName;      // 회원아이디
-    private String memberPassword;  // 회원비밀번호
-    private String memberFullName;  // 회원이름
-    private String  memberBirthday; // 회원생년월일
-    private String memberEmail;     // 회원이메일
-    private String memberPhone;     // 회원연락처
-    private String memberSuspension;    // 회원정지상태여부
-    private String memberDeletion;      // 회원탈퇴상태여부
-    private int memberLike;         // 좋아요
-    private String memberImg;        // 이미지경로
-    private AuthorityDTO authority;     // 권한
-    private String memberCreate;        // 회원생성일
-    private String memberLeave;         // 회원탈퇴일
+import java.util.List;
 
-    public AccountDTO() {
+
+@Entity
+@Table(name = "tbl_account")
+public class AccountEntity {
+
+    @Id
+    @Column(name = "member_code")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int memberCode;
+
+    @Column(name = "member_name")
+    private String memberName;
+
+    @Column(name = "member_password")
+    private String memberPassword;
+
+    @Column(name = "member_full_name")
+    private String memberFullName;
+
+    @Column(name = "member_birthday")
+    private String memberBirthday;
+
+    @Column(name = "member_email")
+    private String memberEmail;
+
+    @Column(name = "member_phone")
+    private String memberPhone;
+
+    @Column(name = "member_suspension")
+    private String memberSuspension;
+
+    @Column(name = "member_deletion")
+    private String memberDeletion;
+
+    @Column(name = "member_like")
+    private int memberLike;
+
+    @Column(name = "member_img")
+    private String memberImg;
+
+    @Column(name = "member_create")
+    private String memberCreate;
+
+    @Column(name = "member_leave")
+    private String memberLeave;
+
+    @ManyToOne
+    @JoinColumn(name ="authority_code")
+    private AuthorityEntity authority;
+
+    public AccountEntity() {
     }
 
-    public AccountDTO(AuthorityDTO authority, String memberBirthday, int memberCode, String memberCreate, String memberDeletion, String memberEmail, String memberFullName, String memberImg, String memberLeave, int memberLike, String memberName, String memberPassword, String memberPhone, String memberSuspension) {
+    public AccountEntity(AuthorityEntity authority, String memberBirthday, int memberCode, String memberCreate, String memberDeletion, String memberEmail, String memberFullName, String memberImg, String memberLeave, int memberLike, String memberName, String memberPassword, String memberPhone, String memberSuspension) {
         this.authority = authority;
         this.memberBirthday = memberBirthday;
         this.memberCode = memberCode;
@@ -37,11 +74,11 @@ public class AccountDTO {
         this.memberSuspension = memberSuspension;
     }
 
-    public AuthorityDTO getAuthority() {
+    public AuthorityEntity getAuthority() {
         return authority;
     }
 
-    public void setAuthority(AuthorityDTO authority) {
+    public void setAuthority(AuthorityEntity authority) {
         this.authority = authority;
     }
 
@@ -151,7 +188,7 @@ public class AccountDTO {
 
     @Override
     public String toString() {
-        return "AccountDTO{" +
+        return "AccountEntity{" +
                 "authority=" + authority +
                 ", memberCode=" + memberCode +
                 ", memberName='" + memberName + '\'' +

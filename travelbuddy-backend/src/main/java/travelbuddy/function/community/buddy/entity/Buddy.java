@@ -1,65 +1,66 @@
 package travelbuddy.function.community.buddy.entity;
 
-import jakarta.persistence.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
-import travelbuddy.function.member.entity.Account;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import travelbuddy.function.member.entity.AccountEntity;
 import travelbuddy.function.schedule.entity.Region;
 
 @Entity
-@Table(name = "tbl_buddy")  // 테이블 명
-@DynamicInsert
+@Table(name = "tbl_buddy")
 public class Buddy {
 
     @Id
     @Column(name = "buddy_code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int buddyCode;          // 버디코드 PK
+    private int buddyCode;
 
     @ManyToOne
     @JoinColumn(name = "member_code")
-    private Account account;  // 회원코드 FK
+    private AccountEntity memberCode;
 
     @ManyToOne
     @JoinColumn(name = "region_code")
-    private Region region;          // 지역코드 FK
+    private Region region;
 
     @ManyToOne
     @JoinColumn(name = "buddy_type_code")
-    private BuddyType buddyType;    // 버디타입코드 FK
+    private BuddyType buddyType;
 
     @Column(name = "buddy_title")
-    private String buddyTitle;      // 게시글제목
+    private String buddyTitle;
 
     @Column(name = "buddy_contents")
-    private String buddyContents;   // 게시글내용
+    private String buddyContents;
 
     @Column(name = "buddy_create")
-    private String buddyCreate;     // 작성일
+    private String buddyCreate;
 
     @Column(name = "buddy_status")
-    @ColumnDefault("N")
-    private String buddyStatus;     // 매칭상태
+    private String buddyStatus;
 
     @Column(name = "buddy_img")
-    private String buddyImg;        // 이미지경로
+    private String buddyImg;
 
     @Column(name = "buddy_count")
-    private int buddyCount;         // 조회수
+    private int buddyCount;
 
     @Column(name = "buddy_at")
-    @ColumnDefault("N")
-    private String buddyAt;         // 은폐여부
+    private String buddyAt;
 
     @Column(name = "buddy_apply")
-    @ColumnDefault("N")
-    private String buddyApply;      // 버디신청
+    private String buddyApply;
 
     public Buddy() {
     }
 
-    public Buddy(Account account, String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
-        this.account = account;
+    public Buddy(AccountEntity memberCode, String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
+        this.memberCode = memberCode;
         this.buddyApply = buddyApply;
         this.buddyAt = buddyAt;
         this.buddyCode = buddyCode;
@@ -73,12 +74,12 @@ public class Buddy {
         this.region = region;
     }
 
-    public Account getAccount() {
-        return account;
+    public AccountEntity getMemberCode() {
+        return memberCode;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setMemberCode(AccountEntity memberCode) {
+        this.memberCode = memberCode;
     }
 
     public String getBuddyApply() {
@@ -172,7 +173,7 @@ public class Buddy {
     @Override
     public String toString() {
         return "Buddy{" +
-                "account=" + account +
+                "memberCode=" + memberCode +
                 ", buddyCode=" + buddyCode +
                 ", region=" + region +
                 ", buddyType=" + buddyType +

@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import travelbuddy.common.Criteria;
 import travelbuddy.function.admin.controller.AdminQnaController;
 import travelbuddy.function.admin.repository.AdminQnaRepository;
@@ -36,6 +37,7 @@ public class AdminQnaService {
         this.adminQnaRepository = adminQnaRepository;
         this.modelMapper = modelMapper;
     }
+
 
     /*qna 총 개수를 찾는다.*/
     public int selectQnaTotal() {
@@ -74,23 +76,67 @@ public class AdminQnaService {
         return qnaList.stream().map(Qna -> modelMapper.map(Qna, QnaDTO.class)).collect(Collectors.toList());
     }
 
-    /*한개의 qna의 정보를 찾는다.*/
+    /*한개의 qna의 정보를 찾는다. 거기에 qna 와 qnaAnswer 두 DTO 정보를 찾는다.*/
     public Object selectQna(int qnaCode) {
 
         log.info("[AdminQnaService] selectQna() start");
 
         Qna qna = adminQnaRepository.findById(qnaCode).get();
-        QnaAnswer qnaAnswer = adminqnaAnswerRepository.findById(qnaCode).get();
+        QnaAnswer qnaAnswer = adminqnaAnswerRepository.findById(qnaCode).orElse(null);
+            QnaDTO qnaDTO = modelMapper.map(qna , QnaDTO.class);
+            QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
 
-        qnaAnswer.setQna(qna);
+        if (qnaAnswer != null) {
+            qnaAnswer.setQna(qna);
+        } else {
+            qnaAnswer.setAnsContents("답변을 등록하세요");
+        }
 
-        QnaDTO qnaDTO = modelMapper.map(qna , QnaDTO.class);
-        QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
-
-        QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO,qnaDTO);
+            QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO,qnaDTO);
 
         log.info("[AdminQnaService] selectQna() end");
 
         return qnaDetailDTO;
+    }
+
+    /*QnaAnswer 를 등록한다.*/
+    @Transactional
+    public  Object insertQnaAnswer(int qnaCode, QnaAnswerDTO qnaAnswerDTO) {
+
+        QnaAnswer qnaAnswer = modelMapper.map(qnaAnswerDTO, QnaAnswer.class);
+
+        Qna qna = adminQnaRepository.findById(qnaCode).get();
+
+        qnaAnswer.setQna(qna);
+
+        adminqnaAnswerRepository.save(qnaAnswer);
+
+        return modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
+    }
+
+    /*QnaAnswer 를 수정한다.*/
+    @Transactional
+    public Object updateQnaAnswer(int qnaCode, QnaAnswerDTO qnaAnswerDTO) {
+
+        QnaAnswer qnaAnswer = modelMapper.map(qnaAnswerDTO, QnaAnswer.class);
+
+        Qna qna = adminQnaRepository.findById(qnaCode).get();
+
+        qnaAnswer.setQna(qna);
+
+        adminqnaAnswerRepository.save(qnaAnswer);
+
+        return modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
+    }
+
+    /*QnaAnswer 를 삭제한다.*/
+    @Transactional
+    public Object deleteQnaAnswer(int qnaCode) {
+
+        QnaAnswer qnaAnswer = adminqnaAnswerRepository.findById(qnaCode).get();
+        adminqnaAnswerRepository.delete(qnaAnswer);
+
+        return (qnaAnswer != null) ? "삭제 성공" : "삭제 실패";
+
     }
 }

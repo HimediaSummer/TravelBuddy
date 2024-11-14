@@ -12,6 +12,7 @@ import travelbuddy.common.PageDTO;
 import travelbuddy.common.PagingResponseDTO;
 import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.admin.service.AdminQnaService;
+import travelbuddy.function.community.qnafaq.dto.QnaAnswerDTO;
 import travelbuddy.function.community.qnafaq.dto.QnaDTO;
 import travelbuddy.function.community.qnafaq.dto.QnaDetailDTO;
 
@@ -22,10 +23,12 @@ public class AdminQnaController {
     private static final Logger log = LoggerFactory.getLogger(AdminQnaController.class);
     private final AdminQnaService adminQnaService;
 
+
     @Autowired
     public AdminQnaController(AdminQnaService adminQnaService) {
         this.adminQnaService = adminQnaService;
     }
+
 
 //    @Operation(summary = "관리자페이지 QnA 리스트 조회 요청", description = "전체 QnA 조회 및 페이징 처리를 진행합니다.", tags ={"AdminQnaController"})
 //    @GetMapping("/qnas")
@@ -58,11 +61,31 @@ public class AdminQnaController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", adminQnaService.selectQnaList()));
     }
 
-    @Operation(summary = "관리자페이지 QnA 상세 조회 요청", description = "QnA의 상세 페이지 처리가 진행됩니다.", tags = {"AdminQnaController"})
+    @Operation(summary = "관리자페이지 QnA 상세조회 요청", description = "QnA의 상세 페이지 처리가 진행됩니다.", tags = {"AdminQnaController"})
     @GetMapping("/qnas/{qnaCode}")
     public ResponseEntity<ResponseDTO> selectQnaDetail(@PathVariable int qnaCode){
         QnaDetailDTO qnaDetailDTO = (QnaDetailDTO) adminQnaService.selectQna(qnaCode);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnA 상세정보 조회 성공",adminQnaService.selectQna(qnaCode)));
+    }
+
+    @Operation(summary = "관리자페이지 QnA 상세조회 중 답변 추가 요청", description = "QnA의 답변 등록처리가 진행됩니다.", tags = {"AdminQnaController"})
+    @PostMapping("/qnas/{qnaCode}/insertanswer")
+    public ResponseEntity<ResponseDTO> insertQnaAnswer(@PathVariable int qnaCode , @RequestBody QnaAnswerDTO qnaAnswerDTO) {
+        System.out.println("qnaAnswerDTO = " + qnaAnswerDTO);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnaAnswer 입력 성공",adminQnaService.insertQnaAnswer(qnaCode,qnaAnswerDTO)));
+    }
+
+    @Operation(summary = "관리자페이지 QnA 상세조회 중 답변 수정 요청", description = "QnA의 답변 수정처리가 진행됩니다.", tags = {"AdminQnaController"})
+    @PutMapping("/qnas/{qnaCode}/updateanswer")
+    public ResponseEntity<ResponseDTO> updateQnaAnswer(@PathVariable int qnaCode , @RequestBody QnaAnswerDTO qnaAnswerDTO) {
+        System.out.println("qnaAnswerDTO = " + qnaAnswerDTO);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnaAnswer 입력 성공",adminQnaService.updateQnaAnswer(qnaCode,qnaAnswerDTO)));
+    }
+
+    @Operation(summary = "관리자페이지 QnA 상세조회 중 답변 삭제 요청", description = "QnA의 답변 삭제처리가 진행됩니다.", tags = {"AdminQnaController"})
+    @DeleteMapping("/qnas/{qnaCode}/deleteanswer")
+    public ResponseEntity<ResponseDTO> deleteQnaAnswer(@PathVariable int qnaCode) {
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnaAnswer 입력 성공",adminQnaService.deleteQnaAnswer(qnaCode)));
     }
 
 }

@@ -43,7 +43,7 @@ function Register() {
         /* 돌아가기 클릭시 메인 페이지로 이동 */
         navigate("/", { replace: true })
     }
-    
+    //  이메일 가입 양식
     const isValidEmail = (email) => {
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailPattern.test(email);

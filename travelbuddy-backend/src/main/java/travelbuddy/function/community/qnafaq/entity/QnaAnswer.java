@@ -14,7 +14,7 @@ public class QnaAnswer {
 
     @JoinColumn(name = "qna_code")
     @OneToOne(cascade = CascadeType.PERSIST)
-    private Qna qna;            // 문의 참조
+    private Qna qnaCode;            // 문의 참조
 
     @Column(name = "ans_contents")
     private String ansContents; // 문의 답변 내용
@@ -25,11 +25,11 @@ public class QnaAnswer {
     public QnaAnswer() {
     }
 
-    public QnaAnswer(int ansCode, String ansContents, String ansCreate, Qna qna) {
+    public QnaAnswer(int ansCode, String ansContents, String ansCreate, Qna qnaCode) {
         this.ansCode = ansCode;
         this.ansContents = ansContents;
         this.ansCreate = ansCreate;
-        this.qna = qna;
+        this.qnaCode = qnaCode;
     }
 
     public int getAnsCode() {
@@ -56,19 +56,19 @@ public class QnaAnswer {
         this.ansCreate = ansCreate;
     }
 
-    public Qna getQna() {
-        return qna;
+    public Qna getQnaCode() {
+        return qnaCode;
     }
 
-    public void setQna(Qna qna) {
-        this.qna = qna;
+    public void setQnaCode(Qna qnaCode) {
+        this.qnaCode = qnaCode;
     }
 
     @Override
     public String toString() {
         return "QnaAnswer{" +
                 "ansCode=" + ansCode +
-                ", qna=" + qna +
+                ", qnaCode=" + qnaCode +
                 ", ansContents='" + ansContents + '\'' +
                 ", ansCreate='" + ansCreate + '\'' +
                 '}';

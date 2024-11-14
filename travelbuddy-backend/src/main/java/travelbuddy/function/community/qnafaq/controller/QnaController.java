@@ -11,6 +11,7 @@ import travelbuddy.common.Criteria;
 import travelbuddy.common.PageDTO;
 import travelbuddy.common.PagingResponseDTO;
 import travelbuddy.common.ResponseDTO;
+import travelbuddy.function.community.qnafaq.dto.QnaDTO;
 import travelbuddy.function.community.qnafaq.service.QnaService;
 
 
@@ -53,10 +54,17 @@ public class QnaController {
     }
 
     @Operation(summary = "cs 페이지 qna 상세 조회 요청", description = "QnA의 상세 페이지 처리가 진행됩니다.", tags = {"QnaController"})
-    @GetMapping("/qna/{qnaCode}")
+    @GetMapping("/qnas/{qnaCode}")
     public ResponseEntity<ResponseDTO> selectQnaDetail(@PathVariable int qnaCode){
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnA 상세정보 조회 성공",qnaService.selectQna(qnaCode)));
+    }
+
+    @Operation(summary = "cs 페이지 qna 등록 요청", description = "QnA 등록이 진행됩니다.", tags = {"QnaController"})
+    @PostMapping("/qnas")
+    public ResponseEntity<ResponseDTO> insertQna(@RequestBody QnaDTO qnaDTO) {
+        System.out.println("qnaDTO = " + qnaDTO);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "Qna 입력 성공", qnaService.insertQna(qnaDTO)));
     }
 
 }

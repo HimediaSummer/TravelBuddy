@@ -13,7 +13,7 @@ public class Qna {
     private int qnaCode;    // 문의코드
 
     @JoinColumn(name = "fq_type_code")
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private FqType fqType; // fq_type 참조
 
     @Column(name = "qna_title")

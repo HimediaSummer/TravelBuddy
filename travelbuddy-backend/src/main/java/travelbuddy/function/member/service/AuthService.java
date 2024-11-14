@@ -112,7 +112,7 @@ public class AuthService {
         } else {
             AuthorityEntity defaultAuthority = new AuthorityEntity();
             defaultAuthority.setAuthorityCode(2);
-            defaultAuthority.setAuthorityCodeName("일반 사용자");
+//            defaultAuthority.setAuthorityCodeName("일반 사용자");
             authorityRepository.save(defaultAuthority);
             registMember.setAuthority(defaultAuthority);
         }

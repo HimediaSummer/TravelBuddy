@@ -1,13 +1,13 @@
 package travelbuddy.function.member.entity;
 
 import jakarta.persistence.*;
-import travelbuddy.function.member.dto.AccountDTO;
-
-import java.util.List;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Table(name = "tbl_verification")
-public class VerificationEntity {
+@DynamicInsert
+public class Verification {
 
     @Id
     @Column(name = "verification_code")
@@ -18,6 +18,7 @@ public class VerificationEntity {
     private int verificationNumber;
 
     @Column(name = "is_verified")
+    @ColumnDefault("false")
     private Boolean isVerified;
 
     @Column(name = "verification_time")
@@ -25,12 +26,12 @@ public class VerificationEntity {
 
     @ManyToOne
     @JoinColumn(name = "member_code")
-    private AccountEntity account;
+    private Account account;
 
-    public VerificationEntity() {
+    public Verification() {
     }
 
-    public VerificationEntity(AccountEntity account, Boolean isVerified, int verificationCode, int verificationNumber, String verificationTime) {
+    public Verification(Account account, Boolean isVerified, int verificationCode, int verificationNumber, String verificationTime) {
         this.account = account;
         this.isVerified = isVerified;
         this.verificationCode = verificationCode;
@@ -38,11 +39,11 @@ public class VerificationEntity {
         this.verificationTime = verificationTime;
     }
 
-    public AccountEntity getAccount() {
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(AccountEntity account) {
+    public void setAccount(Account account) {
         this.account = account;
     }
 
@@ -80,7 +81,7 @@ public class VerificationEntity {
 
     @Override
     public String toString() {
-        return "VerificationEntity{" +
+        return "Verification{" +
                 "account=" + account +
                 ", verificationCode=" + verificationCode +
                 ", verificationNumber=" + verificationNumber +

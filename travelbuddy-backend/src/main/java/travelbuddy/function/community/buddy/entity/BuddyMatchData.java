@@ -3,20 +3,20 @@ package travelbuddy.function.community.buddy.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tbl_buddy_match_data")
+@Table(name = "tbl_buddy_match_data")   // 테이블명
 public class BuddyMatchData {
 
   @Id
   @Column(name = "buddy_match_code")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int buddyMatchCode;
+  private int buddyMatchCode;     // 버디매칭코드
 
   @ManyToOne
   @JoinColumn(name = "buddy_code")
-  private Buddy buddy;
+  private Buddy buddy;            // 버디코드
 
   @Column(name = "apply_id")
-  private String applyId;
+  private String applyId;         // 신청자아이디
 
   public BuddyMatchData() {
   }

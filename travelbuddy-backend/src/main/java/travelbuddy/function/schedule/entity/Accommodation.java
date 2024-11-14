@@ -1,18 +1,35 @@
-package travelbuddy.function.schedule.dto;
+package travelbuddy.function.schedule.entity;
 
-public class AccommodationDTO {
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "tbl_accommodation")  //테이블명
+public class Accommodation {
+
+    @Id
+    @Column(name = "accom_code")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int accomCode;      // 숙소코드
+
+    @Column(name = "accom_type")
     private String accomType;   // 숙소종류
+
+    @Column(name = "accom_name")
     private String accomName;   // 숙소이름
+
+    @Column(name = "accom_addres")
     private String accomAddres; // 숙소주소
+
+    @Column(name = "accom_img")
     private String accomImg;    // 숙소이미지경로
+
+    @Column(name = "accom_thumbnail_img")
     private String accomThumbnailImg;   // 썸네일이미지경로
 
-    public AccommodationDTO() {
+    public Accommodation() {
     }
 
-    public AccommodationDTO(String accomAddres, int accomCode, String accomImg, String accomName, String accomThumbnailImg, String accomType) {
+    public Accommodation(String accomAddres, int accomCode, String accomImg, String accomName, String accomThumbnailImg, String accomType) {
         this.accomAddres = accomAddres;
         this.accomCode = accomCode;
         this.accomImg = accomImg;
@@ -71,7 +88,7 @@ public class AccommodationDTO {
 
     @Override
     public String toString() {
-        return "AccommodationDTO{" +
+        return "Accommodation{" +
                 "accomAddres='" + accomAddres + '\'' +
                 ", accomCode=" + accomCode +
                 ", accomType='" + accomType + '\'' +
@@ -81,3 +98,4 @@ public class AccommodationDTO {
                 '}';
     }
 }
+

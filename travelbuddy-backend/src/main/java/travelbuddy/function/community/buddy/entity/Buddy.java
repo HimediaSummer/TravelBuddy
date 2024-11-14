@@ -1,58 +1,64 @@
 package travelbuddy.function.community.buddy.entity;
 
 import jakarta.persistence.*;
-import travelbuddy.function.member.entity.AccountEntity;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.schedule.entity.Region;
 
 @Entity
-@Table(name = "tbl_buddy")
+@Table(name = "tbl_buddy")  // 테이블 명
+@DynamicInsert
 public class Buddy {
 
     @Id
     @Column(name = "buddy_code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int buddyCode;
+    private int buddyCode;          // 버디코드 PK
 
     @ManyToOne
     @JoinColumn(name = "member_code")
-    private AccountEntity account;
+    private Account account;  // 회원코드 FK
 
     @ManyToOne
     @JoinColumn(name = "region_code")
-    private Region region;
+    private Region region;          // 지역코드 FK
 
     @ManyToOne
     @JoinColumn(name = "buddy_type_code")
-    private BuddyType buddyType;
+    private BuddyType buddyType;    // 버디타입코드 FK
 
     @Column(name = "buddy_title")
-    private String buddyTitle;
+    private String buddyTitle;      // 게시글제목
 
     @Column(name = "buddy_contents")
-    private String buddyContents;
+    private String buddyContents;   // 게시글내용
 
     @Column(name = "buddy_create")
-    private String buddyCreate;
+    private String buddyCreate;     // 작성일
 
     @Column(name = "buddy_status")
-    private String buddyStatus;
+    @ColumnDefault("N")
+    private String buddyStatus;     // 매칭상태
 
     @Column(name = "buddy_img")
-    private String buddyImg;
+    private String buddyImg;        // 이미지경로
 
     @Column(name = "buddy_count")
-    private int buddyCount;
+    private int buddyCount;         // 조회수
 
     @Column(name = "buddy_at")
-    private String buddyAt;
+    @ColumnDefault("N")
+    private String buddyAt;         // 은폐여부
 
     @Column(name = "buddy_apply")
-    private String buddyApply;
+    @ColumnDefault("N")
+    private String buddyApply;      // 버디신청
 
     public Buddy() {
     }
 
-    public Buddy(AccountEntity account, String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
+    public Buddy(Account account, String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
         this.account = account;
         this.buddyApply = buddyApply;
         this.buddyAt = buddyAt;
@@ -67,11 +73,11 @@ public class Buddy {
         this.region = region;
     }
 
-    public AccountEntity getAccount() {
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(AccountEntity account) {
+    public void setAccount(Account account) {
         this.account = account;
     }
 

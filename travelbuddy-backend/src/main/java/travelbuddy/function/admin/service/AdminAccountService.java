@@ -76,7 +76,7 @@ public class AdminAccountService {
 
         log.info("[AdminAccountService] selectMember() end");
 
-        return modelMapper.map(member, Account.class);
+        return modelMapper.map(member, AccountDTO.class);
     }
 
     /*상태정보들을 가져오려고 만들었는데 아직 미정상태.*/
@@ -107,7 +107,7 @@ public class AdminAccountService {
         }
         log.info("[AdminAccountService] selectMemberSuspension() end");
 
-        return modelMapper.map(member, Account.class);
+        return modelMapper.map(member, AccountDTO.class);
     }
 
     /* 상세페이지 안의 [탈퇴] 버튼을 눌렀을때 Y , N  변화시킬 메소드 */
@@ -128,6 +128,6 @@ public class AdminAccountService {
         }
         log.info("[AdminAccountService] toggleMemberDelesion() end");
 
-        return modelMapper.map(member, Account.class);
+        return modelMapper.map(member, AccountDTO.class);
     }
 }

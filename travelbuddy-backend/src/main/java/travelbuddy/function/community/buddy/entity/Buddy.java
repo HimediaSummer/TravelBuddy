@@ -16,7 +16,7 @@ public class Buddy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int buddyCode;          // 버디코드 PK
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "member_code")
     private Account account;  // 회원코드 FK
 

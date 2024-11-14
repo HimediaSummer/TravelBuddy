@@ -82,6 +82,7 @@ public class AuthService {
 
         /* 목차. 1. tbl_member 테이블에 회원 INSERT */
         /* 설명. 비밀번호 암호화 후 insert */
+        System.out.println("registMember = " + registMember);
         registMember.setMemberPassword(passwordEncoder.encode(registMember.getMemberPassword()));
         System.out.println("registMember = " + registMember);
 //        AccountEntity result1 = memberRepository.save(registMember);		// 설명. 반환형은 int값이 아닌 엔티티임.
@@ -101,8 +102,8 @@ public class AuthService {
 //        System.out.println("defaultAuthority = " + defaultAuthority);
 
         registMember.setMemberCreate(LocalDateTime.now());
-        registMember.setMemberDeletion("N");
-        registMember.setMemberSuspension("N");
+//        registMember.setMemberDeletion("N");
+//        registMember.setMemberSuspension("N");
 
         AuthorityEntity existingAuthority = authorityRepository.findByAuthorityCode(2);
 

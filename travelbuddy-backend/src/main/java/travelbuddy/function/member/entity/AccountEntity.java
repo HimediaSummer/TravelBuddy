@@ -1,12 +1,16 @@
 package travelbuddy.function.member.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
 
 @Entity
+@DynamicInsert
 @Table(name = "tbl_account")
 public class AccountEntity {
 
@@ -34,9 +38,11 @@ public class AccountEntity {
     private String memberPhone;
 
     @Column(name = "member_suspension")
+    @ColumnDefault("N")
     private String memberSuspension;
 
     @Column(name = "member_deletion")
+    @ColumnDefault("N")
     private String memberDeletion;
 
     @Column(name = "member_like")
@@ -54,6 +60,7 @@ public class AccountEntity {
     private String memberLeave;
 
     @ManyToOne
+    @ColumnDefault("일반 사용자")
     @JoinColumn(name ="authority_code")
     private AuthorityEntity authority;
 

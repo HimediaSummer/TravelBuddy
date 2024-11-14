@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import travelbuddy.common.Criteria;
 import travelbuddy.function.admin.repository.AdminAccountRepository;
 import travelbuddy.function.member.dto.AccountDTO;
-import travelbuddy.function.member.entity.AccountEntity;
+import travelbuddy.function.member.entity.Account;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,7 +36,7 @@ public class AdminAccountService {
         log.info("[AdminAccountService] selectMemberTotal() Start");
 
         /*페이징 처리 결과를 Page 타입으로 반환 받는다*/
-        List<AccountEntity> memberList = adminAccountRepository.findBymemberDeletion("N");
+        List<Account> memberList = adminAccountRepository.findBymemberDeletion("N");
 
         log.info("[AdminAccountService] selectMemberTotal() End");
 
@@ -53,18 +53,18 @@ public class AdminAccountService {
         int count = cri.getAmount();
         Pageable paging = PageRequest.of(index, count, Sort.by("productCode").descending());
 
-        Page<AccountEntity> result = adminAccountRepository.findBymemberDeletion("N", paging);
-        List<AccountEntity> memberList = (List<AccountEntity>)result.getContent();
+        Page<Account> result = adminAccountRepository.findBymemberDeletion("N", paging);
+        List<Account> memberList = (List<Account>)result.getContent();
 
         log.info("[AdminAccountService] selectMemberListWithPaging() End");
 
-        return memberList.stream().map(AccountEntity -> modelMapper.map(AccountEntity, AccountDTO.class)).collect(Collectors.toList());
+        return memberList.stream().map(Account -> modelMapper.map(Account, AccountDTO.class)).collect(Collectors.toList());
     }
 
     /*전체 회원 리스트를 찾는다.*/
     public Object selectMemberList() {
-        List<AccountEntity> memberList = adminAccountRepository.findBymemberDeletion("N");
-        return memberList.stream().map(AccountEntity -> modelMapper.map(AccountEntity, AccountDTO.class)).collect(Collectors.toList());
+        List<Account> memberList = adminAccountRepository.findBymemberDeletion("N");
+        return memberList.stream().map(Account -> modelMapper.map(Account, AccountDTO.class)).collect(Collectors.toList());
     }
 
     /*한명의 회원의 정보를 찾는다.*/
@@ -72,11 +72,11 @@ public class AdminAccountService {
 
         log.info("[AdminAccountService] selectMember() start");
 
-        AccountEntity member = adminAccountRepository.findById(memberCode).get();
+        Account member = adminAccountRepository.findById(memberCode).get();
 
         log.info("[AdminAccountService] selectMember() end");
 
-        return modelMapper.map(member, AccountEntity.class);
+        return modelMapper.map(member, Account.class);
     }
 
     /*상태정보들을 가져오려고 만들었는데 아직 미정상태.*/
@@ -94,7 +94,7 @@ public class AdminAccountService {
 
         log.info("[AdminAccountService] selectMemberSuspension() start");
 
-        AccountEntity member = adminAccountRepository.findById(memberCode).orElse(null);
+        Account member = adminAccountRepository.findById(memberCode).orElse(null);
 
         /*update 를 위한 엔티티 값 수정*/
         if (member != null) {
@@ -107,7 +107,7 @@ public class AdminAccountService {
         }
         log.info("[AdminAccountService] selectMemberSuspension() end");
 
-        return modelMapper.map(member, AccountEntity.class);
+        return modelMapper.map(member, Account.class);
     }
 
     /* 상세페이지 안의 [탈퇴] 버튼을 눌렀을때 Y , N  변화시킬 메소드 */
@@ -115,7 +115,7 @@ public class AdminAccountService {
 
         log.info("[AdminAccountService] selectMemberDelesion() start");
 
-        AccountEntity member = adminAccountRepository.findById(memberCode).orElse(null);
+        Account member = adminAccountRepository.findById(memberCode).orElse(null);
 
         /*update 를 위한 엔티티 값 수정*/
         if (member != null) {
@@ -128,6 +128,6 @@ public class AdminAccountService {
         }
         log.info("[AdminAccountService] toggleMemberDelesion() end");
 
-        return modelMapper.map(member, AccountEntity.class);
+        return modelMapper.map(member, Account.class);
     }
 }

@@ -3,15 +3,15 @@ package travelbuddy.function.admin.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import travelbuddy.function.member.entity.AccountEntity;
+import travelbuddy.function.member.entity.Account;
 
 import java.util.List;
 
-public interface AdminAccountRepository extends JpaRepository<AccountEntity,Integer> {
+public interface AdminAccountRepository extends JpaRepository<Account,Integer> {
 
 
-    List<AccountEntity> findBymemberDeletion(String status);
+    List<Account> findBymemberDeletion(String status);
 
-    Page<AccountEntity> findBymemberDeletion(String status, Pageable paging);
+    Page<Account> findBymemberDeletion(String status, Pageable paging);
 
 }

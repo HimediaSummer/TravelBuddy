@@ -1,8 +1,16 @@
 package travelbuddy.function.community.buddy.entity;
 
-import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.schedule.entity.Region;
 
@@ -18,7 +26,7 @@ public class Buddy {
 
     @ManyToOne
     @JoinColumn(name = "member_code")
-    private Account account;  // 회원코드 FK
+    private Account memberCode;  // 회원코드 FK
 
     @ManyToOne
     @JoinColumn(name = "region_code")
@@ -58,8 +66,8 @@ public class Buddy {
     public Buddy() {
     }
 
-    public Buddy(Account account, String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
-        this.account = account;
+    public Buddy(Account memberCode, String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
+        this.memberCode = memberCode;
         this.buddyApply = buddyApply;
         this.buddyAt = buddyAt;
         this.buddyCode = buddyCode;
@@ -73,12 +81,12 @@ public class Buddy {
         this.region = region;
     }
 
-    public Account getAccount() {
-        return account;
+    public Account getMemberCode() {
+        return memberCode;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setMemberCode(Account memberCode) {
+        this.memberCode = memberCode;
     }
 
     public String getBuddyApply() {
@@ -172,7 +180,7 @@ public class Buddy {
     @Override
     public String toString() {
         return "Buddy{" +
-                "account=" + account +
+                "memberCode=" + memberCode +
                 ", buddyCode=" + buddyCode +
                 ", region=" + region +
                 ", buddyType=" + buddyType +

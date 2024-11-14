@@ -4,13 +4,11 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
-import java.util.List;
-
 
 @Entity
 @Table(name = "tbl_account")    // 테이블명
 @DynamicInsert
-public class AccountEntity {
+public class Account {
 
     @Id
     @Column(name = "member_code")
@@ -57,12 +55,12 @@ public class AccountEntity {
 
     @ManyToOne
     @JoinColumn(name ="authority_code")
-    private AuthorityEntity authority;
+    private Authority authority;
 
-    public AccountEntity() {
+    public Account() {
     }
 
-    public AccountEntity(AuthorityEntity authority, String memberBirthday, int memberCode, String memberCreate, String memberDeletion, String memberEmail, String memberFullName, String memberImg, String memberLeave, int memberLike, String memberName, String memberPassword, String memberPhone, String memberSuspension) {
+    public Account(Authority authority, String memberBirthday, int memberCode, String memberCreate, String memberDeletion, String memberEmail, String memberFullName, String memberImg, String memberLeave, int memberLike, String memberName, String memberPassword, String memberPhone, String memberSuspension) {
         this.authority = authority;
         this.memberBirthday = memberBirthday;
         this.memberCode = memberCode;
@@ -79,11 +77,11 @@ public class AccountEntity {
         this.memberSuspension = memberSuspension;
     }
 
-    public AuthorityEntity getAuthority() {
+    public Authority getAuthority() {
         return authority;
     }
 
-    public void setAuthority(AuthorityEntity authority) {
+    public void setAuthority(Authority authority) {
         this.authority = authority;
     }
 
@@ -193,7 +191,7 @@ public class AccountEntity {
 
     @Override
     public String toString() {
-        return "AccountEntity{" +
+        return "Account{" +
                 "authority=" + authority +
                 ", memberCode=" + memberCode +
                 ", memberName='" + memberName + '\'' +

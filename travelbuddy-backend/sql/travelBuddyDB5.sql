@@ -1,4 +1,3 @@
-바뀐 db 로 인한 스크립트 변경입니다
 -- 테이블이 이미 존재하면 삭제
 DROP TABLE IF EXISTS tbl_qna_answer;
 
@@ -78,7 +77,7 @@ CREATE TABLE
 		                          member_like INT NULL COMMENT '좋아요',
 		                          member_img TEXT NULL COMMENT '프로필사진',
 		                          authority_code INT NOT NULL COMMENT '권한코드',
-		                          member_create DATE NOT NULL COMMENT '가입일',
+		                          member_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT  '가입일',
 		                          member_leave DATE NULL COMMENT '탈퇴일',
 		                          PRIMARY KEY (member_code),
 		                          FOREIGN KEY (authority_code) REFERENCES tbl_authority (authority_code) ON DELETE CASCADE
@@ -311,8 +310,8 @@ INSERT INTO
 VALUES
 	(
 		1001,
-		'john_doe',
-		'qwerty1234',
+		'admin',
+		'$2a$10$COvazywgZPXseeKaYhruh.pAYYfcSeGO5aSrHOsLZN0X8joNwW2dW',
 		'John Doe',
 		'1985-06-15',
 		'john.doe@example.com',
@@ -327,8 +326,8 @@ VALUES
 	),
 	(
 		1002,
-		'jane_smith',
-		'abcd1234',
+		'user01',
+		'$2a$10$COvazywgZPXseeKaYhruh.pAYYfcSeGO5aSrHOsLZN0X8joNwW2dW',
 		'Jane Smith',
 		'1990-09-25',
 		'jane.smith@example.com',
@@ -706,7 +705,7 @@ VALUES
 		'경주 맨하튼거리 372-531길 88 그린호스 사거리'
 	),
 	(3, '빌라', '대흥빌라', '서울시 동작구 사당동 382 - 1길'),
-	(4, '펜션', '풍선 펜션', '강원도 언주시 망하산로 286길 우리은행 옆')
+	(4, '펜션', '풍선 펜션', '강원도 언주시 망하산로 286길 우리은행 옆');
 -- tbl_questionnaire
 INSERT INTO
 	tbl_questionnaire (quest_code, theme_code, question)
@@ -870,53 +869,43 @@ VALUES
 	(3, 3, 3);
 
 -- tbl_schedule
-INSERT INTO
-	tbl_schedule (
-	sche_code,
-	region_code,
-	accom_code,
-	member_code,
-	member_answer_code,
-	sche_list,
-	sche_start_date,
-	sche_end_date,
-	travel_time,
-	sche_time
-)
-VALUES
-	(
-		101,
-		101,
-		1,
-		1001,
-		1,
-		'서울의 명소를 알려주세요',
-		'2024-12-01',
-		'2024-12-02',
-		'09:00:00',
-		'18:00:00'
-	),
-	(
-		102,
-		102,
-		2,
-		1002,
-		2,
-		'부산에서 무엇을 할 수 있을까요?',
-		'2024-12-02',
-		'2024-12-05',
-		'08:00:00',
-		'19:00:00'
-	),
-	(
-		103,
-		101,
-		3,
-		1003,
-		3,
-		'서울에서의 자유여행',
-		'2024-12-05',
-		'2024-12-06',
-		'10:00:00',
-		'17:00:00'
-	);
+INSERT INTO tbl_schedule (sche_code,
+                          region_code,
+                          accom_code,
+                          member_code,
+                          member_answer_code,
+                          sche_list,
+                          sche_start_date,
+                          sche_end_date,
+                          travel_time,
+                          sche_time)
+VALUES (101,
+        101,
+        1,
+        1001,
+        1,
+        '서울의 명소를 알려주세요',
+        '2024-12-01',
+        '2024-12-02',
+        '09:00:00',
+        '18:00:00'),
+       (102,
+        102,
+        2,
+        1002,
+        2,
+        '부산에서 무엇을 할 수 있을까요?',
+        '2024-12-02',
+        '2024-12-05',
+        '08:00:00',
+        '19:00:00'),
+       (103,
+        101,
+        3,
+        1003,
+        3,
+        '서울에서의 자유여행',
+        '2024-12-05',
+        '2024-12-06',
+        '10:00:00',
+        '17:00:00');

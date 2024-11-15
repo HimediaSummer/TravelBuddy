@@ -147,7 +147,7 @@ public class ScheduleService {
         log.info("[ScheduleService] selectAccomByCode() start");
         System.out.println("[ScheduleService] 왓니?");
 
-       Accommodation accom = accommodationRepository.findById(accomCode).get();
+        Accommodation accom = accommodationRepository.findById(accomCode).get();
 
         log.info("[ScheduleService] selectAccomByCode() end");
 

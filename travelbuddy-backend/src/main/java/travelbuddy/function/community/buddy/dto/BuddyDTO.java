@@ -1,26 +1,22 @@
 package travelbuddy.function.community.buddy.dto;
 
-import travelbuddy.function.schedule.dto.RegionDTO;
-
 public class BuddyDTO {
-    private int buddyCode;
-    private int memberCode;
-    private int regionCode;
-    private int buddyTypeCode;
-    private String buddyTitle;
-    private String buddyContents;
-    private String buddyCreate;
-    private String buddyStatus;
-    private String buddyImg;
-    private int buddyCount;
-    private String buddyAt;
-    private String buddyApply;
+    private int buddyCode;          // 버디코드
+    private int memberCode;         // 회원코드
+    private int regionCode;         // 지역코드
+    private int buddyTypeCode;      // 버디유형코드
+    private String buddyTitle;      // 게시글제목
+    private String buddyContents;   // 게시글내용
+    private String buddyCreate;     // 작성일
+    private String buddyStatus;     // 매칭상태
+    private String buddyImg;        // 게시글 이미지경로
+    private int buddyCount;         // 조회수
+    private String buddyAt;         // 은폐여부
 
     public BuddyDTO() {
     }
 
-    public BuddyDTO(String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, int buddyTypeCode, int memberCode, int regionCode) {
-        this.buddyApply = buddyApply;
+    public BuddyDTO(String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, int buddyTypeCode, int memberCode, int regionCode) {
         this.buddyAt = buddyAt;
         this.buddyCode = buddyCode;
         this.buddyContents = buddyContents;
@@ -32,14 +28,6 @@ public class BuddyDTO {
         this.buddyTypeCode = buddyTypeCode;
         this.memberCode = memberCode;
         this.regionCode = regionCode;
-    }
-
-    public String getBuddyApply() {
-        return buddyApply;
-    }
-
-    public void setBuddyApply(String buddyApply) {
-        this.buddyApply = buddyApply;
     }
 
     public String getBuddyAt() {
@@ -133,7 +121,6 @@ public class BuddyDTO {
     @Override
     public String toString() {
         return "BuddyDTO{" +
-                "buddyApply='" + buddyApply + '\'' +
                 ", buddyCode=" + buddyCode +
                 ", memberCode=" + memberCode +
                 ", regionCode=" + regionCode +

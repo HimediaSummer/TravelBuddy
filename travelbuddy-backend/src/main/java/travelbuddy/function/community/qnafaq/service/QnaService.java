@@ -54,21 +54,29 @@ public class QnaService {
 
         log.info("[QnaService] selectQna start");
 
-        Qna qna = qnaRepository.findById(qnaCode).get();
-        QnaAnswer qnaAnswer = qnaAnswerRepository.findById(qnaCode).get();
+        Qna qna = qnaRepository.findById(qnaCode).orElse(null);
+        QnaAnswer qnaAnswer = null;
 
-        qnaAnswer.setQna(qna);
+        if (qna != null) {
+            qnaAnswer = qnaAnswerRepository.findByQna(qna);
+        }
+        
+        System.out.println("qna = " + qna);
+        System.out.println("qnaAnswer = " + qnaAnswer);
+
 
         QnaDTO qnaDTO = modelMapper.map(qna , QnaDTO.class);
         QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
 
         QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO, qnaDTO);
+
         log.info("[QnaService] selectQna end");
 
         return qnaDetailDTO;
 
     }
 
+    /*qna 을 등록한다. 근데 qnaanswer 도 qna code 기준 null (기본값) 로 세팅한다.*/
     @Transactional
     public Object insertQna(QnaDTO qnaDTO) {
 
@@ -77,11 +85,22 @@ public class QnaService {
         Qna insertqna = modelMapper.map(qnaDTO, Qna.class);
 
         FqType fqType = fqTypeRepository.findById(qnaDTO.getFqTypeCode()).orElseThrow(() -> new RuntimeException(("FqType not found")));
-
         insertqna.setFqType(fqType);
         qnaRepository.save(insertqna);
 
-        return modelMapper.map(insertqna, QnaDTO.class);
+
+        QnaAnswer qnaAnswer = new QnaAnswer();
+        qnaAnswer.setAnsCode(insertqna.getQnaCode());
+        qnaAnswer.setQna(insertqna);
+        qnaAnswerRepository.save(qnaAnswer);
+        
+        QnaDTO newQna = modelMapper.map(insertqna, QnaDTO.class);
+        QnaAnswerDTO newQnaAnswer = modelMapper.map(qnaAnswer,QnaAnswerDTO.class);
+        QnaDetailDTO qnaDetailDTO = new QnaDetailDTO();
+        qnaDetailDTO.setQnaDTO(newQna);
+        qnaDetailDTO.setQnaAnswerDTO(newQnaAnswer);
+
+        return qnaDetailDTO;
 
     }
 }

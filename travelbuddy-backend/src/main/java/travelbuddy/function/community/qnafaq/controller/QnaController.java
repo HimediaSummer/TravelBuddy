@@ -58,6 +58,7 @@ public class QnaController {
     @GetMapping("/qnas/{qnaCode}")
     public ResponseEntity<ResponseDTO> selectQnaDetail(@PathVariable int qnaCode){
         QnaDetailDTO qnaDetailDTO = (QnaDetailDTO) qnaService.selectQna(qnaCode);
+        System.out.println("qnaDetailDTO = " + qnaDetailDTO);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnA 상세정보 조회 성공",qnaDetailDTO));
     }
 

@@ -1,79 +1,37 @@
 package travelbuddy.function.schedule.dto;
 
-import java.sql.Time;
-import java.util.Date;
 
 public class ScheduleDTO {
 
     private int scheCode;
     private int regionCode;
-    private String question;
-    private String scheDate;
+    private int accomCode;
+    private int memberCode;
+    private int memberAnswerCode;
     private String scheList;
     private String scheStartDate;
     private String scheEndDate;
-    private String accom;
-    private String accomImg;
+    private String scheStartTime;
+    private String scheEndTime;
     private String travelTime;
     private String scheTime;
-    private int memberAnswerCode;
 
     public ScheduleDTO() {
     }
 
-    public ScheduleDTO(String accom, String accomImg, int memberAnswerCode, String question, int regionCode, int scheCode, String scheDate, String scheEndDate, String scheList, String scheStartDate, String scheTime, String travelTime) {
-        this.accom = accom;
-        this.accomImg = accomImg;
-        this.memberAnswerCode = memberAnswerCode;
-        this.question = question;
-        this.regionCode = regionCode;
+    public ScheduleDTO(int scheCode, int regionCode, int accomCode, int memberCode, int memberAnswerCode, String scheList, String scheStartDate, String scheEndDate, String scheStartTime, String scheEndTime, String travelTime, String scheTime) {
         this.scheCode = scheCode;
-        this.scheDate = scheDate;
-        this.scheEndDate = scheEndDate;
+        this.regionCode = regionCode;
+        this.accomCode = accomCode;
+        this.memberCode = memberCode;
+        this.memberAnswerCode = memberAnswerCode;
         this.scheList = scheList;
         this.scheStartDate = scheStartDate;
-        this.scheTime = scheTime;
+        this.scheEndDate = scheEndDate;
+        this.scheStartTime = scheStartTime;
+        this.scheEndTime = scheEndTime;
         this.travelTime = travelTime;
-    }
-
-    public String getAccom() {
-        return accom;
-    }
-
-    public void setAccom(String accom) {
-        this.accom = accom;
-    }
-
-    public String getAccomImg() {
-        return accomImg;
-    }
-
-    public void setAccomImg(String accomImg) {
-        this.accomImg = accomImg;
-    }
-
-    public int getMemberAnswerCode() {
-        return memberAnswerCode;
-    }
-
-    public void setMemberAnswerCode(int memberAnswerCode) {
-        this.memberAnswerCode = memberAnswerCode;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public int getRegionCode() {
-        return regionCode;
-    }
-
-    public void setRegionCode(int regionCode) {
-        this.regionCode = regionCode;
+        this.scheTime = scheTime;
     }
 
     public int getScheCode() {
@@ -84,20 +42,36 @@ public class ScheduleDTO {
         this.scheCode = scheCode;
     }
 
-    public String getScheDate() {
-        return scheDate;
+    public int getRegionCode() {
+        return regionCode;
     }
 
-    public void setScheDate(String scheDate) {
-        this.scheDate = scheDate;
+    public void setRegionCode(int regionCode) {
+        this.regionCode = regionCode;
     }
 
-    public String getScheEndDate() {
-        return scheEndDate;
+    public int getAccomCode() {
+        return accomCode;
     }
 
-    public void setScheEndDate(String scheEndDate) {
-        this.scheEndDate = scheEndDate;
+    public void setAccomCode(int accomCode) {
+        this.accomCode = accomCode;
+    }
+
+    public int getMemberCode() {
+        return memberCode;
+    }
+
+    public void setMemberCode(int memberCode) {
+        this.memberCode = memberCode;
+    }
+
+    public int getMemberAnswerCode() {
+        return memberAnswerCode;
+    }
+
+    public void setMemberAnswerCode(int memberAnswerCode) {
+        this.memberAnswerCode = memberAnswerCode;
     }
 
     public String getScheList() {
@@ -116,12 +90,28 @@ public class ScheduleDTO {
         this.scheStartDate = scheStartDate;
     }
 
-    public String getScheTime() {
-        return scheTime;
+    public String getScheEndDate() {
+        return scheEndDate;
     }
 
-    public void setScheTime(String scheTime) {
-        this.scheTime = scheTime;
+    public void setScheEndDate(String scheEndDate) {
+        this.scheEndDate = scheEndDate;
+    }
+
+    public String getScheStartTime() {
+        return scheStartTime;
+    }
+
+    public void setScheStartTime(String scheStartTime) {
+        this.scheStartTime = scheStartTime;
+    }
+
+    public String getScheEndTime() {
+        return scheEndTime;
+    }
+
+    public void setScheEndTime(String scheEndTime) {
+        this.scheEndTime = scheEndTime;
     }
 
     public String getTravelTime() {
@@ -132,21 +122,29 @@ public class ScheduleDTO {
         this.travelTime = travelTime;
     }
 
+    public String getScheTime() {
+        return scheTime;
+    }
+
+    public void setScheTime(String scheTime) {
+        this.scheTime = scheTime;
+    }
+
     @Override
     public String toString() {
         return "ScheduleDTO{" +
-                "accom='" + accom + '\'' +
-                ", scheCode=" + scheCode +
+                "scheCode=" + scheCode +
                 ", regionCode=" + regionCode +
-                ", question='" + question + '\'' +
-                ", scheDate='" + scheDate + '\'' +
+                ", accomCode=" + accomCode +
+                ", memberCode=" + memberCode +
+                ", memberAnswerCode=" + memberAnswerCode +
                 ", scheList='" + scheList + '\'' +
                 ", scheStartDate='" + scheStartDate + '\'' +
                 ", scheEndDate='" + scheEndDate + '\'' +
-                ", accomImg='" + accomImg + '\'' +
+                ", scheStartTime='" + scheStartTime + '\'' +
+                ", scheEndTime='" + scheEndTime + '\'' +
                 ", travelTime='" + travelTime + '\'' +
                 ", scheTime='" + scheTime + '\'' +
-                ", memberAnswerCode=" + memberAnswerCode +
                 '}';
     }
 }

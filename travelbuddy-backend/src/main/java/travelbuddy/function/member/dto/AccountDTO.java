@@ -1,7 +1,5 @@
 package travelbuddy.function.member.dto;
 
-import java.util.List;
-
 public class AccountDTO {
 
     private int memberCode;         // 회원코드

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/schedule")
+@RequestMapping("/api/v1")
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
@@ -40,6 +40,7 @@ public class ScheduleController {
     }
 
     @Operation(summary = "조회", description = "사용자가 선택할 수 있는 정보가 조회됩니다.", tags = { "ScheduleController" })
+//    @GetMapping()
     @GetMapping("/schedule")
     public ResponseEntity<ResponseDTO> select() {
 

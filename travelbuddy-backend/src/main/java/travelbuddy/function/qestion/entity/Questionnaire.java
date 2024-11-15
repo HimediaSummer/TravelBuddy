@@ -14,7 +14,7 @@ public class Questionnaire {
     @Column(name="question")
     private String question;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="theme_code")
     private QuestionNaireTheme questionNaireTheme;
 

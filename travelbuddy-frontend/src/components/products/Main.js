@@ -1,29 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
-<<<<<<< HEAD
-function App() {
-=======
 function Main() {
->>>>>>> main
   const [message, setMessage] = useState('');
 
   useEffect(() => {
     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
-<<<<<<< HEAD
-    fetch('http://localhost:8080/schedule/hello')
-=======
     fetch('http://localhost:8080/main')
->>>>>>> main
       .then(response => response.text())
       .then(data => setMessage(data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
   return (
-<<<<<<< HEAD
-    <div className="App">
-      <h1>{message}</h1>
-=======
     <div className="Main">
         <head>
             <meta charset="UTF-8" />
@@ -168,13 +156,8 @@ function Main() {
                 </div>
             </footer>
         </body>
->>>>>>> main
     </div>
   );
 }
 
-<<<<<<< HEAD
-export default App;
-=======
 export default Main;
->>>>>>> main

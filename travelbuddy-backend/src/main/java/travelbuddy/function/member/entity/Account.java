@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
-<<<<<<< HEAD
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,22 +13,13 @@ import java.util.List;
 @Entity
 @DynamicInsert
 @Table(name = "tbl_account")
-=======
-
-@Entity
-@Table(name = "tbl_account")    // 테이블명
-@DynamicInsert
->>>>>>> main
 public class Account {
 
     @Id
     @Column(name = "member_code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<<<<<<< HEAD
     private int memberCode;
-=======
-    private int memberCode;     // 멤버코드
->>>>>>> main
+
 
     @Column(name = "member_name")
     private String memberName;
@@ -63,33 +54,22 @@ public class Account {
     private String memberImg;
 
     @Column(name = "member_create")
-<<<<<<< HEAD
 //    private String memberCreate;
     private LocalDateTime memberCreate;
-
-=======
-    private String memberCreate;
->>>>>>> main
 
     @Column(name = "member_leave")
     private String memberLeave;
 
     @ManyToOne
-<<<<<<< HEAD
     @ColumnDefault("일반 사용자")
-=======
->>>>>>> main
     @JoinColumn(name ="authority_code")
     private Authority authority;
 
     public Account() {
     }
 
-<<<<<<< HEAD
+
     public Account(Authority authority, String memberBirthday, int memberCode, LocalDateTime memberCreate, String memberDeletion, String memberEmail, String memberFullName, String memberImg, String memberLeave, int memberLike, String memberName, String memberPassword, String memberPhone, String memberSuspension) {
-=======
-    public Account(Authority authority, String memberBirthday, int memberCode, String memberCreate, String memberDeletion, String memberEmail, String memberFullName, String memberImg, String memberLeave, int memberLike, String memberName, String memberPassword, String memberPhone, String memberSuspension) {
->>>>>>> main
         this.authority = authority;
         this.memberBirthday = memberBirthday;
         this.memberCode = memberCode;
@@ -130,19 +110,13 @@ public class Account {
         this.memberCode = memberCode;
     }
 
-<<<<<<< HEAD
+
     public LocalDateTime getMemberCreate() {
         return memberCreate;
     }
 
     public void setMemberCreate(LocalDateTime memberCreate) {
-=======
-    public String getMemberCreate() {
-        return memberCreate;
-    }
 
-    public void setMemberCreate(String memberCreate) {
->>>>>>> main
         this.memberCreate = memberCreate;
     }
 

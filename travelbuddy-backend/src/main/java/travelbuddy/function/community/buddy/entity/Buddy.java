@@ -1,8 +1,5 @@
 package travelbuddy.function.community.buddy.entity;
 
-<<<<<<< HEAD
-import jakarta.persistence.*;
-=======
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -14,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
->>>>>>> main
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.schedule.entity.Region;
 
@@ -30,11 +26,8 @@ public class Buddy {
 
     @ManyToOne
     @JoinColumn(name = "member_code")
-<<<<<<< HEAD
     private Account account;
-=======
-    private Account account;  // 회원코드 FK
->>>>>>> main
+
 
     @ManyToOne
     @JoinColumn(name = "region_code")
@@ -63,13 +56,8 @@ public class Buddy {
     @Column(name = "buddy_count")
     private int buddyCount;         // 조회수
 
-    @Column(name = "buddy_at")
-<<<<<<< HEAD
-    private String buddyAt;
-=======
     @ColumnDefault("N")
     private String buddyAt;         // 은폐여부
->>>>>>> main
 
     public Buddy() {
     }

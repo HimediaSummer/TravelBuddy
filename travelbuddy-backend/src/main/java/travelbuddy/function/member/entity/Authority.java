@@ -17,15 +17,7 @@ public class Authority {
     private int authorityCode;
 
     @Column(name = "authority_name")
-<<<<<<< HEAD
-<<<<<<<< HEAD:travelbuddy-backend/src/main/java/travelbuddy/function/member/entity/Authority.java
     private String authorityName;
-========
-    private String authorityCodeName;
->>>>>>>> main:travelbuddy-backend/src/main/java/travelbuddy/function/member/entity/AuthorityEntity.java
-=======
-    private String authorityName;
->>>>>>> main
 
     public Authority() {
     }

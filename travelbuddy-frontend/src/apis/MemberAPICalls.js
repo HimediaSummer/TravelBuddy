@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { GET_MEMBER, POST_LOGIN, POST_REGISTER, POST_SIGNUP } from '../modules/MemberModule';
 
 export const callGetMemberAPI = ({ memberName }) => {
@@ -89,21 +88,21 @@ export const callRegisterAPI = ({ form }) => {
 		}
 	};
 };
-=======
-import { GET_MEMBER, POST_LOGIN, POST_REGISTER } from '../modules/MemberModule';
 
-export const callMemberListForAdminAPI = ({currentPage}) => {
-    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members`;
+export const callMemberListForAdminAPI = ({ currentPage }) => {
+	const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/api/v1/members?page=${currentPage}`;
 
-    return async (dispatch, getState) => {
-        const result = await fetch(requestURL, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: '*/*'
-            }
-        }).then((response) => response.json());
-        dispatch({type: GET_MEMBER, result });
-        console.log('백엔드에서 가져온 데이터',result);
-    }}
->>>>>>> main
+	return async (dispatch, getState) => {
+		const result = await fetch(requestURL, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: '*/*',
+				Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
+			}
+		}).then((response) => response.json());
+
+		console.log('[MemberAPICalls] callMemberListForAdminAPI RESULT : ', result);
+		dispatch({ type: GET_MEMBER, payload: result });
+	};
+};

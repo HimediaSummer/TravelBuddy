@@ -20,23 +20,17 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-<<<<<<< HEAD
+
 import travelbuddy.jwt.JwtAccessDeniedHandler;
 import travelbuddy.jwt.JwtAuthenticationEntryPoint;
 import travelbuddy.jwt.JwtFilter;
 import travelbuddy.jwt.TokenProvider;
-=======
-//import travelbuddy.jwt.JwtAccessDeniedHandler;
-//import travelbuddy.jwt.JwtAuthenticationEntryPoint;
-//import travelbuddy.jwt.JwtFilter;
-//import travelbuddy.jwt.TokenProvider;
->>>>>>> main
+
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-<<<<<<< HEAD
     // JWT 토큰을 발급하고 검증하는 Token Provider
     private final TokenProvider tokenProvider;
     // 인증 실패 관련 예외
@@ -53,24 +47,7 @@ public class SecurityConfig {
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
     }
-=======
-//    // JWT 토큰을 발급하고 검증하는 Token Provider
-//    private final TokenProvider tokenProvider;
-//    // 인증 실패 관련 예외
-//    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-//    // 접근 거부 관련 예외
-//    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-//
-//    @Autowired
-//    @Lazy
-//    public SecurityConfig(TokenProvider tokenProvider,
-//                          JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-//                          JwtAccessDeniedHandler jwtAccessDeniedHandler) {
-//        this.tokenProvider = tokenProvider;
-//        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-//        this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
-//    }
->>>>>>> main
+
 
     /* 목차. 1. 암호화 처리를 위한 PasswordEncoder를 빈으로 설정(빈을 등록 시 메소드 이름 오타 없도록 주의!) */
     @Bean

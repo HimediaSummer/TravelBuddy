@@ -1,4 +1,3 @@
-import LoginCSS from './Login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
@@ -64,8 +63,8 @@ function Login() {
     }
 
     return (
-        <div className={ LoginCSS.backgroundDiv}>
-            <div className={ LoginCSS.loginDiv }>
+        <div >
+            <div >
                 <h1>로그인</h1>
                 <input 
                     type="text" 

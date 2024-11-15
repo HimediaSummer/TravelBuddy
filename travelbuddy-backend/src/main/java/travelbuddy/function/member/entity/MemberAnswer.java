@@ -28,7 +28,7 @@ public class MemberAnswer {
   @JoinColumn(name="answer_code")
   private Answer answer;
 
-<<<<<<< HEAD
+
   @ManyToOne
   @JoinColumn(name="member_code")
   private Account Account;
@@ -41,30 +41,6 @@ public class MemberAnswer {
     this.answer = answer;
     this.memberAnswerCode = memberAnswerCode;
     this.questionnaire = questionnaire;
-  }
-
-  public Account getAccount() {
-    return Account;
-  }
-
-  public void setAccount(Account account) {
-    Account = account;
-  }
-
-  public Answer getAnswer() {
-    return answer;
-  }
-
-  public void setAnswer(Answer answer) {
-=======
-  public MemberAnswer() {
-  }
-
-  public MemberAnswer(int memberAnswerCode, Questionnaire questionnaire, Answer answer) {
-    this.memberAnswerCode = memberAnswerCode;
-    this.questionnaire = questionnaire;
->>>>>>> main
-    this.answer = answer;
   }
 
   public int getMemberAnswerCode() {
@@ -91,12 +67,21 @@ public class MemberAnswer {
     this.answer = answer;
   }
 
+  public travelbuddy.function.member.entity.Account getAccount() {
+    return Account;
+  }
+
+  public void setAccount(travelbuddy.function.member.entity.Account account) {
+    Account = account;
+  }
+
   @Override
   public String toString() {
     return "MemberAnswer{" +
             "memberAnswerCode=" + memberAnswerCode +
             ", questionnaire=" + questionnaire +
             ", answer=" + answer +
+            ", Account=" + Account +
             '}';
   }
 }

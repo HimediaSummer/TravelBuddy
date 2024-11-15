@@ -51,7 +51,7 @@ public class AdminAccountService {
 
         int index = cri.getPageNum() - 1;
         int count = cri.getAmount();
-        Pageable paging = PageRequest.of(index, count, Sort.by("productCode").descending());
+        Pageable paging = PageRequest.of(index, count, Sort.by("memberCode").descending());
 
         Page<Account> result = adminAccountRepository.findBymemberDeletion("N", paging);
         List<Account> memberList = (List<Account>)result.getContent();

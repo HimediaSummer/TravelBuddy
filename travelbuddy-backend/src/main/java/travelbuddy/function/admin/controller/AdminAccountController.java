@@ -29,58 +29,57 @@ public class AdminAccountController {
         this.adminAccountService = adminAccountService;
     }
 
-//    @Operation(summary = "관리자페이지 회원 리스트 조회 요청", description = "전체 회원 조회 및 페이징 처리를 진행합니다.", tags ={"AdminAccountController"})
-//    @GetMapping("/members")
-//    public ResponseEntity<ResponseDTO> selectMemberListWithPaging(
-//            @RequestParam(name = "offset", defaultValue = "1") String offset) {
-//
-//        log.info("[AdminAccountController] selectMemberListWithPaging : " + offset);
-//
-//        /*========pageing 처리를 위한 작업===================*/
-//        /*전체 회원의 수를 확인*/
-//        int total = adminAccountService.selectMemberTotal();
-//
-//        Criteria cri = new Criteria(Integer.valueOf(offset), 10);
-//        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
-//
-//        /*1. offset (현재 기본 1로 지정) 의 번호에 맞는 페이지에 뿌릴 Member 들*/
-//        pagingResponseDTO.setData(adminAccountService.selectMemberListWithPaging(cri));
-//
-//        /*2. pageDTO(criteria(보고싶은페이지, 한페이지에 뿌릴 개수), 전체 회원 수)
-//         * 화면에서 페이징 처리를 계산해서 추출 한다.*/
-//        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
-//        /*===================================================*/
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", pagingResponseDTO));
-//    }
+    @Operation(summary = "관리자페이지 회원 리스트 조회 요청", description = "전체 회원 조회 및 페이징 처리를 진행합니다.", tags ={"AdminAccountController"})
+    @GetMapping("/members")
+    public ResponseEntity<ResponseDTO> selectMemberListWithPaging(
+            @RequestParam(name = "offset", defaultValue = "1") String offset) {
+
+        log.info("[AdminAccountController] selectMemberListWithPaging : " + offset);
+
+        /*========pageing 처리를 위한 작업===================*/
+        /*전체 회원의 수를 확인*/
+        int total = adminAccountService.selectMemberTotal();
+
+        Criteria cri = new Criteria(Integer.valueOf(offset), 10);
+        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
+
+        /*1. offset (현재 기본 1로 지정) 의 번호에 맞는 페이지에 뿌릴 Member 들*/
+        pagingResponseDTO.setData(adminAccountService.selectMemberListWithPaging(cri));
+
+        /*2. pageDTO(criteria(보고싶은페이지, 한페이지에 뿌릴 개수), 전체 회원 수)
+         * 화면에서 페이징 처리를 계산해서 추출 한다.*/
+        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
+        /*===================================================*/
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 요청", pagingResponseDTO));
+    }
 
     /*값만 잘 추출되는지 확인하기 위해 만든 메소드 (추후 없애도 됨)*/
-    @GetMapping("/members")
-    public ResponseEntity<ResponseDTO> selectMemberList() {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", adminAccountService.selectMemberList()));
-    }
+//    @GetMapping("/members")
+//    public ResponseEntity<ResponseDTO> selectMemberList() {
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 요청", adminAccountService.selectMemberList()));
+//    }
 
     @Operation(summary = "관리자페이지 회원 상세 조회 요청", description = "회원의 상세 페이지 처리가 진행됩니다.", tags = {"AdminAccountController"})
     @GetMapping("/members/{memberCode}")
     public ResponseEntity<ResponseDTO> selectMemberDetail(@PathVariable int memberCode){
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"회원 상세정보 조회 성공",adminAccountService.selectMember(memberCode)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"회원 상세정보 조회 요청",adminAccountService.selectMember(memberCode)));
     }
 
-    @Operation(summary = "회원 정지 상태 변경", description = "정지 여부를 Y와 N으로 전환합니다.", tags = {"AdminAccountController"})
+    @Operation(summary = "관리자페이지 회원 정지 상태 변경", description = "정지 여부를 Y와 N으로 전환합니다.", tags = {"AdminAccountController"})
     @PostMapping("/members/{memberCode}/toggle-suspension")
     public ResponseEntity<ResponseDTO> toggleMemberSuspension(@PathVariable int memberCode){
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"정지 여부 변경 성공", adminAccountService.toggleMemberSuspension(memberCode)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"정지 여부 변경 요청", adminAccountService.toggleMemberSuspension(memberCode)));
     }
 
-    @Operation(summary = "회원 탈퇴 상태 변경", description = "탈퇴 여부를 Y와 N으로 전환합니다.", tags = {"AdminAccountController"})
+    @Operation(summary = "관리자페이지 회원 탈퇴 상태 변경", description = "탈퇴 여부를 Y와 N으로 전환합니다.", tags = {"AdminAccountController"})
     @PostMapping("/members/{memberCode}/toggle-deletion")
     public ResponseEntity<ResponseDTO> toggleMemberDelesion(@PathVariable int memberCode){
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"탈퇴 여부 변경 성공", adminAccountService.toggleMemberDelesion(memberCode)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"탈퇴 여부 변경 요청", adminAccountService.toggleMemberDelesion(memberCode)));
     }
-
 
 
 }

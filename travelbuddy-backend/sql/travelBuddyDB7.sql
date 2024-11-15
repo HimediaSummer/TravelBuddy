@@ -124,7 +124,6 @@ CREATE TABLE
 		                        buddy_img TEXT NULL COMMENT '게시글이미지',
 		                        buddy_count INT NOT NULL COMMENT '조회수',
 		                        buddy_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
-		                        buddy_apply VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '버디신청',
 		                        PRIMARY KEY (buddy_code),
 		                        FOREIGN KEY (member_code) REFERENCES tbl_account (member_code) ON DELETE CASCADE,
 		                        FOREIGN KEY (region_code) REFERENCES tbl_region (region_code) ON DELETE CASCADE,
@@ -181,6 +180,7 @@ CREATE TABLE
 		                                   buddy_match_code INT NOT NULL AUTO_INCREMENT COMMENT '버디매칭코드',
 		                                   buddy_code INT NOT NULL COMMENT '버디코드',
 		                                   apply_id VARCHAR(30) NULL COMMENT '신청자아이디',
+		                                   apply_status INT NOT NULL DEFAULT '1' COMMENT '매칭신청',
 		                                   PRIMARY KEY (buddy_match_code),
 		                                   FOREIGN KEY (buddy_code) REFERENCES tbl_buddy (buddy_code) ON DELETE CASCADE
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '버디 매칭 데이터';
@@ -241,8 +241,8 @@ CREATE TABLE
 		                           sche_list VARCHAR(255) NOT NULL COMMENT '생성된스케줄',
 		                           sche_start_date DATE NOT NULL COMMENT '여행시작날짜',
 		                           sche_end_date DATE NOT NULL COMMENT '여행종료날짜',
-		                           sche_start_time TIME NOT NULL COMMENT '여행시작시간',
-		                           sche_end_time TIME NOT NULL COMMENT '여행종료시간',
+		                           sche_start_time time NOT NULL COMMENT '여행시작날짜',
+		                           sche_end_time time NOT NULL COMMENT '여행종료날짜',
 		                           travel_time VARCHAR(100) NOT NULL COMMENT '이동시간',
 		                           sche_time VARCHAR(100) NOT NULL COMMENT '스케줄시간',
 		                           PRIMARY KEY (sche_code),
@@ -634,8 +634,7 @@ INSERT INTO
 	buddy_status,
 	buddy_img,
 	buddy_count,
-	buddy_at,
-	buddy_apply
+	buddy_at
 )
 VALUES
 	(
@@ -648,8 +647,7 @@ VALUES
 		'N',
 		'image1.jpg',
 		150,
-		'N',
-		'Y'
+		'N'
 	),
 	(
 		1002,
@@ -661,8 +659,7 @@ VALUES
 		'N',
 		'image2.jpg',
 		230,
-		'N',
-		'Y'
+		'N'
 	),
 	(
 		1003,
@@ -674,17 +671,16 @@ VALUES
 		'Y',
 		'image3.jpg',
 		75,
-		'Y',
-		'N'
+		'Y'
 	);
 
 -- tbl_OfferMemberData
 INSERT INTO
-	tbl_buddy_match_data (buddy_match_code, buddy_code, apply_id)
+	tbl_buddy_match_data (buddy_match_code, buddy_code, apply_id, apply_status)
 VALUES
-	(1, 1, 'john_doe'),
-	(2, 2, 'jane_smith'),
-	(3, 3, 'alex_kim');
+	(1, 1, 'john_doe', 1),
+	(2, 2, 'jane_smith', 2),
+	(3, 3, 'alex_kim', 3);
 
 -- tbl_question_naire_theme
 INSERT INTO
@@ -892,7 +888,7 @@ VALUES (101,
         '2024-12-01',
         '2024-12-02',
         '10:00:00',
-        '12:00:00',
+        '22:00:00',
         '09:00:00',
         '18:00:00'),
        (102,
@@ -904,7 +900,7 @@ VALUES (101,
         '2024-12-02',
         '2024-12-05',
         '10:00:00',
-        '12:00:00',
+        '22:00:00',
         '08:00:00',
         '19:00:00'),
        (103,
@@ -916,6 +912,6 @@ VALUES (101,
         '2024-12-05',
         '2024-12-06',
         '10:00:00',
-        '12:00:00',
+        '22:00:00',
         '10:00:00',
         '17:00:00');

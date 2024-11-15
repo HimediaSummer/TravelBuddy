@@ -1,0 +1,20 @@
+
+@media (max-width: 390px) {
+    .popular-city-title h3{
+        margin-left: 50px;
+    }
+
+    .plan-order{
+        
+    }
+
+}
+
+
+
+@media (min-width: 391px) and (max-width: 412px) {
+    .order-title,
+    #arrow-icon{
+        width: fit-content;
+    }
+}

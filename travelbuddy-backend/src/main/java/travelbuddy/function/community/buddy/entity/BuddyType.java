@@ -1,18 +1,23 @@
 package travelbuddy.function.community.buddy.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tbl_buddy_type")
+@Table(name = "tbl_buddy_type")     //테이블명
 public class BuddyType {
 
     @Id
     @Column(name = "buddy_type_code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int buddyTypeCode;
+    private int buddyTypeCode;          // 버디유형코드
 
     @Column(name = "buddy_type_name")
-    private String buddyTypeName;
+    private String buddyTypeName;       // 버디유형이름
 
     public BuddyType() {
     }

@@ -34,24 +34,32 @@ spring:
 # static resource(image media file) config
 ## ???? ??? ??? ??? ? ??? ?? ??
 image:
-#  # Local Dev
-#  add-resource-locations: classpath:/static/productimgs/
-#  add-resource-handler: /productimgs/**
-#  # Local Dev
-#  image-dir: src/main/resources/static/productimgs
-#  image-url: http://localhost:8080/productimgs/
-# Docker(Local)
-#  add-resource-locations: file:///springboot-app/productimgs/
-#  add-resource-handler: /productimgs/**
-#  # Docker(Local)
-#  image-dir: /springboot-app/productimgs
-#  image-url: http://localhost:8888/productimgs/
+  # Local Dev
+  add-resource-locations: classpath:/static/productimgs/
+  add-resource-handler: /productimgs/**
+  # Local Dev
+  image-dir: src/main/resources/static/productimgs
+  image-url: http://localhost:8080/productimgs/
+#Docker(Local)
+# add-resource-locations: file:///springboot-app/productimgs/
+# add-resource-handler: /productimgs/**
+# # Docker(Local)
+# image-dir: /springboot-app/productimgs
+# image-url: http://localhost:8888/productimgs/
 # Docker(AWS)
+<<<<<<< HEAD
   add-resource-locations: file:///springboot-app/productimgs/
   add-resource-handler: /productimgs/**
 # Docker(AWS)
   image-dir: /springboot-app/productimgs
   image-url: http://travel-buddy.me:8080/productimgs/
+=======
+#add-resource-locations: file:///springboot-app/productimgs/
+#add-resource-handler: /productimgs/**
+# Docker(AWS)
+#image-dir: /springboot-app/productimgs
+#image-url: http://travel-buddy.me:8080/productimgs/
+>>>>>>> main
 
 # security(jwt) config
 jwt:

@@ -1,6 +1,11 @@
 package travelbuddy.function.member.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tbl_authority")
@@ -12,7 +17,15 @@ public class Authority {
     private int authorityCode;
 
     @Column(name = "authority_name")
+<<<<<<< HEAD
+<<<<<<<< HEAD:travelbuddy-backend/src/main/java/travelbuddy/function/member/entity/Authority.java
     private String authorityName;
+========
+    private String authorityCodeName;
+>>>>>>>> main:travelbuddy-backend/src/main/java/travelbuddy/function/member/entity/AuthorityEntity.java
+=======
+    private String authorityName;
+>>>>>>> main
 
     public Authority() {
     }

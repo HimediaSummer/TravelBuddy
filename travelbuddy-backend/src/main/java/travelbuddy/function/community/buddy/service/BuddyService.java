@@ -49,17 +49,22 @@ public class BuddyService {
     }
 
 
-    public Object selectBuddyListWithPaging(Criteria criteria) {
+    public List<BuddyDTO> selectBuddyListWithPaging(Criteria criteria) {
 
         log.info("[BuddyService] selectBuddyListWithPaging() Start");
 
         int index = criteria.getPageNum() -1;
         int count = criteria.getAmount();
         Pageable paging = PageRequest.of(index, count, Sort.by("buddyCode").descending());
+        System.out.println("버디서비스 영역의 paging = " + paging);
+
 
         Page<Buddy> result = buddyRepository.findByBuddyStatus("N", paging);
+        System.out.println("버디서비스영역의 result = " + result);
 //        Page<Buddy> result = buddyRepository.findAll(paging);
         List<Buddy> buddyList = (List<Buddy>) result.getContent();
+        System.out.println("buddyList = " + buddyList);
+
 
         for(int i = 0 ; i < buddyList.size() ; i++) {
             buddyList.get(i).setBuddyTitle(buddyList.get(i).getBuddyTitle());
@@ -67,30 +72,14 @@ public class BuddyService {
 
         log.info("[BuddyService] selectBuddyListWithPaging() END");
 
-        return buddyList.stream().map(buddy -> modelMapper.map(buddy, BuddyDTO.class)).collect(Collectors.toList());
+//        return buddyList.stream().map(buddy -> modelMapper.map(buddy, BuddyDTO.class)).collect(Collectors.toList());
+        return  buddyList.stream().map(buddy -> {
+            BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
+            if (buddy.getAccount() != null) {
+                buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
+            }
+            return buddyDTO;
+        }).collect(Collectors.toList());
     }
-
-//    public Object selectBuddyListWithPaging() {
-//        log.info("[MypageService] selectBuddyList() Start");
-//        List<Buddy> selectBuddyList = buddyRepository.findByMemberCode();
-//
-//        System.out.println("selectBuddyList = " + selectBuddyList);
-//
-//        List<BuddyDTO> buddyList = selectBuddyList.stream()
-//                .map(buddy -> {
-//                    BuddyDTO buddyDto = modelMapper.map(buddy, BuddyDTO.class);
-//
-//                    // account.memberCode -> BuddyDTO.memberCode 매핑
-//                    if (buddy.getMemberCode() != null) {
-//                        buddyDto.setMemberCode(buddy.getMemberCode().getMemberCode());
-//                    } return buddyDto;
-//                })
-//                .collect(Collectors.toList());
-//
-//        log.info("[MypageService] selectMypagePostList() END");
-//
-//        return buddyList;
-//    }
-
 
 }

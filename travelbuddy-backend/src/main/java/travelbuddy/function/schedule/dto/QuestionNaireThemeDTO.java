@@ -1,23 +1,15 @@
-package travelbuddy.function.qestion.entity;
+package travelbuddy.function.schedule.dto;
 
-import jakarta.persistence.*;
 
-@Entity
-@Table(name="tbl_question_naire_theme")
-public class QuestionNaireTheme {
+public class QuestionNaireThemeDTO {
 
-  @Id
-  @Column(name="theme_code")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int themeCode;
-
-  @Column(name="question_theme")
   private String questionTheme;
 
-  public QuestionNaireTheme() {
+  public QuestionNaireThemeDTO() {
   }
 
-  public QuestionNaireTheme(int themeCode, String questionTheme) {
+  public QuestionNaireThemeDTO(int themeCode, String questionTheme) {
     this.themeCode = themeCode;
     this.questionTheme = questionTheme;
   }

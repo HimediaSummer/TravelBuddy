@@ -16,12 +16,12 @@ import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.entity.MemberAnswer;
 import travelbuddy.function.member.repository.AccountRepository;
 import travelbuddy.function.member.repository.MemberAnswerRepository;
-import travelbuddy.function.qestion.dto.QuestionNaireThemeDTO;
-import travelbuddy.function.qestion.dto.QuestionnaireDTO;
-import travelbuddy.function.qestion.entity.QuestionNaireTheme;
-import travelbuddy.function.qestion.entity.Questionnaire;
-import travelbuddy.function.qestion.repository.QuestionNaireThemeRepository;
-import travelbuddy.function.qestion.repository.QuestionnaireRepository;
+import travelbuddy.function.schedule.dto.QuestionNaireThemeDTO;
+import travelbuddy.function.schedule.dto.QuestionnaireDTO;
+import travelbuddy.function.schedule.entity.QuestionNaireTheme;
+import travelbuddy.function.schedule.entity.Questionnaire;
+import travelbuddy.function.schedule.repository.QuestionNaireThemeRepository;
+import travelbuddy.function.schedule.repository.QuestionnaireRepository;
 import travelbuddy.function.schedule.dto.AccommodationDTO;
 import travelbuddy.function.schedule.dto.RegionDTO;
 import travelbuddy.function.schedule.dto.ScheduleDTO;
@@ -183,18 +183,45 @@ public class ScheduleService {
         return modelMapper.map(accom, Accommodation.class);
     }
 
+//    @Transactional
+//    public Object selectQuestionByThemeCode(int themeCode) {
+//
+//        log.info("[ScheduleService] selectQuestionByThemeCode() start");
+//        System.out.println("[ScheduleService] 왓니?");
+//
+//        List<Questionnaire> question = questionnaireRepository.findByQuestionNaireTheme_ThemeCode(themeCode);
+//
+//        log.info("[ScheduleService] selectQuestionByThemeCode() end");
+//
+//        System.out.println("[ScheduleService] question = " + question);
+//
+//        return modelMapper.map(question, Questionnaire.class);
+//    }
+
     @Transactional
     public Object selectQuestionByThemeCode(int themeCode) {
-
         log.info("[ScheduleService] selectQuestionByThemeCode() start");
-        System.out.println("[ScheduleService] 왓니?");
 
-        List<Questionnaire> question = questionnaireRepository.findByQuestionNaireTheme_ThemeCode(themeCode);
+        // themeCode로 조회한 질문지 리스트
+        List<Questionnaire> questions = questionnaireRepository.findByQuestionNaireTheme_ThemeCode(themeCode);
 
-        log.info("[ScheduleService] selectQuestionByThemeCode() end");
+        log.info("[ScheduleService] Retrieved questions: " + questions);
 
-        System.out.println("[ScheduleService] question = " + question);
+        // DTO 변환
+        List<QuestionnaireDTO> questionnaireDTOList = questions.stream().map(q -> {
+            QuestionnaireDTO dto = new QuestionnaireDTO();
+            dto.setQuestCode(q.getQuestCode());
+            dto.setQuestion(q.getQuestion());
+            // themeCode가 들어있는 questionNaireTheme이 null인지 확인
+//            if (q.getQuestionNaireTheme() != null) {
+                dto.setThemeCode(q.getQuestionNaireTheme().getThemeCode()); // themeCode 설정
+//            }
+            return dto;
+        }).collect(Collectors.toList());
 
-        return modelMapper.map(question, Questionnaire.class);
+        log.info("[ScheduleService] Converted DTOs: " + questionnaireDTOList);  // 변환된 DTO 리스트 확인
+
+        return questionnaireDTOList;  // 서비스에서 DTO 리스트 반환
     }
+
 }

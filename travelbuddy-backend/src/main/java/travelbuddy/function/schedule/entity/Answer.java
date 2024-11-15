@@ -1,4 +1,4 @@
-package travelbuddy.function.qestion.entity;
+package travelbuddy.function.schedule.entity;
 
 import jakarta.persistence.*;
 

@@ -65,6 +65,8 @@ public class MypageService {
         log.info("[MypageService] selectBuddyList() Start");
         List<Buddy> selectBuddyList = mypageRepository.findByMemberCode();
 
+        
+
         System.out.println("selectBuddyList = " + selectBuddyList);
 
         List<BuddyDTO> buddyList = selectBuddyList.stream()

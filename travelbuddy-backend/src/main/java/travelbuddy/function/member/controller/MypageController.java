@@ -68,14 +68,14 @@ public class MypageController {
 //    }
 
     @Operation(summary = "게시글조회요청", description = "내가쓴글목록조회", tags = {"MypageController"})
-    @GetMapping("/mybuddypost")
+    @GetMapping("/mybuddylist")
     public ResponseEntity<ResponseDTO> selectBuddyList() {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글목록조회성공", mypageService.selectBuddyList()));
     }
 
     @Operation(summary = "게시글상세조회요청", description = "내가쓴글상세조회", tags = {"MypageController"})
-    @GetMapping("/mybuddypost/{buddyCode}")
+    @GetMapping("/mybuddylist/{buddyCode}")
     public ResponseEntity<ResponseDTO> getBuddyDetail(@PathVariable("buddyCode") int buddyCode) {
         Map<String, Object> getBuddyDetail = mypageService.getBuddyDetail(buddyCode);
 

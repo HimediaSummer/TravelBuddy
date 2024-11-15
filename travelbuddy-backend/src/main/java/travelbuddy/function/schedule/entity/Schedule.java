@@ -21,19 +21,19 @@ public class Schedule {
     private int scheCode;
 
     @ManyToOne
-    @JoinColumn(name="region_code")
+    @JoinColumn(name="region_code", referencedColumnName = "region_code")
     private Region region;
 
     @ManyToOne
-    @JoinColumn(name="accom_code")
+    @JoinColumn(name="accom_code", referencedColumnName = "accom_code")
     private Accommodation accommodation;
 
     @ManyToOne
-    @JoinColumn(name="member_code")
+    @JoinColumn(name="member_code", referencedColumnName = "member_code")
     private Account account;
 
     @ManyToOne
-    @JoinColumn(name="member_answer_code")
+    @JoinColumn(name="member_answer_code", referencedColumnName = "member_answer_code")
     private MemberAnswer memberAnswer;
 
     @Column(name="sche_list")

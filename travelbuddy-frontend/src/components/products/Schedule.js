@@ -1,18 +1,128 @@
 import React, { useEffect, useState } from 'react';
 
-function App() {
-  const [message, setMessage] = useState('');
+function Schedule() {
+//   const [message, setMessage] = useState('');
+  const [accom, setAccom] = useState([]);
+  const [region, setRegion] = useState([]);
+  const [question, setQuestion] = useState([]);
+  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [selectedAccom, setSelectedAccom] = useState(null);
 
-  useEffect(() => {
+//   useEffect(() => {
+//     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
+//     fetch('http://localhost:8080/schedule')
+//       .then(response => response.text())
+//       .then(data => setMessage(data))
+//       .catch(error => console.error('Error fetching data:', error));
+//   }, []);
+
+//   useEffect(() => {
+//     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
+//     fetch('http://localhost:8080/schedule/accom/1')
+//       .then(response => response.text())
+//       .then(data => setMessage(data))
+//       .catch(error => console.error('Error fetching data:', error));
+//   }, []);
+
+//   useEffect(() => {
+//     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
+//     fetch('http://localhost:8080/schedule/region')
+//       .then(response => response.text())
+//       .then(data => setRegion(data))
+//       .catch(error => console.error('Error fetching data:', error));
+//   }, []);
+
+    // useEffect(() => {
+    //     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
+    //     fetch('http://localhost:8080/schedule/accom')
+    //     .then(response => response.text())
+    //     .then(data => setAccom(data))
+    //     .catch(error => console.error('Error fetching data:', error));
+    // }, []);
+
+    useEffect(() => {
+        // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
+        fetch('http://localhost:8080/schedule/question')
+        .then(response => response.json())
+        .then(data => {
+            const question = data.data.question.map(question => ({
+            themeCode : question.themeCode,
+            questionTheme : question.questionTheme
+        }));
+        setQuestion(question);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }, []);
+
+    useEffect(() => {
     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
-    fetch('http://localhost:8080/schedule')
-      .then(response => response.text())
-      .then(data => setMessage(data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
+    fetch('http://localhost:8080/schedule/region')
+        .then(response => response.json())
+        .then(data => {
+            const regions = data.data.regions.map(region => ({
+            regionCode : region.regionCode,
+            regionName : region.regionName
+        }));
+        setRegion(regions);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }, []);
+
+    useEffect(() => {
+        fetch('http://localhost:8080/schedule/accom')
+          .then(response => response.json())
+          .then(data => {
+              const accommodations = data.data.Accommodations.map(accom => ({
+              accomCode: accom.accomCode,
+              accomType: accom.accomType
+            }));
+            setAccom(accommodations);
+          })
+          .catch(error => console.error('Error fetching data:', error));
+    }, []);
+
+      const handleRegionSelect = (region) => {
+        setSelectedRegion(region);
+        console.log("Selected Region:", region);
+      };
+
+      const handleAccomSelect = (accom) => {
+        setSelectedAccom(accom);
+        console.log("Selected Accommodation:", accom);
+      };
 
   return (
     <div className="App">
+      <h2>Regions</h2>
+      {region.map((region, index) => (
+        <div key={index}>
+          <p>regionCode: {region.regionCode}</p>
+          <p>regionName: {region.regionName}</p>
+        </div>
+      ))}
+      
+      <h2>Accommodations</h2>
+      {accom.map((accom, index) => (
+        <div key={index}>
+          <p>accomCode: {accom.accomCode}</p>
+          <p>accomType: {accom.accomType}</p>
+        </div>
+      ))}
+
+      <h2>question</h2>
+      {question}
+      {question.map((question, index) => (
+        <div key={index}>
+          <p>themeCode: {question.themeCode}</p>
+          <p>questionTheme: {question.questionTheme}</p>
+        </div>
+      ))}
+      {/* {accom} */}
+      {/* {accom.accomCode} */}
+      <br/>      
+      <br/>      
+      {/* {region} */}
+      {/* {region.regionCode} */}
       <head>
         <meta charset="UTF-8" />
         <script src="https://kit.fontawesome.com/9e9931aed0.js" crossorigin="anonymous"></script>
@@ -75,32 +185,52 @@ function App() {
                     <p>트래블 버디</p>
                     <p>어떤 여행을 하고싶나요?<i id="plane-icon"class="fa-solid fa-plane-departure"></i></p>
                 </div>
+                
 
                     <div class="chat-container">
                         <form class="chat-form" action="post">
                             <div class="user_input">
                                 <h2 class="chat-head">여행 일정을 입력해주세요</h2>
-                                <div class="location">
-                                    <div class="depart-airport">
-                                    <select id="start-point">
-                                        <option value="" disabled selected>가고싶은도시</option>
-                                        <option name="start-point" value="서울">서울</option>
-                                        <option name="start-point" value="인천">인천</option>
-                                        <option name="start-point" value="부산">부산</option>
-                                        <option name="start-point" value="광주">광주</option>
-                                        <option name="start-point "value="울산">울산</option>
-                                        <option name="start-point "value="제주">제주</option>
-                                    </select>
+                                {/* 출발일, 도착일 */}
+                                <div class="travel-date">
+                                    <div class="depart">
+                                        <input id="depart-schedule" type="date" name="depart"/>
+                                    </div>
+                                    <div class="arrive">
+                                        <input id="arrive-schedule" type="date" name="arrive"/>
+                                    </div>
                                 </div>
-                        </div>
-                        {/* 출발일, 도착일 */}
-                        <div class="travel-date">
-                            <div class="depart">
-                                <input id="depart-schedule" type="date" name="depart"/>
-                            </div>
-                            <div class="arrive">
-                                <input id="arrive-schedule" type="date" name="arrive"/>
-                            </div>
+                                <div class="location">
+                                <div class="depart-airport">
+                                <div class="tema-title">
+                                    <legend>가고싶은 도시를 선택해주세요</legend>
+                                </div>
+                                    <select id="start-point">
+                                        <option value="" disabled selected>가고싶은 도시</option>
+                                        {region.map((region) => (
+                                            <option key={region.regionCode} value={region.regionName}>
+                                                {region.regionName}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <div>
+                                        {region.map((region) => (
+                                        <button key={region.regionCode} onClick={() => handleRegionSelect(region)}>
+                                            {region.regionName}
+                                        </button>
+                                        ))}
+                                    </div>
+                                    <div class="tema-title">
+                                        <legend>선호하는 숙소형태를 선택해주세요</legend>
+                                    </div>
+                                    <div>
+                                        {accom.map((accom) => (
+                                        <button key={accom.accomCode} onClick={() => handleAccomSelect(accom)}>
+                                            {accom.accomName} ({accom.accomType})
+                                        </button>
+                                        ))}
+                                    </div>
+                                </div>
                         </div>
                     <div>
                         <fieldset class="select">
@@ -194,4 +324,4 @@ function App() {
   );
 }
 
-export default App;
+export default Schedule;

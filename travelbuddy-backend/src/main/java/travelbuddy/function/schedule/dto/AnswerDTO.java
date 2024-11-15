@@ -1,4 +1,4 @@
-package travelbuddy.function.qestion.dto;
+package travelbuddy.function.schedule.dto;
 
 
 public class AnswerDTO {

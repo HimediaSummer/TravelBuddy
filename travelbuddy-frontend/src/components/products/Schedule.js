@@ -4,9 +4,10 @@ function Schedule() {
 //   const [message, setMessage] = useState('');
   const [accom, setAccom] = useState([]);
   const [region, setRegion] = useState([]);
-  const [question, setQuestion] = useState([]);
+  const [qTheme, setQTheme] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [selectedAccom, setSelectedAccom] = useState(null);
+  const [selectedQuestionTheme, setSelectedQuestionTheme] = useState(null);
 
 //   useEffect(() => {
 //     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
@@ -40,20 +41,7 @@ function Schedule() {
     //     .catch(error => console.error('Error fetching data:', error));
     // }, []);
 
-    useEffect(() => {
-        // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
-        fetch('http://localhost:8080/schedule/question')
-        .then(response => response.json())
-        .then(data => {
-            const question = data.data.question.map(question => ({
-            themeCode : question.themeCode,
-            questionTheme : question.questionTheme
-        }));
-        setQuestion(question);
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    }, []);
-
+	// 장소
     useEffect(() => {
     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
     fetch('http://localhost:8080/schedule/region')
@@ -63,11 +51,13 @@ function Schedule() {
             regionCode : region.regionCode,
             regionName : region.regionName
         }));
+		console.log("가져왓냐?", data);
         setRegion(regions);
         })
         .catch(error => console.error('Error fetching data:', error));
     }, []);
 
+	// 숙소
     useEffect(() => {
         fetch('http://localhost:8080/schedule/accom')
           .then(response => response.json())
@@ -76,10 +66,27 @@ function Schedule() {
               accomCode: accom.accomCode,
               accomType: accom.accomType
             }));
+			console.log("가져왓냐?", data);
             setAccom(accommodations);
           })
           .catch(error => console.error('Error fetching data:', error));
-    }, []);
+      }, []);
+
+	  // 질문지 테마
+	  useEffect(() => {
+        fetch('http://localhost:8080/schedule/question')
+          .then(response => response.json())
+          .then(data => {
+			console.log('가져온거', data);
+              const questionThemes = data.data.qThemes.map(qTheme => ({
+              themeCode: qTheme.themeCode,
+              questionTheme: qTheme.questionTheme
+            }));
+			console.log("가져왓냐?", data);
+            setQTheme(questionThemes);
+          })
+          .catch(error => console.error('Error fetching data:', error));
+      }, []);
 
       const handleRegionSelect = (region) => {
         setSelectedRegion(region);
@@ -90,6 +97,11 @@ function Schedule() {
         setSelectedAccom(accom);
         console.log("Selected Accommodation:", accom);
       };
+
+	  const hadleQuestionThemeSelect = qTheme => {
+		setSelectedQuestionTheme(qTheme);
+		console.log("Selected QuestionTheme:", qTheme);
+	  };
 
   return (
     <div className="App">
@@ -109,12 +121,11 @@ function Schedule() {
         </div>
       ))}
 
-      <h2>question</h2>
-      {question}
-      {question.map((question, index) => (
+	 <h2>QuestionThemes</h2>
+      {qTheme.map((qTheme, index) => (
         <div key={index}>
-          <p>themeCode: {question.themeCode}</p>
-          <p>questionTheme: {question.questionTheme}</p>
+          <p>themeCode: {qTheme.themeCode}</p>
+          <p>questionTheme: {qTheme.questionTheme}</p>
         </div>
       ))}
       {/* {accom} */}

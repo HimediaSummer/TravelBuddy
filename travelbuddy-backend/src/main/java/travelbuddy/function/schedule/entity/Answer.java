@@ -45,12 +45,12 @@ public class Answer {
   }
 
 
-  public Questionnaire getQuestCode() {
+  public Questionnaire getQuestionnaire() {
     return questionnaire;
   }
 
-  public void setQuestCode(Questionnaire questCode) {
-    this.questionnaire = questCode;
+  public void setQuestionnaire(Questionnaire questionnaire) {
+    this.questionnaire = questionnaire;
   }
 
   @Override

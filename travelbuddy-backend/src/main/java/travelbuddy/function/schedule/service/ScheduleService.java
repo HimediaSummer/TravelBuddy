@@ -1,12 +1,17 @@
 package travelbuddy.function.schedule.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import travelbuddy.function.member.dto.AccountDTO;
+
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.entity.MemberAnswer;
 import travelbuddy.function.member.repository.AccountRepository;
@@ -20,11 +25,6 @@ import travelbuddy.function.schedule.entity.Schedule;
 import travelbuddy.function.schedule.repository.AccommodationRepository;
 import travelbuddy.function.schedule.repository.RegionRepository;
 import travelbuddy.function.schedule.repository.ScheduleRepository;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class ScheduleService {
@@ -105,7 +105,6 @@ public class ScheduleService {
                                                 .collect(Collectors.toList());
 
         // 질문지 테마(카테고리)
-
 
         // 묶어
         Map<String, Object> responseData = new HashMap<>();

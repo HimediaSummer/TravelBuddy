@@ -11,6 +11,7 @@ export const callMemberListForAdminAPI = ({currentPage}) => {
                 Accept: '*/*'
             }
         }).then((response) => response.json());
-        dispatch({type: GET_MEMBER, result });
-        console.log('백엔드에서 가져온 데이터',result);
+        console.log('API 응답:', result);
+        dispatch({type: GET_MEMBER, payload: result });
+        console.log('액션 디스패치 완료');
     }}

@@ -104,6 +104,9 @@ public class ScheduleService {
                                                 .map(accommodation -> modelMapper.map(accommodation, AccommodationDTO.class))
                                                 .collect(Collectors.toList());
 
+        // 질문지 테마(카테고리)
+
+
         // 묶어
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("regions", regionDTOS);

@@ -11,9 +11,17 @@ function App() {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
+  useEffect(() => {
+    // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
+    fetch('http://localhost:8080/schedule/accom/1')
+      .then(response => response.text())
+      .then(data => setMessage(data))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
   return (
     <div className="App">
-      {/*message*/}
+      {message}
       <head>
         <meta charset="UTF-8" />
         <script src="https://kit.fontawesome.com/9e9931aed0.js" crossorigin="anonymous"></script>

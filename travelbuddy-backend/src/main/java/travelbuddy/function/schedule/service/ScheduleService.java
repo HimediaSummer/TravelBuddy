@@ -88,8 +88,7 @@ public class ScheduleService {
         return (result > 0) ? "생성 일정 저장 성공" : "생성 일정 저장 실패";
     }
 
-    public Map<String, Object> select() {
-
+    public Map<String, Object> selectAllregion() {
         log.info("[ScheduleService] select() start");
         System.out.println("[ScheduleService] 왓니?");
 
@@ -98,6 +97,22 @@ public class ScheduleService {
         List<RegionDTO> regionDTOS = regions.stream()
                                             .map(region -> modelMapper.map(region, RegionDTO.class))
                                             .collect(Collectors.toList());
+
+        // 질문지 테마(카테고리)
+
+        // 묶어
+        Map<String, Object> responseDataRegion = new HashMap<>();
+        responseDataRegion.put("regions", regionDTOS);
+
+        log.info("[ScheduleService] select() end");
+
+        return responseDataRegion;
+    }
+
+    public Map<String, Object> selectAllaccom() {
+        log.info("[ScheduleService] select() start");
+        System.out.println("[ScheduleService] 왓니?");
+
         // 숙소
         List<Accommodation> accoms = accommodationRepository.findAll();
         List<AccommodationDTO> accomDTOS = accoms.stream()
@@ -107,13 +122,12 @@ public class ScheduleService {
         // 질문지 테마(카테고리)
 
         // 묶어
-        Map<String, Object> responseData = new HashMap<>();
-        responseData.put("regions", regionDTOS);
-        responseData.put("Accommodations", accomDTOS);
+        Map<String, Object> responseDataAccom = new HashMap<>();
+        responseDataAccom.put("Accommodations", accomDTOS);
 
         log.info("[ScheduleService] select() end");
 
-        return responseData;
+        return responseDataAccom;
     }
 
     public Object selectRegionByCode(int regionCode) {
@@ -133,7 +147,7 @@ public class ScheduleService {
         log.info("[ScheduleService] selectAccomByCode() start");
         System.out.println("[ScheduleService] 왓니?");
 
-        Accommodation accom = accommodationRepository.findById(accomCode).get();
+       Accommodation accom = accommodationRepository.findById(accomCode).get();
 
         log.info("[ScheduleService] selectAccomByCode() end");
 

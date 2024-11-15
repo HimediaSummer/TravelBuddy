@@ -1,5 +1,7 @@
 package travelbuddy.function.schedule.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +51,15 @@ public class ScheduleController {
 //        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", responseData));
 //    }
 
+    @Operation(summary = "지역 전체 조회", description = "사용자가 선택할 수 있는 모든지역이 조회됩니다.", tags = { "ScheduleController" })
+    @GetMapping("/region")
+    public ResponseEntity<ResponseDTO> selectAllregion() {
+        Map<String, Object> responseDataRegion = scheduleService.selectAllregion();
+        System.out.println("[ScheduleController] 왓니?");
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전체 조회 성공", responseDataRegion));
+    }
+
     @Operation(summary = "지역 상세 조회", description = "사용자가 선택할 수 있는 지역이 상세 조회됩니다.", tags = { "ScheduleController" })
     @GetMapping("/region/{regionCode}")
     public ResponseEntity<ResponseDTO> selectRegionByCode(@PathVariable int regionCode) {
@@ -56,6 +67,13 @@ public class ScheduleController {
         System.out.println("[ScheduleController] 왓니?");
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상세 조회 성공", scheduleService.selectRegionByCode(regionCode)));
+    }
+
+    @Operation(summary = "숙소 전체 조회", description = "모든 지역과 숙소 정보를 조회합니다.", tags = { "ScheduleController" })
+    @GetMapping("/accom")
+    public ResponseEntity<ResponseDTO> selectAllaccom() {
+        Map<String, Object> responseDataAccom = scheduleService.selectAllaccom();
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "모든 숙소 조회 성공", responseDataAccom));
     }
 
     @Operation(summary = "숙소 상세 조회", description = "사용자가 선택할 수 있는 지역이 상세 조회됩니다.", tags = { "ScheduleController" })

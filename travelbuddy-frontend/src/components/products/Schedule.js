@@ -1,27 +1,48 @@
 import React, { useEffect, useState } from 'react';
 
 function App() {
-  const [message, setMessage] = useState('');
+//   const [message, setMessage] = useState('');
+  const [region, setRegion] = useState('');
+  const [accom, setAccom] = useState('');
+
+//   useEffect(() => {
+//     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
+//     fetch('http://localhost:8080/schedule')
+//       .then(response => response.text())
+//       .then(data => setMessage(data))
+//       .catch(error => console.error('Error fetching data:', error));
+//   }, []);
+
+//   useEffect(() => {
+//     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
+//     fetch('http://localhost:8080/schedule/accom/1')
+//       .then(response => response.text())
+//       .then(data => setMessage(data))
+//       .catch(error => console.error('Error fetching data:', error));
+//   }, []);
 
   useEffect(() => {
     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
-    fetch('http://localhost:8080/schedule')
+    fetch('http://localhost:8080/schedule/accom')
       .then(response => response.text())
-      .then(data => setMessage(data))
+      .then(data => setRegion(data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
   useEffect(() => {
     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
-    fetch('http://localhost:8080/schedule/accom/1')
+    fetch('http://localhost:8080/schedule/region')
       .then(response => response.text())
-      .then(data => setMessage(data))
+      .then(data => setAccom(data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
   return (
     <div className="App">
-      {message}
+      {region}
+      <br/>
+      <br/>
+      {accom}
       <head>
         <meta charset="UTF-8" />
         <script src="https://kit.fontawesome.com/9e9931aed0.js" crossorigin="anonymous"></script>

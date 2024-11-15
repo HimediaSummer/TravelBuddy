@@ -27,6 +27,11 @@ public class MemberService {
 		
 		Account member = memberRepository.findByMemberName(memberName);
 		log.info("[MemberService] {}", member);
+
+		AccountDTO accountDTO = modelMapper.map(member, AccountDTO.class);
+		accountDTO.setMemberCode(member.getMemberCode());
+
+		log.info("[MemberService] {}", member);
 		log.info("[MemberService] getMyInfo End =========================");
 		
 		return modelMapper.map(member, AccountDTO.class);

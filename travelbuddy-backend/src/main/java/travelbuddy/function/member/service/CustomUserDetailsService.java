@@ -44,6 +44,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         // 조회된 사용자 엔티티를 DTO로 매핑.
         // 이 AccountDTO는 엔티티를 옮겨 담는 DTO역할도 수행하지만, 결국 내부적으로 UserDetails가 구현되어 있다.
         AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
+        accountDTO.setMemberCode(account.getMemberCode());
 
         /* 처음 조회한 엔티티 째로는 사용자에게 할당된 권한 정보를 얻어낼 수 없다.
          * MemberDTO에 추가한 Collection<GrantedAuthority> authorities 필드 변수를 사용해야 한다.

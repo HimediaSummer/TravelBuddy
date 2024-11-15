@@ -14,13 +14,11 @@ public class BuddyDTO {
     private String buddyImg;
     private int buddyCount;
     private String buddyAt;
-    private String buddyApply;
 
     public BuddyDTO() {
     }
 
-    public BuddyDTO(String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, int buddyTypeCode, int memberCode, int regionCode) {
-        this.buddyApply = buddyApply;
+    public BuddyDTO(String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, int buddyTypeCode, int memberCode, int regionCode) {
         this.buddyAt = buddyAt;
         this.buddyCode = buddyCode;
         this.buddyContents = buddyContents;
@@ -32,14 +30,6 @@ public class BuddyDTO {
         this.buddyTypeCode = buddyTypeCode;
         this.memberCode = memberCode;
         this.regionCode = regionCode;
-    }
-
-    public String getBuddyApply() {
-        return buddyApply;
-    }
-
-    public void setBuddyApply(String buddyApply) {
-        this.buddyApply = buddyApply;
     }
 
     public String getBuddyAt() {
@@ -133,7 +123,6 @@ public class BuddyDTO {
     @Override
     public String toString() {
         return "BuddyDTO{" +
-                "buddyApply='" + buddyApply + '\'' +
                 ", buddyCode=" + buddyCode +
                 ", memberCode=" + memberCode +
                 ", regionCode=" + regionCode +

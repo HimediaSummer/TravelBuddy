@@ -18,29 +18,17 @@ public class BuddyMatchData {
   @Column(name = "apply_id")
   private String applyId;
 
+  @Column(name = "apply_status")
+  private int applyStatus;
+
   public BuddyMatchData() {
   }
 
-  public BuddyMatchData(String applyId, Buddy buddy, int buddyMatchCode) {
-    this.applyId = applyId;
-    this.buddy = buddy;
+  public BuddyMatchData(int buddyMatchCode, Buddy buddy, String applyId, int applyStatus) {
     this.buddyMatchCode = buddyMatchCode;
-  }
-
-  public String getApplyId() {
-    return applyId;
-  }
-
-  public void setApplyId(String applyId) {
-    this.applyId = applyId;
-  }
-
-  public Buddy getBuddy() {
-    return buddy;
-  }
-
-  public void setBuddy(Buddy buddy) {
     this.buddy = buddy;
+    this.applyId = applyId;
+    this.applyStatus = applyStatus;
   }
 
   public int getBuddyMatchCode() {
@@ -51,12 +39,38 @@ public class BuddyMatchData {
     this.buddyMatchCode = buddyMatchCode;
   }
 
+  public Buddy getBuddy() {
+    return buddy;
+  }
+
+  public void setBuddy(Buddy buddy) {
+    this.buddy = buddy;
+  }
+
+  public String getApplyId() {
+    return applyId;
+  }
+
+  public void setApplyId(String applyId) {
+    this.applyId = applyId;
+  }
+
+  public int getApplyStatus() {
+    return applyStatus;
+  }
+
+  public void setApplyStatus(int applyStatus) {
+    this.applyStatus = applyStatus;
+  }
+
   @Override
   public String toString() {
     return "BuddyMatchData{" +
-            "applyId='" + applyId + '\'' +
-            ", buddyMatchCode=" + buddyMatchCode +
+            "buddyMatchCode=" + buddyMatchCode +
             ", buddy=" + buddy +
+            ", applyId='" + applyId + '\'' +
+            ", applyStatus=" + applyStatus +
             '}';
   }
+
 }

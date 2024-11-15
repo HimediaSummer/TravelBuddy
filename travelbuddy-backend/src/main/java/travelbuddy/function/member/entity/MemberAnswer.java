@@ -8,8 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import travelbuddy.function.qestion.entity.Answer;
-import travelbuddy.function.qestion.entity.Questionnaire;
+import travelbuddy.function.schedule.entity.Answer;
+import travelbuddy.function.schedule.entity.Questionnaire;
 
 @Entity
 @Table(name="tbl_member_answer")

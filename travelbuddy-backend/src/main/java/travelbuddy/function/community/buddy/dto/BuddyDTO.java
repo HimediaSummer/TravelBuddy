@@ -1,7 +1,5 @@
 package travelbuddy.function.community.buddy.dto;
 
-import travelbuddy.function.schedule.dto.RegionDTO;
-
 public class BuddyDTO {
     private int buddyCode;          // 버디코드
     private int memberCode;         // 회원코드

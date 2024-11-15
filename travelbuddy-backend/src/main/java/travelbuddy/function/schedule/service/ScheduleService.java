@@ -16,6 +16,11 @@ import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.entity.MemberAnswer;
 import travelbuddy.function.member.repository.AccountRepository;
 import travelbuddy.function.member.repository.MemberAnswerRepository;
+import travelbuddy.function.qestion.dto.QuestionNaireThemeDTO;
+import travelbuddy.function.qestion.entity.QuestionNaireTheme;
+import travelbuddy.function.qestion.entity.Questionnaire;
+import travelbuddy.function.qestion.repository.QuestionNaireThemeRepository;
+import travelbuddy.function.qestion.repository.QuestionnaireRepository;
 import travelbuddy.function.schedule.dto.AccommodationDTO;
 import travelbuddy.function.schedule.dto.RegionDTO;
 import travelbuddy.function.schedule.dto.ScheduleDTO;
@@ -37,15 +42,19 @@ public class ScheduleService {
     private final AccountRepository accountRepository;
     private final MemberAnswerRepository memberAnswerRepository;
     private final ModelMapper modelMapper;
+    private final QuestionnaireRepository questionnaireRepository;
+    private final QuestionNaireThemeRepository questionNaireThemeRepository;
 
     @Autowired
-    public ScheduleService(ScheduleRepository scheduleRepository, RegionRepository regionRepository, AccommodationRepository accommodationRepository, AccountRepository accountRepository, MemberAnswerRepository memberAnswerRepository, ModelMapper modelMapper) {
+    public ScheduleService(ScheduleRepository scheduleRepository, RegionRepository regionRepository, AccommodationRepository accommodationRepository, AccountRepository accountRepository, MemberAnswerRepository memberAnswerRepository, ModelMapper modelMapper, QuestionNaireThemeRepository questionNaireThemeRepository, QuestionnaireRepository questionnaireRepository) {
         this.scheduleRepository = scheduleRepository;
         this.regionRepository = regionRepository;
         this.accommodationRepository = accommodationRepository;
         this.accountRepository = accountRepository;
         this.memberAnswerRepository = memberAnswerRepository;
         this.modelMapper = modelMapper;
+        this.questionnaireRepository = questionnaireRepository;
+        this.questionNaireThemeRepository = questionNaireThemeRepository;
     }
 
     public List<Schedule> getAllSchedules() {
@@ -105,11 +114,16 @@ public class ScheduleService {
                                                 .collect(Collectors.toList());
 
         // 질문지 테마(카테고리)
+        List<QuestionNaireTheme> qThemes = questionNaireThemeRepository.findAll();
+        List<QuestionNaireThemeDTO> qThemeDTOs = qThemes.stream()
+                                                        .map(questionNaireTheme -> modelMapper.map(questionNaireTheme, QuestionNaireThemeDTO.class))
+                                                        .collect(Collectors.toList());
 
         // 묶어
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("regions", regionDTOS);
-        responseData.put("Accommodations", accomDTOS);
+        responseData.put("accommodations", accomDTOS);
+        responseData.put("questionNaireThemes", qThemeDTOs);
 
         log.info("[ScheduleService] select() end");
 
@@ -138,5 +152,17 @@ public class ScheduleService {
         log.info("[ScheduleService] selectAccomByCode() end");
 
         return modelMapper.map(accom, Accommodation.class);
+    }
+
+    public Object selectQuestionByThemeCode(int themeCode) {
+
+        log.info("[ScheduleService] selectQuestionByThemeCode() start");
+        System.out.println("[ScheduleService] 왓니?");
+
+        Questionnaire question = questionnaireRepository.findQuestionNaireTheme_ThemeCode(themeCode).get();
+
+        log.info("[ScheduleService] selectQuestionByThemeCode() end");
+
+        return modelMapper.map(question, Questionnaire.class);
     }
 }

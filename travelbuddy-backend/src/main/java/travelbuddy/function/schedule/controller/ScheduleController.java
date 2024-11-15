@@ -15,6 +15,8 @@ import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.schedule.dto.ScheduleDTO;
 import travelbuddy.function.schedule.service.ScheduleService;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/schedule")
 public class ScheduleController {
@@ -38,16 +40,17 @@ public class ScheduleController {
         return "일단 메인페이지 따란~";
     }
 
-//    @Operation(summary = "조회", description = "사용자가 선택할 수 있는 정보가 조회됩니다.", tags = { "ScheduleController" })
+    @Operation(summary = "전체 조회", description = "사용자가 선택할 수 있는 정보가 조회됩니다.", tags = { "ScheduleController" })
+    @GetMapping()
 //    @GetMapping("/schedule")
-//    public ResponseEntity<ResponseDTO> select() {
-//
-//        System.out.println("[ScheduleController] 왓니?");
-//
-//        Map<String, Object> responseData = scheduleService.select();
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", responseData));
-//    }
+    public ResponseEntity<ResponseDTO> select() {
+
+        System.out.println("[ScheduleController] 왓니?");
+
+        Map<String, Object> responseData = scheduleService.select();
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", responseData));
+    }
 
     @Operation(summary = "지역 상세 조회", description = "사용자가 선택할 수 있는 지역이 상세 조회됩니다.", tags = { "ScheduleController" })
     @GetMapping("/region/{regionCode}")
@@ -65,6 +68,15 @@ public class ScheduleController {
         System.out.println("[ScheduleController] 왓니?");
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상세 조회 성공", scheduleService.selectAccomByCode(accomCode)));
+    }
+
+    @Operation(summary = "질문지 상세 조회", description = "사용자가 선택할 수 있는 질문지가 상세 조회됩니다.", tags = { "ScheduleController" })
+    @GetMapping("/question/{themeCode}")
+    public ResponseEntity<ResponseDTO> selectQuestionByThemeCode(@PathVariable int themeCode) {
+
+        System.out.println("[ScheduleController] 왓니?");
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상세 조회 성공", scheduleService.selectQuestionByThemeCode(themeCode)));
     }
 
     @Operation(summary = "일정 생성", description = "사용자 정보 입력 받아 일정 생성", tags = { "ScheduleController" })

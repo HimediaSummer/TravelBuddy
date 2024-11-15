@@ -141,8 +141,8 @@ public class ScheduleService {
     }
 
     public Map<String, Object> selectAllQuestionTheme() {
-        log.info("[ScheduleService] selectAllQuestionTheme() start");
-        System.out.println("[ScheduleService] 왓니?");
+        log.info("[QuestionTheme] selectAllQuestionTheme() start");
+        System.out.println("[QuestionTheme] 왓니?");
 
         // 질문지 테마
         List<QuestionNaireTheme> qThemes = questionNaireThemeRepository.findAll();
@@ -154,7 +154,7 @@ public class ScheduleService {
         Map<String, Object> responseDataQuestionTheme = new HashMap<>();
         responseDataQuestionTheme.put("qThemes", qThemeDTOs);
 
-        log.info("[ScheduleService] selectAllQuestionTheme() end");
+        log.info("[QuestionTheme] selectAllQuestionTheme() end");
 
         return responseDataQuestionTheme;
     }
@@ -186,14 +186,14 @@ public class ScheduleService {
     @Transactional
     public Object selectQuestionByThemeCode(int themeCode) {
 
-        log.info("[ScheduleService] selectQuestionByThemeCode() start");
-        System.out.println("[ScheduleService] 왓니?");
+        log.info("[QuestionByThemeCode] selectQuestionByThemeCode() start");
+        System.out.println("[QuestionByThemeCode] 왓니?");
 
         List<Questionnaire> question = questionnaireRepository.findByQuestionNaireTheme_ThemeCode(themeCode);
 
-        log.info("[ScheduleService] selectQuestionByThemeCode() end");
+        log.info("[QuestionByThemeCode] selectQuestionByThemeCode() end");
 
-        System.out.println("[ScheduleService] question = " + question);
+        System.out.println("[QuestionByThemeCode] question = " + question);
 
         return modelMapper.map(question, Questionnaire.class);
     }

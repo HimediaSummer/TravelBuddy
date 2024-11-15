@@ -4,6 +4,7 @@ function Schedule() {
 //   const [message, setMessage] = useState('');
   const [accom, setAccom] = useState([]);
   const [region, setRegion] = useState([]);
+  const [question, setQuestion] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [selectedAccom, setSelectedAccom] = useState(null);
 
@@ -40,6 +41,20 @@ function Schedule() {
     // }, []);
 
     useEffect(() => {
+        // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
+        fetch('http://localhost:8080/schedule/question')
+        .then(response => response.json())
+        .then(data => {
+            const question = data.data.question.map(region => ({
+            questionCode : question.questionCode,
+            questionName : question.questionName
+        }));
+        setRegion(question);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }, []);
+
+    useEffect(() => {
     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
     fetch('http://localhost:8080/schedule/region')
         .then(response => response.json())
@@ -64,7 +79,7 @@ function Schedule() {
             setAccom(accommodations);
           })
           .catch(error => console.error('Error fetching data:', error));
-      }, []);
+    }, []);
 
       const handleRegionSelect = (region) => {
         setSelectedRegion(region);
@@ -78,6 +93,7 @@ function Schedule() {
 
   return (
     <div className="App">
+      {question}
       <h2>Regions</h2>
       {region.map((region, index) => (
         <div key={index}>

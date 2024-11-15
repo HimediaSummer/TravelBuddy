@@ -45,11 +45,11 @@ function Schedule() {
         fetch('http://localhost:8080/schedule/question')
         .then(response => response.json())
         .then(data => {
-            const question = data.data.question.map(region => ({
-            questionCode : question.questionCode,
-            questionName : question.questionName
+            const question = data.data.question.map(question => ({
+            themeCode : question.themeCode,
+            questionTheme : question.questionTheme
         }));
-        setRegion(question);
+        setQuestion(question);
         })
         .catch(error => console.error('Error fetching data:', error));
     }, []);
@@ -93,7 +93,6 @@ function Schedule() {
 
   return (
     <div className="App">
-      {question}
       <h2>Regions</h2>
       {region.map((region, index) => (
         <div key={index}>
@@ -107,6 +106,15 @@ function Schedule() {
         <div key={index}>
           <p>accomCode: {accom.accomCode}</p>
           <p>accomType: {accom.accomType}</p>
+        </div>
+      ))}
+
+      <h2>question</h2>
+      {question}
+      {question.map((question, index) => (
+        <div key={index}>
+          <p>themeCode: {question.themeCode}</p>
+          <p>questionTheme: {question.questionTheme}</p>
         </div>
       ))}
       {/* {accom} */}

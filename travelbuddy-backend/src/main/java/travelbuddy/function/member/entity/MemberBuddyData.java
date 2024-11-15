@@ -49,7 +49,7 @@ public class MemberBuddyData {
         return memberCode;
     }
 
-    public void setAccount(AccountEntity memberCode) {
+    public void setMemberCode(AccountEntity memberCode) {
         this.memberCode = memberCode;
     }
 

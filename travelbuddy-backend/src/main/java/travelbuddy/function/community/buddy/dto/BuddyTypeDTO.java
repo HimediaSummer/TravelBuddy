@@ -1,8 +1,8 @@
 package travelbuddy.function.community.buddy.dto;
 
 public class BuddyTypeDTO {
-    private int buddyTypeCode;
-    private String buddyTypeName;
+    private int buddyTypeCode;          // 버디유형코드
+    private String buddyTypeName;       // 버디유형이름
 
     public BuddyTypeDTO() {
     }

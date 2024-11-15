@@ -17,6 +17,7 @@ import travelbuddy.function.member.entity.MemberAnswer;
 import travelbuddy.function.member.repository.AccountRepository;
 import travelbuddy.function.member.repository.MemberAnswerRepository;
 import travelbuddy.function.qestion.dto.QuestionNaireThemeDTO;
+import travelbuddy.function.qestion.dto.QuestionnaireDTO;
 import travelbuddy.function.qestion.entity.QuestionNaireTheme;
 import travelbuddy.function.qestion.entity.Questionnaire;
 import travelbuddy.function.qestion.repository.QuestionNaireThemeRepository;
@@ -98,7 +99,7 @@ public class ScheduleService {
     }
 
     public Map<String, Object> selectAllregion() {
-        log.info("[ScheduleService] select() start");
+        log.info("[ScheduleService] selectAllregion() start");
         System.out.println("[ScheduleService] 왓니?");
 
         // 장소
@@ -113,13 +114,13 @@ public class ScheduleService {
         Map<String, Object> responseDataRegion = new HashMap<>();
         responseDataRegion.put("regions", regionDTOS);
 
-        log.info("[ScheduleService] select() end");
+        log.info("[ScheduleService] selectAllregion() end");
 
         return responseDataRegion;
     }
 
     public Map<String, Object> selectAllaccom() {
-        log.info("[ScheduleService] select() start");
+        log.info("[ScheduleService] selectAllaccom() start");
         System.out.println("[ScheduleService] 왓니?");
 
         // 숙소
@@ -134,9 +135,28 @@ public class ScheduleService {
         Map<String, Object> responseDataAccom = new HashMap<>();
         responseDataAccom.put("Accommodations", accomDTOS);
 
-        log.info("[ScheduleService] select() end");
+        log.info("[ScheduleService] selectAllaccom() end");
 
         return responseDataAccom;
+    }
+
+    public Map<String, Object> selectAllQuestionTheme() {
+        log.info("[ScheduleService] selectAllQuestionTheme() start");
+        System.out.println("[ScheduleService] 왓니?");
+
+        // 질문지 테마
+        List<QuestionNaireTheme> qThemes = questionNaireThemeRepository.findAll();
+        List<QuestionNaireThemeDTO> qThemeDTOs = qThemes.stream()
+                                                        .map(questionNaireTheme -> modelMapper.map(questionNaireTheme, QuestionNaireThemeDTO.class))
+                                                        .collect(Collectors.toList());
+
+        // 묶어
+        Map<String, Object> responseDataQuestionTheme = new HashMap<>();
+        responseDataQuestionTheme.put("qThemes", qThemeDTOs);
+
+        log.info("[ScheduleService] selectAllQuestionTheme() end");
+
+        return responseDataQuestionTheme;
     }
 
     public Object selectRegionByCode(int regionCode) {
@@ -163,14 +183,24 @@ public class ScheduleService {
         return modelMapper.map(accom, Accommodation.class);
     }
 
+    @Transactional
     public Object selectQuestionByThemeCode(int themeCode) {
 
         log.info("[ScheduleService] selectQuestionByThemeCode() start");
         System.out.println("[ScheduleService] 왓니?");
 
-        Questionnaire question = questionnaireRepository.findQuestionNaireTheme_ThemeCode(themeCode).get();
+        List<Questionnaire> question = questionnaireRepository.findByQuestionNaireTheme_ThemeCode(themeCode);
 
         log.info("[ScheduleService] selectQuestionByThemeCode() end");
+
+        System.out.println("[ScheduleService] question = " + question);
+
+        List<QuestionnaireDTO> questionDTOList = question.stream().map(questionnaire -> {
+          QuestionnaireDTO dto = new QuestionnaireDTO();
+          dto.setQuestCode(questionnaire.getQuestCode());
+          dto.setQuestion(questionnaire.getQuestion());
+//          dto.setThemeCode(questionnaire.getQ());
+        })
 
         return modelMapper.map(question, Questionnaire.class);
     }

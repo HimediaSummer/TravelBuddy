@@ -8,5 +8,5 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface QuestionnaireRepository extends JpaRepository<Questionnaire, Integer> {
-    List<Questionnaire> findQuestionNaireTheme_ThemeCode(int themeCode);
+    List<Questionnaire> findByQuestionNaireTheme_ThemeCode(int themeCode);
 }

@@ -42,17 +42,17 @@ public class ScheduleController {
         return "일단 메인페이지 따란~";
     }
 
-    @Operation(summary = "전체 조회", description = "사용자가 선택할 수 있는 정보가 조회됩니다.", tags = { "ScheduleController" })
-    @GetMapping()
-//    @GetMapping("/schedule")
-    public ResponseEntity<ResponseDTO> select() {
-
-        System.out.println("[ScheduleController] 왓니?");
-
-        Map<String, Object> responseData = scheduleService.select();
-
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", responseData));
-    }
+//    @Operation(summary = "전체 조회", description = "사용자가 선택할 수 있는 정보가 조회됩니다.", tags = { "ScheduleController" })
+//    @GetMapping()
+////    @GetMapping("/schedule")
+//    public ResponseEntity<ResponseDTO> select() {
+//
+//        System.out.println("[ScheduleController] 왓니?");
+//
+//        Map<String, Object> responseData = scheduleService.select();
+//
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", responseData));
+//    }
 
     @Operation(summary = "지역 전체 조회", description = "사용자가 선택할 수 있는 모든지역이 조회됩니다.", tags = { "ScheduleController" })
     @GetMapping("/region")
@@ -88,13 +88,24 @@ public class ScheduleController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상세 조회 성공", scheduleService.selectAccomByCode(accomCode)));
     }
 
+    @Operation(summary = "질문지 테마 조회", description = "질문지의 모든 테마가 조회됩니다.", tags = { "ScheduleController" })
+    @GetMapping("/question")
+    public ResponseEntity<ResponseDTO> selectAllQuestionTheme() {
+        Map<String, Object> responseDataQuestionTheme = scheduleService.selectAllQuestionTheme();
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "질문지 테마 조회 성공", responseDataQuestionTheme));
+    }
+
     @Operation(summary = "질문지 상세 조회", description = "사용자가 선택할 수 있는 질문지가 상세 조회됩니다.", tags = { "ScheduleController" })
     @GetMapping("/question/{themeCode}")
     public ResponseEntity<ResponseDTO> selectQuestionByThemeCode(@PathVariable int themeCode) {
 
         System.out.println("[ScheduleController] 왓니?");
+        System.out.println("[ScheduleController] themeCode = " + themeCode);
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상세 조회 성공", scheduleService.selectQuestionByThemeCode(themeCode)));
+        Object responseData = scheduleService.selectQuestionByThemeCode(themeCode);
+        System.out.println("[ScheduleController] responseData = " + responseData);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "질문지 상세 조회 성공", responseData));
     }
 
     @Operation(summary = "일정 생성", description = "사용자 정보 입력 받아 일정 생성", tags = { "ScheduleController" })

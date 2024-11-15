@@ -195,13 +195,6 @@ public class ScheduleService {
 
         System.out.println("[ScheduleService] question = " + question);
 
-        List<QuestionnaireDTO> questionDTOList = question.stream().map(questionnaire -> {
-          QuestionnaireDTO dto = new QuestionnaireDTO();
-          dto.setQuestCode(questionnaire.getQuestCode());
-          dto.setQuestion(questionnaire.getQuestion());
-//          dto.setThemeCode(questionnaire.getQ());
-        })
-
         return modelMapper.map(question, Questionnaire.class);
     }
 }

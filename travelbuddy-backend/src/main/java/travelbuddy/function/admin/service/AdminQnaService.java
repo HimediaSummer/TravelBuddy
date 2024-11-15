@@ -89,7 +89,7 @@ public class AdminQnaService {
         if (qnaAnswer != null) {
             qnaAnswer.setQna(qna);
         } else {
-            qnaAnswer.setAnsContents("답변을 등록하세요");
+            qnaAnswer = null;
         }
 
             QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO,qnaDTO);

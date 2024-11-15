@@ -26,7 +26,7 @@ public class Buddy {
 
     @ManyToOne
     @JoinColumn(name = "member_code")
-    private Account memberCode;  // 회원코드 FK
+    private Account account;  // 회원코드 FK
 
     @ManyToOne
     @JoinColumn(name = "region_code")
@@ -59,16 +59,11 @@ public class Buddy {
     @ColumnDefault("N")
     private String buddyAt;         // 은폐여부
 
-    @Column(name = "buddy_apply")
-    @ColumnDefault("N")
-    private String buddyApply;      // 버디신청
-
     public Buddy() {
     }
 
-    public Buddy(Account memberCode, String buddyApply, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
-        this.memberCode = memberCode;
-        this.buddyApply = buddyApply;
+    public Buddy(Account account, String buddyAt, int buddyCode, String buddyContents, int buddyCount, String buddyCreate, String buddyImg, String buddyStatus, String buddyTitle, BuddyType buddyType, Region region) {
+        this.account = account;
         this.buddyAt = buddyAt;
         this.buddyCode = buddyCode;
         this.buddyContents = buddyContents;
@@ -81,20 +76,12 @@ public class Buddy {
         this.region = region;
     }
 
-    public Account getMemberCode() {
-        return memberCode;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setMemberCode(Account memberCode) {
-        this.memberCode = memberCode;
-    }
-
-    public String getBuddyApply() {
-        return buddyApply;
-    }
-
-    public void setBuddyApply(String buddyApply) {
-        this.buddyApply = buddyApply;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public String getBuddyAt() {
@@ -180,7 +167,7 @@ public class Buddy {
     @Override
     public String toString() {
         return "Buddy{" +
-                "memberCode=" + memberCode +
+                "account=" + account +
                 ", buddyCode=" + buddyCode +
                 ", region=" + region +
                 ", buddyType=" + buddyType +
@@ -191,7 +178,6 @@ public class Buddy {
                 ", buddyImg='" + buddyImg + '\'' +
                 ", buddyCount=" + buddyCount +
                 ", buddyAt='" + buddyAt + '\'' +
-                ", buddyApply='" + buddyApply + '\'' +
                 '}';
     }
 }

@@ -13,7 +13,7 @@ function App() {
 
   return (
     <div className="App">
-      {message}
+      {/*message*/}
       <head>
         <meta charset="UTF-8" />
         <script src="https://kit.fontawesome.com/9e9931aed0.js" crossorigin="anonymous"></script>

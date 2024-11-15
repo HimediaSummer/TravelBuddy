@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Schedule from './components/products/Schedule';
 import Main from './components/products/Main';
+import MemberManagement from './pages/admin/MemberManagement';
+
 
 function App() {
 
@@ -12,6 +14,7 @@ function App() {
         <Route path="/">
             <Route index element={ <Main/> }/>          
             <Route path="Schedule" element={ <Schedule /> }/>   
+            <Route path="MemberManagement" element={ <MemberManagement/> }/> 
         </Route>
       </Routes>
     </BrowserRouter>

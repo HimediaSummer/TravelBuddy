@@ -99,7 +99,8 @@ public class AdminQnaService {
         return qnaDetailDTO;
     }
 
-    /*QnaAnswer 를 등록한다.*/
+    /*QnaAnswer 를 등록한다. 이미 존재하는 QnaAnswer 의 contents 와 create 에 null 값이 존재하여,
+    데이터 삽입이 아닌 해당 code 들의 null 에 값을 update 해야한다.*/
     @Transactional
     public  Object insertQnaAnswer(int qnaCode, QnaAnswerDTO qnaAnswerDTO) {
 
@@ -129,14 +130,16 @@ public class AdminQnaService {
         return modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
     }
 
-    /*QnaAnswer 를 삭제한다.*/
+    /*QnaAnswer 를 삭제한다. ( 다시 contents 와 create 를 null 로 변경한다.)*/
     @Transactional
     public Object deleteQnaAnswer(int qnaCode) {
 
         QnaAnswer qnaAnswer = adminqnaAnswerRepository.findById(qnaCode).get();
-        adminqnaAnswerRepository.delete(qnaAnswer);
+        qnaAnswer.setAnsContents(null);
+        qnaAnswer.setAnsCreate(null);
+        adminqnaAnswerRepository.save(qnaAnswer);
 
-        return (qnaAnswer != null) ? "삭제 성공" : "삭제 실패";
+        return (qnaAnswer.getAnsContents() == null) ? "삭제 성공" : "삭제 실패";
 
     }
 }

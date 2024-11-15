@@ -16,19 +16,19 @@ import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.entity.MemberAnswer;
 import travelbuddy.function.member.repository.AccountRepository;
 import travelbuddy.function.member.repository.MemberAnswerRepository;
+import travelbuddy.function.schedule.dto.AccommodationDTO;
 import travelbuddy.function.schedule.dto.QuestionNaireThemeDTO;
 import travelbuddy.function.schedule.dto.QuestionnaireDTO;
-import travelbuddy.function.schedule.entity.QuestionNaireTheme;
-import travelbuddy.function.schedule.entity.Questionnaire;
-import travelbuddy.function.schedule.repository.QuestionNaireThemeRepository;
-import travelbuddy.function.schedule.repository.QuestionnaireRepository;
-import travelbuddy.function.schedule.dto.AccommodationDTO;
 import travelbuddy.function.schedule.dto.RegionDTO;
 import travelbuddy.function.schedule.dto.ScheduleDTO;
 import travelbuddy.function.schedule.entity.Accommodation;
+import travelbuddy.function.schedule.entity.QuestionNaireTheme;
+import travelbuddy.function.schedule.entity.Questionnaire;
 import travelbuddy.function.schedule.entity.Region;
 import travelbuddy.function.schedule.entity.Schedule;
 import travelbuddy.function.schedule.repository.AccommodationRepository;
+import travelbuddy.function.schedule.repository.QuestionNaireThemeRepository;
+import travelbuddy.function.schedule.repository.QuestionnaireRepository;
 import travelbuddy.function.schedule.repository.RegionRepository;
 import travelbuddy.function.schedule.repository.ScheduleRepository;
 
@@ -141,8 +141,8 @@ public class ScheduleService {
     }
 
     public Map<String, Object> selectAllQuestionTheme() {
-        log.info("[ScheduleService] selectAllQuestionTheme() start");
-        System.out.println("[ScheduleService] 왓니?");
+        log.info("[QuestionTheme] selectAllQuestionTheme() start");
+        System.out.println("[QuestionTheme] 왓니?");
 
         // 질문지 테마
         List<QuestionNaireTheme> qThemes = questionNaireThemeRepository.findAll();
@@ -154,7 +154,7 @@ public class ScheduleService {
         Map<String, Object> responseDataQuestionTheme = new HashMap<>();
         responseDataQuestionTheme.put("qThemes", qThemeDTOs);
 
-        log.info("[ScheduleService] selectAllQuestionTheme() end");
+        log.info("[QuestionTheme] selectAllQuestionTheme() end");
 
         return responseDataQuestionTheme;
     }
@@ -200,11 +200,17 @@ public class ScheduleService {
 
     @Transactional
     public Object selectQuestionByThemeCode(int themeCode) {
+
+        log.info("[QuestionByThemeCode] selectQuestionByThemeCode() start");
+        System.out.println("[QuestionByThemeCode] 왓니?");
         log.info("[ScheduleService] selectQuestionByThemeCode() start");
 
         // themeCode로 조회한 질문지 리스트
         List<Questionnaire> questions = questionnaireRepository.findByQuestionNaireTheme_ThemeCode(themeCode);
 
+        log.info("[QuestionByThemeCode] selectQuestionByThemeCode() end");
+
+        System.out.println("[QuestionByThemeCode] question = " + questions);
         log.info("[ScheduleService] Retrieved questions: " + questions);
 
         // DTO 변환

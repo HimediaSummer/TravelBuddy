@@ -1,4 +1,4 @@
-package travelbuddy.function.qestion.entity;
+package travelbuddy.function.schedule.entity;
 
 import jakarta.persistence.*;
 
@@ -14,7 +14,7 @@ public class Questionnaire {
     @Column(name="question")
     private String question;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="theme_code")
     private QuestionNaireTheme questionNaireTheme;
 
@@ -43,12 +43,12 @@ public class Questionnaire {
         this.question = question;
     }
 
-    public QuestionNaireTheme getThemeCode() {
+    public QuestionNaireTheme getQuestionNaireTheme() {
         return questionNaireTheme;
     }
 
-    public void setThemeCode(QuestionNaireTheme themeCode) {
-        this.questionNaireTheme = themeCode;
+    public void setQuestionNaireTheme(QuestionNaireTheme questionNaireTheme) {
+        this.questionNaireTheme = questionNaireTheme;
     }
 
     @Override

@@ -1,6 +1,14 @@
 package travelbuddy.function.member.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import travelbuddy.function.community.buddy.entity.Buddy;
 
 @Entity
@@ -14,7 +22,7 @@ public class MemberBuddyData {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "member_code")
-    private AccountEntity memberCode;
+    private Account memberCode;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "buddy_code")
@@ -23,7 +31,7 @@ public class MemberBuddyData {
     public MemberBuddyData() {
     }
 
-    public MemberBuddyData(int memberBuddyCode, AccountEntity memberCode, Buddy buddy) {
+    public MemberBuddyData(int memberBuddyCode, Account memberCode, Buddy buddy) {
         this.memberBuddyCode = memberBuddyCode;
         this.memberCode = memberCode;
         this.buddy = buddy;
@@ -37,11 +45,11 @@ public class MemberBuddyData {
         this.memberBuddyCode = memberBuddyCode;
     }
 
-    public AccountEntity getMemberCode() {
+    public Account getMemberCode() {
         return memberCode;
     }
 
-    public void setMemberCode(AccountEntity memberCode) {
+    public void setMemberCode(Account memberCode) {
         this.memberCode = memberCode;
     }
 
@@ -62,4 +70,3 @@ public class MemberBuddyData {
                 '}';
     }
 }
-

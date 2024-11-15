@@ -22,9 +22,9 @@ web:
   resources:
     static-locations: classpath:/productimgs/
 # JPA config
-jpa:
-  generate-ddl: false
-  database: mysql
+  jpa:
+    generate-ddl: false
+    database: mysql
 properties:
   hibernate:
     format_sql: true
@@ -35,11 +35,11 @@ properties:
 ## ???? ??? ??? ??? ? ??? ?? ??
 image:
  # Local Dev
- add-resource-locations: classpath:/static/productimgs/
- add-resource-handler: /productimgs/**
+  add-resource-locations: classpath:/static/productimgs/
+  add-resource-handler: /productimgs/**
  # Local Dev
- image-dir: src/main/resources/static/productimgs
- image-url: http://localhost:8080/productimgs/
+  image-dir: src/main/resources/static/productimgs
+  image-url: http://localhost:8080/productimgs/
 #Docker(Local)
 # add-resource-locations: file:///springboot-app/productimgs/
 # add-resource-handler: /productimgs/**

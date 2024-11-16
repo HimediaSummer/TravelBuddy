@@ -83,8 +83,7 @@ function Main() {
                     </div>
                 </h1>
                     <ul className="menu">
-                        <li>이용 방법</li>
-                        <li>커뮤니티</li>
+                        <li>마이페이지</li>
                         <li>
                         {/* <li onClick={handleLoginClick}>로그인</li> */}
                         {isLogin == null || isLogin == undefined ? (
@@ -93,6 +92,8 @@ function Main() {
                             <AfterLogin />
                         )}
                         </li>
+                        <li>이용 방법</li>
+                        <li>커뮤니티</li>
                         
                     </ul>
                     <button className="header_toogleBtn">

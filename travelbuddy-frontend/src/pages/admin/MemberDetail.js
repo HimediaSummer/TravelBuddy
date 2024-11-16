@@ -18,7 +18,6 @@ function MemberDetail () {
     const params = useParams();
     const memberData = useSelector((state) => state.memberReducer);
     const {data: member} = memberData;
-    console.log('data:member 로 지정한 값은',member);
  
     useEffect (
         () => {
@@ -102,8 +101,8 @@ function MemberDetail () {
                 <td>{member.memberCreate}</td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td>임시정지상태확인 : {member.memberSuspension}</td>
+                    <td>임시탈퇴상태확인 : {member.memberDeletion}</td>
                     <td><button onClick={onClickChangeHandlerSus}>정지</button></td>
                     <td><button onClick={onClickChangeHandlerDel}>정보삭제</button></td>
                 </tr>

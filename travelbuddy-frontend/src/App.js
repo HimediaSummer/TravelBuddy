@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Schedule from './components/products/Schedule';
 import Main from './components/products/Main';
-import MemberManagement from './pages/admin/MemberManagement';
+import Members from './pages/admin/Members';
 import MemberDetail from './pages/admin/MemberDetail';
 import MyPage from './pages/member/mypage/Mypage';
 import MypageBuddyList from './components/products/MypageBuddyList';
@@ -16,7 +16,7 @@ function App() {
         <Route path="/">
           <Route index element={ <Main/> }/>          
           <Route path="Schedule" element={ <Schedule /> }/>   
-          <Route path="MemberManagement" element={ <MemberManagement/> }/>
+          <Route path="Members" element={ <Members/> }/>
           <Route path="MemberDetail/:memberCode" element={ <MemberDetail/>} />
           <Route path="MyPage" element={<MyPage />}>
             <Route path="MyBuddyList" element={<MypageBuddyList />} />

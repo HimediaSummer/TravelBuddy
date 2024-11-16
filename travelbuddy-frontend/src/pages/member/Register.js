@@ -85,8 +85,8 @@ function Register() {
     }
 
     return (
-        <div className={ RegisterCSS.backgroundDiv}>
-            <div className={ RegisterCSS.registerDiv }>
+        <div >
+            <div >
                 <h1>회원가입</h1>
                 <input 
                     type="text" 

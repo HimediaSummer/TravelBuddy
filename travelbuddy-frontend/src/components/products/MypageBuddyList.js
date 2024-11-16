@@ -11,7 +11,10 @@ function MypageBuddyList() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const buddyList = useSelector((state) => state.mypageBuddyReducer?.buddyList || []); 
+    const buddyList = useSelector((state) => {
+        console.log('Redux State:', state); // 전체 Redux 상태 확인
+        return state.mypageBuddyReducer?.buddyList || [];
+    });
 
     useEffect(
         () => {
@@ -23,10 +26,12 @@ function MypageBuddyList() {
                 return response.json();
             })   
             .then((data) => {
+                console.log('Fetched Data:', data);
             dispatch(getBuddyList(data));
+            console.log('Dispatched GET_BUDDYLIST:', data);
             })
             .catch((error) => {
-            console.error('Error fetching buddy list:', error);
+                console.error('Error fetching buddy list:', error);
             });
     }, [dispatch]);
 
@@ -40,7 +45,7 @@ function MypageBuddyList() {
         <div>
             {buddyList.map((buddy) => (
                 <div key={buddy.buddyCode}>
-                    <h5>{buddy.buddyName}</h5>
+                    <h5>{buddy.buddyTitle}</h5>
                 </div>
             ))}
         </div>

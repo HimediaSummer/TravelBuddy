@@ -1,15 +1,17 @@
 package travelbuddy.function.member.service;
 
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import travelbuddy.common.Criteria;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
 import travelbuddy.function.community.buddy.dto.BuddyMatchDataDTO;
@@ -17,11 +19,10 @@ import travelbuddy.function.community.buddy.entity.Buddy;
 import travelbuddy.function.community.buddy.entity.BuddyMatchData;
 import travelbuddy.function.member.repository.BuddyMatchRepository;
 import travelbuddy.function.member.repository.MypageRepository;
+import travelbuddy.util.FileUploadUtils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +32,11 @@ public class MypageService {
     private final MypageRepository mypageRepository;
     private final BuddyMatchRepository buddyMatchRepository;
     private final ModelMapper modelMapper;
+
+    @Value("${image.image-dir}")
+    private String IMAGE_DIR;
+    @Value("${image.image-url}")
+    private String IMAGE_URL;
 
     @Autowired
     public MypageService(MypageRepository mypageRepository, BuddyMatchRepository buddyMatchRepository, ModelMapper modelMapper) {
@@ -115,5 +121,52 @@ public class MypageService {
         log.info("[MypageService] getBuddyDetail() END");
 
         return result;
+    }
+
+    @Transactional
+    public Object updateBuddy(BuddyDTO buddyDTO, MultipartFile buddyImg){
+        log.info("[MypageService] updateBuddy() Start");
+        log.info("[MypageService] buddyDTO : {}", buddyDTO);
+
+        String replaceFileName = null;
+        int result = 0;
+
+        try {
+
+            /* 설명. update 할 엔티티 조회 */
+            Buddy buddy = mypageRepository.findById(buddyDTO.getBuddyCode()).get();
+            String oriImage = buddy.getBuddyImg();
+            log.info("[updateBuddy] oriImage : {}", oriImage);
+
+            /* 설명. update를 위한 엔티티 값 수정 */
+            buddy.setRegion(buddyDTO.getRegionCode());
+            buddy.setBuddyType(buddyDTO.getBuddyTypeCode());
+            buddy.setBuddyTitle(buddyDTO.getBuddyTitle());
+            buddy.setBuddyContents(buddyDTO.getBuddyContents());
+            buddy.setBuddyCreate(buddyDTO.getBuddyCreate());
+
+            if(buddyImg != null){
+                String imageName = UUID.randomUUID().toString().replace("-", "");
+                replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, buddyImg);
+                log.info("[updateBuddy] InsertFileName : {}", replaceFileName);
+
+                buddy.setBuddyImg(replaceFileName);	// 새로운 파일 이름으로 update
+                log.info("[updateBuddy] deleteImage : {}", oriImage);
+
+                boolean isDelete = FileUploadUtils.deleteFile(IMAGE_DIR, oriImage);
+                log.info("[update] isDelete : {}", isDelete);
+            } else {
+                buddy.setBuddyImg(oriImage);
+            }
+
+            result = 1;
+        } catch (
+        IOException e) {
+            log.info("[updateBuddy] Exception!!");
+            FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
+            throw new RuntimeException(e);
+        }
+            log.info("[MypageService] updateBuddy End ===================================");
+            return (result > 0) ? "내가쓴글 수정 성공" : "퉤퉤퉤";
     }
 }

@@ -6,7 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import travelbuddy.common.Criteria;
 import travelbuddy.common.PageDTO;
 import travelbuddy.common.PagingResponseDTO;
@@ -82,5 +84,13 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글세부내용및신청회원조회성공", mypageService.getBuddyDetail(buddyCode)));
     }
 
+    @Operation(summary = "게시글수정", description = "내가쓴글수정", tags = {"MypageController"})
+    @PutMapping(value = "/mybuddylist/{buddyCode}/update")
+    public ResponseEntity<ResponseDTO> updateBuddy(@ModelAttribute BuddyDTO buddyDTO, @RequestParam(required = false) MultipartFile buddyImg) {
+
+        System.out.println("buddyDTO = " + buddyDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글수정성공",  mypageService.updateBuddy(buddyDTO, buddyImg)));
+    }
 
 }

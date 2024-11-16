@@ -12,10 +12,12 @@ export const getBuddyList = (payload) => ({
 /* 리듀서 */
 const mypageBuddyReducer = handleActions(
 	{
-		[GET_BUDDYLIST]: (state, { payload }) => ({
+		[GET_BUDDYLIST]: (state, { payload }) => {
+            console.log('Reducer is handling GET_BUDDYLIST:', payload);
+            return{
             ...state,
-            buddyList: payload, // buddyList 배열 업데이트
-        }),
+            buddyList: payload,};
+        },
 	},
 	initialState
 );

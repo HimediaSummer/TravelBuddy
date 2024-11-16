@@ -172,4 +172,11 @@ public class Buddy {
                 ", buddyAt='" + buddyAt + '\'' +
                 '}';
     }
+
+    public void setRegion(int regionCode) {
+    }
+
+    public void setBuddyType(int buddyTypeCode) {
+
+    }
 }

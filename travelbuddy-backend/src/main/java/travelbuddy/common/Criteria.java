@@ -2,8 +2,8 @@ package travelbuddy.common;
 
 
 public class Criteria {
-    private int pageNum;
-    private int amount;
+    private int pageNum;    // 몇 페이지
+    private int amount; // 페이지에 담길 몇 개
 
     private String searchValue;
 

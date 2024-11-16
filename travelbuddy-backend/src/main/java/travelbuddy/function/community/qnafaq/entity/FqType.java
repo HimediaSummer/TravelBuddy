@@ -1,10 +1,7 @@
 package travelbuddy.function.community.qnafaq.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tbl_fq_type")    // 테이블명
@@ -12,6 +9,7 @@ public class FqType {
 
     @Id
     @Column(name = "fq_type_code")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fqTypeCode;     // fq_type 코드
 
     @Column(name = "fq_type_name")

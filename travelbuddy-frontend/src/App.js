@@ -1,6 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Schedule from './components/products/Schedule';
 import Main from './components/products/Main';
+import MemberManagement from './pages/admin/MemberManagement';
+
+
+import MyPage from './pages/member/mypage/Mypage';
+import MypageBuddyList from './components/products/MypageBuddyList';
 
 function App() {
 
@@ -12,7 +17,13 @@ function App() {
         <Route path="/">
             <Route index element={ <Main/> }/>          
             <Route path="Schedule" element={ <Schedule /> }/>   
+            <Route path="MemberManagement" element={ <MemberManagement/> }/> 
+            
+            <Route path="mypage" element={<MyPage />}>
+              <Route path="mybuddylist" element={<MypageBuddyList />} />
+            </Route> 
         </Route>
+  
       </Routes>
     </BrowserRouter>
   );

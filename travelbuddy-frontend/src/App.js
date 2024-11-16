@@ -4,7 +4,7 @@ import Main from './components/products/Main';
 import MemberManagement from './pages/admin/MemberManagement';
 
 
-import MyPage from './pages/member/mypage/Mypage';
+// import MyPage from './pages/member/mypage/Mypage';
 import MypageBuddyList from './components/products/MypageBuddyList';
 
 import Login from './pages/member/Login';
@@ -23,9 +23,10 @@ function App() {
             <Route path="Schedule" element={ <Schedule /> }/>   
             <Route path="MemberManagement" element={ <MemberManagement/> }/> 
             
-            <Route path="mypage" element={<MyPage />}>
+            {/* <Route path="mypage" element={<MyPage />}>
               <Route path="mybuddylist" element={<MypageBuddyList />} />
-            </Route> 
+            </Route>  */}
+
             <Route path="/login" element={ <Login/> } />
             <Route path="/signup" element={ <Register/> } />
             <Route path="*" element={ <Error/> }/>

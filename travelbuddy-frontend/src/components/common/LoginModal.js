@@ -1,4 +1,4 @@
-import LoginModalCSS from './LoginModal.module.css';
+// import LoginModalCSS from './LoginModal.module.css';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -9,7 +9,7 @@ function LoginModal({ setLoginModal }) {
 	const dispatch = useDispatch();
 
 	const [form, setForm] = useState({
-		memberId: '',
+		memberName: '',
 		memberPassword: ''
 	});
 
@@ -38,13 +38,16 @@ function LoginModal({ setLoginModal }) {
 	};
 
 	return (
-		<div className={LoginModalCSS.modal}>
-			<div className={LoginModalCSS.modalContainer}>
-				<div className={LoginModalCSS.loginModalDiv}>
+		// <div className={LoginModalCSS.modal}>
+		<div >
+			{/* <div className={LoginModalCSS.modalContainer}> */}
+			<div >
+				{/* <div className={LoginModalCSS.loginModalDiv}> */}
+				<div >
 					<h1>로그인</h1>
 					<input
 						type="text"
-						name="memberId"
+						name="memberName"
 						placeholder="아이디"
 						autoComplete="off"
 						onChange={onChangeHandler}

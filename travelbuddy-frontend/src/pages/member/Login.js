@@ -23,25 +23,19 @@ function Login() {
     });
 
     useEffect(() => {
-        
-        if(loginMember.status === 200){
-            console.log("[Login] Login SUCCESS {}", loginMember);
+        if (loginMember.status === 200) {
+            console.log("[Login] Login SUCCESS", loginMember);
             navigate("/", { replace: true });
         }
 
-        /* 회원 가입 후 로그인 페이지로 안내 되었을 때 */
-        if(loginMember.status === 201){
-
-            loginMember.status = 100  // Continue
-            dispatch({ type: POST_SIGNUP,  payload: loginMember });
+        if (loginMember.status === 201) {
+            dispatch({ type: POST_SIGNUP, payload: loginMember });
         }  
-    }
-    ,[loginMember]);
+    }, [loginMember, navigate, dispatch]);
     
-    /* 로그인 상태일 시 로그인페이지로 접근 방지 */
-    if(loginMember.length > 0) {
+    if (loginMember.status === 200) {
         console.log("[Login] Login is already authenticated by the server");        
-        return <Navigate to="/"/>
+        return <Navigate to="/" />;
     }
 
     const onChangeHandler = (e) => {
@@ -52,7 +46,7 @@ function Login() {
     };
 
     const onClickRegisterHandler = () => { 
-        navigate("/signup", { replace: true })
+        navigate("/signup", { replace: true });
     }
 
     /* 로그인 버튼 클릭시 디스패처 실행 및 메인 페이지로 이동 */

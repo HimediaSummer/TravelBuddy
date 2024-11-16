@@ -1,25 +1,25 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import { Navigate } from "react-router-dom";
-import { useEffect } from "react";
+// import { Outlet, useNavigate } from "react-router-dom";
 
-function Mypage() {
-	const navigate = useNavigate();
+// import { useEffect } from "react";
 
-	useEffect(() => {
+// function Mypage() {
+// 	const navigate = useNavigate();
+
+// 	useEffect(() => {
         
-        if (window.location.pathname === '/mypage') {
-            navigate("/mypage/buddylist", { replace: false });
-        }
-    }, [navigate]);
+//         if (window.location.pathname === '/mypage') {
+//             navigate("/mypage/buddylist", { replace: false });
+//         }
+//     }, [navigate]);
 
-	return (
-		<>
-			<div>
-                <h1>마이페이지마이페이지마이페이지마이페이지마이페이지</h1>
-				<Outlet />
-			</div>
-		</>
-	);
-}
+// 	return (
+// 		<>
+// 			<div>
+//                 <h1>마이페이지마이페이지마이페이지마이페이지마이페이지</h1>
+// 				<Outlet />
+// 			</div>
+// 		</>
+// 	);
+// }
 
-export default Mypage;
+// export default Mypage;

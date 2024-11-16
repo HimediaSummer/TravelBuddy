@@ -1,4 +1,4 @@
-import { GET_MEMBER, POST_LOGIN, POST_REGISTER, POST_SIGNUP } from '../modules/MemberModule';
+import { GET_MEMBER, POST_LOGIN, POST_SIGNUP } from '../modules/MemberModule';
 
 export const callGetMemberAPI = ({ memberName }) => {
 	const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/api/v1/members/${memberName}`;

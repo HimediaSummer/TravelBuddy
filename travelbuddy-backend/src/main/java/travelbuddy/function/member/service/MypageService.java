@@ -6,13 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import travelbuddy.common.Criteria;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
 import travelbuddy.function.community.buddy.dto.BuddyMatchDataDTO;
 import travelbuddy.function.community.buddy.entity.Buddy;
@@ -70,8 +65,6 @@ public class MypageService {
     public Object selectBuddyList() {
         log.info("[MypageService] selectBuddyList() Start");
         List<Buddy> selectBuddyList = mypageRepository.findByMemberCode();
-
-        
 
         System.out.println("selectBuddyList = " + selectBuddyList);
 
@@ -168,5 +161,24 @@ public class MypageService {
         }
             log.info("[MypageService] updateBuddy End ===================================");
             return (result > 0) ? "내가쓴글 수정 성공" : "퉤퉤퉤";
+    }
+
+    @Transactional
+    public Object deleteBuddyCode(int buddyCode) {
+        log.info("[MypageService] 삭제 시작: buddyCode = {}", buddyCode);
+        System.out.println("buddyCode = " + buddyCode);
+
+        Buddy buddy = mypageRepository.findById(buddyCode)
+             .orElseThrow(() -> new RuntimeException("삭제할 게시글을 찾을 수 없습니다."));
+
+        System.out.println("buddyCode = " + buddyCode);
+
+        mypageRepository.delete(buddy);
+
+        System.out.println("buddyCode = " + buddyCode);
+
+        log.info("[MypageService] 삭제 완료: buddyCode = {}", buddyCode);
+
+        return "return 게시글 삭제 성공";
     }
 }

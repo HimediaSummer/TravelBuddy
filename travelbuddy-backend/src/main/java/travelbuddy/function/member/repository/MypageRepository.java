@@ -12,8 +12,6 @@ import java.util.Map;
 
 public interface MypageRepository extends JpaRepository<Buddy, Integer> {
 
-
-
     @Query("SELECT b FROM Buddy b WHERE b.account.memberCode = 1002")
     List<Buddy> findByMemberCode();
 

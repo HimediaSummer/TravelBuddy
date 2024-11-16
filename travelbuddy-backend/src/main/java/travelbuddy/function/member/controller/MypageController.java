@@ -88,9 +88,16 @@ public class MypageController {
     @PutMapping(value = "/mybuddylist/{buddyCode}/update")
     public ResponseEntity<ResponseDTO> updateBuddy(@ModelAttribute BuddyDTO buddyDTO, @RequestParam(required = false) MultipartFile buddyImg) {
 
-        System.out.println("buddyDTO = " + buddyDTO);
-
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글수정성공",  mypageService.updateBuddy(buddyDTO, buddyImg)));
+    }
+
+    @Operation(summary = "게시글삭제", description = "내가쓴글삭제", tags = {"MypageController"})
+    @DeleteMapping(value = "/mybuddylist/{buddyCode}/delete")
+    public ResponseEntity<ResponseDTO> deleteBuddy(@PathVariable int buddyCode) {
+
+        mypageService.deleteBuddyCode(buddyCode);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글삭제성공", null));
     }
 
 }

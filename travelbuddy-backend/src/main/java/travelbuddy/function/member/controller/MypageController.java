@@ -6,18 +6,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import travelbuddy.common.Criteria;
-import travelbuddy.common.PageDTO;
-import travelbuddy.common.PagingResponseDTO;
 import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
-import travelbuddy.function.community.buddy.entity.Buddy;
+import travelbuddy.function.member.repository.MyBuddyRepository;
 import travelbuddy.function.member.service.MypageService;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,12 +23,18 @@ public class MypageController {
     private final MypageService mypageService;
 
     @Autowired
-    public MypageController(MypageService mypageService) {
+    public MypageController(MypageService mypageService, MyBuddyRepository myBuddyRepository) {
         this.mypageService = mypageService;
     }
 
     /* =========================================== My정보 =========================================== */
+    @Operation(summary = "회원정보조회", description = "내가입정보조회", tags = {"MypageController"})
+    @GetMapping()
+    public ResponseEntity<ResponseDTO> selectMyProfile() {
+        log.info("[MypageService] seleceMyProfile Start");
 
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원정보조회", mypageService.selectMyProfile()));
+    }
 
 
 

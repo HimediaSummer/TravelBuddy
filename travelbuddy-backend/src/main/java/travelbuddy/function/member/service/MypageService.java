@@ -12,8 +12,11 @@ import travelbuddy.function.community.buddy.dto.BuddyDTO;
 import travelbuddy.function.community.buddy.dto.BuddyMatchDataDTO;
 import travelbuddy.function.community.buddy.entity.Buddy;
 import travelbuddy.function.community.buddy.entity.BuddyMatchData;
+import travelbuddy.function.member.dto.AccountDTO;
+import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.repository.BuddyMatchRepository;
-import travelbuddy.function.member.repository.MypageRepository;
+import travelbuddy.function.member.repository.MyBuddyRepository;
+import travelbuddy.function.member.repository.MyProfileRepository;
 import travelbuddy.util.FileUploadUtils;
 
 import java.io.IOException;
@@ -24,8 +27,9 @@ import java.util.stream.Collectors;
 public class MypageService {
 
     private static final Logger log = LoggerFactory.getLogger(MypageService.class);
-    private final MypageRepository mypageRepository;
+    private final MyBuddyRepository myBuddyRepository;
     private final BuddyMatchRepository buddyMatchRepository;
+    private final MyProfileRepository myProfileRepository;
     private final ModelMapper modelMapper;
 
     @Value("${image.image-dir}")
@@ -34,12 +38,31 @@ public class MypageService {
     private String IMAGE_URL;
 
     @Autowired
-    public MypageService(MypageRepository mypageRepository, BuddyMatchRepository buddyMatchRepository, ModelMapper modelMapper) {
-        this.mypageRepository = mypageRepository;
+    public MypageService(MyBuddyRepository myBuddyRepository, BuddyMatchRepository buddyMatchRepository, MyProfileRepository myProfileRepository, ModelMapper modelMapper) {
+        this.myBuddyRepository = myBuddyRepository;
         this.buddyMatchRepository = buddyMatchRepository;
+        this.myProfileRepository = myProfileRepository;
         this.modelMapper = modelMapper;
     }
 
+    /* =========================================== My정보 =========================================== */
+
+    public Object selectMyProfile() {
+        log.info("[MypageService] selectMyProfile() Start");
+
+        List<Account> accountMyProfile = myProfileRepository.findById();
+
+        log.info("[MypageService] selectMyProfile() END");
+        return accountMyProfile.stream().map(account -> modelMapper.map(account, AccountDTO.class)).collect(Collectors.toList());
+    }
+
+
+
+    /* =========================================== My일정 =========================================== */
+
+
+
+    /* =========================================== My정보 =========================================== */
 //    public int selectMypagePostTotal() {
 //        log.info("[MypageService] selectMyPostTotal() Start");
 //        List<Buddy> mypagePostList = mypageRepository.Buddy(1001);
@@ -64,7 +87,7 @@ public class MypageService {
 
     public Object selectBuddyList() {
         log.info("[MypageService] selectBuddyList() Start");
-        List<Buddy> selectBuddyList = mypageRepository.findByMemberCode();
+        List<Buddy> selectBuddyList = myBuddyRepository.findByMemberCode();
 
         System.out.println("selectBuddyList = " + selectBuddyList);
 
@@ -87,7 +110,7 @@ public class MypageService {
     public Map<String, Object> getBuddyDetail(int buddyCode) {
         log.info("[MypageService] getBuddyDetail() Start");
 
-        Buddy getBuddyDetail = mypageRepository.findById(buddyCode).get();
+        Buddy getBuddyDetail = myBuddyRepository.findById(buddyCode).get();
 //        buddy.setBuddyImageUrl(IMAGE_URL + buddy.getBuddyImageUrl());
         List<BuddyMatchData> buddyMatchDataList = buddyMatchRepository.findByBuddyCode(buddyCode);
 
@@ -127,7 +150,7 @@ public class MypageService {
         try {
 
             /* 설명. update 할 엔티티 조회 */
-            Buddy buddy = mypageRepository.findById(buddyDTO.getBuddyCode()).get();
+            Buddy buddy = myBuddyRepository.findById(buddyDTO.getBuddyCode()).get();
             String oriImage = buddy.getBuddyImg();
             log.info("[updateBuddy] oriImage : {}", oriImage);
 
@@ -166,19 +189,16 @@ public class MypageService {
     @Transactional
     public Object deleteBuddyCode(int buddyCode) {
         log.info("[MypageService] 삭제 시작: buddyCode = {}", buddyCode);
-        System.out.println("buddyCode = " + buddyCode);
 
-        Buddy buddy = mypageRepository.findById(buddyCode)
+        Buddy buddy = myBuddyRepository.findById(buddyCode)
              .orElseThrow(() -> new RuntimeException("삭제할 게시글을 찾을 수 없습니다."));
 
-        System.out.println("buddyCode = " + buddyCode);
-
-        mypageRepository.delete(buddy);
-
-        System.out.println("buddyCode = " + buddyCode);
+        myBuddyRepository.delete(buddy);
 
         log.info("[MypageService] 삭제 완료: buddyCode = {}", buddyCode);
 
         return "return 게시글 삭제 성공";
     }
+
+
 }

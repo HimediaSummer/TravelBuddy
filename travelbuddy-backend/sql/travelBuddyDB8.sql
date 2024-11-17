@@ -134,11 +134,13 @@ CREATE TABLE
     IF NOT EXISTS tbl_qna (
                               qna_code INT NOT NULL AUTO_INCREMENT COMMENT '문의코드',
                               fq_type_code INT NOT NULL COMMENT '문의유형코드',
+                              member_code INT NOT NULL COMMENT '회원코드',
                               qna_title VARCHAR(100) NOT NULL COMMENT '문의제목',
                               qna_contents VARCHAR(500) NOT NULL COMMENT '문의내용',
                               qna_create DATETIME NOT NULL COMMENT '문의생성일',
                               PRIMARY KEY (qna_code),
-                              FOREIGN KEY (fq_type_code) REFERENCES tbl_fq_type (fq_type_code) ON DELETE CASCADE
+                              FOREIGN KEY (fq_type_code) REFERENCES tbl_fq_type (fq_type_code) ON DELETE CASCADE,
+                              FOREIGN KEY (member_code) REFERENCES tbl_account (member_code) ON DELETE CASCADE
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = 'QnA';
 
 CREATE TABLE
@@ -566,36 +568,31 @@ VALUES
     );
 
 -- tbl_qna
-INSERT INTO
-    tbl_qna (
-    qna_code,
-    fq_type_code,
-    qna_title,
-    qna_contents,
-    qna_create
-)
-VALUES
-    (
+INSERT INTO tbl_qna (qna_code,
+                     fq_type_code,
+                     member_code,
+                     qna_title,
+                     qna_contents,
+                     qna_create)
+VALUES (1,
         1,
-        1,
+        1001,
         '회원가입 방법에 대해 알려주세요',
         '회원가입을 위한 이메일 주소와 비밀번호 설정이 필요합니다.',
-        NOW()
-    ),
-    (
+        NOW()),
+       (2,
         2,
-        2,
+        1002,
         '결제 오류 발생시 어떻게 하나요?',
         '결제 오류 발생 시 고객센터를 통해 처리할 수 있습니다.',
-        NOW()
-    ),
-    (
-        3,
+        NOW()),
+       (3,
         1,
+        1003,
         '비밀번호를 변경하려면 어떻게 해야 하나요?',
         '비밀번호 변경은 계정 설정에서 할 수 있습니다.',
-        NOW()
-    );
+        NOW());
+
 
 -- tbl_qna_answer
 INSERT INTO

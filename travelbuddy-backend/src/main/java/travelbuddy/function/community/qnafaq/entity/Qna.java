@@ -2,6 +2,7 @@ package travelbuddy.function.community.qnafaq.entity;
 
 
 import jakarta.persistence.*;
+import travelbuddy.function.member.entity.Account;
 
 @Entity
 @Table(name = "tbl_qna")    // 테이블명
@@ -16,6 +17,10 @@ public class Qna {
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private FqType fqType; // fq_type 참조
 
+    @JoinColumn(name = "member_code")
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Account account; // fq_type 참조
+
     @Column(name = "qna_title")
     private String qnaTitle;    // 문의제목
 
@@ -28,12 +33,21 @@ public class Qna {
     public Qna() {
     }
 
-    public Qna(FqType fqType, int qnaCode, String qnaContents, String qnaCreate, String qnaTitle) {
-        this.fqType = fqType;
+    public Qna(int qnaCode, FqType fqType, Account account, String qnaTitle, String qnaContents, String qnaCreate) {
         this.qnaCode = qnaCode;
+        this.fqType = fqType;
+        this.account = account;
+        this.qnaTitle = qnaTitle;
         this.qnaContents = qnaContents;
         this.qnaCreate = qnaCreate;
-        this.qnaTitle = qnaTitle;
+    }
+
+    public int getQnaCode() {
+        return qnaCode;
+    }
+
+    public void setQnaCode(int qnaCode) {
+        this.qnaCode = qnaCode;
     }
 
     public FqType getFqType() {
@@ -44,12 +58,20 @@ public class Qna {
         this.fqType = fqType;
     }
 
-    public int getQnaCode() {
-        return qnaCode;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setQnaCode(int qnaCode) {
-        this.qnaCode = qnaCode;
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public String getQnaTitle() {
+        return qnaTitle;
+    }
+
+    public void setQnaTitle(String qnaTitle) {
+        this.qnaTitle = qnaTitle;
     }
 
     public String getQnaContents() {
@@ -68,19 +90,12 @@ public class Qna {
         this.qnaCreate = qnaCreate;
     }
 
-    public String getQnaTitle() {
-        return qnaTitle;
-    }
-
-    public void setQnaTitle(String qnaTitle) {
-        this.qnaTitle = qnaTitle;
-    }
-
     @Override
     public String toString() {
         return "Qna{" +
-                "fqType=" + fqType +
-                ", qnaCode=" + qnaCode +
+                "qnaCode=" + qnaCode +
+                ", fqType=" + fqType +
+                ", account=" + account +
                 ", qnaTitle='" + qnaTitle + '\'' +
                 ", qnaContents='" + qnaContents + '\'' +
                 ", qnaCreate='" + qnaCreate + '\'' +

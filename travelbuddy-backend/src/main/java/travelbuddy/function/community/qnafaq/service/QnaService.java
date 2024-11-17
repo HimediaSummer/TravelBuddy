@@ -84,7 +84,7 @@ public class QnaService {
         if (qna != null) {
             qnaAnswer = qnaAnswerRepository.findByQna(qna);
         }
-        
+
         System.out.println("qna = " + qna);
         System.out.println("qnaAnswer = " + qnaAnswer);
 
@@ -117,7 +117,7 @@ public class QnaService {
         qnaAnswer.setAnsCode(insertqna.getQnaCode());
         qnaAnswer.setQna(insertqna);
         qnaAnswerRepository.save(qnaAnswer);
-        
+
         QnaDTO newQna = modelMapper.map(insertqna, QnaDTO.class);
         QnaAnswerDTO newQnaAnswer = modelMapper.map(qnaAnswer,QnaAnswerDTO.class);
         QnaDetailDTO qnaDetailDTO = new QnaDetailDTO();

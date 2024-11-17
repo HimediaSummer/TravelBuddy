@@ -65,9 +65,19 @@ public class QnaService {
 
         log.info("[QnaService] selectQnaListWithPaging() End");
 
-        return qnaList.stream().map(Qna -> modelMapper.map(Qna, QnaDTO.class)).collect(Collectors.toList());
+        return qnaList.stream().map(qna -> {
+            QnaDTO qnaDTO = modelMapper.map(qna, QnaDTO.class);
+            qnaDTO.setMemberCode(qna.getAccount().getMemberCode());
+
+            QnaAnswer qnaAnswer = qnaAnswerRepository.findByQna(qna);
+            QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
+
+            QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO, qnaDTO);
+            return qnaDetailDTO;
+        }).collect(Collectors.toList());
     }
 
+    // 그냥 값 뽑기 테스트용 메소드
     public Object selectQnaList() {
         List<Qna> qnaList = qnaRepository.findAll();
         return qnaList.stream().map((Qna) -> modelMapper.map(Qna, QnaDTO.class));

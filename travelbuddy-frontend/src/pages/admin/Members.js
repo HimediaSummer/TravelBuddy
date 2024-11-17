@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
 import { callMemberListForAdminAPI } from "../../apis/MemberAPICalls";
-import { GET_MEMBERS } from "../../modules/MemberModule";
 
 function Members() {
     const navigate = useNavigate();

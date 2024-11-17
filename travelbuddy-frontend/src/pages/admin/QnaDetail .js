@@ -18,7 +18,10 @@ function QnaDetail () {
     const dispatch = useDispatch();
     const params = useParams();
     const qnaData = useSelector((state) => state.qnaReducer);
-    const {data: member} = memberData;
+    const {data} = qnaData;
+    const {qnaDTO, qnaAnswerDTO} = data || {};
+    console.log('data 가 가지고있는것',data);
+
  
     useEffect (
         () => {
@@ -26,95 +29,65 @@ function QnaDetail () {
         } , []
     );
 
-    useEffect (
-        () => {
-            if (qna) {
-                setQnaContents();
-            }
-        }, [qna]
-    );
-
-    // 필요없을지도 ===========================================================
-
-    // const onClickChangeHandlerSus = () => {
-    //     const newSuspensionStatus = memberSuspension === 'N' ? 'Y' : 'N';
-    //     dispatch(toggleMemberSuspensionAPI(params,newSuspensionStatus))
-    //     .then(
+    // useEffect (
     //     () => {
-    //         setIsMemberSuspension(newSuspensionStatus);
-    //         if (memberSuspension !== 'Y') {
-    //             alert("계정을 정지상태로 변경합니다.");
-    //         } else {
-    //             alert("정지 상태를 해제합니다.");
+    //         if (qna) {
+    //             setQnaContents();
     //         }
-    //     })
-    //     .catch(error => {
-    //         console.error('정지 버튼이 정상작동하지 않습니다.:', error);
-    //     }); 
-    // };
+    //     }, [qna]
+    // );
 
-    // const onClickChangeHandlerDel = () => {
-    //     const newDeletionStatus = memberDeletion === 'N' ? 'Y' : 'N';
-    //     dispatch(toggleMemberDeletionAPI(params,newDeletionStatus))
-    //     .then(
-    //     () => {
-    //         setIsMemberDeletion(newDeletionStatus);
-    //         if (memberDeletion !== 'N') {
-    //             alert("계정을 삭제상태로 변경합니다.");
-    //         } else {
-    //             alert("삭제 상태를 해제합니다.");
-    //         }
-    //     })
-    //     .catch(error => {
-    //         console.error('삭제 버튼이 정상작동하지 않습니다.:', error);
-    //     }); 
-    // };
-
-    // 필요없을지도 ===========================================================
 
     return (
         <div>
         <table>
             <thead>
+                <tr>
                 <th>문의(Q&A)</th>
-                {/* <th><input type={{select}}></input></th> */}
+                </tr>
             </thead>
             <tbody>
+                {qnaDTO ? (
+                    <>
                 <tr>
-                <td rowSpan="7" >썸네일</td>
-                <td >아이디</td>
-                <td>{member.memberName}</td>
+                <td>제목</td>
+                <td>{qnaDTO.qnaTitle}</td>
+                <td>문의유형</td>
+                <td>{qnaDTO.fqTypeCode}</td>
+                <td><button>삭제</button></td>
+                </tr>
+
+                <tr>
+                <td colSpan={4}>{qnaDTO.qnaContents}</td>
+                </tr>
+
+                <tr>
+                <td>답변 작성</td>
+                <td>{qnaAnswerDTO.ansContents}</td>
+                </tr>
+
+                <tr>
                 </tr>
                 <tr>
-                <td>이름</td>
-                <td>{member.memberFullName}</td>
                 </tr>
+
                 <tr>
-                <td>생년월일</td>
-                <td>{member.memberBirthday}</td>
+                    <td></td>
+                    <td></td>
+                    <td><button>답변 등록</button></td>
+                    <td><button>답변 수정</button></td>
+                    <td><button>답변 삭제</button></td>
                 </tr>
-                <tr>
-                <td>연락처</td>
-                <td>{member.memberPhone}</td>
-                </tr>
-                <tr>
-                <td>이메일</td>
-                <td>{member.memberEmail}</td>
-                </tr>
-                <tr>
-                <td>가입일</td>
-                <td>{member.memberCreate}</td>
-                </tr>
-                <tr>
-                    <td>임시정지상태확인 : {member.memberSuspension}</td>
-                    <td>임시탈퇴상태확인 : {member.memberDeletion}</td>
-                    <td><button onClick={onClickChangeHandlerSus}>정지</button></td>
-                    <td><button onClick={onClickChangeHandlerDel}>정보삭제</button></td>
-                </tr>
+                </>
+                ) : (
+                    <tr>
+                            <td colSpan="2">로딩 중...</td> {/* 데이터가 없을 때 로딩 메시지 */}
+                        </tr>
+                )}
             </tbody>
         </table>
         </div>
     ) 
 }
 
-export default MemberDetail
+export default QnaDetail

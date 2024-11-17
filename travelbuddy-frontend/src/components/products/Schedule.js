@@ -1,13 +1,82 @@
 import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import moment from 'moment';
+
+
+// 모달 body 태그에 붙이기
+Modal.setAppElement('#root');
 
 function Schedule() {
 //   const [message, setMessage] = useState('');
   const [accom, setAccom] = useState([]);
   const [region, setRegion] = useState([]);
   const [qTheme, setQTheme] = useState([]);
+  const [questions, setQuestions] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState(null);
   const [selectedAccom, setSelectedAccom] = useState(null);
   const [selectedQuestionTheme, setSelectedQuestionTheme] = useState(null);
+  const [selectedQuestions, setSelectedQuestions] = useState(null);
+
+  // 모달
+  const [isModalOpen, setIsModalOpen] = useState(false);
+//   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  // 날짜
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [selectedRange, setSelectedRange] = useState([null, null]);
+
+  // 페이지 오면 모달 자동으로 열리게
+  useEffect(
+	() => {setIsModalOpen(true);},
+	[]
+  );
+
+  // 모달 닫기
+  const closeModal = () => {
+	if(!startDate || !endDate) {
+		alert('날짜를 선택해주세요.');
+		return;
+	}
+	setIsModalOpen(false);
+  };
+
+  // 날짜 선택 최대 5일
+  const diffdays = (start, end) => {
+	const startDate = new Date(start);
+	const endDate = new Date(end);
+	return (endDate - startDate) / (1000 * 3600 * 24);
+  };
+
+  // 날짜 선택 핸들러
+  const dateSelectedHandler = e => {
+
+	const start = e[0];
+	const end = e[1];
+
+	if(start && end) {
+
+		const daysDiff = diffdays(start, end);
+		
+		if(daysDiff > 5) {
+			alert('최대 5일까지 선택 가능합니다.');
+			setStartDate(null);
+			setEndDate(null);
+			setSelectedRange([null, null]);
+			return;
+		}
+
+		const startDateFormat = moment(start).format("YYYY/MM/DD");
+		const endDateFormat = moment(end).format("YYYY/MM/DD");
+
+		setStartDate(startDateFormat);
+        setEndDate(endDateFormat);
+		setSelectedRange([start, end]);
+	}
+};
+
 
 //   useEffect(() => {
 //     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
@@ -98,7 +167,18 @@ function Schedule() {
         console.log("Selected Accommodation:", accom);
       };
 
-	  const hadleQuestionThemeSelect = qTheme => {
+	  const handleQuestionThemeSelect = qTheme => {
+		const selectedQThemes = qTheme.target.value;
+
+		if(selectedQuestionTheme === selectedQThemes) {
+			setSelectedQuestionTheme(null);
+		} else {
+			setSelectedQuestionTheme(selectedQThemes);
+		}
+		console.log("Selected QuestionTheme:", selectedQThemes);
+	  };
+
+	  const handleQuestionThemeSelect2 = qTheme => {
 		setSelectedQuestionTheme(qTheme);
 		console.log("Selected QuestionTheme:", qTheme);
 	  };
@@ -128,6 +208,7 @@ function Schedule() {
           <p>questionTheme: {qTheme.questionTheme}</p>
         </div>
       ))}
+
       {/* {accom} */}
       {/* {accom.accomCode} */}
       <br/>      
@@ -197,6 +278,27 @@ function Schedule() {
                     <p>어떤 여행을 하고싶나요?<i id="plane-icon"class="fa-solid fa-plane-departure"></i></p>
                 </div>
                 
+				{/* 날짜 선택 모달 */}
+				<Modal
+					isOpen={isModalOpen}
+					onRequestClose={closeModal}
+					contentLabel="날짜선택모달"
+					overlayClassName="overlay"
+				>
+					<h4>행복한 여행기간을 선택해주세요!</h4>
+					<p>최대 5일까지 선택 가능합니다.</p>
+					<Calendar
+						onChange={dateSelectedHandler}
+						value={selectedRange}
+						minDate={new Date()}
+						selectRange={true}
+						formatDay={(locale, date) => moment(date).format("DD") }
+					/>
+
+					<br/>
+					<button onClick = {closeModal} disabled={! startDate || !endDate}>선택완료</button>
+
+				</Modal>
 
                     <div class="chat-container">
                         <form class="chat-form" action="post">
@@ -205,10 +307,10 @@ function Schedule() {
                                 {/* 출발일, 도착일 */}
                                 <div class="travel-date">
                                     <div class="depart">
-                                        <input id="depart-schedule" type="date" name="depart"/>
+                                        <h3 id="depart-schedule">출발 날짜: {startDate || ""}</h3>
                                     </div>
                                     <div class="arrive">
-                                        <input id="arrive-schedule" type="date" name="arrive"/>
+									<h3 id="depart-schedule">도착 날짜: {endDate || ""}</h3>
                                     </div>
                                 </div>
                                 <div class="location">
@@ -248,7 +350,7 @@ function Schedule() {
                             <div class="tema-title">
                                 <legend>선호하는 여행테마를 선택해주세요</legend>
                             </div>
-                        <ul class="user-tema">
+                        {/* <ul class="user-tema">
                         <li>
                             <input type="checkbox" id="favorite-healing" name="tema" value="healing"/>
                             <label for="favorite-healing">힐링</label>
@@ -265,7 +367,27 @@ function Schedule() {
                             <input type="checkbox" id="favorite-food" name="tema" value="food"/>
                             <label for="favorite-food">식사</label>
                         </li>
-                        </ul>
+                        </ul> */}
+						<div>
+							{qTheme.map((qTheme) => (
+								<label key={qTheme.themeCode}>
+									<input 
+										type="checkbox" 
+										value={qTheme.questionTheme}
+										onChange={handleQuestionThemeSelect}
+										checked={selectedQuestionTheme === qTheme.questionTheme}
+									/>
+									{qTheme.questionTheme}
+								</label>
+							))}
+						</div>
+						<div>
+							{qTheme.map((qTheme) => {
+								return (<button key={qTheme.questionTheme} onClick={handleQuestionThemeSelect2}>
+									{qTheme.questionTheme}
+								</button>);
+							})}
+						</div>
                         </fieldset>
                     </div>
                         {/* Qestion */}

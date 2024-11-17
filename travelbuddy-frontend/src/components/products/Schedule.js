@@ -3,12 +3,18 @@ import Modal from 'react-modal';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
+import 'moment/locale/ko';
+import Region from './Region';
+import Accom from './Accom';
+import Question from './Question';
 
 
 // 모달 body 태그에 붙이기
 Modal.setAppElement('#root');
+moment.locale('ko');
 
 function Schedule() {
+	const [currentStep, setCurrentStep] = useState(0); // z컴포넌트 바꾸기?
 //   const [message, setMessage] = useState('');
   const [accom, setAccom] = useState([]);
   const [region, setRegion] = useState([]);
@@ -27,6 +33,13 @@ function Schedule() {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [selectedRange, setSelectedRange] = useState([null, null]);
+
+  // 각 단계 컴포넌트들
+  const steps = [
+	<Region onNext={() => setCurrentStep(1)} />,
+	<Accom onNext={() => setCurrentStep(2)} />,
+	<Question onNext={() => setCurrentStep(2)} />
+  ];
 
   // 페이지 오면 모달 자동으로 열리게
   useEffect(
@@ -68,15 +81,14 @@ function Schedule() {
 			return;
 		}
 
-		const startDateFormat = moment(start).format("YYYY/MM/DD");
-		const endDateFormat = moment(end).format("YYYY/MM/DD");
+		const startDateFormat = moment(start).format("MM.DD(ddd)");
+		const endDateFormat = moment(end).format("MM.DD(ddd)");
 
 		setStartDate(startDateFormat);
         setEndDate(endDateFormat);
 		setSelectedRange([start, end]);
 	}
 };
-
 
 //   useEffect(() => {
 //     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
@@ -326,19 +338,20 @@ function Schedule() {
                     <div class="chat-container">
                         <form class="chat-form" action="post">
                             <div class="user_input">
-                                <h2 class="chat-head">여행 일정을 입력해주세요</h2>
+                                <h2 class="chat-head" style={{margin: 'auto'}}>장소를 입력해주세요.</h2>
+								<h5 style={{margin: 'auto'}}>{startDate || ""} ~ {endDate || ""}</h5>
                                 {/* 출발일, 도착일 */}
                                 <div class="travel-date">
                                     <div class="depart">
-                                        <h3 id="depart-schedule">출발 날짜: {startDate || ""}</h3>
+                                        <h3 id="depart-schedule">{startDate || ""}&nbsp;&nbsp;오전 10:00&nbsp;&nbsp;오후10:00</h3>
                                     </div>
                                     <div class="arrive">
-									<h3 id="depart-schedule">도착 날짜: {endDate || ""}</h3>
+									<h3 id="depart-schedule">{endDate || ""}&nbsp;&nbsp;오전 10:00&nbsp;&nbsp;오후 10:00</h3>
                                     </div>
                                 </div>
                                 <div class="location">
                                 <div class="depart-airport">
-                                <div class="tema-title">
+                                {/* <div class="tema-title">
                                     <legend>가고싶은 도시를 선택해주세요</legend>
                                 </div>
                                     <select id="start-point">
@@ -355,8 +368,12 @@ function Schedule() {
                                             {region.regionName}
                                         </button>
                                         ))}
-                                    </div>
-                                    <div class="tema-title">
+                                    </div> */}
+									{/* 각 단계별 컴포넌트 자리 */}
+									<div>
+										{steps[currentStep]}
+									</div>
+                                    {/* <div class="tema-title">
                                         <legend>선호하는 숙소형태를 선택해주세요</legend>
                                     </div>
                                     <div>
@@ -365,14 +382,14 @@ function Schedule() {
                                             {accom.accomName} ({accom.accomType})
                                         </button>
                                         ))}
-                                    </div>
+                                    </div> */}
                                 </div>
                         </div>
                     <div>
-                        <fieldset class="select">
+                        {/* <fieldset class="select">
                             <div class="tema-title">
                                 <legend>선호하는 여행테마를 선택해주세요</legend>
-                            </div>
+                            </div> */}
                         {/* <ul class="user-tema">
                         <li>
                             <input type="checkbox" id="favorite-healing" name="tema" value="healing"/>
@@ -391,7 +408,7 @@ function Schedule() {
                             <label for="favorite-food">식사</label>
                         </li>
                         </ul> */}
-						<div>
+						{/* <div>
 							{qTheme.map((qTheme) => (
 								<label key={qTheme.themeCode}>
 									<input 
@@ -411,11 +428,11 @@ function Schedule() {
 								</button>);
 							})}
 						</div>
-                        </fieldset>
+                        </fieldset> */}
                     </div>
                         {/* Qestion */}
                         <div>
-                            <fieldset class="select">
+                            {/* <fieldset class="select">
                                 <div class="qestion-title">
                                     <legend>질문 : 새로운 모임의 단톡방이 만들어 졌을 때 나는?</legend>
                                 </div>
@@ -437,7 +454,7 @@ function Schedule() {
                                         <label for="answer-4">우우 유령이다 우우</label>
                                     </li>
                                 </ul>
-                            </fieldset>
+                            </fieldset> */}
                         </div>
                         {/* Schedule */}
                         <div class="button-edit">

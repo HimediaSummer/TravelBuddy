@@ -185,29 +185,29 @@ function Schedule() {
 
   return (
     <div className="App">
-      <h2>Regions</h2>
+      {/* <h2>Regions</h2>
       {region.map((region, index) => (
         <div key={index}>
           <p>regionCode: {region.regionCode}</p>
           <p>regionName: {region.regionName}</p>
         </div>
-      ))}
+      ))} */}
       
-      <h2>Accommodations</h2>
+      {/* <h2>Accommodations</h2>
       {accom.map((accom, index) => (
         <div key={index}>
           <p>accomCode: {accom.accomCode}</p>
           <p>accomType: {accom.accomType}</p>
         </div>
-      ))}
-
+      ))} */}
+{/* 
 	 <h2>QuestionThemes</h2>
       {qTheme.map((qTheme, index) => (
         <div key={index}>
           <p>themeCode: {qTheme.themeCode}</p>
           <p>questionTheme: {qTheme.questionTheme}</p>
         </div>
-      ))}
+      ))} */}
 
       {/* {accom} */}
       {/* {accom.accomCode} */}
@@ -283,10 +283,31 @@ function Schedule() {
 					isOpen={isModalOpen}
 					onRequestClose={closeModal}
 					contentLabel="날짜선택모달"
-					overlayClassName="overlay"
+					style={{
+						overlay: {
+							backgroundColor: "rgba(0, 0, 0, 0.75)",
+							zIndex: 20
+						},
+						content: {
+							position: 'absolute',
+							top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            zIndex: 20,
+							width: "50%",
+							height: "70%"
+						}
+					}}
 				>
+					<div style={{textAlign: 'center'}}>
 					<h4>행복한 여행기간을 선택해주세요!</h4>
 					<p>최대 5일까지 선택 가능합니다.</p>
+					</div>
+					<div style={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center'
+						}}>
 					<Calendar
 						onChange={dateSelectedHandler}
 						value={selectedRange}
@@ -294,9 +315,11 @@ function Schedule() {
 						selectRange={true}
 						formatDay={(locale, date) => moment(date).format("DD") }
 					/>
-
+					</div>
 					<br/>
+					<div style={{textAlign: 'right', paddingRight: '50px'}}>
 					<button onClick = {closeModal} disabled={! startDate || !endDate}>선택완료</button>
+					</div>
 
 				</Modal>
 

@@ -45,11 +45,11 @@ public class AdminQnaService {
         log.info("[AdminQnaService] selectQnaTotal() Start");
 
         /*페이징 처리 결과를 Page 타입으로 반환 받는다*/
-        List<Qna> memberList = adminQnaRepository.findAll();
+        List<Qna> qnaList = adminQnaRepository.findAll();
 
         log.info("[AdminQnaService] selectQnaTotal() End");
 
-        return memberList.size();
+        return qnaList.size();
 
     }
     /*qna 리스트와 paging 처리를 함께 한다.*/
@@ -59,14 +59,14 @@ public class AdminQnaService {
 
         int index = cri.getPageNum() - 1;
         int count = cri.getAmount();
-        Pageable paging = PageRequest.of(index, count, Sort.by("productCode").descending());
+        Pageable paging = PageRequest.of(index, count, Sort.by("qnaCode").descending());
 
         Page<Qna> result = adminQnaRepository.findAll(paging);
-        List<Qna> memberList = (List<Qna>)result.getContent();
+        List<Qna> qnaList = (List<Qna>)result.getContent();
 
         log.info("[AdminQnaService] selectQnaListWithPaging() End");
 
-        return memberList.stream().map(Qna -> modelMapper.map(Qna, QnaDTO.class)).collect(Collectors.toList());
+        return qnaList.stream().map(Qna -> modelMapper.map(Qna, QnaDTO.class)).collect(Collectors.toList());
     }
 
     /*전체 qna 리스트를 찾는다.*/

@@ -2,8 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
-import { callBuddiesListAPI } from "../../apis/BuddyAPICalls";
-import { callBuddyDetailForAdminAPI } from "../../apis/BuddyAPICalls";
+import { callBuddiesListAPI } from "../../../apis/BuddyAPICalls";
 
 function Buddies() {
     const navigate = useNavigate();

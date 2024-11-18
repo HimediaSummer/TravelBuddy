@@ -2,18 +2,25 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { callBuddyDetailAPI } from '../../apis/BuddyAPICalls';
+import { callBuddyDetailAPI } from '../../../apis/BuddyAPICalls';
 
 function BuddyDetail () {
 
     const dispatch = useDispatch();
     const params = useParams();
-    const buddyData = useSelector((state) => state.qnaReducer);
-    const {data} = buddyData;
-	const{buddyDTO} = data || {};
+    const buddyData = useSelector((state) => state.buddiesReducer);
+    console.log("buddyData = ", buddyData);
+
+    // const {buddyDTO} = buddyData;
+    // console.log('data 가 가지고있는것',data);
+
+	// const{buddyDTO} = data || {};
+    // console.log('buddyDTO = ', buddyDTO);
+
+
 	const currentUser = useSelector((state) => state.memberReducer.currentUser);
+    console.log('currentUser = ', currentUser);
     // const {qnaDTO, qnaAnswerDTO} = data || {};
-    console.log('data 가 가지고있는것',data);
 
  
     useEffect (
@@ -40,18 +47,18 @@ function BuddyDetail () {
                 </tr>
             </thead>
             <tbody>
-                {buddyDTO ? (
+                {buddyData ? (
                     <>
                 <tr>
                 <td>제목</td>
-                <td>{buddyDTO.buddyTitle}</td>
+                <td>{buddyData.buddyTitle}</td>
                 <td>유형</td>
-                <td>{buddyDTO.buddyTypeCode}</td>
-                <td><button>삭제</button></td>
+                <td>{buddyData.buddyType}</td>
+                {/* <td><button>삭제</button></td> */}
                 </tr>
 
                 <tr>
-                <td colSpan={4}>{buddyDTO.buddyContents}</td>
+                <td colSpan={4}>{buddyData.buddyContents}</td>
                 </tr>
 
                 {/* <tr>
@@ -68,7 +75,7 @@ function BuddyDetail () {
                     <td></td>
                     <td></td>
                     {/* <td><button>답변 등록</button></td> */}
-					{currentUser && currentUser.memberCode === buddyDTO.memberCode && (//작성자동일시 버튼활성화
+					{currentUser && currentUser.memberCode === buddyData.memberCode && (//작성자동일시 버튼활성화
 					<>
                     <td><button>답변 수정</button></td>
                     <td><button>답변 삭제</button></td>

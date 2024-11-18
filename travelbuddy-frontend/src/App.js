@@ -11,8 +11,8 @@ import QnaDetail from './pages/admin/QnaDetail ';
 import Login from './pages/member/Login';
 import Register from './pages/member/Register';
 import Error from './pages/Error';
-import Buddies from './pages/member/Buddy';
-import BuddyDetail from './pages/member/BuddyDetail';
+import Buddies from './pages/member/comunity/Buddy';
+import BuddyDetail from './pages/member/comunity/BuddyDetail';
 
 function App() {
 

@@ -104,7 +104,7 @@ function QuestionSchedule({ onNext }) {
 	};
 
 	return (
-		<>
+		<div>
 			<fieldset class="select">
 				<div class="tema-title">
 					<legend>선호하는 여행테마를 선택해주세요</legend>
@@ -144,7 +144,7 @@ function QuestionSchedule({ onNext }) {
 				</div>
 				<button onClick={onNext}>다음</button>
 			</fieldset>
-		</>
+		</div>
 	);
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Accom({ onNext }) {
+function AccomSchedule({ onNext }) {
 
 	const [accom, setAccom] = useState([]);
 	const [accomDetails, setAccomDetails] = useState([]);
@@ -81,4 +81,4 @@ function Accom({ onNext }) {
 
 };
 
-export default Accom;
+export default AccomSchedule;

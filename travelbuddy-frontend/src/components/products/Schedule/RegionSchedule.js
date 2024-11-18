@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Region({ onNext }) {
+function RegionSchedule({ onNext }) {
 
 	const [region, setRegion] = useState([]);
 	const [regionDetails, setRegionDetails] = useState([]);
@@ -76,4 +76,4 @@ function Region({ onNext }) {
 		</>
 	);
 }
-export default Region;
+export default RegionSchedule;

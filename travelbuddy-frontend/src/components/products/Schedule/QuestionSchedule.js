@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Question({ onNext }) {
+function QuestionSchedule({ onNext }) {
 
 	const [qTheme, setQTheme] = useState([]);
 	const [questionDetails, setQuestionDetails] = useState([]);
@@ -270,10 +270,11 @@ function Question({ onNext }) {
 					) : (
 						<p>답이 왜 안 나오냐?</p>
 					)}
-				</div> */}
+				</div>
+				<button onClick={onNext}>다음</button>
 			</fieldset>
 		</>
 	);
 }
 
-export default Question;
+export default QuestionSchedule;

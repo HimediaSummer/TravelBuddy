@@ -1,5 +1,6 @@
 package travelbuddy.function.community.buddy.service;
 
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,13 +10,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import travelbuddy.common.Criteria;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
 import travelbuddy.function.community.buddy.entity.Buddy;
 import org.springframework.data.domain.Pageable;
 import travelbuddy.function.community.buddy.repository.BuddyRepository;
+import travelbuddy.util.FileUploadUtils;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,4 +86,66 @@ public class BuddyService {
         }).collect(Collectors.toList());
     }
 
+    public Object selectBuddyDetail(int buddyCode) {
+        log.info("[BuddyService] selectBuddyDetail() Start");
+
+        Buddy buddy = buddyRepository.findById(buddyCode).get();
+        buddy.setBuddyImg(IMAGE_URL + buddy.getBuddyImg());
+
+        log.info("[BuddyService} selectBuddyDetail() END");
+
+        return modelMapper.map(buddy, Buddy.class);
+    }
+
+    @Transactional
+    public Object insertBuddy(BuddyDTO buddyDTO, MultipartFile buddyImage) {
+        log.info("[BuddyService] insertBuddy() Start");
+        log.info("[BuddyService] buddy: {}", buddyDTO);
+
+        String imageName = UUID.randomUUID().toString().replace("-","");
+        String replaceFileName = null;
+        int result = 0;
+
+        try{
+            replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, buddyImage);
+
+            buddyDTO.setBuddyImg(replaceFileName);
+
+            log.info("[BuddyService] insert Image Name : {}", replaceFileName);
+
+            Buddy insertBuddy = modelMapper.map(buddyDTO, Buddy.class);
+
+            buddyRepository.save(insertBuddy);
+
+            result = 1;
+        } catch (Exception e) {
+            FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
+            throw new RuntimeException(e);
+        }
+
+        return (result > 0 ? "버디게시글 등록 성공" : "버디게시글 등록 실패");
+    }
+
+////    @Transactional
+////    public Object updateBuddy(BuddyDTO buddyDTO, MultipartFile productImage) {
+////        log.info("[BuddyService] insertBuddy() Start");
+////        log.info("[BuddyService] buddy: {}", buddyDTO);
+////
+////        String  replaceFileName = null;
+////        int result = 0;
+////
+////        try {
+////            Buddy buddy = buddyRepository.findById(buddyDTO.getBuddyCode()).get();
+////            String oriImage = buddy.getBuddyImg();
+////            log.info("[upadteBuddy] oriImage : {}", oriImage);
+////
+////            buddy.setBuddyType((buddyDTO.getBuddyTypeCode()));
+////            buddy.setRegion(buddyDTO.getRegionCode());
+////            buddy.setBuddyTitle(buddyDTO.getBuddyTitle());
+////            buddy.setBuddyContents(buddyDTO.getBuddyContents());
+////            buddy.setBuddyImg(buddyDTO.getBuddyImg());
+////            buddy.setBuddyStatus(buddyDTO.getBuddyStatus());
+////            buddy.setBuddyAt(buddyDTO.getBuddyAt());
+////        }
+//    }
 }

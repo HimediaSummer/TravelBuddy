@@ -25,6 +25,7 @@ import travelbuddy.function.community.qnafaq.repository.QnaRepository;
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.repository.AccountRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -122,9 +123,11 @@ public class QnaService {
 
 //        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        int memberCode = Integer.parseInt(userDetails.getUsername());
+        FqType fqType = fqTypeRepository.findById(qnaDTO.getFqTypeCode()).orElseThrow();
+        Account account = accountRepository.findById(qnaDTO.getMemberCode()).orElseThrow();
         Qna insertqna = modelMapper.map(qnaDTO, Qna.class);
-        insertqna.setQnaTitle(qnaDTO.getQnaTitle());
-        insertqna.setQnaContents(qnaDTO.getQnaContents());
+        insertqna.setFqType(fqType);
+        insertqna.setAccount(account);
         qnaRepository.save(insertqna);
 
         QnaAnswer qnaAnswer = new QnaAnswer();

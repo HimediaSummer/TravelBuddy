@@ -19,4 +19,4 @@
 //        registry.addResourceHandler(ADD_RESOURCE_HANDLER)
 //                .addResourceLocations(ADD_RESOURCE_LOCATION);
 //    }
-//}
+////}

@@ -96,8 +96,9 @@ public class AdminQnaService {
 
         Qna qna = adminQnaRepository.findById(qnaCode).get();
         QnaAnswer qnaAnswer = adminqnaAnswerRepository.findById(qnaCode).orElse(null);
-            QnaDTO qnaDTO = modelMapper.map(qna , QnaDTO.class);
-            QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
+        QnaDTO qnaDTO = modelMapper.map(qna , QnaDTO.class);
+        qnaDTO.setMemberCode(qna.getAccount().getMemberCode());
+        QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
 
         if (qnaAnswer != null) {
             qnaAnswer.setQna(qna);

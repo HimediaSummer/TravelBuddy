@@ -63,7 +63,7 @@ public class QnaController {
     }
 
     @Operation(summary = "qna 등록 요청", description = "QnA 등록이 진행됩니다.", tags = {"QnaController"})
-    @PostMapping("/qnas")
+    @PostMapping("/qnas/insertqna")
     public ResponseEntity<ResponseDTO> insertQna(@RequestBody QnaDTO qnaDTO) {
         System.out.println("qnaDTO = " + qnaDTO);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "Qna 입력 요청", qnaService.insertQna(qnaDTO)));

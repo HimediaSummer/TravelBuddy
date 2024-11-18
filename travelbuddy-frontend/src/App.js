@@ -7,6 +7,9 @@ import MyPage from './pages/member/mypage/Mypage';
 import MypageBuddyList from './components/products/MypageBuddyList';
 import Qnas from './pages/admin/Qnas';
 import QnaDetail from './pages/admin/QnaDetail ';
+import MyQnas from './pages/member/qna/MyQnas';
+import MyQna from './pages/member/qna/MyQna';
+import MyQnaDetail from './pages/member/qna/MyQnaDetail';
 
 function App() {
 
@@ -22,6 +25,9 @@ function App() {
           <Route path="MemberDetail/:memberCode" element={ <MemberDetail/>} />
           <Route path="Qnas" element={ <Qnas/> }/>
           <Route path="QnaDetail/:qnaCode" element={ <QnaDetail/>} />
+          <Route path="MyQnas" element={ <MyQnas/> }/>
+          <Route path="MyQna" element={ <MyQna/> }/>
+          <Route path="MyQnaDetail/:qnaCode" element={ <MyQnaDetail/>} />
           <Route path="MyPage" element={<MyPage />}>
             <Route path="MyBuddyList" element={<MypageBuddyList />} />
           </Route> 

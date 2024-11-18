@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
-import { callQnaListForAdminAPI } from "../../apis/QnaAPICalls";
+import { callQnaListAPI } from "../../apis/QnaAPICalls";
 
 function Qnas() {
     const navigate = useNavigate();
@@ -27,7 +27,7 @@ function Qnas() {
     useEffect(() => {
         setStart((currentPage - 1) * 5);
         dispatch(
-            callQnaListForAdminAPI({
+            callQnaListAPI({
                 currentPage: { currentPage },
             })
         );

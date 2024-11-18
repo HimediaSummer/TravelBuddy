@@ -36,6 +36,7 @@ const qnaReducer = handleActions(
 			return payload;
 		},
 		[POST_QNA]: (state, { payload }) => {
+			console.log('그럼 paylaod의 값은?', payload);
 			return payload;
 		},
 		[GET_QNAANSWER]: (state, { payload }) => {

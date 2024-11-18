@@ -270,7 +270,7 @@ function QuestionSchedule({ onNext }) {
 					) : (
 						<p>답이 왜 안 나오냐?</p>
 					)}
-				</div>
+				</div>*/}
 				<button onClick={onNext}>다음</button>
 			</fieldset>
 		</div>

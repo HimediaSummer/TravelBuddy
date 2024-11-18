@@ -54,33 +54,33 @@ function AccomSchedule({ onNext }) {
 	return (
 		<div class="tema-title">
 			<div class="chat-container">
-                <form class="chat-form" action="post">
-                    <h2>숙소 선택</h2>
-                    <div class="tema-title">
-                        <legend>선호하는 숙소형태를 선택해주세요</legend>
-                    </div>
-                    <div>
-                        {accom.map((accom) => (
-                            <button type='button' key={accom.accomCode} onClick={() => handleAccomSelect(accom)}>
-                                {accom.accomName} ({accom.accomType})
-                            </button>
-                        ))}
-                    </div>
-                    <div>
-                        {selectedAccomDetails ? (
-                            <div>
-                                <p>숙소 타입 : {selectedAccomDetails.accomType}</p>
-                                <p>숙소 이름 : {selectedAccomDetails.accomName}</p>
-                                <p>숙소 주소 : {selectedAccomDetails.accomAddres}</p>
-                            </div>
-                        ) : (
-                            <p>숙소를 선택해주세요.</p>
-                        )}
-                        <button onClick={onNext}>다음</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+				<form class="chat-form" action="post">
+					<h2>숙소 선택</h2>
+					<div class="tema-title">
+						<legend>선호하는 숙소형태를 선택해주세요</legend>
+					</div>
+					<div>
+						{accom.map((accom) => (
+							<button type='button' key={accom.accomCode} onClick={() => handleAccomSelect(accom)}>
+								{accom.accomName} ({accom.accomType})
+							</button>
+						))}
+					</div>
+					<div>
+						{selectedAccomDetails ? (
+							<div>
+								<p>숙소 타입 : {selectedAccomDetails.accomType}</p>
+								<p>숙소 이름 : {selectedAccomDetails.accomName}</p>
+								<p>숙소 주소 : {selectedAccomDetails.accomAddres}</p>
+							</div>
+						) : (
+							<p>숙소를 선택해주세요.</p>
+						)}
+						<button onClick={onNext}>다음</button>
+					</div>
+				</form>
+			</div>
+		</div>
 	);
 };
 

@@ -54,7 +54,7 @@ function RegionSchedule({ onNext }) {
 		<div>
 			<h4>장소 선택&nbsp;&nbsp;장소 등록</h4>
 			<div class="tema-title">
-				<legend>가고싶은 도시를 선택해주세요</legend>
+				<legend>가고싶은 도시를 선택해주세요.</legend>
 			</div>
 			<div>
 				{region.map((region) => (

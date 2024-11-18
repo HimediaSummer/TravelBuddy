@@ -9,6 +9,7 @@ function QuestionSchedule({ onNext }) {
 	const [selectedQuestions, setSelectedQuestions] = useState([]);
 	const [selectedAnswer, setSelectedAnswer] = useState([]);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+	const [isDone, setIsDone] = useState(false);
 
 	// 질문지 테마
 	useEffect(() => {
@@ -191,7 +192,16 @@ function QuestionSchedule({ onNext }) {
 		]);
 
 		// 답변을 선택한 후 다음 질문으로 넘어가기
-		setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+		setCurrentQuestionIndex(prevIndex => {
+			const nextIndex = prevIndex + 1;
+
+			// 모든 질문을 끝냈는지 확인
+			if(nextIndex >= selectedQuestions.length) {
+				setIsDone(true); // 질문 끝!
+			}
+
+			return nextIndex;
+		});
 	};
 
 	// 현재 질문을 가져오기
@@ -258,6 +268,7 @@ function QuestionSchedule({ onNext }) {
 						''
 					)}
 				</div>
+				<br/>
 				{/* <div>
 					{selectedAnswer && selectedAnswer.length > 0 ? (
 						selectedAnswer.map(answers => {
@@ -271,7 +282,12 @@ function QuestionSchedule({ onNext }) {
 						<p>답이 왜 안 나오냐?</p>
 					)}
 				</div>*/}
-				<button onClick={onNext}>다음</button>
+				{/* 모든 질문을 끝냈을 때 다음 버튼 표시하기 */}
+				{isDone && (
+					<div>
+						<button onClick={onNext}>다음</button>
+					</div>
+				)}
 			</fieldset>
 		</div>
 	);

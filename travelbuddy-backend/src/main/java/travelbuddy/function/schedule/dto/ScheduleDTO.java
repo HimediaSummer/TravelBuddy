@@ -1,7 +1,5 @@
 package travelbuddy.function.schedule.dto;
 
-import java.sql.Time;
-import java.util.Date;
 
 public class ScheduleDTO {
 

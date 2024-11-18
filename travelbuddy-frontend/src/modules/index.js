@@ -1,14 +1,8 @@
 import { combineReducers } from 'redux';
-import memberReducer from './MemberModule';
-import reviewReducer from './ReviewModule';
-import productReducer from './ProductModule';
-import purchaseReducer from './PurchaseModule';
+import mypageBuddyReducer from './MypageBuddyModule.js';
 
 const rootReducer = combineReducers({
-	memberReducer,
-	reviewReducer,
-	productReducer,
-	purchaseReducer
+	mypageBuddyReducer
 });
 
 export default rootReducer;

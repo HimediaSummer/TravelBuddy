@@ -108,6 +108,19 @@ public class ScheduleController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "질문지 상세 조회 성공", responseData));
     }
 
+    @Operation(summary = "답변 상세 조회", description = "사용자가 선택할 수 있는 답변이 상세 조회됩니다.", tags = { "ScheduleController" })
+    @GetMapping("/answer/{questCode}")
+    public ResponseEntity<ResponseDTO> selectAnswerByQuestCode(@PathVariable int questCode) {
+
+        System.out.println("[ScheduleController] 왓니?");
+        System.out.println("[ScheduleController] questCode = " + questCode);
+
+        Object responseData = scheduleService.selectAnswerByQuestCode(questCode);
+        System.out.println("[ScheduleController] responseData = " + responseData);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "답변 상세 조회 성공", responseData));
+    }
+
     @Operation(summary = "일정 생성", description = "사용자 정보 입력 받아 일정 생성", tags = { "ScheduleController" })
     @PostMapping("/scheduling")
     public ResponseEntity<ResponseDTO> scheduling(@RequestBody ScheduleDTO scheduleDTO) {

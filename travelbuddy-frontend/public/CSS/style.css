@@ -380,7 +380,8 @@ select,
 .location,
 .travel-date{
     display: flex;
-    flex-direction: row;
+    /* flex-direction: row; */
+    flex-direction: column;
 }
 
 .travel-date input{
@@ -412,9 +413,15 @@ select,
 }
 #depart-schedule,
 #arrive-schedule {
-    width: 230px;
+    /* width: 230px; */
     height: 40px;
-    border-radius: 4px;
+	/* 간격 조정을 위한 마진 수정 */
+	margin: 10px;
+	/* 구분선 */
+	border: 1px solid lightgray;
+	/* 간격 조정을 위한 패딩 수정 */
+	padding: 10px 15px 0px 15px;
+    border-radius: 15px;
     font-size: large;
 }
 

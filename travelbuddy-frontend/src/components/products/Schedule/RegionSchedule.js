@@ -51,27 +51,33 @@ function RegionSchedule({ onNext }) {
 	};
 
 	return (
-		<div>
-			<h4>장소 선택&nbsp;&nbsp;장소 등록</h4>
-			<div class="tema-title">
-				<legend>가고싶은 도시를 선택해주세요.</legend>
-			</div>
-			<div>
-				{region.map((region) => (
-					<button type='button' key={region.regionCode} onClick={() => handleRegionSelect(region)}>
-						{region.regionName}
-					</button>
-				))}
-				{/* 선택된 지역 상세 정보 출력 */}
-				{selectedRegionDetails ? (
-					<div>
-						<h3>지역 이름: {selectedRegionDetails.regionName}</h3>
-						<p>지역 설명: {selectedRegionDetails.regionDescription}</p>
+		<div class="tema-title">
+			<div class="chat-container">
+				<form class="chat-form" action="post">
+				<div id="chat-box2">
+						<h2>장소 선택</h2>
 					</div>
-				) : (
-					<p>지역을 선택해주세요.</p>
-				)}
-				<button onClick={onNext}>다음</button>
+					<div class="tema-title">
+						<legend>가고싶은 도시를 선택해주세요.</legend>
+					</div>
+					<div>
+						{region.map((region) => (
+							<button type='button' key={region.regionCode} onClick={() => handleRegionSelect(region)}>
+								{region.regionName}
+							</button>
+						))}
+						{/* 선택된 지역 상세 정보 출력 */}
+						{selectedRegionDetails ? (
+							<div>
+								<h3>지역 이름: {selectedRegionDetails.regionName}</h3>
+								<p>지역 설명: {selectedRegionDetails.regionDescription}</p>
+							</div>
+						) : (
+							<p>지역을 선택해주세요.</p>
+						)}
+						<button onClick={onNext}>다음</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	);

@@ -75,57 +75,56 @@ function DateSchedule({ onNext }) {
 	};
 	return (
 		<div class="depart-airport">
-			<div style={{textAlign: 'center', justifyContent: 'center'}}>
-				<h2>날짜 선택</h2>
-			</div>
-			{/* 날짜 선택 UI 구현 */}
-			{/* 날짜 선택 모달 */}
-			<Modal
-				isOpen={isModalOpen}
-				onRequestClose={closeModal}
-				contentLabel="날짜선택모달"
-				style={{
-					overlay: {
-						backgroundColor: "rgba(0, 0, 0, 0.75)",
-						zIndex: 20
-					},
-					content: {
-						position: 'absolute',
-						top: "50%",
-						left: "50%",
-						transform: "translate(-50%, -50%)",
-						zIndex: 20,
-						width: "50%",
-						height: "70%"
-					}
-				}}
-			>
-				<div style={{ textAlign: 'center', margin: '30px' }}>
-					<h4>행복한 여행기간을 선택해주세요!</h4>
-					<p>최대 5일까지 선택 가능합니다.</p>
-				</div>
-				<div style={{
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center'
-				}}>
-					<Calendar
-						onChange={dateSelectedHandler}
-						value={selectedRange}
-						minDate={new Date()}
-						selectRange={true}
-						formatDay={(locale, date) => moment(date).format("DD")}
-					/>
-				</div>
-				<br />
-				<div style={{ textAlign: 'right', paddingRight: '50px', margin: '20px' }}>
-					<button onClick={closeModal} disabled={!startDate || !endDate}>선택완료</button>
-				</div>
-
-			</Modal>
-
 			<div class="chat-container">
 				<form class="chat-form" action="post">
+				<div id="chat-box2">
+						<h2>날짜 선택</h2>
+					</div>
+					{/* 날짜 선택 UI 구현 */}
+					{/* 날짜 선택 모달 */}
+					<Modal
+						isOpen={isModalOpen}
+						onRequestClose={closeModal}
+						contentLabel="날짜선택모달"
+						style={{
+							overlay: {
+								backgroundColor: "rgba(0, 0, 0, 0.75)",
+								zIndex: 20
+							},
+							content: {
+								position: 'absolute',
+								top: "50%",
+								left: "50%",
+								transform: "translate(-50%, -50%)",
+								zIndex: 20,
+								width: "50%",
+								height: "70%"
+							}
+						}}
+					>
+						<div style={{ textAlign: 'center', margin: '30px' }}>
+							<h4>행복한 여행기간을 선택해주세요!</h4>
+							<p>최대 5일까지 선택 가능합니다.</p>
+						</div>
+						<div style={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center'
+						}}>
+							<Calendar
+								onChange={dateSelectedHandler}
+								value={selectedRange}
+								minDate={new Date()}
+								selectRange={true}
+								formatDay={(locale, date) => moment(date).format("DD")}
+							/>
+						</div>
+						<br />
+						<div style={{ textAlign: 'right', paddingRight: '50px', margin: '20px' }}>
+							<button onClick={closeModal} disabled={!startDate || !endDate}>선택완료</button>
+						</div>
+					</Modal>
+
 					<div class="user_input">
 						<h2 class="chat-head" style={{ margin: 'auto' }}>장소를 입력해주세요.</h2>
 						<h4 style={{ margin: 'auto' }}>{startDate || ""} ~ {endDate || ""}</h4>
@@ -148,12 +147,10 @@ function DateSchedule({ onNext }) {
 						</div>
 						{/* Qestion */}
 						{/* Schedule */}
+						<button onClick={onNext}>다음</button>
 					</div>
 					{/* Loading */}
 				</form>
-			</div>
-			<div style={{textAlign: 'center', justifyContent: 'center'}}>
-				<button onClick={onNext}>다음</button>
 			</div>
 		</div>
 	);

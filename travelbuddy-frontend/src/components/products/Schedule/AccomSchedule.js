@@ -55,7 +55,9 @@ function AccomSchedule({ onNext }) {
 		<div class="tema-title">
 			<div class="chat-container">
 				<form class="chat-form" action="post">
-					<h2>숙소 선택</h2>
+				<div id="chat-box2">
+						<h2>숙소 선택</h2>
+					</div>
 					<div class="tema-title">
 						<legend>선호하는 숙소형태를 선택해주세요</legend>
 					</div>

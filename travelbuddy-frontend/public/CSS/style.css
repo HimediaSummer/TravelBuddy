@@ -273,6 +273,15 @@ legend {
 	color: black;
 }
 
+#chat-box2 {
+	background-color: var(--background-color);
+	text-align: center;
+	justify-content: center;
+	/* font-size: xx-large; */
+	font-weight: bold;
+	color: #1F709E;
+}
+
 #chat-box p {
 	margin: 0px 0px 0px 0px;
 	line-height: 120%;
@@ -350,6 +359,13 @@ select,
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+}
+
+.chat-form2>div {
+	margin-bottom: 10px;
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
 }
 
 .chat-head {

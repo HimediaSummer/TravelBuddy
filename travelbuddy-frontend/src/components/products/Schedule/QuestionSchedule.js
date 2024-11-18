@@ -196,7 +196,7 @@ function QuestionSchedule({ onNext }) {
 			const nextIndex = prevIndex + 1;
 
 			// 모든 질문을 끝냈는지 확인
-			if(nextIndex >= selectedQuestions.length) {
+			if (nextIndex >= selectedQuestions.length) {
 				setIsDone(true); // 질문 끝!
 			}
 
@@ -208,88 +208,54 @@ function QuestionSchedule({ onNext }) {
 	const currentQuestion = selectedQuestions[currentQuestionIndex];
 
 	return (
-		<div>
-			<fieldset class="select">
-				<div class="tema-title">
-					<legend>선호하는 여행테마를 선택해주세요</legend>
-				</div>
-				<div>
-					{qTheme.map((qTheme) => {
-						return (<button type='button' key={qTheme.questionTheme} onClick={() => handleQuestionThemeSelect(qTheme)}>
-							{qTheme.questionTheme}
-						</button>);
-					})}
-				</div>
-				{/* <div>
-					{selectedQuestions.length > 0 ? (
-						selectedQuestions.map(questions => {
-							const questionAnswer = selectedAnswer.filter(answer => answer.questCode === questions.questCode);
-							return (
-								<div key={questions.questCode}>
-									<p>질문: {questions.question}</p>
-									{questionAnswer.length > 0 ? (
-										questionAnswer.map(answers => {
-											return (
-												<button type='button' key={`${answers.questCode}-${answers.answerCode}`} onClick={() => handleAnswerSelect(answers)}>
-													{answers.answer}
-												</button>
-											)
-										})
-									) : (
-										<p>답이 왜 안 나오냐?</p>
-									)}
-								</div>
-							)
-						})
-					) : (
-						<p>테마를 선택해주세요.</p>
-					)}
-				</div> */}
-				<div>
-					{selectedQuestions.length > 0 && currentQuestionIndex < selectedQuestions.length ? (
-						// 현재 질문만 표시
-						<div key={currentQuestion.questCode}>
-							<p>질문: {currentQuestion.question}</p>
-
-							{/* 해당 질문에 맞는 답변 필터링 */}
-							{selectedAnswer
-								.filter((answer) => answer.questCode === currentQuestion.questCode)
-								.map((answer) => (
-									<button
-										type="button"
-										key={`${answer.questCode}-${answer.answerCode}`} // questCode + answerCode 조합으로 key 설정
-										onClick={() => handleAnswerSelect(answer)} // 답변 선택 시 다음 질문으로 이동
-									>
-										{answer.answer}
-									</button>
-								))}
-						</div>
-					) : (
-						''
-					)}
-				</div>
-				<br/>
-				{/* <div>
-					{selectedAnswer && selectedAnswer.length > 0 ? (
-						selectedAnswer.map(answers => {
-							return (
-								<button key={answers.answerCode} onClick={() => handleAnswerSelect(answers)}>
-									답 : {answers.answer}
-								</button>
-							)
-						})
-					) : (
-						<p>답이 왜 안 나오냐?</p>
-					)}
-				</div>*/}
-				{/* 모든 질문을 끝냈을 때 다음 버튼 표시하기 */}
-				{isDone && (
-					<div>
-						<button onClick={onNext}>다음</button>
+		<div class="tema-title">
+			<div class="chat-container">
+				<form class="chat-form" action="post">
+					<div id="chat-box2">
+						<h2>질문 선택</h2>
 					</div>
-				)}
-			</fieldset>
-		</div>
+					<div class="tema-title">
+						<legend>선호하는 여행테마를 선택해주세요</legend>
+					</div>
+					<div>
+						{qTheme.map((qTheme) => {
+							return (<button type='button' key={qTheme.questionTheme} onClick={() => handleQuestionThemeSelect(qTheme)}>
+								{qTheme.questionTheme}
+							</button>);
+						})}
+					</div>
+					<div>
+						{selectedQuestions.length > 0 && currentQuestionIndex < selectedQuestions.length ? (
+							// 현재 질문만 표시
+							<div key={currentQuestion.questCode}>
+								<p>질문: {currentQuestion.question}</p>
+								{/* 해당 질문에 맞는 답변 필터링 */}
+								{selectedAnswer
+									.filter((answer) => answer.questCode === currentQuestion.questCode)
+									.map((answer) => (
+										<button
+											type="button"
+											key={`${answer.questCode}-${answer.answerCode}`} // questCode + answerCode 조합으로 key 설정
+											onClick={() => handleAnswerSelect(answer)} // 답변 선택 시 다음 질문으로 이동
+										>
+											{answer.answer}
+										</button>
+									))}
+							</div>
+						) : (
+							''
+						)}
+					</div>
+					<br />
+					{/* 모든 질문을 끝냈을 때 다음 버튼 표시하기 */}
+					{isDone && (
+						<div>
+							<button onClick={onNext}>다음</button>
+						</div>
+					)}
+				</form>
+			</div >
+		</div >
 	);
 }
 

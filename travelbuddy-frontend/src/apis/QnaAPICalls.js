@@ -43,7 +43,7 @@ export const noPagingQnaListAPI = () => {
     }}
 
     // 회원이 QnA 1개를 작성한다.
-export const insertQnaAPI = ({qnaDTO}) => {
+export const insertQnaAPI = (qnaDTO) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/cs/qnas/insertqna`;
     console.log('내가 받은 qnaDTO 는?',qnaDTO);
     return async (dispatch, getState) => {
@@ -52,7 +52,8 @@ export const insertQnaAPI = ({qnaDTO}) => {
             headers: {
                 'Content-Type': 'application/json',
                 Accept: '*/*'
-            }
+            },
+            body: qnaDTO
         }).then((response) => response.json());
         dispatch({type: POST_QNA, payload: result });
         console.log('응답받은 result 는?',result);

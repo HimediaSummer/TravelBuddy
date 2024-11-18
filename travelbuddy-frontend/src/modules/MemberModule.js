@@ -26,7 +26,7 @@ const memberReducer = handleActions(
 			return payload;
 		},
 		[POST_MEMBER]: (state, { payload }) => {
-			console.log('payload 의 값 확인',payload);
+			console.log('정보삭제 의 값 확인',payload);
 			return payload;
 		},
 		[POST_REGISTER]: (state, { payload }) => {

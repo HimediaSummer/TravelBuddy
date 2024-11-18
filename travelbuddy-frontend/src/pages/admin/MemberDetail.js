@@ -22,6 +22,7 @@ function MemberDetail () {
     useEffect (
         () => {
             dispatch(callMemberDetailForAdminAPI(params))
+            
         } , []
     );
 
@@ -31,7 +32,7 @@ function MemberDetail () {
                 setIsMemberSuspension(member.memberSuspension);
                 setIsMemberDeletion(member.memberDeletion); 
             }
-        }, [member]
+        }, []
     );
 
     const onClickChangeHandlerSus = () => {

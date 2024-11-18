@@ -208,8 +208,7 @@ function QuestionSchedule({ onNext }) {
 	const currentQuestion = selectedQuestions[currentQuestionIndex];
 
 	return (
-		<>
-		<div style={{textAlign: 'center', justifyContent: 'center'}}>
+		<div>
 			<fieldset class="select">
 				<div class="tema-title">
 					<legend>선호하는 여행테마를 선택해주세요</legend>
@@ -290,8 +289,7 @@ function QuestionSchedule({ onNext }) {
 					</div>
 				)}
 			</fieldset>
-			</div>
-		</>
+		</div>
 	);
 }
 

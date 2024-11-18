@@ -12,6 +12,7 @@ import Login from './pages/member/Login';
 import Register from './pages/member/Register';
 import Error from './pages/Error';
 import Buddies from './pages/member/Buddy';
+import BuddyDetail from './pages/member/BuddyDetail';
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
           <Route path="/signup" element={ <Register/> } />
           <Route path="*" element={ <Error/> }/>
           <Route path="buddies" element={<Buddies />} />
+          <Route path="buddyDetail/:buddyCode" element={ <BuddyDetail/>} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
 import { callBuddiesListAPI } from "../../apis/BuddyAPICalls";
+import { callBuddyDetailForAdminAPI } from "../../apis/BuddyAPICalls";
 
 function Buddies() {
     const navigate = useNavigate();
@@ -38,7 +39,7 @@ function Buddies() {
 
 
     const onClickTableTr = (buddyCode) => {
-        navigate(`buddyBoard/buddies/${buddyCode}`, { replace: false });
+        navigate(`/buddyDetail/${buddyCode}`, { replace: false });
     };
 
 

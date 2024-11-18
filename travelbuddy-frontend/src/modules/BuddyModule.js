@@ -8,15 +8,15 @@ const initialState = {
 
 /* 액션 */
 export const GET_BUDDIES = 'buddyBoard/buddies/GET_BUDDIES';
-// export const GET_QNA = 'qna/GET_QNA';
+export const GET_BUDDY = 'buddyBoard/buddies/GET_BUDDY';
 // export const GET_QNAANSWER = 'qna/GET_QNAANSWER';
-export const GET_BUDDYTYPE = 'buddyBoard/GET_BUDDYTYPE';
+// export const GET_BUDDYTYPE = 'buddyBoard/GET_BUDDYTYPE';
 // export const POST_QNA = 'qna/POST_QNA';
 // export const POST_REGISTER = 'qna/POST_REGISTER';
 
 const actions = createActions({
-	[GET_BUDDIES]: () => {}
-	// [GET_QNA]: () => {},
+	[GET_BUDDIES]: () => {},
+	[GET_BUDDY]: () => {}
 	// [GET_QNAANSWER]: () => {},
 	// [GET_BUDDYTYPE]: () => {},
 	// [POST_QNA]: () => {},
@@ -30,9 +30,10 @@ const buddiesReducer = handleActions(
 			console.log("리듀서에서 받은 payload", payload);
 			return payload;
 		},
-		// [GET_QNA]: (state, { payload }) => {
-		// 	return payload;
-		// },
+		[GET_BUDDY]: (state, { payload }) => {
+			console.log("리듀서에서 받은 payload", payload);
+			return payload;
+		},
 		// [GET_QNAANSWER]: (state, { payload }) => {
 		// 	return payload;
 		// },

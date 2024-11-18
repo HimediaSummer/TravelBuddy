@@ -27,6 +27,7 @@ import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.repository.BuddyMatchRepository;
 import travelbuddy.function.member.repository.MyBuddyRepository;
 import travelbuddy.function.member.repository.MyProfileRepository;
+import travelbuddy.function.schedule.dto.RegionDTO;
 import travelbuddy.function.schedule.entity.Region;
 import travelbuddy.function.schedule.repository.RegionRepository;
 import travelbuddy.util.FileUploadUtils;
@@ -179,26 +180,20 @@ public class MypageService {
 //    }
 
     /* 내가쓴버디게시글조회 */
-    public Object selectBuddyList() {
+    public Object selectBuddyList(int memberCode) {
         log.info("[MypageService] selectBuddyList() Start");
-        List<Buddy> selectBuddyList = myBuddyRepository.findByMemberCode();
+        System.out.println("text memberbuddy" + memberCode);
 
-        System.out.println("selectBuddyList = " + selectBuddyList);
+        Account account = myProfileRepository.findById(memberCode)
+                .orElseThrow(() -> new EntityNotFoundException("Account not found with memberCode: " + memberCode));
 
-        List<BuddyDTO> buddyList = selectBuddyList.stream()
-                .map(buddy -> {
-                    BuddyDTO buddyDto = modelMapper.map(buddy, BuddyDTO.class);
+        Buddy buddy = (Buddy) myBuddyRepository.findByAccount(account)
+                .orElseThrow(() -> new RuntimeException("Member not found with memberCode: " + memberCode));
 
-                    // account.memberCode -> BuddyDTO.memberCode 매핑
-                    if (buddy.getAccount() != null) {
-                        buddyDto.setMemberCode(buddy.getAccount().getMemberCode());
-                    } return buddyDto;
-                })
-                .collect(Collectors.toList());
+        System.out.println("text memberbuddy123" + memberCode);
 
-        log.info("[MypageService] selectMypagePostList() END");
-
-        return buddyList;
+        log.info("[MypageService] selectBuddyList() End");
+        return modelMapper.map(buddy, Buddy.class);
     }
 
     /* 내가쓴버디게시글상세조회및신청회원목록조회 */

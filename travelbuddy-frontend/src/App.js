@@ -4,7 +4,7 @@ import Main from './components/products/Main';
 import Members from './pages/admin/Members';
 import MemberDetail from './pages/admin/MemberDetail';
 import MyPage from './pages/member/mypage/Mypage';
-import MypageBuddyList from './components/products/MypageBuddyList';
+import MypageBuddy from './components/products/MypageBuddy';
 import Qnas from './pages/admin/Qnas';
 import QnaDetail from './pages/admin/QnaDetail ';
 
@@ -23,7 +23,7 @@ function App() {
           <Route path="Qnas" element={ <Qnas/> }/>
           <Route path="QnaDetail/:qnaCode" element={ <QnaDetail/>} />
           <Route path="MyPage" element={<MyPage />}>
-            <Route path="MyBuddyList" element={<MypageBuddyList />} />
+            <Route path="MyBuddy" element={<MypageBuddy />} />
           </Route> 
         </Route>
       </Routes>

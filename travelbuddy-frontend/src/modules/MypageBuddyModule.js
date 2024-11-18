@@ -1,25 +1,34 @@
-// import { createActions, handleActions } from 'redux-actions';
+import { createAction } from 'redux-actions';
 
-// const initialState = {buddyList: [],};
+const initialState = [];
 
-// export const GET_BUDDYLIST = 'buddyList/GET_BUDDYLIST';
-// export const getBuddyList = (payload) => ({
-//     type: GET_BUDDYLIST,
-//     payload,
-// });
+export const GET_BUDDY = 'GET_BUDDY';
 
+export const getBuddy = createAction(GET_BUDDY);
 
-// /* 리듀서 */
-// const mypageBuddyReducer = handleActions(
-// 	{
-// 		[GET_BUDDYLIST]: (state, { payload }) => {
-//             console.log('Reducer is handling GET_BUDDYLIST:', payload);
-//             return{
-//             ...state,
-//             buddyList: payload,};
-//         },
-// 	},
-// 	initialState
-// );
+/* 리듀서 */
+const mypageBuddyReducer = (state = [], action) => {
 
-// export default mypageBuddyReducer;
+    console.log('Reducer received action:', action);
+
+	switch (action.type) {
+        case 'myBuddy/GET_BUDDY':
+
+            console.log('Reducer is myBuddy', action.payload);
+
+            if (!Array.isArray(action.payload)) {
+                console.error('Payload is not an array:', action.payload);
+                return state;
+            }
+
+            const updateState = [...action.payload];
+            console.log('Updated state:', updateState);
+
+            return updateState;
+
+        default:
+            return state;
+    }
+};
+
+export default mypageBuddyReducer;

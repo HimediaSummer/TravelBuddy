@@ -87,10 +87,10 @@ public class MypageController {
 //    }
 
     @Operation(summary = "게시글조회요청", description = "내가쓴글목록조회", tags = {"MypageController"})
-    @GetMapping("/mybuddylist")
+    @GetMapping("/mybuddy")
     public ResponseEntity<ResponseDTO> selectBuddyList() {
-
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글목록조회성공", mypageService.selectBuddyList()));
+        int memberCode = 1001; // 하드코딩된 memberCode
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글목록조회성공", mypageService.selectBuddyList(memberCode)));
     }
 
     @Operation(summary = "게시글상세조회요청", description = "내가쓴글상세조회", tags = {"MypageController"})

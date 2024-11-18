@@ -53,7 +53,6 @@ function AccomSchedule({ onNext }) {
 
 	return (
 		<>
-		<div style={{textAlign: 'center', justifyContent: 'center'}}>
 			<div class="tema-title">
 				<legend>선호하는 숙소형태를 선택해주세요</legend>
 			</div>
@@ -75,7 +74,6 @@ function AccomSchedule({ onNext }) {
 					<p>숙소를 선택해주세요.</p>
 				)}
 				<button onClick={onNext}>다음</button>
-			</div>
 			</div>
 		</>
 	);

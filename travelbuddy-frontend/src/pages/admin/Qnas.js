@@ -5,14 +5,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
 import { callQnaListForAdminAPI } from "../../apis/QnaAPICalls";
-import { GET_QNAS } from "../../modules/QnaModule";
 
 function Qnas() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const qna = useSelector((state) => state.qnaReducer) || {};
     const qnaList = qna.data || {};
-    const {data = {} , pageInfo = {}} = qnaList;
+    const { data = {}, pageInfo = {} } = qnaList;
 
     const [start, setStart] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -29,14 +28,16 @@ function Qnas() {
         setStart((currentPage - 1) * 5);
         dispatch(
             callQnaListForAdminAPI({
-                currentPage: {currentPage},
+                currentPage: { currentPage },
             })
         );
     }, [currentPage]);
 
+
     const onClickTableTr = (qnaCode) => {
         navigate(`/qnaDetail/${qnaCode}`, { replace: false });
     };
+
 
     return (
         <>
@@ -66,19 +67,22 @@ function Qnas() {
                     </thead>
                     <tbody>
                         {Array.isArray(data) &&
-                            data.map((q) => (
+                            data.map((q) => {
+                                return(
                                 <tr
-                                    key={q.qnaCode}
-                                    onClick={() => onClickTableTr(q.qnaCode)}
+                                    key={q.qnaDTO.qnaCode}
+                                    onClick={() =>
+                                        onClickTableTr(q.qnaDTO.qnaCode)
+                                    }
                                 >
-                                    <td>{q.qnaCode}</td>
-                                    <td>{q.fqTypeCode}</td>
-                                    <td colSpan={5}>{q.qnaContents}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>{q.qnaCreate}</td>
+                                    <td>{q.qnaDTO.qnaCode}</td>
+                                    <td>{q.qnaDTO.fqTypeCode}</td>
+                                    <td colSpan={5}>{q.qnaDTO.qnaContents}</td>
+                                    <td>{q.qnaDTO.memberCode}</td>
+                                    <td>{q.qnaAnswerDTO.ansCode}</td>
+                                    <td>{q.qnaDTO.qnaCreate}</td>
                                 </tr>
-                            ))}
+                            )})}
                     </tbody>
                 </table>
             </div>

@@ -22,6 +22,7 @@ function MemberDetail () {
     useEffect (
         () => {
             dispatch(callMemberDetailForAdminAPI(params))
+            
         } , []
     );
 
@@ -29,18 +30,18 @@ function MemberDetail () {
         () => {
             if (member) {
                 setIsMemberSuspension(member.memberSuspension);
-                setIsMemberDeletion(memberDeletion); 
+                setIsMemberDeletion(member.memberDeletion); 
             }
-        }, [member]
+        }, []
     );
 
     const onClickChangeHandlerSus = () => {
-        const newSuspensionStatus = memberSuspension === 'N' ? 'Y' : 'N';
+        const newSuspensionStatus = memberSuspension === 'Y' ? 'Y' : 'N';
         dispatch(toggleMemberSuspensionAPI(params,newSuspensionStatus))
         .then(
         () => {
             setIsMemberSuspension(newSuspensionStatus);
-            if (memberSuspension !== 'Y') {
+            if (newSuspensionStatus !== 'Y') {
                 alert("계정을 정지상태로 변경합니다.");
             } else {
                 alert("정지 상태를 해제합니다.");
@@ -52,12 +53,12 @@ function MemberDetail () {
     };
 
     const onClickChangeHandlerDel = () => {
-        const newDeletionStatus = memberDeletion === 'N' ? 'Y' : 'N';
+        const newDeletionStatus = memberDeletion === 'Y' ? 'Y' : 'N';
         dispatch(toggleMemberDeletionAPI(params,newDeletionStatus))
         .then(
         () => {
             setIsMemberDeletion(newDeletionStatus);
-            if (memberDeletion !== 'N') {
+            if (newDeletionStatus !== 'Y') {
                 alert("계정을 삭제상태로 변경합니다.");
             } else {
                 alert("삭제 상태를 해제합니다.");

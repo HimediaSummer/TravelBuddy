@@ -88,4 +88,10 @@ public class AdminQnaController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnaAnswer 삭제 성공",adminQnaService.deleteQnaAnswer(qnaCode)));
     }
 
+    @Operation(summary = "관리자페이지 QnA 유형 이름 요청", description = "QnA 유형 이름 정보가 출력됩니다.", tags = {"AdminQnaController"})
+    @GetMapping("/qnas/getfqtype")
+    public ResponseEntity<ResponseDTO> selectFqType() {
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"fqType 조회 성공",adminQnaService.selectFqType()));
+    }
+
 }

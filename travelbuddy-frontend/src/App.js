@@ -11,6 +11,7 @@ import QnaDetail from './pages/admin/QnaDetail ';
 import Login from './pages/member/Login';
 import Register from './pages/member/Register';
 import Error from './pages/Error';
+import Buddies from './pages/member/Buddy';
 
 function App() {
 
@@ -29,10 +30,12 @@ function App() {
           <Route path="MyPage" element={<MyPage />}>
             <Route path="MyBuddyList" element={<MypageBuddyList />} />
           </Route> 
+          
 
           <Route path="/login" element={ <Login/> } />
           <Route path="/signup" element={ <Register/> } />
           <Route path="*" element={ <Error/> }/>
+          <Route path="buddies" element={<Buddies />} />
         </Route>
       </Routes>
     </BrowserRouter>

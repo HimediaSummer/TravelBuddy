@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { callLogoutAPI } from '../../apis/MemberAPICalls';
 import LoginModal from '../common/LoginModal';
-import { NavLink } from 'react-router-dom';
 
 function Main() {
   const [message, setMessage] = useState('');
@@ -93,7 +92,9 @@ function Main() {
                         )}
                         </li>
                         <li>이용 방법</li>
-                        <li>커뮤니티</li>
+                        <li>
+                            <NavLink to="/buddies">커뮤니티</NavLink>
+                        </li>
                         
                     </ul>
                     <button className="header_toogleBtn">

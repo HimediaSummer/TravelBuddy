@@ -13,11 +13,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import travelbuddy.common.Criteria;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
+import travelbuddy.function.community.buddy.dto.BuddyTypeDTO;
 import travelbuddy.function.community.buddy.entity.Buddy;
 import org.springframework.data.domain.Pageable;
+import travelbuddy.function.community.buddy.entity.BuddyType;
 import travelbuddy.function.community.buddy.repository.BuddyRepository;
+import travelbuddy.function.community.buddy.repository.BuddyTypeRepository;
 import travelbuddy.util.FileUploadUtils;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -27,6 +31,7 @@ public class BuddyService {
 
     private static final Logger log = LoggerFactory.getLogger(BuddyService.class);
     private final BuddyRepository buddyRepository;
+    private final BuddyTypeRepository buddyTypeRepository;
     private final ModelMapper modelMapper;
 
     @Value("${image.image-dir}")
@@ -35,9 +40,10 @@ public class BuddyService {
     private String IMAGE_URL;
 
     @Autowired
-    public BuddyService(BuddyRepository buddyRepository, ModelMapper modelMapper) {
+    public BuddyService(BuddyRepository buddyRepository, ModelMapper modelMapper, BuddyTypeRepository buddyTypeRepository) {
         this.buddyRepository = buddyRepository;
         this.modelMapper = modelMapper;
+        this.buddyTypeRepository = buddyTypeRepository;
     }
 
 
@@ -63,7 +69,8 @@ public class BuddyService {
         System.out.println("버디서비스 영역의 paging = " + paging);
 
 
-        Page<Buddy> result = buddyRepository.findByBuddyStatus("N", paging);
+//        Page<Buddy> result = buddyRepository.findByBuddyStatus("N", paging);
+        Page<Buddy> result = buddyRepository.findAll(paging);
         System.out.println("버디서비스영역의 result = " + result);
 //        Page<Buddy> result = buddyRepository.findAll(paging);
         List<Buddy> buddyList = (List<Buddy>) result.getContent();
@@ -126,26 +133,55 @@ public class BuddyService {
         return (result > 0 ? "버디게시글 등록 성공" : "버디게시글 등록 실패");
     }
 
-////    @Transactional
-////    public Object updateBuddy(BuddyDTO buddyDTO, MultipartFile productImage) {
-////        log.info("[BuddyService] insertBuddy() Start");
-////        log.info("[BuddyService] buddy: {}", buddyDTO);
-////
-////        String  replaceFileName = null;
-////        int result = 0;
-////
-////        try {
-////            Buddy buddy = buddyRepository.findById(buddyDTO.getBuddyCode()).get();
-////            String oriImage = buddy.getBuddyImg();
-////            log.info("[upadteBuddy] oriImage : {}", oriImage);
-////
-////            buddy.setBuddyType((buddyDTO.getBuddyTypeCode()));
-////            buddy.setRegion(buddyDTO.getRegionCode());
-////            buddy.setBuddyTitle(buddyDTO.getBuddyTitle());
-////            buddy.setBuddyContents(buddyDTO.getBuddyContents());
-////            buddy.setBuddyImg(buddyDTO.getBuddyImg());
-////            buddy.setBuddyStatus(buddyDTO.getBuddyStatus());
-////            buddy.setBuddyAt(buddyDTO.getBuddyAt());
-////        }
-//    }
+    @Transactional
+    public Object updateBuddy(BuddyDTO buddyDTO, MultipartFile buddyImage) {
+        log.info("[BuddyService] insertBuddy() Start");
+        log.info("[BuddyService] buddy: {}", buddyDTO);
+
+        String  replaceFileName = null;
+        int result = 0;
+
+        try {
+            Buddy buddy = buddyRepository.findById(buddyDTO.getBuddyCode()).get();
+            String oriImage = buddy.getBuddyImg();
+            log.info("[upadteBuddy] oriImage : {}", oriImage);
+
+            buddy.setBuddyType((buddyDTO.getBuddyTypeCode()));
+            buddy.setRegion(buddyDTO.getRegionCode());
+            buddy.setBuddyTitle(buddyDTO.getBuddyTitle());
+            buddy.setBuddyContents(buddyDTO.getBuddyContents());
+            buddy.setBuddyImg(buddyDTO.getBuddyImg());
+            buddy.setBuddyStatus(buddyDTO.getBuddyStatus());
+            buddy.setBuddyAt(buddyDTO.getBuddyAt());
+
+            if(buddyImage != null) {
+                String imageName = UUID.randomUUID().toString().replace("-","");
+                replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, buddyImage);
+                log.info("[updateBuddy] InsertFileName : {}" , replaceFileName);
+
+                buddy.setBuddyImg(replaceFileName);
+                log.info("[upsateBuddy] deleteImage : {}", oriImage);
+
+                boolean isDelete = FileUploadUtils.deleteFile(IMAGE_DIR, oriImage);
+                log.info("[update[ isDelete : {}", isDelete);
+            } else {
+
+                //이미지 변동 없을 경우
+                buddy.setBuddyImg(oriImage);
+            }
+
+            result = 1;
+        } catch (IOException e) {
+            log.info("[updateBuddy] Exception!!");
+            FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
+            throw new RuntimeException(e);
+        }
+        log.info("[BuddyService] updateBuddy END");
+        return (result > 1 ) ? "상품 업데이트 성공" : "상품 업데이트 실패";
+    }
+
+    public Object selectBuddyType() {
+        List<BuddyType> buddyTypeList = buddyTypeRepository.findAll();
+        return buddyTypeList.stream().map(BuddyType ->modelMapper.map(BuddyType, BuddyTypeDTO.class)).collect(Collectors.toList());
+    }
 }

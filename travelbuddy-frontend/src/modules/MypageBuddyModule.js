@@ -1,23 +1,25 @@
-import { createActions, handleActions } from 'redux-actions';
+// import { createActions, handleActions } from 'redux-actions';
 
-const initialState = {buddyList: [],};
+// const initialState = {buddyList: [],};
 
-export const GET_BUDDYLIST = 'buddyList/GET_BUDDYLIST';
-export const getBuddyList = (payload) => ({
-    type: GET_BUDDYLIST,
-    payload,
-});
+// export const GET_BUDDYLIST = 'buddyList/GET_BUDDYLIST';
+// export const getBuddyList = (payload) => ({
+//     type: GET_BUDDYLIST,
+//     payload,
+// });
 
 
-/* 리듀서 */
-const mypageBuddyReducer = handleActions(
-	{
-		[GET_BUDDYLIST]: (state, { payload }) => ({
-            ...state,
-            buddyList: payload, // buddyList 배열 업데이트
-        }),
-	},
-	initialState
-);
+// /* 리듀서 */
+// const mypageBuddyReducer = handleActions(
+// 	{
+// 		[GET_BUDDYLIST]: (state, { payload }) => {
+//             console.log('Reducer is handling GET_BUDDYLIST:', payload);
+//             return{
+//             ...state,
+//             buddyList: payload,};
+//         },
+// 	},
+// 	initialState
+// );
 
-export default mypageBuddyReducer;
+// export default mypageBuddyReducer;

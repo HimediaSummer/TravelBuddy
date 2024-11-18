@@ -127,10 +127,12 @@ public class QnaService {
         insertqna.setQnaContents(qnaDTO.getQnaContents());
         qnaRepository.save(insertqna);
 
-        QnaAnswer qnaAnswer = qnaAnswerRepository.findByQna(insertqna);
+        QnaAnswer qnaAnswer = new QnaAnswer();
+        qnaAnswer.setQna(insertqna);
+        qnaAnswer.setAnsContents(null);
         qnaAnswerRepository.save(qnaAnswer);
 
-        return "상품 입력 성공";
+        return "QnA 입력 성공";
 
     }
 

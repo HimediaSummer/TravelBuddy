@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
 import { callQnaListForAdminAPI } from "../../apis/QnaAPICalls";
-import { callFqTypeAPI } from "../../apis/QnaAPICalls";
 
 function Qnas() {
     const navigate = useNavigate();
@@ -13,12 +12,10 @@ function Qnas() {
     const qna = useSelector((state) => state.qnaReducer) || {};
     const qnaList = qna.data || {};
     const { data = {}, pageInfo = {} } = qnaList;
-    console.log("한번에 하나만 담기나?", data);
 
     const [start, setStart] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageEnd, setPageEnd] = useState(1);
-    const [fqTypes, setFqTypes] = useState([]);
 
     const pageNumber = [];
     if (pageInfo) {
@@ -36,15 +33,6 @@ function Qnas() {
         );
     }, [currentPage]);
 
-    useEffect(() => {
-        dispatch(callFqTypeAPI()).then((data) => {
-            console.log("그래서 여기 뭐있는데", data);
-            setFqTypes(data);
-        });
-    }, []);
-    useEffect(() => {
-        console.log("FqTypes 저장되었나", fqTypes); // fqTypes가 변경될 때마다 출력
-    }, [fqTypes]);
 
     const onClickTableTr = (qnaCode) => {
         navigate(`/qnaDetail/${qnaCode}`, { replace: false });

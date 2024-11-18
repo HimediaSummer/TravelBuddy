@@ -29,14 +29,15 @@ function QnaDetail () {
         } , []
     );
 
-    // useEffect (
-    //     () => {
-    //         if (qna) {
-    //             setQnaContents();
-    //         }
-    //     }, [qna]
-    // );
-
+    const onClickChangeHandlerInsert = () => {
+        dispatch(insertQnaAnswerAPI(params))
+    };
+    const onClickChangeHandlerUpdate = () => {
+        dispatch(updateQnaAnswerAPI(params))
+    };
+    const onClickChangeHandlerDelete = () => {
+        dispatch(deleteQnaAnswerAPI(params))
+    };
 
     return (
         <div>
@@ -74,9 +75,9 @@ function QnaDetail () {
                 <tr>
                     <td></td>
                     <td></td>
-                    <td><button>답변 등록</button></td>
-                    <td><button>답변 수정</button></td>
-                    <td><button>답변 삭제</button></td>
+                    <td><button onClick={onClickChangeHandlerInsert}>답변 등록</button></td>
+                    <td><button onClick={onClickChangeHandlerUpdate}>답변 수정</button></td>
+                    <td><button onClick={onClickChangeHandlerDelete}>답변 삭제</button></td>
                 </tr>
                 </>
                 ) : (

@@ -4,8 +4,10 @@ function Question({ onNext }) {
 
 	const [qTheme, setQTheme] = useState([]);
 	const [questionDetails, setQuestionDetails] = useState([]);
+	const [answers, setAnswers] = useState([]);
 	const [selectedQuestionTheme, setSelectedQuestionTheme] = useState(null);
 	const [selectedQuestions, setSelectedQuestions] = useState([]);
+	const [selectedAnswer, setSelectedAnswer] = useState([]);
 
 	// 질문지 테마
 	useEffect(() => {
@@ -40,6 +42,23 @@ function Question({ onNext }) {
 	// 		.catch(error => console.error('Error fetching data:', error));
 	// }, []);
 
+	// 질문별 대답
+	useEffect(() => {
+		fetch('http://localhost:8080/schedule/answer/1')
+			.then(response => response.json())
+			.then(data => {
+				console.log('가져온거', data);
+				const answers = data.data.map(answers => ({
+					answerCode: answers.answerCode,
+					answer: answers.answer,
+					questCode: answers.questCode
+				}));
+				console.log("가져왓냐?", data);
+				setSelectedQuestions(answers);
+			})
+			.catch(error => console.error('Error fetching data:', error));
+	}, []);
+
 	const handleQuestionThemeSelect = qTheme => {
 
 		console.log('선택된테마코드?', qTheme);
@@ -62,6 +81,28 @@ function Question({ onNext }) {
 		console.log("Selected QuestionTheme:", qTheme);
 	};
 
+	// 답변 핸들러
+	const handleAnswerSelect = answers => {
+		
+		console.log('선택된테마코드?', answers);
+		console.log('야있냐???', answers.questCode);
+
+		fetch(`http://localhost:8080/schedule/answer/${answers.questCode}`)
+		.then(response => response.json())
+		.then(data => {
+			console.log('뭐가져왓냐', data);
+			const answers = data.data.map(answers => ({
+				answerCode: answers.answerCode,
+				answer: answers.answer,
+				questCode: answers.questCode
+			}))
+			setSelectedAnswer(answers);
+		})
+		.catch(error => console.error('Error fetching data:', error));
+		console.log("Selected Answer:", answers);
+
+	};
+
 	return (
 		<>
 			<fieldset class="select">
@@ -80,12 +121,25 @@ function Question({ onNext }) {
 						selectedQuestions.map(questions => {
 							return (
 								<div key={questions.questCode}>
-									<p>질문 : {questions.question}</p>
+									<p>질문: {questions.question}</p>
 								</div>
 							)
 						})
 					) : (
 						<p>테마를 선택해주세요.</p>
+					)}
+				</div>
+				<div>
+					{selectedAnswer && selectedAnswer.length > 0 ? (
+						selectedAnswer.map(answers => {
+							return (
+								<button key={answers.answerCode} onClick={() => handleAnswerSelect(answers)}>
+									답 : {answers.answer}
+								</button>
+							)
+						})
+					) : (
+						<p>답이 왜 안 나오냐?</p>
 					)}
 				</div>
 			</fieldset>

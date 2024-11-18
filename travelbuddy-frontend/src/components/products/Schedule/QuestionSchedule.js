@@ -209,6 +209,7 @@ function QuestionSchedule({ onNext }) {
 
 	return (
 		<>
+		<div style={{textAlign: 'center', justifyContent: 'center'}}>
 			<fieldset class="select">
 				<div class="tema-title">
 					<legend>선호하는 여행테마를 선택해주세요</legend>
@@ -268,6 +269,7 @@ function QuestionSchedule({ onNext }) {
 						''
 					)}
 				</div>
+				<br/>
 				{/* <div>
 					{selectedAnswer && selectedAnswer.length > 0 ? (
 						selectedAnswer.map(answers => {
@@ -283,9 +285,12 @@ function QuestionSchedule({ onNext }) {
 				</div>*/}
 				{/* 모든 질문을 끝냈을 때 다음 버튼 표시하기 */}
 				{isDone && (
-				<button onClick={onNext}>다음</button>
+					<div>
+						<button onClick={onNext}>다음</button>
+					</div>
 				)}
 			</fieldset>
+			</div>
 		</>
 	);
 }

@@ -75,7 +75,9 @@ function DateSchedule({ onNext }) {
 	};
 	return (
 		<div class="depart-airport">
-			<h2>날짜 선택</h2>
+			<div style={{textAlign: 'center', justifyContent: 'center'}}>
+				<h2>날짜 선택</h2>
+			</div>
 			{/* 날짜 선택 UI 구현 */}
 			{/* 날짜 선택 모달 */}
 			<Modal
@@ -98,7 +100,7 @@ function DateSchedule({ onNext }) {
 					}
 				}}
 			>
-				<div style={{ textAlign: 'center' }}>
+				<div style={{ textAlign: 'center', margin: '30px' }}>
 					<h4>행복한 여행기간을 선택해주세요!</h4>
 					<p>최대 5일까지 선택 가능합니다.</p>
 				</div>
@@ -116,7 +118,7 @@ function DateSchedule({ onNext }) {
 					/>
 				</div>
 				<br />
-				<div style={{ textAlign: 'right', paddingRight: '50px' }}>
+				<div style={{ textAlign: 'right', paddingRight: '50px', margin: '20px' }}>
 					<button onClick={closeModal} disabled={!startDate || !endDate}>선택완료</button>
 				</div>
 
@@ -126,7 +128,7 @@ function DateSchedule({ onNext }) {
 				<form class="chat-form" action="post">
 					<div class="user_input">
 						<h2 class="chat-head" style={{ margin: 'auto' }}>장소를 입력해주세요.</h2>
-						<h5 style={{ margin: 'auto' }}>{startDate || ""} ~ {endDate || ""}</h5>
+						<h4 style={{ margin: 'auto' }}>{startDate || ""} ~ {endDate || ""}</h4>
 						{/* 출발일, 도착일 */}
 						<div class="travel-date">
 							<div class="depart">
@@ -150,7 +152,9 @@ function DateSchedule({ onNext }) {
 					{/* Loading */}
 				</form>
 			</div>
-			<button onClick={onNext}>다음</button>
+			<div style={{textAlign: 'center', justifyContent: 'center'}}>
+				<button onClick={onNext}>다음</button>
+			</div>
 		</div>
 	);
 }

@@ -49,15 +49,15 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원정보수정", mypageService.updateMyProfile(accountDTO,memberImg)));
     }
 
-//    @Operation(summary = "회원탈퇴", description = "회원숨김수정", tags = {"MypageController"})
-//    @PutMapping("/putdelete/{memberCode}")
-//    public ResponseEntity<ResponseDTO> putDeleteAccount(@PathVariable int memberCode) {
-//        log.info("[MypageService] updateMyProfile Start");
-//
-//        mypageService.putDeleteAccount(memberCode);
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원숨김ㅃㅃ", null));
-//    }
+    @Operation(summary = "회원탈퇴", description = "회원숨김수정", tags = {"MypageController"})
+    @PutMapping("/putdelete/{memberCode}")
+    public ResponseEntity<ResponseDTO> putDeleteAccount(@PathVariable int memberCode) {
+        log.info("[MypageService] updateMyProfile Start");
+
+        mypageService.putDeleteAccount(memberCode);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원숨김ㅃㅃ", null));
+    }
 
     /* =========================================== My일정 =========================================== */
 

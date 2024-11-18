@@ -2,6 +2,8 @@ package travelbuddy.function.member.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,20 +132,21 @@ public class MypageService {
     }
 
     /* 회원숨김 */
-//    @Transactional
-//    public Object putDeleteAccount(int memberCode) {
-//        log.info("[MypageService] 숨김설정시작: memberCode = {}", memberCode);
-//
-//        Account account = (Account) myProfileRepository.findById(memberCode)
-//                .orElseThrow(() -> new RuntimeException("숨김처리할 회원을 찾을 수 없습니다."));
-//
-//        account.setMemberLeave("Y");
-//        myProfileRepository.saveMemberLeave(account);
-//
-//        log.info("[MypageService] 숨김 완료: memberCode = {}", memberCode);
-//
-//        return "return 회원숨김성공ㅊ";
-//    }
+    @Transactional
+    public Object putDeleteAccount(int memberCode) {
+        log.info("[MypageService] 숨김설정시작: memberCode = {}", memberCode);
+
+        Account account = (Account) myProfileRepository.findById(memberCode)
+                .orElseThrow(() -> new RuntimeException("숨김처리할 회원을 찾을 수 없습니다."));
+
+        account.setMemberDeletion("Y");
+        account.setMemberLeave(String.valueOf(LocalDate.now()));
+        myProfileRepository.save(account);
+
+        log.info("[MypageService] 숨김 완료: memberCode = {}", memberCode);
+
+        return "return 회원숨김성공ㅊ";
+    }
 
     /* =========================================== My일정 =========================================== */
 

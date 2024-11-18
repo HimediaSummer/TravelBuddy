@@ -14,7 +14,7 @@ public class MemberScheduleData {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "member_code")
-    private AccountEntity account;
+    private Account account;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "sche_code")
@@ -23,17 +23,17 @@ public class MemberScheduleData {
     public MemberScheduleData() {
     }
 
-    public MemberScheduleData(AccountEntity account, int memberScheCode, Schedule schedule) {
+    public MemberScheduleData(Account account, int memberScheCode, Schedule schedule) {
         this.account = account;
         this.memberScheCode = memberScheCode;
         this.schedule = schedule;
     }
 
-    public AccountEntity getAccount() {
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(AccountEntity account) {
+    public void setAccount(Account account) {
         this.account = account;
     }
 

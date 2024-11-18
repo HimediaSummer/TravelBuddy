@@ -74,7 +74,7 @@ CREATE TABLE
                                   member_phone VARCHAR(15) NOT NULL COMMENT '회원전화번호',
                                   member_suspension VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '정지여부',
                                   member_deletion VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '탈퇴여부',
-                                  member_like INT NULL COMMENT '좋아요',
+                                  member_like INT NULL DEFAULT 0 COMMENT '좋아요',
                                   member_img TEXT NULL COMMENT '프로필사진',
                                   authority_code INT NOT NULL COMMENT '권한코드',
                                   member_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT  '가입일',
@@ -122,7 +122,7 @@ CREATE TABLE
                                 buddy_create DATETIME NOT NULL COMMENT '게시글작성일',
                                 buddy_status VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '게시글상태',
                                 buddy_img TEXT NULL COMMENT '게시글이미지',
-                                buddy_count INT NOT NULL COMMENT '조회수',
+                                buddy_count INT NOT NULL DEFAULT 0 COMMENT '조회수',
                                 buddy_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
                                 PRIMARY KEY (buddy_code),
                                 FOREIGN KEY (member_code) REFERENCES tbl_account (member_code) ON DELETE CASCADE,
@@ -568,40 +568,31 @@ VALUES
     );
 
 -- tbl_qna
-INSERT INTO
-    tbl_qna (
-    qna_code,
-    fq_type_code,
-    member_code,
-    qna_title,
-    qna_contents,
-    qna_create
-)
-VALUES
-    (
-        1,
+INSERT INTO tbl_qna (qna_code,
+                     fq_type_code,
+                     member_code,
+                     qna_title,
+                     qna_contents,
+                     qna_create)
+VALUES (1,
         1,
         1001,
         '회원가입 방법에 대해 알려주세요',
         '회원가입을 위한 이메일 주소와 비밀번호 설정이 필요합니다.',
-        NOW()
-    ),
-    (
-        2,
+        NOW()),
+       (2,
         2,
         1002,
         '결제 오류 발생시 어떻게 하나요?',
         '결제 오류 발생 시 고객센터를 통해 처리할 수 있습니다.',
-        NOW()
-    ),
-    (
-        3,
+        NOW()),
+       (3,
         1,
         1003,
         '비밀번호를 변경하려면 어떻게 해야 하나요?',
         '비밀번호 변경은 계정 설정에서 할 수 있습니다.',
-        NOW()
-    );
+        NOW());
+
 
 -- tbl_qna_answer
 INSERT INTO

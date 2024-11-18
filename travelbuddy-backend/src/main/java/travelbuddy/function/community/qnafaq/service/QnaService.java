@@ -4,6 +4,10 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelbuddy.common.Criteria;
@@ -18,6 +22,7 @@ import travelbuddy.function.community.qnafaq.repository.QnaAnswerRepository;
 import travelbuddy.function.community.qnafaq.repository.QnaRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QnaService {
@@ -37,13 +42,42 @@ public class QnaService {
     }
 
     public int selectQnaTotal() {
-       return 0;
+        log.info("[QnaService] selectQnaTotal() Start");
+
+        /*페이징 처리 결과를 Page 타입으로 반환 받는다*/
+        List<Qna> qnaList = qnaRepository.findAll();
+
+        log.info("[QnaService] selectQnaTotal() End");
+
+        return qnaList.size();
     }
 
+    /*qna 리스트와 paging 처리를 함께 한다.*/
     public Object selectQnaListWithPaging(Criteria cri) {
-        return null;
+        log.info("[AdminQnaService] selectQnaListWithPaging() Start");
+
+        int index = cri.getPageNum() - 1;
+        int count = cri.getAmount();
+        Pageable paging = PageRequest.of(index, count, Sort.by("qnaCode").descending());
+
+        Page<Qna> result = qnaRepository.findAll(paging);
+        List<Qna> qnaList = (List<Qna>)result.getContent();
+
+        log.info("[QnaService] selectQnaListWithPaging() End");
+
+        return qnaList.stream().map(qna -> {
+            QnaDTO qnaDTO = modelMapper.map(qna, QnaDTO.class);
+            qnaDTO.setMemberCode(qna.getAccount().getMemberCode());
+
+            QnaAnswer qnaAnswer = qnaAnswerRepository.findByQna(qna);
+            QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
+
+            QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO, qnaDTO);
+            return qnaDetailDTO;
+        }).collect(Collectors.toList());
     }
 
+    // 그냥 값 뽑기 테스트용 메소드
     public Object selectQnaList() {
         List<Qna> qnaList = qnaRepository.findAll();
         return qnaList.stream().map((Qna) -> modelMapper.map(Qna, QnaDTO.class));
@@ -60,7 +94,7 @@ public class QnaService {
         if (qna != null) {
             qnaAnswer = qnaAnswerRepository.findByQna(qna);
         }
-        
+
         System.out.println("qna = " + qna);
         System.out.println("qnaAnswer = " + qnaAnswer);
 
@@ -93,7 +127,7 @@ public class QnaService {
         qnaAnswer.setAnsCode(insertqna.getQnaCode());
         qnaAnswer.setQna(insertqna);
         qnaAnswerRepository.save(qnaAnswer);
-        
+
         QnaDTO newQna = modelMapper.map(insertqna, QnaDTO.class);
         QnaAnswerDTO newQnaAnswer = modelMapper.map(qnaAnswer,QnaAnswerDTO.class);
         QnaDetailDTO qnaDetailDTO = new QnaDetailDTO();

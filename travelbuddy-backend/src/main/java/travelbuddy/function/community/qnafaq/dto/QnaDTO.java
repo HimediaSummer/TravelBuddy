@@ -4,6 +4,7 @@ public class QnaDTO {
 
     private int qnaCode;    // 문의코드
     private int fqTypeCode; // fq_type_코드
+    private int memberCode; // 회원코드
     private String qnaTitle;    // 문의제목
     private String qnaContents; // 문의내용
     private String qnaCreate;   // 등록일시
@@ -11,12 +12,21 @@ public class QnaDTO {
     public QnaDTO() {
     }
 
-    public QnaDTO(int fqTypeCode, int qnaCode, String qnaContents, String qnaCreate, String qnaTitle) {
-        this.fqTypeCode = fqTypeCode;
+    public QnaDTO(int qnaCode, int fqTypeCode, int memberCode, String qnaTitle, String qnaContents, String qnaCreate) {
         this.qnaCode = qnaCode;
+        this.fqTypeCode = fqTypeCode;
+        this.memberCode = memberCode;
+        this.qnaTitle = qnaTitle;
         this.qnaContents = qnaContents;
         this.qnaCreate = qnaCreate;
-        this.qnaTitle = qnaTitle;
+    }
+
+    public int getQnaCode() {
+        return qnaCode;
+    }
+
+    public void setQnaCode(int qnaCode) {
+        this.qnaCode = qnaCode;
     }
 
     public int getFqTypeCode() {
@@ -27,12 +37,20 @@ public class QnaDTO {
         this.fqTypeCode = fqTypeCode;
     }
 
-    public int getQnaCode() {
-        return qnaCode;
+    public int getMemberCode() {
+        return memberCode;
     }
 
-    public void setQnaCode(int qnaCode) {
-        this.qnaCode = qnaCode;
+    public void setMemberCode(int memberCode) {
+        this.memberCode = memberCode;
+    }
+
+    public String getQnaTitle() {
+        return qnaTitle;
+    }
+
+    public void setQnaTitle(String qnaTitle) {
+        this.qnaTitle = qnaTitle;
     }
 
     public String getQnaContents() {
@@ -51,19 +69,12 @@ public class QnaDTO {
         this.qnaCreate = qnaCreate;
     }
 
-    public String getQnaTitle() {
-        return qnaTitle;
-    }
-
-    public void setQnaTitle(String qnaTitle) {
-        this.qnaTitle = qnaTitle;
-    }
-
     @Override
     public String toString() {
         return "QnaDTO{" +
-                "fqTypeCode=" + fqTypeCode +
-                ", qnaCode=" + qnaCode +
+                "qnaCode=" + qnaCode +
+                ", fqTypeCode=" + fqTypeCode +
+                ", memberCode=" + memberCode +
                 ", qnaTitle='" + qnaTitle + '\'' +
                 ", qnaContents='" + qnaContents + '\'' +
                 ", qnaCreate='" + qnaCreate + '\'' +

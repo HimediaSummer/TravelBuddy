@@ -44,7 +44,7 @@ public class QnaAnswer {
         return ansContents;
     }
 
-    public void setAnsContents(String ansContents) {
+    public void setAnsContents(Object o) {
         this.ansContents = ansContents;
     }
 

@@ -30,36 +30,36 @@ public class AdminQnaController {
     }
 
 
-//    @Operation(summary = "관리자페이지 QnA 리스트 조회 요청", description = "전체 QnA 조회 및 페이징 처리를 진행합니다.", tags ={"AdminQnaController"})
-//    @GetMapping("/qnas")
-//    public ResponseEntity<ResponseDTO> selectQnaListWithPaging(
-//            @RequestParam(name = "offset", defaultValue = "1") String offset) {
-//
-//        log.info("[AdminQnaController] selectQnaListWithPaging : " + offset);
-//
-//        /*========pageing 처리를 위한 작업===================*/
-//        /*전체 회원의 수를 확인*/
-//        int total = adminQnaService.selectQnaTotal();
-//
-//        Criteria cri = new Criteria(Integer.valueOf(offset), 10);
-//        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
-//
-//        /*1. offset (현재 기본 1로 지정) 의 번호에 맞는 페이지에 뿌릴 Member 들*/
-//        pagingResponseDTO.setData(adminQnaService.selectQnaListWithPaging(cri));
-//
-//        /*2. pageDTO(criteria(보고싶은페이지, 한페이지에 뿌릴 개수), 전체 회원 수)
-//         * 화면에서 페이징 처리를 계산해서 추출 한다.*/
-//        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
-//        /*===================================================*/
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", pagingResponseDTO));
-//    }
+    @Operation(summary = "관리자페이지 QnA 리스트 조회 요청", description = "전체 QnA 조회 및 페이징 처리를 진행합니다.", tags ={"AdminQnaController"})
+    @GetMapping("/qnas")
+    public ResponseEntity<ResponseDTO> selectQnaListWithPaging(
+            @RequestParam(name = "offset", defaultValue = "1") String offset) {
+
+        log.info("[AdminQnaController] selectQnaListWithPaging : " + offset);
+
+        /*========pageing 처리를 위한 작업===================*/
+        /*전체 회원의 수를 확인*/
+        int total = adminQnaService.selectQnaTotal();
+
+        Criteria cri = new Criteria(Integer.valueOf(offset), 10);
+        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
+
+        /*1. offset (현재 기본 1로 지정) 의 번호에 맞는 페이지에 뿌릴 Member 들*/
+        pagingResponseDTO.setData(adminQnaService.selectQnaListWithPaging(cri));
+
+        /*2. pageDTO(criteria(보고싶은페이지, 한페이지에 뿌릴 개수), 전체 회원 수)
+         * 화면에서 페이징 처리를 계산해서 추출 한다.*/
+        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
+        /*===================================================*/
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", pagingResponseDTO));
+    }
 
     /*값만 잘 추출되는지 확인하기 위해 만든 메소드 (추후 없애도 됨)*/
-    @GetMapping("/qnas")
-    public ResponseEntity<ResponseDTO> selectQnaList() {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", adminQnaService.selectQnaList()));
-    }
+//    @GetMapping("/qnas")
+//    public ResponseEntity<ResponseDTO> selectQnaList() {
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", adminQnaService.selectQnaList()));
+//    }
 
     @Operation(summary = "관리자페이지 QnA 상세조회 요청", description = "QnA의 상세 페이지 처리가 진행됩니다.", tags = {"AdminQnaController"})
     @GetMapping("/qnas/{qnaCode}")
@@ -86,6 +86,12 @@ public class AdminQnaController {
     @DeleteMapping("/qnas/{qnaCode}/deleteanswer")
     public ResponseEntity<ResponseDTO> deleteQnaAnswer(@PathVariable int qnaCode) {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnaAnswer 삭제 성공",adminQnaService.deleteQnaAnswer(qnaCode)));
+    }
+
+    @Operation(summary = "관리자페이지 QnA 유형 이름 요청", description = "QnA 유형 이름 정보가 출력됩니다.", tags = {"AdminQnaController"})
+    @GetMapping("/qnas/getfqtype")
+    public ResponseEntity<ResponseDTO> selectFqType() {
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"fqType 조회 성공",adminQnaService.selectFqType()));
     }
 
 }

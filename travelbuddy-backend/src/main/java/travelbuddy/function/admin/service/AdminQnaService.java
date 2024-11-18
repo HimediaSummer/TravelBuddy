@@ -11,17 +11,21 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelbuddy.common.Criteria;
-import travelbuddy.function.admin.controller.AdminQnaController;
 import travelbuddy.function.admin.repository.AdminQnaRepository;
+import travelbuddy.function.admin.repository.AdminfqTypeRepository;
 import travelbuddy.function.admin.repository.AdminqnaAnswerRepository;
+import travelbuddy.function.community.qnafaq.dto.FqTypeDTO;
 import travelbuddy.function.community.qnafaq.dto.QnaAnswerDTO;
 import travelbuddy.function.community.qnafaq.dto.QnaDTO;
 import travelbuddy.function.community.qnafaq.dto.QnaDetailDTO;
+import travelbuddy.function.community.qnafaq.entity.FqType;
 import travelbuddy.function.community.qnafaq.entity.Qna;
 import travelbuddy.function.community.qnafaq.entity.QnaAnswer;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.apache.logging.log4j.ThreadContext.isEmpty;
 
 @Service
 public class AdminQnaService {
@@ -29,15 +33,16 @@ public class AdminQnaService {
     private static Logger log = LoggerFactory.getLogger(AdminQnaService.class);
     private AdminQnaRepository adminQnaRepository;
     private AdminqnaAnswerRepository adminqnaAnswerRepository;
+    private AdminfqTypeRepository adminFqTypeRepository;
     private ModelMapper modelMapper;
 
     @Autowired
-    public AdminQnaService(AdminqnaAnswerRepository adminqnaAnswerRepository, AdminQnaRepository adminQnaRepository, ModelMapper modelMapper) {
-        this.adminqnaAnswerRepository = adminqnaAnswerRepository;
+    public AdminQnaService(AdminQnaRepository adminQnaRepository, AdminqnaAnswerRepository adminqnaAnswerRepository, AdminfqTypeRepository adminFqTypeRepository, ModelMapper modelMapper) {
         this.adminQnaRepository = adminQnaRepository;
+        this.adminqnaAnswerRepository = adminqnaAnswerRepository;
+        this.adminFqTypeRepository = adminFqTypeRepository;
         this.modelMapper = modelMapper;
     }
-
 
     /*qna 총 개수를 찾는다.*/
     public int selectQnaTotal() {
@@ -45,11 +50,11 @@ public class AdminQnaService {
         log.info("[AdminQnaService] selectQnaTotal() Start");
 
         /*페이징 처리 결과를 Page 타입으로 반환 받는다*/
-        List<Qna> memberList = adminQnaRepository.findAll();
+        List<Qna> qnaList = adminQnaRepository.findAll();
 
         log.info("[AdminQnaService] selectQnaTotal() End");
 
-        return memberList.size();
+        return qnaList.size();
 
     }
     /*qna 리스트와 paging 처리를 함께 한다.*/
@@ -59,20 +64,28 @@ public class AdminQnaService {
 
         int index = cri.getPageNum() - 1;
         int count = cri.getAmount();
-        Pageable paging = PageRequest.of(index, count, Sort.by("productCode").descending());
+        Pageable paging = PageRequest.of(index, count, Sort.by("qnaCode").descending());
 
         Page<Qna> result = adminQnaRepository.findAll(paging);
-        List<Qna> memberList = (List<Qna>)result.getContent();
+        List<Qna> qnaList = (List<Qna>)result.getContent();
 
         log.info("[AdminQnaService] selectQnaListWithPaging() End");
 
-        return memberList.stream().map(Qna -> modelMapper.map(Qna, QnaDTO.class)).collect(Collectors.toList());
+        return qnaList.stream().map(qna -> {
+            QnaDTO qnaDTO = modelMapper.map(qna, QnaDTO.class);
+            qnaDTO.setMemberCode(qna.getAccount().getMemberCode());
+
+            QnaAnswer qnaAnswer = adminqnaAnswerRepository.findByQna(qna);
+            QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
+
+            QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO, qnaDTO);
+            return qnaDetailDTO;
+        }).collect(Collectors.toList());
     }
 
     /*전체 qna 리스트를 찾는다.*/
     public Object selectQnaList() {
         List<Qna> qnaList = adminQnaRepository.findAll();
-        System.out.println("qnaList = " + qnaList);
         return qnaList.stream().map(Qna -> modelMapper.map(Qna, QnaDTO.class)).collect(Collectors.toList());
     }
 
@@ -141,5 +154,10 @@ public class AdminQnaService {
 
         return (qnaAnswer.getAnsContents() == null) ? "삭제 성공" : "삭제 실패";
 
+    }
+
+    public Object selectFqType() {
+        List<FqType> fqTypeList = adminFqTypeRepository.findAll();
+        return fqTypeList.stream().map(FqType ->modelMapper.map(FqType, FqTypeDTO.class)).collect(Collectors.toList());
     }
 }

@@ -53,7 +53,7 @@ export const insertQnaAPI = (qnaDTO) => {
                 'Content-Type': 'application/json',
                 Accept: '*/*'
             },
-            body: qnaDTO
+            body: JSON.stringify(qnaDTO)
         }).then((response) => response.json());
         dispatch({type: POST_QNA, payload: result });
         console.log('응답받은 result 는?',result);

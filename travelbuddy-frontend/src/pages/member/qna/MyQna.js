@@ -23,9 +23,11 @@ function MyQna() {
 
 
     const inserMyQna = () => {
-        dispatch(insertQnaAPI(qnaDTO));
+        const formattedDate = (() => new Date().toISOString().slice(0, 10).replace(/-/g, '/').replace('T', ' ').slice(0, 19).replace(/(\d{2})-(\d{2})-(\d{2})/, '$1-$2-$3'))();
+        const updatedQnaDTO = {...qnaDTO, qnaCreate: formattedDate};
+        dispatch(insertQnaAPI(updatedQnaDTO));
         alert('문의가 등록되었습니다.');
-        // navigate(`/MyQnas`);
+        navigate(`/MyQnas`);
     };
 
     return (

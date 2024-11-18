@@ -234,14 +234,16 @@ public class ScheduleService {
         log.info("[ScheduleService] answers:" + answers);
 
         // DTO 변환
-//        List<AnswerDTO> answerDTOList = answers.stream().map(a -> {
-//            AnswerDTO dto = new AnswerDTO();
-////            dto.set
-//        }).collect(Collectors.toList());
+        List<AnswerDTO> answerDTOList = answers.stream().map(a -> {
+            AnswerDTO dto = new AnswerDTO();
+            dto.setAnswerCode(a.getAnswerCode());
+            dto.setAnswer(a.getAnswer());
+            dto.setQuestCode(a.getQuestionnaire().getQuestCode());
+            return dto;
+        }).collect(Collectors.toList());
 
-//        log.info("[ScheduleService] Converted DTOs: " + answerDTOList);
+        log.info("[ScheduleService] Converted DTOs: " + answerDTOList);
 
-//        return answerDTOList;
-        return null;
+        return answerDTOList;
     }
 }

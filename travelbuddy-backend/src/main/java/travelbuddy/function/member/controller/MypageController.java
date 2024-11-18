@@ -101,6 +101,18 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글세부내용및신청회원조회성공", mypageService.getBuddyDetail(buddyCode)));
     }
 
+    @Operation(summary = "게시글매칭상태수정", description = "매칭신청상태 1 : 신청 , 2: 수락 , 3: 거절", tags = {"MypageController"})
+    @PutMapping("/mybuddylist/{buddyCode}/applystatus")
+    public ResponseEntity<ResponseDTO> getBuddyApplyStatus(
+            @PathVariable("buddyCode") int buddyCode,
+            @RequestParam("buddyMatchCode") int buddyMatchCode,
+            @RequestParam("applyStatus") int applyStatus) {
+
+        mypageService.updateApplyStatus(buddyCode, buddyMatchCode, applyStatus);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글매칭신청자상태수정", null));
+    }
+
     @Operation(summary = "게시글수정", description = "내가쓴글수정", tags = {"MypageController"})
     @PutMapping(value = "/mybuddylist/{buddyCode}/update")
     public ResponseEntity<ResponseDTO> updateBuddy(@ModelAttribute BuddyDTO buddyDTO, @RequestParam(required = false) MultipartFile buddyImg) {

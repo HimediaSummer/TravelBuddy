@@ -24,27 +24,22 @@ import travelbuddy.function.community.buddy.entity.BuddyType;
 import travelbuddy.function.community.buddy.repository.BuddyTypeRepository;
 import travelbuddy.function.member.dto.AccountDTO;
 import travelbuddy.function.member.entity.Account;
-import travelbuddy.function.member.repository.BuddyMatchRepository;
+import travelbuddy.function.member.repository.MyBuddyMatchRepository;
 import travelbuddy.function.member.repository.MyBuddyRepository;
 import travelbuddy.function.member.repository.MyProfileRepository;
-import travelbuddy.function.schedule.dto.RegionDTO;
 import travelbuddy.function.schedule.entity.Region;
 import travelbuddy.function.schedule.repository.RegionRepository;
 import travelbuddy.util.FileUploadUtils;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class MypageService {
 
     private static final Logger log = LoggerFactory.getLogger(MypageService.class);
     private final MyBuddyRepository myBuddyRepository;
-    private final BuddyMatchRepository buddyMatchRepository;
+    private final MyBuddyMatchRepository myBuddyMatchRepository;
     private final MyProfileRepository myProfileRepository;
     private final BuddyTypeRepository buddyTypeRepository;
     private final RegionRepository regionRepository;
@@ -56,9 +51,9 @@ public class MypageService {
     private String IMAGE_URL;
 
     @Autowired
-    public MypageService(MyBuddyRepository myBuddyRepository, BuddyMatchRepository buddyMatchRepository, MyProfileRepository myProfileRepository, BuddyTypeRepository buddyTypeRepository, RegionRepository regionRepository, ModelMapper modelMapper) {
+    public MypageService(MyBuddyRepository myBuddyRepository, MyBuddyMatchRepository myBuddyMatchRepository, MyProfileRepository myProfileRepository, BuddyTypeRepository buddyTypeRepository, RegionRepository regionRepository, ModelMapper modelMapper) {
         this.myBuddyRepository = myBuddyRepository;
-        this.buddyMatchRepository = buddyMatchRepository;
+        this.myBuddyMatchRepository = myBuddyMatchRepository;
         this.myProfileRepository = myProfileRepository;
         this.buddyTypeRepository = buddyTypeRepository;
         this.regionRepository = regionRepository;
@@ -202,7 +197,7 @@ public class MypageService {
 
         Buddy getBuddyDetail = myBuddyRepository.findById(buddyCode).get();
 //        buddy.setBuddyImageUrl(IMAGE_URL + buddy.getBuddyImageUrl());
-        List<BuddyMatchData> buddyMatchDataList = buddyMatchRepository.findByBuddyCode(buddyCode);
+        List<BuddyMatchData> buddyMatchDataList = myBuddyMatchRepository.findByBuddyCode(buddyCode);
 
         BuddyDTO buddyDTO = modelMapper.map(getBuddyDetail, BuddyDTO.class);
         if (getBuddyDetail.getAccount() != null) {
@@ -213,7 +208,7 @@ public class MypageService {
             BuddyMatchDataDTO bmdd = new BuddyMatchDataDTO();
             bmdd.setBuddyMatchCode(matchData.getBuddyMatchCode());
             bmdd.setApplyId(matchData.getApplyId());
-            bmdd.setApplyStatus(Integer.parseInt(matchData.getApplyStatus()));
+            bmdd.setApplyStatus(matchData.getApplyStatus());
             if (matchData.getBuddy() != null) {
                 bmdd.setBuddyCode(matchData.getBuddy().getBuddyCode());
             }
@@ -227,6 +222,29 @@ public class MypageService {
         log.info("[MypageService] getBuddyDetail() END");
 
         return result;
+    }
+
+    /* 내가쓴글 신청자 매칭 상태 변경 */
+    @Transactional
+    public void updateApplyStatus(int buddyCode, int buddyMatchCode, int applyStatus) {
+        log.info("[MypageService] updateBuddyApplyStatus() Start");
+
+        List<BuddyMatchData> buddyMatchData = myBuddyMatchRepository.findByBuddyCode(buddyCode);
+
+        int countApplyStatus = (int) buddyMatchData.stream()
+                .filter(data -> data.getApplyStatus() == 2)
+                .count();
+
+        if (countApplyStatus > 1 && applyStatus == 2) {
+            throw new IllegalStateException("이미 수락한 신청자가 존재합니다.");
+        }
+
+        BuddyMatchData matchDataToUpdate = buddyMatchData.stream()
+                .filter(data -> data.getBuddyMatchCode() == buddyMatchCode)
+                .findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("BuddyMatchData not found with buddyMatchCode: " + buddyMatchCode));
+
+        matchDataToUpdate.setApplyStatus(applyStatus);
     }
 
     /* 내가쓴버디게시글수정 */

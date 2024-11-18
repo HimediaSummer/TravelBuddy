@@ -26,12 +26,12 @@ public class BuddyMatchData {
   private String applyId;         // 신청자아이디
 
   @Column(name = "apply_status")
-  private String applyStatus;         // 매칭신청
+  private int applyStatus;         // 매칭신청
 
   public BuddyMatchData() {
   }
 
-  public BuddyMatchData(int buddyMatchCode, Buddy buddy, String applyId, String applyStatus) {
+  public BuddyMatchData(int buddyMatchCode, Buddy buddy, String applyId, int applyStatus) {
     this.buddyMatchCode = buddyMatchCode;
     this.buddy = buddy;
     this.applyId = applyId;
@@ -62,11 +62,11 @@ public class BuddyMatchData {
     this.applyId = applyId;
   }
 
-  public String getApplyStatus() {
+  public int getApplyStatus() {
     return applyStatus;
   }
 
-  public void setApplyStatus(String applyStatus) {
+  public void setApplyStatus(int applyStatus) {
     this.applyStatus = applyStatus;
   }
 
@@ -76,7 +76,7 @@ public class BuddyMatchData {
             "buddyMatchCode=" + buddyMatchCode +
             ", buddy=" + buddy +
             ", applyId='" + applyId + '\'' +
-            ", applyStatus='" + applyStatus + '\'' +
+            ", applyStatus=" + applyStatus +
             '}';
   }
 }

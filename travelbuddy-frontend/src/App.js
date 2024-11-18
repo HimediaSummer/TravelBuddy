@@ -6,6 +6,7 @@ import MemberDetail from './pages/admin/MemberDetail';
 import MyPage from './pages/member/mypage/Mypage';
 import MypageBuddyList from './components/products/MypageBuddyList';
 import Qnas from './pages/admin/Qnas';
+import QnaDetail from './pages/admin/QnaDetail ';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="Members" element={ <Members/> }/>
           <Route path="MemberDetail/:memberCode" element={ <MemberDetail/>} />
           <Route path="Qnas" element={ <Qnas/> }/>
+          <Route path="QnaDetail/:qnaCode" element={ <QnaDetail/>} />
           <Route path="MyPage" element={<MyPage />}>
             <Route path="MyBuddyList" element={<MypageBuddyList />} />
           </Route> 

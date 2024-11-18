@@ -24,6 +24,7 @@ export const callMemberDetailForAdminAPI = ({memberCode}) => {
                 }
             }).then((response) => response.json());
             dispatch({type: GET_MEMBER, payload: result });
+            console.log('가져온 값',result);
         }}
 
         export const toggleMemberSuspensionAPI = ({memberCode}) => {
@@ -36,7 +37,9 @@ export const callMemberDetailForAdminAPI = ({memberCode}) => {
                         Accept: '*/*'
                     }
                 }).then((response) => response.json());
+                console.log('API 응답:', result);
                 dispatch({type: POST_MEMBER, payload: result });
+                console.log('액션 디스패치 완료');
             }}
 
             export const toggleMemberDeletionAPI = ({memberCode}) => {
@@ -49,7 +52,5 @@ export const callMemberDetailForAdminAPI = ({memberCode}) => {
                             Accept: '*/*'
                         }
                     }).then((response) => response.json());
-                    console.log('API 응답:', result);
                     dispatch({type: POST_MEMBER, payload: result });
-                    console.log('액션 디스패치 완료');
                 }}

@@ -19,7 +19,7 @@ public class Qna {
 
     @JoinColumn(name = "member_code")
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private Account account; // fq_type 참조
+    private Account account; // Account 참조
 
     @Column(name = "qna_title")
     private String qnaTitle;    // 문의제목

@@ -16,21 +16,9 @@ import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.entity.MemberAnswer;
 import travelbuddy.function.member.repository.AccountRepository;
 import travelbuddy.function.member.repository.MemberAnswerRepository;
-import travelbuddy.function.schedule.dto.AccommodationDTO;
-import travelbuddy.function.schedule.dto.QuestionNaireThemeDTO;
-import travelbuddy.function.schedule.dto.QuestionnaireDTO;
-import travelbuddy.function.schedule.dto.RegionDTO;
-import travelbuddy.function.schedule.dto.ScheduleDTO;
-import travelbuddy.function.schedule.entity.Accommodation;
-import travelbuddy.function.schedule.entity.QuestionNaireTheme;
-import travelbuddy.function.schedule.entity.Questionnaire;
-import travelbuddy.function.schedule.entity.Region;
-import travelbuddy.function.schedule.entity.Schedule;
-import travelbuddy.function.schedule.repository.AccommodationRepository;
-import travelbuddy.function.schedule.repository.QuestionNaireThemeRepository;
-import travelbuddy.function.schedule.repository.QuestionnaireRepository;
-import travelbuddy.function.schedule.repository.RegionRepository;
-import travelbuddy.function.schedule.repository.ScheduleRepository;
+import travelbuddy.function.schedule.dto.*;
+import travelbuddy.function.schedule.entity.*;
+import travelbuddy.function.schedule.repository.*;
 
 @Service
 public class ScheduleService {
@@ -45,9 +33,10 @@ public class ScheduleService {
     private final ModelMapper modelMapper;
     private final QuestionnaireRepository questionnaireRepository;
     private final QuestionNaireThemeRepository questionNaireThemeRepository;
+    private final AnswerRepository answerRepository;
 
     @Autowired
-    public ScheduleService(ScheduleRepository scheduleRepository, RegionRepository regionRepository, AccommodationRepository accommodationRepository, AccountRepository accountRepository, MemberAnswerRepository memberAnswerRepository, ModelMapper modelMapper, QuestionNaireThemeRepository questionNaireThemeRepository, QuestionnaireRepository questionnaireRepository) {
+    public ScheduleService(ScheduleRepository scheduleRepository, RegionRepository regionRepository, AccommodationRepository accommodationRepository, AccountRepository accountRepository, MemberAnswerRepository memberAnswerRepository, ModelMapper modelMapper, QuestionNaireThemeRepository questionNaireThemeRepository, QuestionnaireRepository questionnaireRepository, AnswerRepository answerRepository) {
         this.scheduleRepository = scheduleRepository;
         this.regionRepository = regionRepository;
         this.accommodationRepository = accommodationRepository;
@@ -56,6 +45,7 @@ public class ScheduleService {
         this.modelMapper = modelMapper;
         this.questionnaireRepository = questionnaireRepository;
         this.questionNaireThemeRepository = questionNaireThemeRepository;
+        this.answerRepository = answerRepository;
     }
 
     public List<Schedule> getAllSchedules() {
@@ -201,16 +191,15 @@ public class ScheduleService {
     @Transactional
     public Object selectQuestionByThemeCode(int themeCode) {
 
-        log.info("[QuestionByThemeCode] selectQuestionByThemeCode() start");
-        System.out.println("[QuestionByThemeCode] 왓니?");
         log.info("[ScheduleService] selectQuestionByThemeCode() start");
+        System.out.println("[QuestionByThemeCode] 왓니?");
 
         // themeCode로 조회한 질문지 리스트
         List<Questionnaire> questions = questionnaireRepository.findByQuestionNaireTheme_ThemeCode(themeCode);
 
         log.info("[QuestionByThemeCode] selectQuestionByThemeCode() end");
 
-        System.out.println("[QuestionByThemeCode] question = " + questions);
+        System.out.println("[QuestionByThemeCode] questions = " + questions);
         log.info("[ScheduleService] Retrieved questions: " + questions);
 
         // DTO 변환
@@ -230,4 +219,29 @@ public class ScheduleService {
         return questionnaireDTOList;  // 서비스에서 DTO 리스트 반환
     }
 
+    @Transactional
+    public Object selectAnswerByQuestCode(int questCode) {
+
+        log.info("[ScheduleService] selectAnswerByQuestCode() start");
+        System.out.println("[AnswerByQuestCode] 왓니?");
+
+        // questCode로 조회한 답변 리스트
+        List<Answer> answers = answerRepository.findByQuestionnaire_QuestCode(questCode);
+
+        log.info("[ScheduleService] selectAnswerByQuestCode() end");
+
+        System.out.println("[AnswerByQuestCode] answers = " + answers);
+        log.info("[ScheduleService] answers:" + answers);
+
+        // DTO 변환
+//        List<AnswerDTO> answerDTOList = answers.stream().map(a -> {
+//            AnswerDTO dto = new AnswerDTO();
+////            dto.set
+//        }).collect(Collectors.toList());
+
+//        log.info("[ScheduleService] Converted DTOs: " + answerDTOList);
+
+//        return answerDTOList;
+        return null;
+    }
 }

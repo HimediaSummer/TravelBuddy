@@ -17,7 +17,8 @@ function RegionSchedule({ onNext }) {
 					regionCode: region.regionCode,
 					regionName: region.regionName,
 					regionDescription: region.regionDescription,
-					regionImg: region.regionImg
+					regionImg: region.regionImg,
+					regionThumbnailImg: region.regionThumbnailImg
 				}));
 				console.log("가져왓냐?", data);
 				setRegion(regions);
@@ -62,9 +63,12 @@ function RegionSchedule({ onNext }) {
 					</div>
 					<div>
 						{region.map((region) => (
+							<div>
+							<img key={region.regionCode} src={`/Img/${region.regionThumbnailImg}`} alt={region.regionName} width={'50px'} height={'50px'} style={{borderRadius: '15px'}}/>
 							<button type='button' key={region.regionCode} onClick={() => handleRegionSelect(region)}>
 								{region.regionName}
 							</button>
+							</div>
 						))}
 						{/* 선택된 지역 상세 정보 출력 */}
 						{selectedRegionDetails ? (

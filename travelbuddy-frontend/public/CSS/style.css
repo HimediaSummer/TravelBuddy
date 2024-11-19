@@ -813,6 +813,10 @@ select,
 	margin-top: 20px; /* 위쪽 여백 추가 */
 }
 
+.regions {
+	margin-top: 550%;
+}
+
 .region-wordMargin {
     flex-grow: 1; /* 남은 공간을 차지 */
     white-space: nowrap; /* 줄 바꿈 방지 */

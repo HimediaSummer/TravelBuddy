@@ -7,6 +7,7 @@ const initialState = [];
 export const GET_QNAS = 'qna/GET_QNAS';
 export const GET_QNA = 'qna/GET_QNA';
 export const POST_QNA = 'qna/POST_QNA';
+export const DELETE_QNA = 'qna/POST_QNA';
 export const GET_QNAANSWER = 'qna/GET_QNAANSWER';
 export const POST_QNAANSWER = 'qna/POST_QNAANSWER';
 export const PUT_QNAANSWER = 'qna/PUT_QNAANSWER';
@@ -18,6 +19,7 @@ const actions = createActions({
 	[GET_QNAS]: () => {},
 	[GET_QNA]: () => {},
 	[POST_QNA]: () => {},
+	[DELETE_QNA]: () => {},
 	[GET_QNAANSWER]: () => {},
 	[POST_QNAANSWER]: () => {},
 	[PUT_QNAANSWER]: () => {},
@@ -36,6 +38,10 @@ const qnaReducer = handleActions(
 			return payload;
 		},
 		[POST_QNA]: (state, { payload }) => {
+			return payload;
+		},
+		[DELETE_QNA]: (state, { payload }) => {
+			console.log('뭐라고 답하나',payload);
 			return payload;
 		},
 		[GET_QNAANSWER]: (state, { payload }) => {

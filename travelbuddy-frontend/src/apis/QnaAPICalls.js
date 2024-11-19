@@ -1,4 +1,4 @@
-import { GET_QNAS, GET_QNA, POST_QNA, GET_QNAANSWER, POST_QNAANSWER, PUT_QNAANSWER, DELETE_QNAANSWER, POST_REGISTER } from '../modules/QnaModule';
+import { GET_QNAS, GET_QNA, POST_QNA, DELETE_QNA, GET_QNAANSWER, POST_QNAANSWER, PUT_QNAANSWER, DELETE_QNAANSWER} from '../modules/QnaModule';
 
     // 관리자가 QnA 리스트를 전체 불러온다.(paging 처리)
 export const callQnaListForAdminAPI = ({currentPage}) => {
@@ -59,7 +59,7 @@ export const insertQnaAPI = (qnaDTO) => {
 
     // 관리자든 회원이든 QnA 답변을 삭제한다.
 export const deleteQnaAPI = (qnaCode) => {
-    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/qnas/${qnaCode}/deleteanswer`;
+    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/cs/qnas/${qnaCode}/deleteqna`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'DELETE',
@@ -68,7 +68,7 @@ export const deleteQnaAPI = (qnaCode) => {
                 Accept: '*/*'
             }
         }).then((response) => response.json());
-        dispatch({type: DELETE_QNAANSWER, payload: result });
+        dispatch({type: DELETE_QNA, payload: result });
     }}
 
     // 관리자가 QnA 1개를 상세 조회한다.
@@ -86,7 +86,7 @@ export const callQnaDetailForAdminAPI = (qnaCode) => {
         }}
 
     //  회원이 자신이 작성한 QnA 1건을 상세 조회한다.
-export const callQnaDetailAPI = ({qnaCode}) => {
+export const callQnaDetailAPI = (qnaCode) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/cs/qnas/${qnaCode}`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {

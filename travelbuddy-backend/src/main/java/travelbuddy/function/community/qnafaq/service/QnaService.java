@@ -151,15 +151,16 @@ public class QnaService {
     /*본인이 작성한 qna 를 삭제한다. 다만 answer 에 null 이 아닐 경우에는 삭제 할수 없다.*/
     public Object deleteQna(int qnaCode) {
 
-        Qna qna = qnaRepository.findById(qnaCode).orElse(null);
+        Qna qna = qnaRepository.findById(qnaCode).get();
         QnaAnswer qnaAnswer = qnaAnswerRepository.findByQna(qna);
 
-        if (qnaAnswer.getAnsContents().isEmpty()) {
-            qnaRepository.delete(qna);
+        if (qnaAnswer.getAnsCreate() == null) {
             qnaAnswerRepository.delete(qnaAnswer);
-            return "QnA 가 삭제되었습니다.";
+            qnaRepository.delete(qna);
+
+            return "문의가 정상적으로 삭제되었습니다.";
         }
 
-        return "삭제 요청은 성공했으나 답변이 존재하여 삭제가 되지 않습니다.";
+        return "답변이 존재하여 삭제가 되지 않습니다.";
     }
 }

@@ -85,11 +85,13 @@ function RegionSchedule({ onNext }) {
 					{selectedRegionDetails ? (
 						<div>
 							<img src={`/Img/${selectedRegionDetails.regionImg}`} alt={selectedRegionDetails.regionName} width={'500px'} height={'300px'} />
-							<h3>지역 이름: {selectedRegionDetails.regionName}</h3>
-							<p>지역 설명: {selectedRegionDetails.regionDescription}</p>
+							<h3>{selectedRegionDetails.regionName}</h3>
+							<p>{selectedRegionDetails.regionDescription}</p>
+							<div style={{display: 'flex', justifyContent: 'flex-end'}}>
+							<button className="region-button2" onClick={onNext}>다음</button>
+							</div>
 						</div>
 					) : ('')}
-					<button className="region-button2" onClick={onNext}>다음</button>
 				</div>
 			</div>
 		</div>

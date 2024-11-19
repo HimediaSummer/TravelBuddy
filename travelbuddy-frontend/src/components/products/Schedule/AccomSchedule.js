@@ -55,7 +55,7 @@ function AccomSchedule({ onNext }) {
 		<div class="tema-title">
 			<div class="chat-container">
 				<form class="chat-form" action="post">
-				<div id="chat-box2">
+					<div id="chat-box2">
 						<h2>숙소 선택</h2>
 					</div>
 					<div class="tema-title">
@@ -63,35 +63,38 @@ function AccomSchedule({ onNext }) {
 					</div>
 					<div className='accom-scroll'>
 						<div className='accoms'>
-						{accom.map((accom) => (
-							<div className='accom-item2' key={accom.accomCode}>
-								<div className='accom-item'>
-									<img key={accom.accomCode} src={`/Img/${accom.accomThumbnailImg}`} alt={accom.accomName} width={'150px'} height={'150px'} style={{borderRadius: '15px'}}/>
+							{accom.map((accom) => (
+								<div className='accom-item2' key={accom.accomCode}>
+									<div className='accom-item'>
+										<img key={accom.accomCode} src={`/Img/${accom.accomThumbnailImg}`} alt={accom.accomName} width={'150px'} height={'150px'} style={{ borderRadius: '15px' }} />
+									</div>
+									<div className='accom-wordMargin'>
+										{accom.accomName} ({accom.accomType})
+									</div>
+									<button type='button' className={`accom-button ${selectedAccom && selectedAccom.accomCode === accom.accomCode ? 'selected' : ''}`} onClick={() => handleAccomSelect(accom)}></button>
 								</div>
-								<div className='accom-wordMargin'>
-								{accom.accomName} ({accom.accomType})
-								</div>
-							<button type='button' className='accom-button' key={accom.accomCode} onClick={() => handleAccomSelect(accom)}></button>
-							</div>
-						))}
+							))}
 						</div>
 					</div>
 				</form>
-					<div id='chat-box3'>
-						{selectedAccomDetails ? (
-							<div>
-								{/* <img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'50px'} height={'50px'}/>  */}
-								<p>
-								<img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'50px'} height={'50px'} style={{borderRadius: '15px'}}/>
-									숙소 타입 : {selectedAccomDetails.accomType}</p>
-								<p>숙소 이름 : {selectedAccomDetails.accomName}</p>
-								<p>숙소 주소 : {selectedAccomDetails.accomAddres}</p>
+				<div id='chat-box3'>
+					{selectedAccomDetails ? (
+						<div>
+							<img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'500px'} height={'300px'} />
+							<p>
+								{/* <img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'50px'} height={'50px'}/> */}
+								{selectedAccomDetails.accomType}</p>
+							<p>{selectedAccomDetails.accomName}</p>
+							<p>{selectedAccomDetails.accomAddres}</p>
+							<div style={{display: 'flex', justifyContent: 'flex-end'}}>
+								<button className='accom-button2' onClick={onNext}>다음</button>
 							</div>
-						) : (
-							''
-						)}
-						<button className='accom-button2' onClick={onNext}>다음</button>
-					</div>
+						</div>
+					) : (
+						''
+					)}
+
+				</div>
 			</div>
 		</div>
 	);

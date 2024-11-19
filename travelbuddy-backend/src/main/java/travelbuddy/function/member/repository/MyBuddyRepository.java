@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface MyBuddyRepository extends JpaRepository<Buddy, Integer> {
 
     Optional<Object> findByAccount(Account account);
+
+    Optional<Object> findByBuddyCode(int buddyCode);
 }

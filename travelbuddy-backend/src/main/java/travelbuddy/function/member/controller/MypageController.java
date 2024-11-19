@@ -129,4 +129,16 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글삭제성공", null));
     }
 
+    @Operation(summary = "신청게시글조회", description = "내가매칭신청한게시글조회", tags = {"MypageController"})
+    @GetMapping(value = "/mymatch/{memberName}")
+    public ResponseEntity<ResponseDTO> seleteMatch() {
+        log.info("[MypageController] seleteMatch() Start");
+        String memberName = "qq";
+
+        Object matchData = mypageService.selectMatch(memberName);
+
+        log.info("[MypageController] seleteMatch() End");
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가신청한게시글조회성공", matchData));
+    }
+
 }

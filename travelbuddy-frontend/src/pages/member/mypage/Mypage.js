@@ -16,6 +16,10 @@ function Mypage() {
 		<>
 			<div>
                 <h1>마이페이지마이페이지마이페이지마이페이지마이페이지</h1>
+					<button>My정보</button>
+					<button>My커뮤니티</button>
+					<button>My버디</button>
+					<button>My신청</button>
 				<Outlet />
 			</div>
 		</>

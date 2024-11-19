@@ -13,7 +13,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* React에서 보여줄 화면 주소(URL) 정하는곳 */}
+  
         {/* 자세한건 Schedule으로 이동바람 (컨트롤 좌클릭)  */}
         <Route path="/">
           <Route index element={ <Main/> }/>          
@@ -24,6 +24,7 @@ function App() {
           <Route path="QnaDetail/:qnaCode" element={ <QnaDetail/>} />
           <Route path="MyPage" element={<MyPage />}>
             <Route path="MyBuddy" element={<MypageBuddy />} />
+            <Route path="MyBudddyMatch" element= {<MypageBuddyDetail />} />
           </Route> 
         </Route>
       </Routes>

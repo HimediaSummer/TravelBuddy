@@ -324,4 +324,32 @@ public class MypageService {
         return "return 게시글 삭제 성공";
     }
 
+    /* 내가 신청한 게시글 조회 */
+    public Object selectMatch(String memberName) {
+        log.info("[MypageService] selectMatch() Start");
+
+        BuddyMatchData getMatchData = myBuddyMatchRepository.findByMemberName(memberName)
+                .orElseThrow(() -> new IllegalArgumentException("No matching data found for memberName: " + memberName));
+
+        BuddyMatchDataDTO buddyMatchDataDTO = new BuddyMatchDataDTO();
+        buddyMatchDataDTO.setBuddyMatchCode(getMatchData.getBuddyMatchCode());
+        buddyMatchDataDTO.setBuddyCode(getMatchData.getBuddy().getBuddyCode());
+        buddyMatchDataDTO.setApplyId(getMatchData.getApplyId());
+        buddyMatchDataDTO.setApplyStatus(getMatchData.getApplyStatus());
+
+        System.out.println("buddyMatchDataDTO = " + buddyMatchDataDTO);
+
+        int buddyCode = getMatchData.getBuddy().getBuddyCode();
+        Object buddy = myBuddyRepository.findByBuddyCode(buddyCode)
+                .orElseThrow(() -> new IllegalArgumentException("No Buddy found for buddyCode: " + buddyCode));
+
+        System.out.println("buddy1234 = " + buddy);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("buddyMatchData", buddyMatchDataDTO);
+        response.put("buddyDetails", buddy);
+
+        log.info("[MypageService] selectMatch() End");
+        return response;
+    }
 }

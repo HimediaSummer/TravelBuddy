@@ -5,6 +5,7 @@ import qnaReducer from './QnaModule.js';
 
 const rootReducer = combineReducers({
 	mypageBuddyReducer,
+	
 	memberReducer,
 	qnaReducer
 });

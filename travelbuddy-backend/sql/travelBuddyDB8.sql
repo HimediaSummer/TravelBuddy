@@ -290,8 +290,8 @@ VALUES
 INSERT INTO
     tbl_authority (authority_code, authority_name)
 VALUES
-    (1, '관리자'),
-    (2, '일반 사용자');
+    (1, 'ROLE_ADMIN'),
+    (2, 'ROLE_USER');
 
 -- tbl_Account
 INSERT INTO

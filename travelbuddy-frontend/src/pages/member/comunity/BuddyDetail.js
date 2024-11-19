@@ -3,95 +3,75 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { callBuddyDetailAPI } from '../../../apis/BuddyAPICalls';
+import { callGetMemberAPI } from '../../../apis/MemberAPICalls';
+import { decodeJwt } from '../../../utils/tokenUtils';
 
 function BuddyDetail () {
 
     const dispatch = useDispatch();
     const params = useParams();
     const buddyData = useSelector((state) => state.buddiesReducer);
-    console.log("buddyData = ", buddyData);
+    const member = useSelector(state => state.memberReducer); 
+    console.log("member =" , member);
 
-    // const {buddyDTO} = buddyData;
-    // console.log('data 가 가지고있는것',data);
+    const token = decodeJwt(window.localStorage.getItem("accessToken"));
+    console.log("token = ", token)
 
-	// const{buddyDTO} = data || {};
-    // console.log('buddyDTO = ', buddyDTO);
+    const {data} = buddyData;
+    console.log('data 가 가지고있는것',data);
+
+    useEffect(() => {
+        dispatch(callBuddyDetailAPI(params));
+    }, []);
 
 
-	const currentUser = useSelector((state) => state.memberReducer.currentUser);
-    console.log('currentUser = ', currentUser);
-    // const {qnaDTO, qnaAnswerDTO} = data || {};
-
- 
-    useEffect (
-        () => {
-            dispatch(callBuddyDetailAPI(params))
-        } , []
-    );
-
-    // useEffect (
-    //     () => {
-    //         if (qna) {
-    //             setQnaContents();
-    //         }
-    //     }, [qna]
-    // );
+    useEffect(() => {
+        dispatch(callGetMemberAPI({ memberName: token.sub }));
+    }, []);
 
 
     return (
+        
         <div>
-        <table>
-            <thead>
-                <tr>
-                <th>버디매칭</th>
-                </tr>
-            </thead>
-            <tbody>
-                {buddyData ? (
-                    <>
-                <tr>
-                <td>제목</td>
-                <td>{buddyData.buddyTitle}</td>
-                <td>유형</td>
-                <td>{buddyData.buddyType}</td>
-                {/* <td><button>삭제</button></td> */}
-                </tr>
-
-                <tr>
-                <td colSpan={4}>{buddyData.buddyContents}</td>
-                </tr>
-
-                {/* <tr>
-                <td>답변 작성</td>
-                <td>{qnaAnswerDTO.ansContents}</td>
-                </tr> */}
-
-                <tr>
-                </tr>
-                <tr>
-                </tr>
-
-                <tr>
-                    <td></td>
-                    <td></td>
-                    {/* <td><button>답변 등록</button></td> */}
-					{currentUser && currentUser.memberCode === buddyData.memberCode && (//작성자동일시 버튼활성화
-					<>
-                    <td><button>답변 수정</button></td>
-                    <td><button>답변 삭제</button></td>
-					</>
-					)}
-                </tr>
-                </>
-                ) : (
+            <table>
+                <thead>
                     <tr>
-                            <td colSpan="2">로딩 중...</td> {/* 데이터가 없을 때 로딩 메시지 */}
+                        <th>버디매칭</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data ? (
+                        <>
+                            <tr>
+                                <td>제목</td>
+                                <td>{data.buddyTitle}</td>
+                                <td>유형</td>
+                                <td>{data.buddyTypeCode}</td>
+                            </tr>
+
+                            <tr>
+                                <td colSpan={4}>{data.buddyContents}</td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                    <>
+                                        <td><button>게시글 수정</button></td>
+                                        <td><button>게시글 삭제</button></td>
+                                    </>
+                            </tr>
+                        </>
+                    ) : (
+                        <tr>
+                            <td colSpan="2">로딩 중...</td>
                         </tr>
-                )}
-            </tbody>
-        </table>
+                    )}
+                </tbody>
+            </table>
         </div>
-    ) 
+
+    );
 }
 
-export default BuddyDetail
+export default BuddyDetail;

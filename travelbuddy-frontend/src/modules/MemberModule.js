@@ -25,6 +25,7 @@ const memberReducer = handleActions(
 			return payload;
 		},
 		[GET_MEMBER]: (state, { payload }) => {
+			console.log("멤버모듈", payload)
 			return payload;
 		},
 		[POST_MEMBER]: (state, { payload }) => {

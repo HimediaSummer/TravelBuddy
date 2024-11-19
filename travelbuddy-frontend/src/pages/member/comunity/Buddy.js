@@ -8,7 +8,7 @@ function Buddies() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const buddy = useSelector((state) => state.buddiesReducer) || {};
-	// console.log("buddy에 뭐가 담김?", buddy)
+	console.log("buddy에 뭐가 담김?", buddy)
 
     const buddyList = buddy.data || {};
 	// console.log("buddyList에 뭐가 담김?", buddyList)

@@ -22,18 +22,17 @@ public class MemberService {
 		this.modelMapper = modelMapper;
 	}
 	
-	public AccountDTO selectMyInfo(String memberName) {
+	public Object selectMyInfo(String memberName) {
 		log.info("[MemberService] getMyInfo Start =======================");
-		
-		Account member = memberRepository.findByMemberName(memberName);
-		log.info("[MemberService] {}", member);
 
-		AccountDTO accountDTO = modelMapper.map(member, AccountDTO.class);
-		accountDTO.setMemberCode(member.getMemberCode());
+		Account account = memberRepository.findByMemberName(memberName);
 
-		log.info("[MemberService] {}", member);
+
+		AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
+
 		log.info("[MemberService] getMyInfo End =========================");
-		
-		return modelMapper.map(member, AccountDTO.class);
+
+
+		return accountDTO;
 	}
 }

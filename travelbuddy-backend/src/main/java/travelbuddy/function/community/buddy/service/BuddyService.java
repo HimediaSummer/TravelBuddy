@@ -19,6 +19,8 @@ import org.springframework.data.domain.Pageable;
 import travelbuddy.function.community.buddy.entity.BuddyType;
 import travelbuddy.function.community.buddy.repository.BuddyRepository;
 import travelbuddy.function.community.buddy.repository.BuddyTypeRepository;
+import travelbuddy.function.member.entity.Account;
+import travelbuddy.function.member.repository.AccountRepository;
 import travelbuddy.util.FileUploadUtils;
 
 import java.io.IOException;
@@ -33,6 +35,7 @@ public class BuddyService {
     private final BuddyRepository buddyRepository;
     private final BuddyTypeRepository buddyTypeRepository;
     private final ModelMapper modelMapper;
+    private final AccountRepository accountRepository;
 
     @Value("${image.image-dir}")
     private String IMAGE_DIR;
@@ -40,10 +43,11 @@ public class BuddyService {
     private String IMAGE_URL;
 
     @Autowired
-    public BuddyService(BuddyRepository buddyRepository, ModelMapper modelMapper, BuddyTypeRepository buddyTypeRepository) {
+    public BuddyService(BuddyRepository buddyRepository, ModelMapper modelMapper, BuddyTypeRepository buddyTypeRepository, AccountRepository accountRepository) {
         this.buddyRepository = buddyRepository;
         this.modelMapper = modelMapper;
         this.buddyTypeRepository = buddyTypeRepository;
+        this.accountRepository = accountRepository;
     }
 
 
@@ -97,11 +101,17 @@ public class BuddyService {
         log.info("[BuddyService] selectBuddyDetail() Start");
 
         Buddy buddy = buddyRepository.findById(buddyCode).get();
+        Account account = accountRepository.findById(buddy.getAccount().getMemberCode()).get();
         buddy.setBuddyImg(IMAGE_URL + buddy.getBuddyImg());
+        buddy.setAccount(account);
+        buddyRepository.save(buddy);
+        BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
+        buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
 
         log.info("[BuddyService} selectBuddyDetail() END");
 
-        return modelMapper.map(buddy, Buddy.class);
+//        return modelMapper.map(buddy, BuddyDTO.class);
+        return buddyDTO;
     }
 
     @Transactional

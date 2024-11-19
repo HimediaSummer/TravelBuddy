@@ -62,7 +62,7 @@ public class TokenProvider {
     private static final Logger log = LoggerFactory.getLogger(TokenProvider.class);
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
-    private static final int ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;
+    private static final int ACCESS_TOKEN_EXPIRE_TIME = 3000 * 60 * 30;
 
     // Spring Security가 제공하는 UserDetailsService를 그대로 활용
     private final UserDetailsService userDetailsService;
@@ -88,20 +88,21 @@ public class TokenProvider {
     }
 
     /* 목차. 1. 토큰 생성 메서드 */
-    public TokenDTO generateTokenDTO(Account accountEntity) {
+    public TokenDTO generateTokenDTO(Account account) {
 
         log.info("[TokenProvider] generateTokenDTO() Start");
 
         // 단읠 권한을 바로 사용
-        String role = accountEntity.getAuthority().getAuthorityName();
+        String role = account.getAuthority().getAuthorityName();
 
 //        // 매개변수로 전달된 회원의 권한을 담기 위한 리스트 생성
 //        List<String> roles = new ArrayList<>();
 //        // 회원의 권한을 모두 추출해 리스트에 추가
-//        for(AuthorityEntity authorityEntity : accountEntity.getAuthority()) {
-////            roles.add(memberRole.getAuthority().getAuthorityName());
-//            roles.add(authorityEntity.getAuthorityCodeName());
+//        for(Authority authorityEntity : account.getAuthority()) {
+//            roles.add(memberRole.getAuthority().getAuthorityName());
+//            roles.add(authority.getAuthorityCodeName());
 //        }
+
 
         log.info("[TokenProvider] authorized authorities {}", role);
 
@@ -113,7 +114,7 @@ public class TokenProvider {
         // JWT 토큰 생성
         String accessToken = Jwts.builder()
                 // 회원 아이디를 "sub"이라는 클레임으로 토큰에 추가
-                .setSubject(accountEntity.getMemberName())
+                .setSubject(account.getMemberName())
                 // 회원의 권한들을 "auth"라는 클레임으로 토큰에 추가
                 .claim(AUTHORITIES_KEY, role)
                 // 만료 시간 설정
@@ -126,7 +127,7 @@ public class TokenProvider {
 
         log.info("[TokenProvider] generateTokenDTO() End");
 
-        return new TokenDTO(BEARER_TYPE, accountEntity.getMemberName(), accessToken, accessTokenExpiresIn.getTime());
+        return new TokenDTO(BEARER_TYPE, account.getMemberName(), accessToken, accessTokenExpiresIn.getTime());
     }
 
     /* 목차. 2. 토큰에 등록된 클레임의 sub에서 해당 회원의 아이디를 추출 */

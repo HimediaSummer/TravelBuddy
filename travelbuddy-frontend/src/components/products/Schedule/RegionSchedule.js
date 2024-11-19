@@ -73,6 +73,7 @@ function RegionSchedule({ onNext }) {
 						{/* 선택된 지역 상세 정보 출력 */}
 						{selectedRegionDetails ? (
 							<div>
+								<img src={`/Img/${selectedRegionDetails.regionImg}`} alt={selectedRegionDetails.regionName} width={'100px'} height={'100px'}/>
 								<h3>지역 이름: {selectedRegionDetails.regionName}</h3>
 								<p>지역 설명: {selectedRegionDetails.regionDescription}</p>
 							</div>

@@ -155,7 +155,6 @@ public class AdminQnaService {
         adminQnaAnswerRepository.save(qnaAnswer);
 
         return (qnaAnswer == null) ? "삭제 성공" : "삭제 실패";
-
     }
 
     public Object selectFqType() {

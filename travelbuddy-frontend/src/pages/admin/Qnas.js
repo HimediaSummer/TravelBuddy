@@ -1,4 +1,3 @@
-// import QnaDetail from "./QnaDetail";
 import QnaCSS from "./Qnas.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";

@@ -95,6 +95,7 @@ function AccomSchedule({ onNext }) {
 					)}
 
 				</div>
+				{/* 테스트 잔디확인용 */}
 			</div>
 		</div>
 	);

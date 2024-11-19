@@ -78,7 +78,7 @@ function RegionSchedule({ onNext }) {
 								<p>지역 설명: {selectedRegionDetails.regionDescription}</p>
 							</div>
 						) : (
-							<p>지역을 선택해주세요.</p>
+							''
 						)}
 						<button onClick={onNext}>다음</button>
 					</div>

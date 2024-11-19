@@ -621,6 +621,7 @@ select,
 }
 
 /* 달력 스타일 */
+
 .react-calendar__month-view__weekdays__weekday {
 	text-align: center !important;
 	font-family: '카페24 써라운드' !important;
@@ -724,28 +725,65 @@ select,
     height: auto; /* 비율 유지 */
 }
 
-/* 장소선택토글 */
-.container {
-	display: flex;
-	justify-content: space-between;
-	gap: 20px
+.region-item {
+    display: flex;
+    flex-direction: column; /* 세로로 정렬 */
+    align-items: center; /* 중앙 정렬 */
+    margin-bottom: 20px; /* 각 항목 간의 간격 */
+}
+.region-item2 {
+    display: flex;
+    flex-direction: row; /* 가로로 정렬 */
+    align-items: center; /* 중앙 정렬 */
+    margin-bottom: 20px; /* 각 항목 간의 간격 */
 }
 
-.left-side {
-	width: 30%;
-	padding: 10px;
-	display: flex;
-	gap: 15px;
+
+.region-item img {
+	margin-bottom: 10px; /* 이미지와 버튼 간의 간격 */
 }
 
-.right-side {
-	width: 60%;
-	padding: 10px;
-	border-radius: 15px;
-	display: none; /* 기본적으로 숨겨진 상태 */
-	transition: transform 0.3s ease;
+.region-item2 img {
+    margin-right: 20px; /* 이미지와 이름 간의 간격 */
 }
 
-.right-side.open {
-	display: block; /* 지역을 선택하면 상세 정보가 오른쪽에서 보이게 */
+.region-item2 .region-button {
+    margin-left: 20px; /* 이름과 버튼 간의 간격 */
 }
+
+.region-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px; /* 버튼 너비 설정 */
+    height: 80px; /* 버튼 높이 설정 */
+    border-radius: 25px; /* 타원형 모양 */
+    background-color: var(--accent-color); /* 배경색 설정 */
+    color: white; /* 글자 색상 */
+    border: none; /* 테두리 제거 */
+    cursor: pointer; /* 마우스 커서 변경 */
+    font-size: 24px; /* 글자 크기 설정 */
+    position: relative; /* 위치 설정 */
+}
+
+.region-button2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px; /* 버튼 너비 설정 */
+    height: 50px; /* 버튼 높이 설정 */
+    border-radius: 25px; /* 타원형 모양 */
+    background-color: var(--accent-color); /* 배경색 설정 */
+    color: white; /* 글자 색상 */
+    border: none; /* 테두리 제거 */
+    cursor: pointer; /* 마우스 커서 변경 */
+    font-size: 24px; /* 글자 크기 설정 */
+    position: relative; /* 위치 설정 */
+}
+
+.region-button:before {
+    content: "+"; /* "+" 기호 추가 */
+    position: absolute; /* 절대 위치 설정 */
+    font-size: 24px; /* 기호 크기 설정 */
+}
+

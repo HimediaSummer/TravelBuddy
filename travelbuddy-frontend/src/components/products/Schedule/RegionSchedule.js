@@ -71,7 +71,10 @@ function RegionSchedule({ onNext }) {
 								<div className='region-wordMargin'>
 									{region.regionName}
 								</div>
-								<button type='button' className="region-button" key={region.regionCode} onClick={() => handleRegionSelect(region)}></button>
+								<button 
+                           type='button' 
+                           className={`region-button ${selectedRegion && selectedRegion.regionCode === region.regionCode ? 'selected' : ''}`} 
+                           onClick={() => handleRegionSelect(region)}></button>
 							</div>
 						))}
 						</div>

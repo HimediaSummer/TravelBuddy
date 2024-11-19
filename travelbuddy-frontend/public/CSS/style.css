@@ -290,13 +290,19 @@ legend {
 }
 
 #chat-box3 {
+	width: 500px;
+	height: auto;
 	background-color: var(--background-color);
-	text-align: center;
-	justify-content: center;
+	text-align: left;
+	justify-content: flex-start;
 	/* font-size: xx-large; */
 	font-weight: bold;
 	color: #1F709E;
-	margin-top: 28px; /* 내용물 위쪽 여백 추가 */
+	margin-top: 100px; /* 내용물 위쪽 여백 추가 */
+}
+
+#chat-box>p {
+	white-space: normal;
 }
 
 #chat-box p {
@@ -865,6 +871,7 @@ select,
     align-items: center; /* 중앙 정렬 */
     margin-bottom: 20px; /* 각 항목 간의 간격 */
 	width: 400px; /* 고정 너비 설정 */
+	flex-shrink: 0;
 }
 
 .accom-item img {
@@ -877,6 +884,9 @@ select,
 
 .accom-item2 .accom-button {
     margin-left: 20px; /* 이름과 버튼 간의 간격 */
+	flex-shrink: 0;
+	width: 50px;
+	height: 80px;
 }
 
 .accom-button {
@@ -944,7 +954,7 @@ select,
 
 .accom-wordMargin {
     flex-grow: 1; /* 남은 공간을 차지 */
-    /*white-space: nowrap; /* 줄 바꿈 방지 */
+    white-space: wrap; /* 줄 바꿈 방지 */
     overflow: hidden; /* 넘치는 내용 숨기기 */
     text-overflow: ellipsis; /* 넘치는 내용에 대해 생략 부호(...) 표시 */
 }

@@ -10,14 +10,6 @@ import Summary from './Schedule/SummarySchedule';
 function Schedule() {
 	const [currentStep, setCurrentStep] = useState(0); // z컴포넌트 바꾸기?
 
-	// 모달
-	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	// 날짜
-	const [startDate, setStartDate] = useState();
-	const [endDate, setEndDate] = useState();
-	const [selectedRange, setSelectedRange] = useState([null, null]);
-
 	// 각 단계 컴포넌트들
 	const steps = [
 		<DateSchedule onNext={() => setCurrentStep(1)} />,
@@ -60,7 +52,7 @@ function Schedule() {
 
 				{/* main */}
 				<main class="wrap">
-					<div id="plan-order">
+					{/* <div id="plan-order">
 						<div class="order-title">
 							<p class="step">STEP 1</p>
 							<p>날짜 선택</p>
@@ -85,22 +77,34 @@ function Schedule() {
 							<p class="step">STEP 5</p>
 							<p>일정 생성</p>
 						</div>
+					</div> */}
+					<div id="plan-order">
+						{['날짜 선택', '장소 선택', '숙소 선택', '질문 선택', '일정 생성'].map((title, index) => (
+							<div className="order-title" key={index}>
+								<p className="step" style={{ color: currentStep === index ? '#1F709E' : '#8CC8EA' }}>
+									STEP {index + 1}
+								</p>
+								<p>{title}</p>
+							</div>
+						))}
 					</div>
 
-					<div id="chat-box" >
-						<p>트래블 버디</p>
-						<p>어떤 여행을 하고싶나요?<i id="plane-icon" class="fa-solid fa-plane-departure"></i></p>
+					<div className="main-content">
+						<div id="chat-box" >
+							<p>트래블 버디</p>
+							<p>어떤 여행을 하고싶나요?<i id="plane-icon" class="fa-solid fa-plane-departure"></i></p>
+						</div>
+						{/* 날짜 선택 모달 */}
+						{/* 출발일, 도착일 */}
+						{/* Region */}
+						{/* Accommodation */}
+						{/* Qestion */}
+						{/* Schedule */}
+						{/* Loading */}
+						{steps[currentStep]}
 					</div>
-
-					{/* 날짜 선택 모달 */}
-					{/* 출발일, 도착일 */}
-					{steps[currentStep]}
-					{/* Region */}
-					{/* Accommodation */}
-					{/* Qestion */}
-					{/* Schedule */}
-					{/* Loading */}
 				</main>
+				
 				{/* Footer */}
 				<footer class="footer">
 					<div>

@@ -1,4 +1,4 @@
-import { GET_BUDDIES, GET_BUDDY } from '../modules/BuddyModule';
+import { GET_BUDDIES, GET_BUDDY, POST_BUDDY } from '../modules/BuddyModule';
 
 export const callBuddiesListAPI = ({currentPage}) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies`;
@@ -31,18 +31,23 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
         }}
 
 
-//     export const callQnaAnswerAPI = ({qnaCode}) => {
-//         const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/qnas/${qnaCode}`;
-//         return async (dispatch, getState) => {
-//             const result = await fetch(requestURL, {
-//                 method: 'GET',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     Accept: '*/*'
-//                 }
-//             }).then((response) => response.json());
-//             dispatch({type: GET_QNAANSWER, payload: result });
-//         }}
+    export const callBuddyRegistAPI = ({form}) => {
+        const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies`;
+        return async (dispatch, getState) => {
+            const result = await fetch(requestURL, {
+                method: 'POST',
+                headers: {
+                    Accept: '*/*',
+                    Authorization:
+					    'Bearer ' + window.localStorage.getItem('accessToken')
+                },
+                body: form
+            }).then((response) => response.json());
+
+            console.log("[BuddyAPICalls] callBuddyRegistAPI result : ", result);
+
+            dispatch({type: POST_BUDDY, payload: result });
+        }}
 
     // export const callBuddyTypeAPI = () => {
     //     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies/getBuddyType`;

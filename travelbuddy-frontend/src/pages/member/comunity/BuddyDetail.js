@@ -42,8 +42,8 @@ function BuddyDetail () {
         dispatch(callGetMemberAPI({ memberName: token.sub }));
     }, [dispatch, token.sub]);
 
-    console.log("token.sub", token.sub);
-    console.log("token.sub type", typeof token.sub);
+    console.log("token.sub", token?.sub);
+    console.log("token.sub type", typeof token?.sub);
 
     const isAuthor = data?.memberCode === token.sub;
     console.log("data?.memberName", data?.memberName);

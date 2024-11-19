@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 function QuestionSchedule({ onNext }) {
 
 	const [qTheme, setQTheme] = useState([]);
-	const [questionDetails, setQuestionDetails] = useState([]);
 	const [answers, setAnswers] = useState([]);
 	const [selectedQuestionTheme, setSelectedQuestionTheme] = useState(null);
 	const [selectedQuestions, setSelectedQuestions] = useState([]);
@@ -27,105 +26,8 @@ function QuestionSchedule({ onNext }) {
 			.catch(error => console.error('Error fetching data:', error));
 	}, []);
 
-	// 테마별 질문
-	// useEffect(() => {
-	// 	fetch('http://localhost:8080/schedule/question/1')
-	// 		.then(response => response.json())
-	// 		.then(data => {
-	// 			console.log('가져온거', data);
-	// 			const questionDetails = data.data.map(questions => ({
-	// 				questCode: questions.questCode,
-	// 				question: questions.question,
-	// 				themeCode: questions.themeCode
-	// 			}));
-	// 			console.log("가져왓냐?", data);
-	// 			setSelectedQuestions(questionDetails);
-	// 		})
-	// 		.catch(error => console.error('Error fetching data:', error));
-	// }, []);
-
-	// 질문별 대답
-	// useEffect(() => {
-	// 	fetch('http://localhost:8080/schedule/answer/1')
-	// 		.then(response => response.json())
-	// 		.then(data => {
-	// 			console.log('답변 가져온거', data);
-	// 			const answers = data.data.map(answers => ({
-	// 				answerCode: answers.answerCode,
-	// 				answer: answers.answer,
-	// 				questCode: answers.questCode
-	// 			}));
-	// 			console.log("답변 가져왓냐?", data);
-	// 			setSelectedQuestions(answers);
-	// 		})
-	// 		.catch(error => console.error('Error fetching data:', error));
-	// }, []);
-
-	// const handleQuestionThemeSelect = qTheme => {
-
-	// 	console.log('선택된테마코드?', qTheme);
-	// 	console.log('야있냐???', qTheme.themeCode);
-
-	// 	setSelectedQuestionTheme(qTheme);
-
-	// 	fetch(`http://localhost:8080/schedule/question/${qTheme.themeCode}`)
-	// 		.then(response => response.json())
-	// 		.then(data => {
-	// 			console.log('뭐가져왔냐?', data);
-	// 			const questionDetails = data.data.map(questions => ({
-	// 				questCode: questions.questCode,
-	// 				question: questions.question,
-	// 				themeCode: questions.themeCode
-	// 			}))
-	// 			setSelectedQuestions(questionDetails);
-
-	// 			qTheme.questions.forEach(question => {			
-	// 				fetch(`http://localhost:8080/schedule/answer/${question.questCode}`)
-	// 					.then(response => response.json())
-	// 					.then(data => {
-	// 						console.log('뭐가져왓냐', data);
-	// 						const answers = data.data.map(answers => ({
-	// 							answerCode: answers.answerCode,
-	// 							answer: answers.answer,
-	// 							questCode: answers.questCode
-	// 						}))
-	// 						setSelectedAnswer(prevAnswers => [...prevAnswers, answers]);
-	// 					})
-	// 					.catch(error => console.error('Error fetching data:', error));
-	// 				console.log("Selected Answer:", answers);
-	// 			});
-	// 		})
-	// 		.catch(error => console.error('Error fetching data:', error));
-	// 	console.log("Selected QuestionTheme:", qTheme);
-	// };
-
-	// 답변 핸들러
-	// 	const handleAnswerSelect = answers => {
-
-	// 		console.log('선택된답변코드는?', answers);
-	// 		console.log('코드잇냐고~!???', answers.questCode);
-
-	// 	qTheme.questions.forEach(question => {			
-	// 		fetch(`http://localhost:8080/schedule/answer/${question.questCode}`)
-	// 			.then(response => response.json())
-	// 			.then(data => {
-	// 				console.log('뭐가져왓냐', data);
-	// 				const answers = data.data.map(answers => ({
-	// 					answerCode: answers.answerCode,
-	// 					answer: answers.answer,
-	// 					questCode: answers.questCode
-	// 				}))
-	// 				setSelectedAnswer(prevAnswers => [...prevAnswers, answers]);
-	// 			})
-	// 			.catch(error => console.error('Error fetching data:', error));
-	// 		console.log("Selected Answer:", answers);
-	// 	});
-	// };
-
 	// 테마별 질문과 답변 가져오기
-	const handleQuestionThemeSelect = (qTheme) => {
-		console.log('선택된 테마 코드:', qTheme.themeCode);
-
+		const handleQuestionThemeSelect = (qTheme) => {
 		setSelectedQuestionTheme(qTheme);
 		setSelectedQuestions([]);  // 이전 질문, 답변 초기화
 		setSelectedAnswer([]); // 답변 초기화
@@ -167,18 +69,6 @@ function QuestionSchedule({ onNext }) {
 			.catch(error => console.error('Error fetching questions:', error));
 	};
 
-	// 답변 선택 핸들러
-	// const handleAnswerSelect = (selectedAnswer) => {
-	// 	console.log('선택된 답변:', selectedAnswer);
-	// 	setSelectedAnswer(prevAnswers =>
-	// 		prevAnswers.map(answer =>
-	// 			answer.answerCode === selectedAnswer.answerCode
-	// 				? { ...answer, selected: true } // 선택된 답변에 selected 속성 추가
-	// 				: answer
-	// 		)
-	// 	);
-	// };
-
 	// 답변 선택 후 다음 질문으로 넘어가기
 	const handleAnswerSelect = (answer) => {
 		// 답변을 selectedAnswers에 저장 (현재 질문에 대한 답변)
@@ -206,7 +96,6 @@ function QuestionSchedule({ onNext }) {
 
 	// 현재 질문을 가져오기
 	const currentQuestion = selectedQuestions[currentQuestionIndex];
-
 	return (
 		<div class="tema-title">
 			<div class="chat-container">
@@ -217,37 +106,37 @@ function QuestionSchedule({ onNext }) {
 					<div class="tema-title">
 						<legend>선호하는 여행테마를 선택해주세요</legend>
 					</div>
+					{/* <div className="answer-container"> */}
 					<div>
-						{qTheme.map((qTheme) => {
-							return (<button type='button' key={qTheme.questionTheme} onClick={() => handleQuestionThemeSelect(qTheme)}>
+						{!selectedQuestionTheme && qTheme.map((qTheme) => (
+							<div className="answer-box" key={qTheme.questionTheme} onClick={() => handleQuestionThemeSelect(qTheme)}>
 								{qTheme.questionTheme}
-							</button>);
-						})}
+							</div>
+						))}
 					</div>
 					<div>
 						{selectedQuestions.length > 0 && currentQuestionIndex < selectedQuestions.length ? (
-							// 현재 질문만 표시
 							<div key={currentQuestion.questCode}>
 								<p>질문: {currentQuestion.question}</p>
 								{/* 해당 질문에 맞는 답변 필터링 */}
 								{selectedAnswer
 									.filter((answer) => answer.questCode === currentQuestion.questCode)
 									.map((answer) => (
-										<button
-											type="button"
-											key={`${answer.questCode}-${answer.answerCode}`} // questCode + answerCode 조합으로 key 설정
-											onClick={() => handleAnswerSelect(answer)} // 답변 선택 시 다음 질문으로 이동
-										>
+										<div className="answer-box2" key={`${answer.questCode}-${answer.answerCode}`} onClick={() => handleAnswerSelect(answer)}>
 											{answer.answer}
-										</button>
+										</div>
 									))}
 							</div>
-						) : (
-							''
-						)}
+							) : ('')
+						}
 					</div>
 					<br />
 					{/* 모든 질문을 끝냈을 때 다음 버튼 표시하기 */}
+					{isDone && (
+						<div>
+							<p>응답이 완료되었습니다.</p>
+						</div>
+					)}
 					{isDone && (
 						<div>
 							<button onClick={onNext}>다음</button>

@@ -63,15 +63,21 @@ function AccomSchedule({ onNext }) {
 					</div>
 					<div>
 						{accom.map((accom) => (
+							<div>
+								<img key={accom.accomCode} src={`/Img/${accom.accomThumbnailImg}`} alt={accom.accomName} width={'50px'} height={'50px'} style={{borderRadius: '15px'}}/>
 							<button type='button' key={accom.accomCode} onClick={() => handleAccomSelect(accom)}>
 								{accom.accomName} ({accom.accomType})
 							</button>
+							</div>
 						))}
 					</div>
 					<div>
 						{selectedAccomDetails ? (
 							<div>
-								<p>숙소 타입 : {selectedAccomDetails.accomType}</p>
+								{/* <img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'50px'} height={'50px'}/>  */}
+								<p>
+								<img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'50px'} height={'50px'} style={{borderRadius: '15px'}}/>
+									숙소 타입 : {selectedAccomDetails.accomType}</p>
 								<p>숙소 이름 : {selectedAccomDetails.accomName}</p>
 								<p>숙소 주소 : {selectedAccomDetails.accomAddres}</p>
 							</div>

@@ -60,7 +60,14 @@ public class MypageController {
     }
 
     /* =========================================== My일정 =========================================== */
+    /* 내 일정 목록 조회*/
+    @Operation(summary = "일정조회", description = "일정목록조회", tags = {"MypageController"})
+    @GetMapping("/myschedule/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectMySchedule(@PathVariable int memberCode) {
+        log.info("[MypageService] selectMySchedule Start");
 
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원정보조회", mypageService.selectMySchedule(memberCode)));
+    }
 
 
 

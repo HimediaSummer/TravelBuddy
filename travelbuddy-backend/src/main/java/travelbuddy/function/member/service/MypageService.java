@@ -25,7 +25,10 @@ import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.repository.MyBuddyMatchRepository;
 import travelbuddy.function.member.repository.MyBuddyRepository;
 import travelbuddy.function.member.repository.MyProfileRepository;
+import travelbuddy.function.member.repository.MyScheduleRepository;
+import travelbuddy.function.schedule.dto.ScheduleDTO;
 import travelbuddy.function.schedule.entity.Region;
+import travelbuddy.function.schedule.entity.Schedule;
 import travelbuddy.function.schedule.repository.RegionRepository;
 import travelbuddy.util.FileUploadUtils;
 
@@ -40,6 +43,7 @@ public class MypageService {
     private final MyProfileRepository myProfileRepository;
     private final BuddyTypeRepository buddyTypeRepository;
     private final RegionRepository regionRepository;
+    private final MyScheduleRepository myScheduleRepository;
     private final ModelMapper modelMapper;
 
     @Value("${image.image-dir}")
@@ -48,12 +52,13 @@ public class MypageService {
     private String IMAGE_URL;
 
     @Autowired
-    public MypageService(MyBuddyRepository myBuddyRepository, MyBuddyMatchRepository myBuddyMatchRepository, MyProfileRepository myProfileRepository, BuddyTypeRepository buddyTypeRepository, RegionRepository regionRepository, ModelMapper modelMapper) {
+    public MypageService(MyBuddyRepository myBuddyRepository, MyBuddyMatchRepository myBuddyMatchRepository, MyProfileRepository myProfileRepository, BuddyTypeRepository buddyTypeRepository, RegionRepository regionRepository, MyScheduleRepository myScheduleRepository, ModelMapper modelMapper) {
         this.myBuddyRepository = myBuddyRepository;
         this.myBuddyMatchRepository = myBuddyMatchRepository;
         this.myProfileRepository = myProfileRepository;
         this.buddyTypeRepository = buddyTypeRepository;
         this.regionRepository = regionRepository;
+        this.myScheduleRepository = myScheduleRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -142,7 +147,18 @@ public class MypageService {
     }
 
     /* =========================================== My일정 =========================================== */
+    public Object selectMySchedule(int memberCode) {
+        log.info("[MypageService] selectMySchedule() Start");
 
+        List<Schedule> scheduleList =  myScheduleRepository.findByMemberCode(memberCode);
+
+        if (scheduleList.isEmpty()) {
+            throw new RuntimeException("해당 회원의 일정이 없습니다. memberCode: " + memberCode);
+        }
+
+        log.info("[MypageService] selectMySchedule() END");
+        return scheduleList;
+    }
 
 
 

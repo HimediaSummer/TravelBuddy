@@ -113,6 +113,7 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글매칭신청자상태수정", null));
     }
 
+    /* 내가 쓴글 수정 */
     @Operation(summary = "게시글수정", description = "내가쓴글수정", tags = {"MypageController"})
     @PutMapping(value = "/mybuddylist/{buddyCode}/update")
     public ResponseEntity<ResponseDTO> updateBuddy(@ModelAttribute BuddyDTO buddyDTO, @RequestParam(required = false) MultipartFile buddyImg) {
@@ -120,6 +121,7 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글수정성공", mypageService.updateBuddy(buddyDTO, buddyImg)));
     }
 
+    /* 내가 쓴글 삭제 */
     @Operation(summary = "게시글삭제", description = "내가쓴글삭제", tags = {"MypageController"})
     @DeleteMapping(value = "/mybuddylist/{buddyCode}/delete")
     public ResponseEntity<ResponseDTO> deleteBuddy(@PathVariable int buddyCode) {
@@ -129,16 +131,29 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글삭제성공", null));
     }
 
+    /* 내가 신청한 게시글, 신청상태 조회 */
     @Operation(summary = "신청게시글조회", description = "내가매칭신청한게시글조회", tags = {"MypageController"})
-    @GetMapping(value = "/mymatch/{memberName}")
-    public ResponseEntity<ResponseDTO> seleteMatch() {
+    @GetMapping(value = "/mymatch/{memberCode}")
+    public ResponseEntity<ResponseDTO> seleteMatch(@PathVariable int memberCode) {
         log.info("[MypageController] seleteMatch() Start");
-        String memberName = "qq";
 
-        Object matchData = mypageService.selectMatch(memberName);
+        Object matchData = mypageService.selectMatch(memberCode);
 
         log.info("[MypageController] seleteMatch() End");
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가신청한게시글조회성공", matchData));
     }
+
+    /* 신청취소(삭제) */
+//    @Operation(summary = "신청취소", description = "신청취소삭제", tags = {"MypageController"})
+//    @DeleteMapping(value = "/mymatch/{memberName}/delete/{applyId}")
+//    public ResponseEntity<ResponseDTO> deleteMatch(@PathVariable String memberName, @PathVariable String applyId) {
+//        log.info("[MypageController] deleteMatch() Start");
+//        log.info("Delete Request - memberName: {}, applyId: {}", memberName, applyId);
+//
+//        mypageService.deleteMatch(memberName, applyId);
+//
+//        log.info("[MypageController] seleteMatch() End");
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "신청취소 완 (삭제)", null));
+//    }
 
 }

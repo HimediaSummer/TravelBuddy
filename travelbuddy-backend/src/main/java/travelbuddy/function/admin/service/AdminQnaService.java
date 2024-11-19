@@ -23,6 +23,7 @@ import travelbuddy.function.community.qnafaq.entity.Qna;
 import travelbuddy.function.community.qnafaq.entity.QnaAnswer;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -106,8 +107,8 @@ public class AdminQnaService {
         return qnaDetailDTO;
     }
 
-    /*QnaAnswer 를 등록한다. 이미 존재하는 QnaAnswer 의 contents 와 create 에 null 값이 존재하여,
-    데이터 삽입이 아닌 해당 code 들의 null 에 값을 update 해야한다. 유니크 중복이 걸려서 해당 qna 의 qna 코드는 지워야한다*/
+    /*QnaAnswer 를 등록한다.
+    * 수정과 같은 기능을하여 통합한다. 등록/수정*/
     @Transactional
     public  Object insertQnaAnswer(int qnaCode, QnaAnswerDTO qnaAnswerDTO) {
 
@@ -124,30 +125,36 @@ public class AdminQnaService {
     }
 
     /*QnaAnswer 를 수정한다.*/
-    @Transactional
-    public Object updateQnaAnswer(int qnaCode, QnaAnswerDTO qnaAnswerDTO) {
+//    @Transactional
+//    public Object updateQnaAnswer(int qnaCode, QnaAnswerDTO qnaAnswerDTO) {
+//
+//        QnaAnswer qnaAnswer = modelMapper.map(qnaAnswerDTO, QnaAnswer.class);
+//
+//        Qna qna = adminQnaRepository.findById(qnaCode).get();
+//
+//        qnaAnswer.setQna(qna);
+//
+//        adminQnaAnswerRepository.save(qnaAnswer);
+//
+//        return modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
+//    }
 
-        QnaAnswer qnaAnswer = modelMapper.map(qnaAnswerDTO, QnaAnswer.class);
-
-        Qna qna = adminQnaRepository.findById(qnaCode).get();
-
-        qnaAnswer.setQna(qna);
-
-        adminQnaAnswerRepository.save(qnaAnswer);
-
-        return modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
-    }
-
-    /*QnaAnswer 를 삭제한다. ( 다시 contents 와 create 를 null 로 변경한다.)*/
+    /*QnaAnswer 를 삭제한다.*/
     @Transactional
     public Object deleteQnaAnswer(int qnaCode) {
 
-        QnaAnswer qnaAnswer = adminQnaAnswerRepository.findById(qnaCode).get();
+        Qna qna = adminQnaRepository.findById(qnaCode).get();
+
+        QnaAnswer deleteAnswer = adminQnaAnswerRepository.findByQna(qna);
+        adminQnaAnswerRepository.delete(deleteAnswer);
+
+        QnaAnswer qnaAnswer = new QnaAnswer();
+        qnaAnswer.setQna(qna);
         qnaAnswer.setAnsContents(null);
         qnaAnswer.setAnsCreate(null);
         adminQnaAnswerRepository.save(qnaAnswer);
 
-        return (qnaAnswer.getAnsContents() == null) ? "삭제 성공" : "삭제 실패";
+        return (qnaAnswer == null) ? "삭제 성공" : "삭제 실패";
 
     }
 

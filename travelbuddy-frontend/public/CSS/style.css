@@ -159,6 +159,8 @@ legend {
 }
 
 .wrap {
+	display: flex; /* 사이드바와 메인 콘텐츠를 가로로 배치 */
+	height: 100vh; /* 전체 높이 사용 */
 	min-height: 100%;
 	padding-bottom: 60px;
 }
@@ -659,4 +661,45 @@ select,
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
 	background: #1F709E;
+}
+
+#plan-order {
+    display: flex;
+    flex-direction: column; /* 수직으로 정렬 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+    padding: 20px; /* 여백 추가 */
+    background-color: #ffffff; /* 배경색 설정 */
+    border-right: 1px solid #ccc; /* 오른쪽 경계선 추가 */
+    width: 250px; /* 사이드바 너비 설정 */
+}
+
+.order-title {
+    margin-bottom: 20px; /* 각 단계 간의 간격 */
+    cursor: pointer; /* 마우스 커서 변경 */
+    transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
+    padding: 10px; /* 패딩 추가 */
+    border-radius: 5px; /* 모서리 둥글게 */
+}
+
+.order-title:hover {
+    background-color: #e0f7fa; /* 호버 시 배경색 변경 */
+}
+
+.order-title .step {
+    font-weight: bold; /* 글씨 두껍게 */
+    font-size: 20px; /* 글씨 크기 설정 */
+    color: var(--accent-color); /* 강조 색상 사용 */
+}
+
+.order-title p {
+    font-size: 16px; /* 단계 제목 크기 설정 */
+    color: #636363; /* 글씨 색상 설정 */
+    margin: 0; /* 기본 여백 제거 */
+}
+
+.main-content {
+    flex-grow: 1; /* 남은 공간을 차지 */
+    padding: 20px; /* 여백 추가 */
+    overflow-y: auto; /* 세로 스크롤 가능 */
+    margin-top: 100px; /* 위쪽 여백 추가 */
 }

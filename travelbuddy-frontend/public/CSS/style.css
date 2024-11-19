@@ -621,7 +621,6 @@ select,
 }
 
 /* 달력 스타일 */
-
 .react-calendar__month-view__weekdays__weekday {
 	text-align: center !important;
 	font-family: '카페24 써라운드' !important;
@@ -723,4 +722,30 @@ select,
 .image-container img {
     max-width: 100%; /* 이미지가 컨테이너를 넘지 않도록 설정 */
     height: auto; /* 비율 유지 */
+}
+
+/* 장소선택토글 */
+.container {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px
+}
+
+.left-side {
+	width: 30%;
+	padding: 10px;
+	display: flex;
+	gap: 15px;
+}
+
+.right-side {
+	width: 60%;
+	padding: 10px;
+	border-radius: 15px;
+	display: none; /* 기본적으로 숨겨진 상태 */
+	transition: transform 0.3s ease;
+}
+
+.right-side.open {
+	display: block; /* 지역을 선택하면 상세 정보가 오른쪽에서 보이게 */
 }

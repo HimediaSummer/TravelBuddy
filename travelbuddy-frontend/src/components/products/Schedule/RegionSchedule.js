@@ -52,37 +52,41 @@ function RegionSchedule({ onNext }) {
 	};
 
 	return (
-		<div class="tema-title">
-			<div class="chat-container">
-				<form class="chat-form" action="post">
-				<div id="chat-box2">
-						<h2>장소 선택</h2>
-					</div>
-					<div class="tema-title">
-						<legend>가고싶은 도시를 선택해주세요.</legend>
-					</div>
-					<div>
-						{region.map((region) => (
-							<div>
-							<img key={region.regionCode} src={`/Img/${region.regionThumbnailImg}`} alt={region.regionName} width={'50px'} height={'50px'} style={{borderRadius: '15px'}}/>
-							<button type='button' key={region.regionCode} onClick={() => handleRegionSelect(region)}>
-								{region.regionName}
-							</button>
+		<div className='container'>
+			<div class="tema-title">
+				<div class="chat-container">
+					<form class="chat-form" action="post">
+						<div className='left-side'>
+							<div id="chat-box2">
+								<h2>장소 선택</h2>
 							</div>
-						))}
-						{/* 선택된 지역 상세 정보 출력 */}
-						{selectedRegionDetails ? (
-							<div>
-								<img src={`/Img/${selectedRegionDetails.regionImg}`} alt={selectedRegionDetails.regionName} width={'100px'} height={'100px'}/>
-								<h3>지역 이름: {selectedRegionDetails.regionName}</h3>
-								<p>지역 설명: {selectedRegionDetails.regionDescription}</p>
+							<div class="tema-title">
+								<legend>가고싶은 도시를 선택해주세요.</legend>
 							</div>
-						) : (
-							''
-						)}
-						<button onClick={onNext}>다음</button>
-					</div>
-				</form>
+							{region.map((region) => (
+								<div>
+									<img key={region.regionCode} src={`/Img/${region.regionThumbnailImg}`} alt={region.regionName} width={'50px'} height={'50px'} style={{ borderRadius: '15px' }} />
+									<button type='button' key={region.regionCode} onClick={() => handleRegionSelect(region)}>
+										{region.regionName}
+									</button>
+								</div>
+							))}
+						</div>
+						<div className={`right-side ${selectedRegionDetails ? 'open' : ''}`}>
+							{/* 선택된 지역 상세 정보 출력 */}
+							{selectedRegionDetails ? (
+								<div>
+									<img src={`/Img/${selectedRegionDetails.regionImg}`} alt={selectedRegionDetails.regionName} width={'100px'} height={'100px'} />
+									<h3>지역 이름: {selectedRegionDetails.regionName}</h3>
+									<p>지역 설명: {selectedRegionDetails.regionDescription}</p>
+								</div>
+							) : (
+								''
+							)}
+							<button onClick={onNext}>다음</button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	);

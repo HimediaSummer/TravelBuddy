@@ -133,31 +133,26 @@ public class QnaService {
 
     }
 
-    /*qna 작성글의 내용과 작성일을 수정한다.*/
-    @Transactional
-    public Object updateQna(int qnaCode, QnaDTO qnaDTO) {
-
-        Qna qna = modelMapper.map(qnaDTO, Qna.class);
-        Qna foundQna = qnaRepository.findById(qnaCode).orElse(null);
-
-        foundQna.setQnaContents(qna.getQnaContents());
-        foundQna.setQnaCreate(qna.getQnaCreate());
-
-        qnaRepository.save(foundQna);
-
-        return modelMapper.map(foundQna,QnaDTO.class);
-
-
-
-    }
+    /*qna 작성글의 내용과 작성일을 수정한다. (insert 와 동일 기능으로 주석처리)*/
+//    @Transactional
+//    public Object updateQna(int qnaCode, QnaDTO qnaDTO) {
+//
+//        Qna qna = modelMapper.map(qnaDTO, Qna.class);
+//        Qna foundQna = qnaRepository.findById(qnaCode).orElse(null);
+//
+//        foundQna.setQnaContents(qna.getQnaContents());
+//        foundQna.setQnaCreate(qna.getQnaCreate());
+//
+//        qnaRepository.save(foundQna);
+//
+//        return modelMapper.map(foundQna,QnaDTO.class);
+//    }
 
     /*본인이 작성한 qna 를 삭제한다. 다만 answer 에 null 이 아닐 경우에는 삭제 할수 없다.*/
     public Object deleteQna(int qnaCode) {
 
         Qna qna = qnaRepository.findById(qnaCode).orElse(null);
         QnaAnswer qnaAnswer = qnaAnswerRepository.findByQna(qna);
-        System.out.println("qna = " + qna);
-        System.out.println("qnaAnswer = " + qnaAnswer);
 
         if (qnaAnswer.getAnsContents().isEmpty()) {
             qnaRepository.delete(qna);

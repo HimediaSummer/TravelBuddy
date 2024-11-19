@@ -8,7 +8,7 @@ import {
 import {
     insertQnaAnswerAPI} from '../../apis/QnaAPICalls';
 import {
-    updateQnaAnswerAPI} from '../../apis/QnaAPICalls';
+    deleteQnaAPI} from '../../apis/QnaAPICalls';
 import {
     deleteQnaAnswerAPI} from '../../apis/QnaAPICalls';
 
@@ -53,11 +53,16 @@ function QnaDetail () {
         navigate(`/Qnas`);
     };
 
-    const onClickChangeHandlerUpdate = () => {
-        dispatch(updateQnaAnswerAPI(params))
-    };
     const onClickChangeHandlerDelete = () => {
-        dispatch(deleteQnaAnswerAPI(params))
+        dispatch(deleteQnaAnswerAPI(qnaCode))
+        alert('답변이 삭제되었습니다.');
+        navigate(`/Qnas`);
+    };
+
+    const onClickQnaDelete = () => {
+        dispatch(deleteQnaAPI(qnaCode))
+        alert('문의가 삭제되었습니다.');
+        navigate(`/Qnas`);
     };
 
     return (
@@ -76,7 +81,7 @@ function QnaDetail () {
                 <td>{qnaDTO.qnaTitle}</td>
                 <td>문의유형</td>
                 <td>{qnaDTO.fqTypeCode}</td>
-                <td><button>삭제</button></td>
+                <td><button onClick={onClickQnaDelete}>삭제</button></td>
                 </tr>
 
                 <tr>
@@ -103,8 +108,7 @@ function QnaDetail () {
                 <tr>
                     <td>답변시간</td>
                     <td>{qnaAnswerDTO.ansCreate || ''}</td>
-                    <td><button onClick={onClickChangeHandlerInsert}>답변 등록</button></td>
-                    <td><button onClick={onClickChangeHandlerUpdate}>답변 수정</button></td>
+                    <td><button onClick={onClickChangeHandlerInsert}>답변 등록/수정</button></td>
                     <td><button onClick={onClickChangeHandlerDelete}>답변 삭제</button></td>
                 </tr>
                 </>

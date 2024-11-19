@@ -45,7 +45,6 @@ export const noPagingQnaListAPI = () => {
     // 회원이 QnA 1개를 작성한다.
 export const insertQnaAPI = (qnaDTO) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/cs/qnas/insertqna`;
-    console.log('내가 받은 qnaDTO 는?',qnaDTO);
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'POST',
@@ -56,7 +55,20 @@ export const insertQnaAPI = (qnaDTO) => {
             body: JSON.stringify(qnaDTO)
         }).then((response) => response.json());
         dispatch({type: POST_QNA, payload: result });
-        console.log('응답받은 result 는?',result);
+    }}
+
+    // 관리자든 회원이든 QnA 답변을 삭제한다.
+export const deleteQnaAPI = (qnaCode) => {
+    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/qnas/${qnaCode}/deleteanswer`;
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*'
+            }
+        }).then((response) => response.json());
+        dispatch({type: DELETE_QNAANSWER, payload: result });
     }}
 
     // 관리자가 QnA 1개를 상세 조회한다.
@@ -104,8 +116,6 @@ export const callQnaAnswerAPI = ({qnaCode}) => {
     // 관리자가 QnA 답변을 추가한다 (사실상 answer 의 null 을 text 로 수정하는것과 같다.).
 export const insertQnaAnswerAPI = (qnaCode,updatedAnswerState) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/qnas/${qnaCode}/insertanswer`;
-    console.log('내가 받은 data in API',qnaCode);
-    console.log('내가 받은 answerState in API',updatedAnswerState);
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'POST',
@@ -118,7 +128,7 @@ export const insertQnaAnswerAPI = (qnaCode,updatedAnswerState) => {
         dispatch({type: POST_QNAANSWER, payload: result });
     }}
 
-    // 관리자가 QnA 답변을 수정한다.
+    // 관리자가 QnA 답변을 수정한다. 위의 코드가 기능 중복되어 사용 안함
 export const updateQnaAnswerAPI = ({qnaCode}) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/qnas/${qnaCode}/updateanswer`;
     return async (dispatch, getState) => {
@@ -133,7 +143,7 @@ export const updateQnaAnswerAPI = ({qnaCode}) => {
     }}
 
     // 관리자가 QnA 답변을 삭제한다.
-export const deleteQnaAnswerAPI = ({qnaCode}) => {
+export const deleteQnaAnswerAPI = (qnaCode) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/qnas/${qnaCode}/deleteanswer`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {

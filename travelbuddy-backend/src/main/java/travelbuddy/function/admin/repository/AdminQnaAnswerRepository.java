@@ -6,6 +6,7 @@ import travelbuddy.function.community.qnafaq.entity.Qna;
 import travelbuddy.function.community.qnafaq.entity.QnaAnswer;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AdminQnaAnswerRepository extends JpaRepository<QnaAnswer,Integer> {
 

@@ -352,29 +352,17 @@ public class MypageService {
     }
 
     /* 신청취소 */
-//    @Transactional
-//    public void deleteMatch(String memberName, String applyId) {
-//        log.info("[MypageService] deleteMatch() Start");
-//        log.info("Attempting to delete - memberName: {}, applyId: {}", memberName, applyId);
-//
-//        Optional<BuddyMatchData> matchData = myBuddyMatchRepository.findByNameAndId(applyId, memberName);
-//        if (matchData.isEmpty()) {
-//            throw new RuntimeException("삭제할 데이터를 찾을 수 없습니다.");
-//        }
-//        System.out.println("matchData1111111111 = " + matchData);
-//
-//        if (matchData.isPresent()) {
-//            BuddyMatchData data = matchData.get();
-//            System.out.println("Expected applyId: " + applyId);
-//            System.out.println("Expected memberName: " + memberName);
-//            System.out.println("Actual applyId: " + data.getApplyId());
-//            System.out.println("Actual memberName: " + data.getBuddy().getAccount().getMemberName());
-//        }
-//
-//        int deleteByNameAndId = myBuddyMatchRepository.deleteByNameAndId(applyId, memberName);
-//
-//        System.out.println("deleteByNameAndId=============== = " + deleteByNameAndId);
-//        log.info("[MypageService] deleteMatch() End");
-//    }
+    @Transactional
+    public void deleteMatch(int memberCode) {
+        log.info("[MypageService] deleteMatch() Start");
+
+        BuddyMatchData buddyMatchData = myBuddyMatchRepository.findByMemberCode(memberCode)
+                .orElseThrow(() -> new RuntimeException("BuddyMatchData에 없는 회원코드! 꾀꼬리."));
+
+        myBuddyMatchRepository.delete(buddyMatchData);
+
+        System.out.println("buddyMatchData=============== = " + buddyMatchData);
+        log.info("[MypageService] deleteMatch() End");
+    }
 
 }

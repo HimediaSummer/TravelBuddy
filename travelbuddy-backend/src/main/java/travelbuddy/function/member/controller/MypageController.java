@@ -144,16 +144,16 @@ public class MypageController {
     }
 
     /* 신청취소(삭제) */
-//    @Operation(summary = "신청취소", description = "신청취소삭제", tags = {"MypageController"})
-//    @DeleteMapping(value = "/mymatch/{memberName}/delete/{applyId}")
-//    public ResponseEntity<ResponseDTO> deleteMatch(@PathVariable String memberName, @PathVariable String applyId) {
-//        log.info("[MypageController] deleteMatch() Start");
-//        log.info("Delete Request - memberName: {}, applyId: {}", memberName, applyId);
-//
-//        mypageService.deleteMatch(memberName, applyId);
-//
-//        log.info("[MypageController] seleteMatch() End");
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "신청취소 완 (삭제)", null));
-//    }
+    @Operation(summary = "신청취소", description = "신청취소삭제", tags = {"MypageController"})
+    @DeleteMapping(value = "/mymatch/{memberCode}/delete")
+    public ResponseEntity<ResponseDTO> deleteMatch(@PathVariable int memberCode) {
+        log.info("[MypageController] deleteMatch() Start");
+        log.info("Delete Request - memberCode: {}", memberCode);
+
+        mypageService.deleteMatch(memberCode);
+
+        log.info("[MypageController] deleteMatch() End");
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "신청취소 완 (삭제)", null));
+    }
 
 }

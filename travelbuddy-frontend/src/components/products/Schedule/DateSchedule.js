@@ -98,7 +98,8 @@ function DateSchedule({ onNext }) {
 								transform: "translate(-50%, -50%)",
 								zIndex: 20,
 								width: "50%",
-								height: "60%"
+								// height: "60%"		// 학원 데스크탑 모니터 기준
+								height: '75%'			// 내 노트북 기준
 							}
 						}}
 					>

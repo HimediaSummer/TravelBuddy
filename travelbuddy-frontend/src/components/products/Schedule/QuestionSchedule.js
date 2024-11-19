@@ -106,8 +106,8 @@ function QuestionSchedule({ onNext }) {
 					<div class="tema-title">
 						<legend>선호하는 여행테마를 선택해주세요</legend>
 					</div>
-					{/* <div className="answer-container"> */}
-					<div>
+					<div className="answer-container">
+					{/* <div> */}
 						{!selectedQuestionTheme && qTheme.map((qTheme) => (
 							<div className="answer-box" key={qTheme.questionTheme} onClick={() => handleQuestionThemeSelect(qTheme)}>
 								{qTheme.questionTheme}
@@ -139,7 +139,7 @@ function QuestionSchedule({ onNext }) {
 					)}
 					{isDone && (
 						<div>
-							<button onClick={onNext}>다음</button>
+							<button className='quest-button2' onClick={onNext}>다음</button>
 						</div>
 					)}
 				</form>

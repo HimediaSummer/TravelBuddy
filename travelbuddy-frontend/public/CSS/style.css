@@ -846,6 +846,7 @@ select,
     align-items: center; /* 중앙 정렬 */
     margin-bottom: 20px; /* 각 항목 간의 간격 */
 	width: 400px; /* 고정 너비 설정 */
+	flex-shrink: 0;
 }
 
 .accom-item img {
@@ -915,7 +916,8 @@ select,
 
 .accom-wordMargin {
     flex-grow: 1; /* 남은 공간을 차지 */
-    white-space: nowrap; /* 줄 바꿈 방지 */
+    /* white-space: nowrap; 줄 바꿈 방지 */
+    white-space: wrap; /* 줄 바꿈 방지 */
     overflow: hidden; /* 넘치는 내용 숨기기 */
     text-overflow: ellipsis; /* 넘치는 내용에 대해 생략 부호(...) 표시 */
 }

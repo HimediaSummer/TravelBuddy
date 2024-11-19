@@ -98,14 +98,16 @@ function DateSchedule({ onNext }) {
 								transform: "translate(-50%, -50%)",
 								zIndex: 20,
 								width: "50%",
-								height: "70%"
+								height: "60%"
 							}
 						}}
 					>
-					<div style={{ textAlign: 'center', margin: '30px' }}>
-						<h4>행복한 여행기간을 선택해주세요!</h4>
-						<p>최대 5일까지 선택 가능합니다.</p>
+					<div id='chat-box2'>
+						<h2>행복한 여행기간을 선택해주세요!</h2>
 					</div>
+					<div style={{ textAlign: 'center'}}>
+						<p>최대 5일까지 선택 가능합니다.</p>
+						</div>
 					<div style={{
 						display: 'flex',
 						justifyContent: 'center',

@@ -63,11 +63,12 @@ function RegionSchedule({ onNext }) {
                </div>
                <div>
                   {region.map((region) => (
-                     <div>
-                     <img key={region.regionCode} src={`/Img/${region.regionThumbnailImg}`} alt={region.regionName} width={'50px'} height={'50px'} style={{borderRadius: '15px'}}/>
-                     <button type='button' key={region.regionCode} onClick={() => handleRegionSelect(region)}>
-                        {region.regionName}
-                     </button>
+                     <div className="region-item2" key={region.regionCode}>
+						<div className="region-item">
+							<img src={`/Img/${region.regionThumbnailImg}`} alt={region.regionName} width={'150px'} height={'150px'} style={{borderRadius: '15px'}}/>
+						</div>
+						{region.regionName}
+						<button type='button' className="region-button" key={region.regionCode} onClick={() => handleRegionSelect(region)}></button>
                      </div>
                   ))}
                   {/* 선택된 지역 상세 정보 출력 */}
@@ -80,7 +81,7 @@ function RegionSchedule({ onNext }) {
                   ) : (
                      ''
                   )}
-                  <button onClick={onNext}>다음</button>
+                  <button className="region-button2" onClick={onNext}>다음</button>
                </div>
             </form>
          </div>

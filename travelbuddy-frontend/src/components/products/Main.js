@@ -70,7 +70,7 @@ function Main() {
                     <input type="radio" name="radio-btn" id="img-3" />
                     <li class="slide-container">
                         <div class="slide">
-                            <img src="/Img/gangwon.PNG" />
+                            <img src="/Img/gangwon.jpg" />
                         </div>
                     <div class="nav">
                         <label for="img-2" class="prev">&#x2039;</label>
@@ -80,7 +80,7 @@ function Main() {
                     <input type="radio" name="radio-btn" id="img-4" />
                     <li class="slide-container">
                         <div class="slide">
-                            <img src="/Img/seoul.PNG" />
+                            <img src="/Img/seoul.jpg" />
                         </div>
                     <div class="nav">
                         <label for="img-3" class="prev">&#x2039;</label>
@@ -90,7 +90,7 @@ function Main() {
                     <input type="radio" name="radio-btn" id="img-5" />
                     <li class="slide-container">
                         <div class="slide">
-                            <img src="/Img/incheon.PNG" />
+                            <img src="/Img/incheon.jpg" />
                         </div>
                     <div class="nav">
                         <label for="img-4" class="prev">&#x2039;</label>
@@ -100,7 +100,7 @@ function Main() {
                     <input type="radio" name="radio-btn" id="img-6" />
                     <li class="slide-container">
                         <div class="slide">
-                            <img src="/Img/jeju.PNG" />
+                            <img src="/Img/jeju.jpg" />
                         </div>
                     <div class="nav">
                         <label for="img-5" class="prev">&#x2039;</label>
@@ -128,18 +128,18 @@ function Main() {
             </div>
             <div class="popular-city-list">
                 <div class="city-box">
-                    <img src="/Img/seoul.PNG"/>
+                    <img src="/Img/seoul.jpg"/>
                     <p id="city-title">seoul</p>
                     <p>서울</p>
                 </div>
                 <div class="city-box">
-                    <img src="/Img/busan.PNG"/>
+                    <img src="/Img/busan.jpg"/>
                     
                     <p id="city-title">Busan</p>
                     <p>부산</p>
                 </div>
                 <div class="city-box">
-                    <img src="/Img/jeju.PNG"/>
+                    <img src="/Img/jeju.jpg"/>
                     <p id="city-title">Jeju</p>
                     <p>제주</p>
                 </div>

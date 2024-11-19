@@ -52,32 +52,6 @@ function Schedule() {
 
 				{/* main */}
 				<main class="wrap2">
-					{/* <div id="plan-order">
-						<div class="order-title">
-							<p class="step">STEP 1</p>
-							<p>날짜 선택</p>
-						</div>
-						<i id="arrow-icon" class="fa-solid fa-angle-right"></i>
-						<div class="order-title">
-							<p class="step">STEP 2</p>
-							<p>장소 선택</p>
-						</div>
-						<i id="arrow-icon" class="fa-solid fa-angle-right"></i>
-						<div class="order-title">
-							<p class="step">STEP 3</p>
-							<p>숙소 선택</p>
-						</div>
-						<i id="arrow-icon" class="fa-solid fa-angle-right"></i>
-						<div class="order-title">
-							<p class="step">STEP 4</p>
-							<p>질문 선택</p>
-						</div>
-						<i id="arrow-icon" class="fa-solid fa-angle-right"></i>
-						<div class="order-title">
-							<p class="step">STEP 5</p>
-							<p>일정 생성</p>
-						</div>
-					</div> */}
 					<div id="plan-order2">
 						{['날짜 선택', '장소 선택', '숙소 선택', '질문 선택', '일정 생성'].map((title, index) => (
 							<div className="order-title" key={index}>

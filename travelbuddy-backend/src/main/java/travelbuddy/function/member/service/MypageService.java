@@ -147,6 +147,7 @@ public class MypageService {
     }
 
     /* =========================================== My일정 =========================================== */
+    /* 내 일정 목록 조회 */
     public Object selectMySchedule(int memberCode) {
         log.info("[MypageService] selectMySchedule() Start");
 
@@ -160,6 +161,15 @@ public class MypageService {
         return scheduleList;
     }
 
+    /* 내 일정 상세 조회 */
+    public Object getDetailSchedule(int scheCode) {
+        log.info("[MypageService] getDetailSchedule() Start");
+
+        Schedule schedule = myScheduleRepository.findById(scheCode).get();
+
+        log.info("[MypageService] getDetailSchedule() End");
+        return modelMapper.map(schedule, Schedule.class);
+    }
 
 
 

@@ -60,16 +60,23 @@ public class MypageController {
     }
 
     /* =========================================== My일정 =========================================== */
-    /* 내 일정 목록 조회*/
+    /* 내 일정 목록 조회 */
     @Operation(summary = "일정조회", description = "일정목록조회", tags = {"MypageController"})
     @GetMapping("/myschedule/{memberCode}")
     public ResponseEntity<ResponseDTO> selectMySchedule(@PathVariable int memberCode) {
         log.info("[MypageService] selectMySchedule Start");
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원정보조회", mypageService.selectMySchedule(memberCode)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정조회", mypageService.selectMySchedule(memberCode)));
     }
 
+    /* 내 일정 세부 조회 */
+    @Operation(summary = "일정상세조회", description = "일정상세조회", tags = {"MypageController"})
+    @GetMapping("/myschedule/{memberCode}/{scheCode}")
+    public ResponseEntity<ResponseDTO> getDetailSchedule(@PathVariable int scheCode) {
+        log.info("[MypageService] selectMySchedule Start");
 
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정상세조회", mypageService.getDetailSchedule(scheCode)));
+    }
 
 
 
@@ -103,7 +110,6 @@ public class MypageController {
     @Operation(summary = "게시글상세조회요청", description = "내가쓴글상세조회", tags = {"MypageController"})
     @GetMapping("/mybuddylist/{buddyCode}")
     public ResponseEntity<ResponseDTO> getBuddyDetail(@PathVariable("buddyCode") int buddyCode) {
-        Map<String, Object> getBuddyDetail = mypageService.getBuddyDetail(buddyCode);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글세부내용및신청회원조회성공", mypageService.getBuddyDetail(buddyCode)));
     }

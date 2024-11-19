@@ -289,6 +289,16 @@ legend {
 	color: #1F709E;
 }
 
+#chat-box3 {
+	background-color: var(--background-color);
+	text-align: center;
+	justify-content: center;
+	/* font-size: xx-large; */
+	font-weight: bold;
+	color: #1F709E;
+	margin-top: 28px; /* 내용물 위쪽 여백 추가 */
+}
+
 #chat-box p {
 	margin: 0px 0px 0px 0px;
 	line-height: 120%;
@@ -341,6 +351,8 @@ select,
 	font-size: large;
 	flex-wrap: wrap;
 	margin-bottom: 80px;
+	height: auto; /* 또는 적절한 높이 설정 */
+    max-height: 100vh; /* 전체 높이 사용 */
 }
 
 .chat-form,
@@ -736,6 +748,7 @@ select,
     flex-direction: row; /* 가로로 정렬 */
     align-items: center; /* 중앙 정렬 */
     margin-bottom: 20px; /* 각 항목 간의 간격 */
+	width: 400px; /* 고정 너비 설정 */
 }
 
 
@@ -779,6 +792,8 @@ select,
     cursor: pointer; /* 마우스 커서 변경 */
     font-size: 24px; /* 글자 크기 설정 */
     position: relative; /* 위치 설정 */
+    align-self: flex-end; /* 버튼을 오른쪽 정렬 */
+    margin-top: auto; /* 버튼을 맨 아래로 이동 */
 }
 
 .region-button:before {
@@ -787,3 +802,20 @@ select,
     font-size: 24px; /* 기호 크기 설정 */
 }
 
+.region-scroll {
+	overflow-y: auto; /* 세로 스크롤 가능 */
+	height: 100%;
+    /*max-height: 3350px; /* 최대 높이 설정 (필요에 따라 조정) */
+    max-height: 1200px; /* 최대 높이 설정 (필요에 따라 조정) */
+	min-height: 600px;
+    border-radius: 5px; /* 모서리 둥글게 */
+	padding: 10px; /* 내부 여백 추가 */
+	margin-top: 20px; /* 위쪽 여백 추가 */
+}
+
+.region-wordMargin {
+    flex-grow: 1; /* 남은 공간을 차지 */
+    white-space: nowrap; /* 줄 바꿈 방지 */
+    overflow: hidden; /* 넘치는 내용 숨기기 */
+    text-overflow: ellipsis; /* 넘치는 내용에 대해 생략 부호(...) 표시 */
+}

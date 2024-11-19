@@ -61,29 +61,31 @@ function RegionSchedule({ onNext }) {
                <div class="tema-title">
                   <legend>가고싶은 도시를 선택해주세요.</legend>
                </div>
-               <div>
+               <div className="region-scroll">
                   {region.map((region) => (
                      <div className="region-item2" key={region.regionCode}>
 						<div className="region-item">
 							<img src={`/Img/${region.regionThumbnailImg}`} alt={region.regionName} width={'150px'} height={'150px'} style={{borderRadius: '15px'}}/>
 						</div>
-						{region.regionName}
+                  <div className='region-wordMargin'>
+						   {region.regionName}
+                  </div>
 						<button type='button' className="region-button" key={region.regionCode} onClick={() => handleRegionSelect(region)}></button>
                      </div>
                   ))}
-                  {/* 선택된 지역 상세 정보 출력 */}
-                  {selectedRegionDetails ? (
-                     <div>
-                        <img src={`/Img/${selectedRegionDetails.regionImg}`} alt={selectedRegionDetails.regionName} width={'100px'} height={'100px'}/>
-                        <h3>지역 이름: {selectedRegionDetails.regionName}</h3>
-                        <p>지역 설명: {selectedRegionDetails.regionDescription}</p>
-                     </div>
-                  ) : (
-                     ''
-                  )}
-                  <button className="region-button2" onClick={onNext}>다음</button>
                </div>
             </form>
+			{/* 선택된 지역 상세 정보 출력 */}
+			<div id="chat-box3">
+				{selectedRegionDetails ? (
+					<div>
+						<img src={`/Img/${selectedRegionDetails.regionImg}`} alt={selectedRegionDetails.regionName} width={'500px'} height={'300px'}/>
+						<h3>지역 이름: {selectedRegionDetails.regionName}</h3>
+						<p>지역 설명: {selectedRegionDetails.regionDescription}</p>
+					</div>
+				) : ('')}
+				<button className="region-button2" onClick={onNext}>다음</button>
+			</div>
          </div>
       </div>
    );

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import travelbuddy.common.Criteria;
 import travelbuddy.function.admin.repository.AdminQnaRepository;
 import travelbuddy.function.admin.repository.AdminfqTypeRepository;
-import travelbuddy.function.admin.repository.AdminqnaAnswerRepository;
+import travelbuddy.function.admin.repository.AdminQnaAnswerRepository;
 import travelbuddy.function.community.qnafaq.dto.FqTypeDTO;
 import travelbuddy.function.community.qnafaq.dto.QnaAnswerDTO;
 import travelbuddy.function.community.qnafaq.dto.QnaDTO;
@@ -25,21 +25,19 @@ import travelbuddy.function.community.qnafaq.entity.QnaAnswer;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.apache.logging.log4j.ThreadContext.isEmpty;
-
 @Service
 public class AdminQnaService {
 
     private static Logger log = LoggerFactory.getLogger(AdminQnaService.class);
-    private AdminQnaRepository adminQnaRepository;
-    private AdminqnaAnswerRepository adminqnaAnswerRepository;
-    private AdminfqTypeRepository adminFqTypeRepository;
-    private ModelMapper modelMapper;
+    private final AdminQnaRepository adminQnaRepository;
+    private final AdminQnaAnswerRepository adminQnaAnswerRepository;
+    private final AdminfqTypeRepository adminFqTypeRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public AdminQnaService(AdminQnaRepository adminQnaRepository, AdminqnaAnswerRepository adminqnaAnswerRepository, AdminfqTypeRepository adminFqTypeRepository, ModelMapper modelMapper) {
+    public AdminQnaService(AdminQnaRepository adminQnaRepository, AdminQnaAnswerRepository adminQnaAnswerRepository, AdminfqTypeRepository adminFqTypeRepository, ModelMapper modelMapper) {
         this.adminQnaRepository = adminQnaRepository;
-        this.adminqnaAnswerRepository = adminqnaAnswerRepository;
+        this.adminQnaAnswerRepository = adminQnaAnswerRepository;
         this.adminFqTypeRepository = adminFqTypeRepository;
         this.modelMapper = modelMapper;
     }
@@ -75,7 +73,7 @@ public class AdminQnaService {
             QnaDTO qnaDTO = modelMapper.map(qna, QnaDTO.class);
             qnaDTO.setMemberCode(qna.getAccount().getMemberCode());
 
-            QnaAnswer qnaAnswer = adminqnaAnswerRepository.findByQna(qna);
+            QnaAnswer qnaAnswer = adminQnaAnswerRepository.findByQna(qna);
             QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
 
             QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO, qnaDTO);
@@ -95,18 +93,13 @@ public class AdminQnaService {
         log.info("[AdminQnaService] selectQna() start");
 
         Qna qna = adminQnaRepository.findById(qnaCode).get();
-        QnaAnswer qnaAnswer = adminqnaAnswerRepository.findById(qnaCode).orElse(null);
+        QnaAnswer qnaAnswer = adminQnaAnswerRepository.findByQna(qna);
+
         QnaDTO qnaDTO = modelMapper.map(qna , QnaDTO.class);
         qnaDTO.setMemberCode(qna.getAccount().getMemberCode());
         QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
 
-        if (qnaAnswer != null) {
-            qnaAnswer.setQna(qna);
-        } else {
-            qnaAnswer = null;
-        }
-
-            QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO,qnaDTO);
+        QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO,qnaDTO);
 
         log.info("[AdminQnaService] selectQna() end");
 
@@ -114,17 +107,18 @@ public class AdminQnaService {
     }
 
     /*QnaAnswer 를 등록한다. 이미 존재하는 QnaAnswer 의 contents 와 create 에 null 값이 존재하여,
-    데이터 삽입이 아닌 해당 code 들의 null 에 값을 update 해야한다.*/
+    데이터 삽입이 아닌 해당 code 들의 null 에 값을 update 해야한다. 유니크 중복이 걸려서 해당 qna 의 qna 코드는 지워야한다*/
     @Transactional
     public  Object insertQnaAnswer(int qnaCode, QnaAnswerDTO qnaAnswerDTO) {
 
-        QnaAnswer qnaAnswer = modelMapper.map(qnaAnswerDTO, QnaAnswer.class);
-
         Qna qna = adminQnaRepository.findById(qnaCode).get();
 
-        qnaAnswer.setQna(qna);
+        QnaAnswer deleteAnswer = adminQnaAnswerRepository.findByQna(qna);
+        adminQnaAnswerRepository.delete(deleteAnswer);
 
-        adminqnaAnswerRepository.save(qnaAnswer);
+        QnaAnswer qnaAnswer = modelMapper.map(qnaAnswerDTO, QnaAnswer.class);
+        qnaAnswer.setQna(qna);
+        adminQnaAnswerRepository.save(qnaAnswer);
 
         return modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
     }
@@ -139,7 +133,7 @@ public class AdminQnaService {
 
         qnaAnswer.setQna(qna);
 
-        adminqnaAnswerRepository.save(qnaAnswer);
+        adminQnaAnswerRepository.save(qnaAnswer);
 
         return modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
     }
@@ -148,10 +142,10 @@ public class AdminQnaService {
     @Transactional
     public Object deleteQnaAnswer(int qnaCode) {
 
-        QnaAnswer qnaAnswer = adminqnaAnswerRepository.findById(qnaCode).get();
+        QnaAnswer qnaAnswer = adminQnaAnswerRepository.findById(qnaCode).get();
         qnaAnswer.setAnsContents(null);
         qnaAnswer.setAnsCreate(null);
-        adminqnaAnswerRepository.save(qnaAnswer);
+        adminQnaAnswerRepository.save(qnaAnswer);
 
         return (qnaAnswer.getAnsContents() == null) ? "삭제 성공" : "삭제 실패";
 

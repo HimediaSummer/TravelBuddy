@@ -97,17 +97,11 @@ public class QnaService {
         log.info("[QnaService] selectQna start");
 
         Qna qna = qnaRepository.findById(qnaCode).get();
-        QnaAnswer qnaAnswer = qnaAnswerRepository.findById(qnaCode).get();
+        QnaAnswer qnaAnswer = qnaAnswerRepository.findByQna(qna);
         QnaDTO qnaDTO = modelMapper.map(qna , QnaDTO.class);
-        qnaDTO.setMemberCode(qna.getAccount().getMemberCode());
         QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
 
-        if (qnaAnswer != null) {
-            qnaAnswer.setQna(qna);
-        } else {
-            qnaAnswer = null;
-        }
-
+        qnaDTO.setMemberCode(qna.getAccount().getMemberCode());
 
         QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO,qnaDTO);
 
@@ -132,7 +126,7 @@ public class QnaService {
 
         QnaAnswer qnaAnswer = new QnaAnswer();
         qnaAnswer.setQna(insertqna);
-        qnaAnswer.setAnsContents(null);
+        qnaAnswer.setAnsContents("");
         qnaAnswerRepository.save(qnaAnswer);
 
         return "QnA 입력 성공";

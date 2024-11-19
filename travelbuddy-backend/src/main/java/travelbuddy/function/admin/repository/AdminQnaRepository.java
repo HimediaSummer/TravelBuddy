@@ -8,4 +8,5 @@ import travelbuddy.function.community.qnafaq.entity.Qna;
 public interface AdminQnaRepository extends JpaRepository<Qna,Integer> {
 
     Page<Qna> findAll(Pageable paging);
+
 }

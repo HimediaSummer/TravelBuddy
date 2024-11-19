@@ -60,7 +60,7 @@ export const insertQnaAPI = (qnaDTO) => {
     }}
 
     // 관리자가 QnA 1개를 상세 조회한다.
-export const callQnaDetailForAdminAPI = ({qnaCode}) => {
+export const callQnaDetailForAdminAPI = (qnaCode) => {
         const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/qnas/${qnaCode}`;
         return async (dispatch, getState) => {
             const result = await fetch(requestURL, {
@@ -101,16 +101,19 @@ export const callQnaAnswerAPI = ({qnaCode}) => {
         dispatch({type: GET_QNAANSWER, payload: result });
     }}
 
-    // 관리자가 QnA 답변을 추가한다.
-export const insertQnaAnswerAPI = ({qnaCode}) => {
+    // 관리자가 QnA 답변을 추가한다 (사실상 answer 의 null 을 text 로 수정하는것과 같다.).
+export const insertQnaAnswerAPI = (qnaCode,updatedAnswerState) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/qnas/${qnaCode}/insertanswer`;
+    console.log('내가 받은 data in API',qnaCode);
+    console.log('내가 받은 answerState in API',updatedAnswerState);
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 Accept: '*/*'
-            }
+                },
+                body: JSON.stringify(updatedAnswerState)
         }).then((response) => response.json());
         dispatch({type: POST_QNAANSWER, payload: result });
     }}

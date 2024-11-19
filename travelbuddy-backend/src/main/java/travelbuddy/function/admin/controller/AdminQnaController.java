@@ -71,7 +71,6 @@ public class AdminQnaController {
     @Operation(summary = "관리자페이지 QnA 상세조회 중 답변 추가 요청", description = "QnA의 답변 등록처리가 진행됩니다.", tags = {"AdminQnaController"})
     @PostMapping("/qnas/{qnaCode}/insertanswer")
     public ResponseEntity<ResponseDTO> insertQnaAnswer(@PathVariable int qnaCode , @RequestBody QnaAnswerDTO qnaAnswerDTO) {
-        System.out.println("qnaAnswerDTO = " + qnaAnswerDTO);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnaAnswer 추가 성공",adminQnaService.insertQnaAnswer(qnaCode,qnaAnswerDTO)));
     }
 

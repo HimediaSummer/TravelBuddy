@@ -78,6 +78,15 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정상세조회", mypageService.getDetailSchedule(scheCode)));
     }
 
+    /* 내 일정 삭제 */
+    @Operation(summary = "일정삭제", description = "내 일정 삭제", tags = {"MypageController"})
+    @DeleteMapping(value = "/myschedule/{memberCode}/{scheCode}/delete")
+    public ResponseEntity<ResponseDTO> deleteSchedule(@PathVariable int memberCode, @PathVariable int scheCode) {
+
+        mypageService.deleteScheCode(memberCode, scheCode);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정삭제성공", null));
+    }
 
 
     /* =========================================== My커뮤니티 =========================================== */

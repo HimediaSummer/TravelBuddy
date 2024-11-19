@@ -171,6 +171,26 @@ public class MypageService {
         return modelMapper.map(schedule, Schedule.class);
     }
 
+    /* 내 일정 삭제 */
+    @Transactional
+    public Object deleteScheCode(int memberCode, int scheCode) {
+        log.info("[MypageService] 삭제 시작: scheCode = {}", scheCode);
+
+        Optional<Schedule> optionalSchedule = myScheduleRepository.findById(scheCode);
+
+        Schedule schedule = optionalSchedule.orElseThrow(() ->
+                new RuntimeException("Schedule not found for id: " + scheCode));
+
+        if (schedule.getAccount() == null || schedule.getAccount().getMemberCode() != memberCode) {
+            throw new RuntimeException("Schedule does not belong to the member with memberCode: " + memberCode);
+        }
+
+        myScheduleRepository.delete(schedule);
+
+        log.info("[MypageService] 삭제 완료: scheCode = {}", scheCode);
+        return "일정삭제성공공공공고옥오고오공고고공ㄱ";
+    }
+
 
 
 
@@ -390,5 +410,4 @@ public class MypageService {
         System.out.println("buddyMatchData=============== = " + buddyMatchData);
         log.info("[MypageService] deleteMatch() End");
     }
-
 }

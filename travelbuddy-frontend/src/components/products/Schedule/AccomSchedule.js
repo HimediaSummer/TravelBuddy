@@ -54,44 +54,42 @@ function AccomSchedule({ onNext }) {
 	return (
 		<div class="tema-title">
 			<div class="chat-container">
-				<div className='container'>
-					<form class="chat-form" action="post">
-						<div className='left-side'>
-							<div id="chat-box2">
-								<h2>숙소 선택</h2>
-							</div>
-							<div class="tema-title">
-								<legend>선호하는 숙소형태를 선택해주세요.</legend>
-							</div>
-							<div>
-								{accom.map((accom) => (
-									<div className='accom-item2' key={accom.accomCode}>
-										<div className='accom-item'>
-											<img key={accom.accomCode} src={`/Img/${accom.accomThumbnailImg}`} alt={accom.accomName} width={'150px'} height={'150px'} style={{ borderRadius: '15px' }} />
-										</div>
-										{accom.accomName} ({accom.accomType})
-										<button type='button' className='accom-button' key={accom.accomCode} onClick={() => handleAccomSelect(accom)}></button>
-									</div>
-								))}
-							</div>
-						</div>
-						<div className='right-side'>
-							{selectedAccomDetails ? (
-								<div>
-									{/* <img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'50px'} height={'50px'}/>  */}
-									<p>
-										<img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'50px'} height={'50px'} style={{ borderRadius: '15px' }} />
-										숙소 타입 : {selectedAccomDetails.accomType}</p>
-									<p>숙소 이름 : {selectedAccomDetails.accomName}</p>
-									<p>숙소 주소 : {selectedAccomDetails.accomAddres}</p>
+				<form class="chat-form" action="post">
+				<div id="chat-box2">
+						<h2>숙소 선택</h2>
+					</div>
+					<div class="tema-title">
+						<legend>선호하는 숙소형태를 선택해주세요.</legend>
+					</div>
+					<div className='accom-scroll'>
+						<div className='accoms'>
+						{accom.map((accom) => (
+							<div className='accom-item2' key={accom.accomCode}>
+								<div className='accom-item'>
+									<img key={accom.accomCode} src={`/Img/${accom.accomThumbnailImg}`} alt={accom.accomName} width={'150px'} height={'150px'} style={{borderRadius: '15px'}}/>
 								</div>
-							) : (
-								''
-							)}
-							<button className='accom-button2' onClick={onNext}>다음</button>
+								{accom.accomName} ({accom.accomType})
+							<button type='button' className='accom-button' key={accom.accomCode} onClick={() => handleAccomSelect(accom)}></button>
+							</div>
+						))}
 						</div>
-					</form>
-				</div>
+					</div>
+				</form>
+					<div id='chat-box3'>
+						{selectedAccomDetails ? (
+							<div>
+								{/* <img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'50px'} height={'50px'}/>  */}
+								<p>
+								<img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'50px'} height={'50px'} style={{borderRadius: '15px'}}/>
+									숙소 타입 : {selectedAccomDetails.accomType}</p>
+								<p>숙소 이름 : {selectedAccomDetails.accomName}</p>
+								<p>숙소 주소 : {selectedAccomDetails.accomAddres}</p>
+							</div>
+						) : (
+							''
+						)}
+						<button className='accom-button2' onClick={onNext}>다음</button>
+					</div>
 			</div>
 		</div>
 	);

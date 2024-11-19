@@ -77,7 +77,7 @@ function DateSchedule({ onNext }) {
 		<div class="depart-airport">
 			<div class="chat-container">
 				<form class="chat-form" action="post">
-				<div id="chat-box2">
+					<div id="chat-box2">
 						<h2>날짜 선택</h2>
 					</div>
 					{/* 날짜 선택 UI 구현 */}
@@ -102,27 +102,27 @@ function DateSchedule({ onNext }) {
 							}
 						}}
 					>
-						<div style={{ textAlign: 'center', margin: '30px' }}>
-							<h4>행복한 여행기간을 선택해주세요!</h4>
-							<p>최대 5일까지 선택 가능합니다.</p>
-						</div>
-						<div style={{
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center'
+					<div style={{ textAlign: 'center', margin: '30px' }}>
+						<h4>행복한 여행기간을 선택해주세요!</h4>
+						<p>최대 5일까지 선택 가능합니다.</p>
+					</div>
+					<div style={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center'
 						}}>
-							<Calendar
-								onChange={dateSelectedHandler}
-								value={selectedRange}
-								minDate={new Date()}
-								selectRange={true}
-								formatDay={(locale, date) => moment(date).format("DD")}
-							/>
-						</div>
-						<br />
-						<div style={{ textAlign: 'right', paddingRight: '50px', margin: '20px' }}>
-							<button onClick={closeModal} disabled={!startDate || !endDate}>선택완료</button>
-						</div>
+						<Calendar
+							onChange={dateSelectedHandler}
+							value={selectedRange}
+							minDate={new Date()}
+							selectRange={true}
+							formatDay={(locale, date) => moment(date).format("DD")}
+						/>
+					</div>
+					<div style={{ textAlign: 'right', paddingRight: '50px', margin: '20px' }}>
+						<button className="date-button" onClick={closeModal} disabled={!startDate || !endDate}>선택완료</button>
+					</div>
+
 					</Modal>
 
 					<div class="user_input">
@@ -147,7 +147,7 @@ function DateSchedule({ onNext }) {
 						</div>
 						{/* Qestion */}
 						{/* Schedule */}
-						<button onClick={onNext}>다음</button>
+						<button className="date-button" onClick={onNext}>다음</button>
 					</div>
 					{/* Loading */}
 				</form>

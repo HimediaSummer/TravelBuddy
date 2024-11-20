@@ -958,10 +958,10 @@ select,
 	padding: 10px; /* 내부 여백 추가 */
 	margin-top: 20px; /* 위쪽 여백 추가 */
 }
-
+/* 
 .accoms {
 	margin-top: -300px;
-}
+} */
 
 .accom-wordMargin {
     flex-grow: 1; /* 남은 공간을 차지 */

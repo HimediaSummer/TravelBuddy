@@ -9,6 +9,27 @@ function RegionSchedule({ onNext }) {
 	const [selectedRegionDetails, setSelectedRegionDetails] = useState(null);
 	const [isToggleOpen, setIsToggleOpen] = useState(true);
 
+	// 지역 위도/경도 하드코딩 
+	const regionCoordinates = {
+		101: { lat: 37.5665, lng: 126.9780 },	// 서울
+		102: { lat: 37.4138, lng: 127.5183 },	// 경기도
+		103: { lat: 37.4563, lng: 126.7052 },	// 인천
+		104: { lat: 37.8228, lng: 128.1555 },	// 강원도
+		105: { lat: 36.6357, lng: 127.4917 },	// 충북
+		106: { lat: 36.5184, lng: 126.8000 },	// 충남
+		107: { lat: 36.3504, lng: 127.3845 },	// 대전
+		108: { lat: 36.4800, lng: 127.2890 },	// 세종
+		109: { lat: 35.7175, lng: 127.1530 },	// 전북
+		110: { lat: 34.8679, lng: 126.9910 },	// 전남
+		111: { lat: 35.1595, lng: 126.8526 },	// 광주
+		112: { lat: 36.4919, lng: 128.8889 },	// 경북
+		113: { lat: 35.4606, lng: 128.2132 },	// 경남
+		114: { lat: 35.1796, lng: 129.0756 },	// 부산
+		115: { lat: 35.8722, lng: 128.6014 },	// 대구
+		116: { lat: 35.5384, lng: 129.3114 },	// 울산
+		117: { lat: 33.4996, lng: 126.5312 },	// 제주도
+	};
+
 	// 장소 전체
 	useEffect(() => {
 		// 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
@@ -21,6 +42,9 @@ function RegionSchedule({ onNext }) {
 					regionDescription: region.regionDescription,
 					regionImg: region.regionImg,
 					regionThumbnailImg: region.regionThumbnailImg
+					// ...region,
+					// lat: regionCoordinates[region.regionCode]?.lat,
+					// lng: regionCoordinates[region.regionCode]?.lng
 				}));
 				console.log("가져왓냐?", data);
 				setRegion(regions);
@@ -96,7 +120,10 @@ function RegionSchedule({ onNext }) {
 					) : ('')}
 				</div>
 							<div style={{marginTop: '100px'}}>
-							<Map />
+								{selectedRegion && (
+							// <Map latitude={selectedRegion.lat} longitude={selectedRegion.lng}/>
+							<Map regionName={selectedRegion.regionName}/>
+								)}
 							</div>
 			</div>
 		</div>

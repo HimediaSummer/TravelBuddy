@@ -60,7 +60,7 @@ public class Account {
     @Column(name = "member_leave")
     private String memberLeave;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @ColumnDefault("일반 사용자")
     @JoinColumn(name ="authority_code")
     private Authority authority;

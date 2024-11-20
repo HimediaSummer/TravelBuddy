@@ -45,10 +45,10 @@ function BuddyDetail () {
     console.log("token.sub", token?.sub);
     console.log("token.sub type", typeof token?.sub);
 
-    const isAuthor = data?.memberCode === token.sub;
-    console.log("data?.memberName", data?.memberName);
-    console.log("isAuthor = ", isAuthor);
-    console.log("isAuthor type = ", typeof isAuthor);
+    // const isAuthor = data?.memberCode === token.sub;
+    // console.log("data?.memberName", data?.memberName);
+    // console.log("isAuthor = ", isAuthor);
+    // console.log("isAuthor type = ", typeof isAuthor);
 
 
     return (
@@ -74,7 +74,6 @@ function BuddyDetail () {
                                 <td colSpan={4}>{data.buddyContents}</td>
                             </tr>
 
-                        {isAuthor && (
                             <tr>
                                 <td></td>
                                 <td></td>
@@ -83,7 +82,6 @@ function BuddyDetail () {
                                         <td><button>게시글 삭제</button></td>
                                     </>
                             </tr>
-                            )}
                         </>
                     ) : (
                         <tr>

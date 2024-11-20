@@ -13,6 +13,7 @@ import Register from './pages/member/Register';
 import Error from './pages/Error';
 import Buddies from './pages/member/comunity/Buddy';
 import BuddyDetail from './pages/member/comunity/BuddyDetail';
+import BuddyRegist from './pages/member/comunity/BuddyRegist';
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
           <Route path="*" element={ <Error/> }/>
           <Route path="buddies" element={<Buddies />} />
           <Route path="buddyDetail/:buddyCode" element={ <BuddyDetail/>} />
+          <Route path="buddyRegist" element={ <BuddyRegist/>} />
         </Route>
       </Routes>
     </BrowserRouter>

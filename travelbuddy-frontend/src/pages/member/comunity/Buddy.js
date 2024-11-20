@@ -8,13 +8,13 @@ function Buddies() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const buddy = useSelector((state) => state.buddiesReducer) || {};
-	console.log("buddy에 뭐가 담김?", buddy)
+	// console.log("buddy에 뭐가 담김?", buddy)
 
     const buddyList = buddy.data || {};
 	// console.log("buddyList에 뭐가 담김?", buddyList)
 
     const { data = {}, pageInfo = {} } = buddyList;
-    console.log("한번에 하나만 담기나?", data);
+    // console.log("한번에 하나만 담기나?", data);
 
     const [start, setStart] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -41,11 +41,16 @@ function Buddies() {
         navigate(`/buddyDetail/${buddyCode}`, { replace: false });
     };
 
+    const onClickBuddyRegist = () => {
+        navigate("/buddyRegist", {replace: false})
+    };
+
 
     return (
         <>
             <div >
                 <h2>버디매칭</h2>
+                <button onClick={onClickBuddyRegist}>게시글 작성</button>
                 <table >
                     <colgroup>
                         <col width="5%" />

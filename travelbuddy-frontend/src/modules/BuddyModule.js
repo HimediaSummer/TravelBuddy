@@ -8,7 +8,7 @@ export const GET_BUDDIES = 'buddyBoard/buddies/GET_BUDDIES';
 export const GET_BUDDY = 'buddyBoard/buddies/GET_BUDDY';
 // export const GET_QNAANSWER = 'qna/GET_QNAANSWER';
 // export const GET_BUDDYTYPE = 'buddyBoard/GET_BUDDYTYPE';
-export const POST_BUDDY = 'buddyBoard/buddies/POST_QNA';
+export const POST_BUDDY = 'buddyBoard/buddies/buddyRegist/POST_BUDDY';
 // export const POST_REGISTER = 'qna/POST_REGISTER';
 
 const actions = createActions({
@@ -24,11 +24,11 @@ const actions = createActions({
 const buddiesReducer = handleActions(
 	{
 		[GET_BUDDIES]: (state, { payload }) => {
-			console.log("리듀서에서 받은 payload", payload);
+			// console.log("리듀서에서 받은 payload", payload);
 			return payload;
 		},
 		[GET_BUDDY]: (state, { payload }) => {
-			console.log("리듀서에서 받은 payload", payload);
+			// console.log("리듀서에서 받은 payload", payload);
 			return payload;
 		},
 		// [GET_QNAANSWER]: (state, { payload }) => {

@@ -21,9 +21,13 @@ import travelbuddy.function.community.buddy.repository.BuddyRepository;
 import travelbuddy.function.community.buddy.repository.BuddyTypeRepository;
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.repository.AccountRepository;
+import travelbuddy.function.member.repository.MemberRepository;
+import travelbuddy.function.schedule.entity.Region;
+import travelbuddy.function.schedule.repository.RegionRepository;
 import travelbuddy.util.FileUploadUtils;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,6 +40,8 @@ public class BuddyService {
     private final BuddyTypeRepository buddyTypeRepository;
     private final ModelMapper modelMapper;
     private final AccountRepository accountRepository;
+    private final MemberRepository memberRepository;
+    private final RegionRepository regionRepository;
 
     @Value("${image.image-dir}")
     private String IMAGE_DIR;
@@ -43,11 +49,13 @@ public class BuddyService {
     private String IMAGE_URL;
 
     @Autowired
-    public BuddyService(BuddyRepository buddyRepository, ModelMapper modelMapper, BuddyTypeRepository buddyTypeRepository, AccountRepository accountRepository) {
+    public BuddyService(BuddyRepository buddyRepository, ModelMapper modelMapper, BuddyTypeRepository buddyTypeRepository, AccountRepository accountRepository, MemberRepository memberRepository, RegionRepository regionRepository) {
         this.buddyRepository = buddyRepository;
         this.modelMapper = modelMapper;
         this.buddyTypeRepository = buddyTypeRepository;
         this.accountRepository = accountRepository;
+        this.memberRepository = memberRepository;
+        this.regionRepository = regionRepository;
     }
 
 
@@ -115,32 +123,37 @@ public class BuddyService {
     }
 
     @Transactional
-    public Object insertBuddy(BuddyDTO buddyDTO, MultipartFile buddyImage) {
+    public Object insertBuddy(BuddyDTO buddyDTO) {
         log.info("[BuddyService] insertBuddy() Start");
         log.info("[BuddyService] buddy: {}", buddyDTO);
 
-        String imageName = UUID.randomUUID().toString().replace("-","");
-        String replaceFileName = null;
-        int result = 0;
+        Buddy buddy = modelMapper.map(buddyDTO, Buddy.class);
 
-        try{
-            replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, buddyImage);
+        BuddyType buddyType = buddyTypeRepository.findById(buddyDTO.getBuddyTypeCode()).get();
+        buddy.setBuddyType(buddyType);
+        log.info("buddyType = " + buddyType);
 
-            buddyDTO.setBuddyImg(replaceFileName);
+        Region region = regionRepository.findById(buddyDTO.getRegionCode()).get();
+        buddy.setRegion(region);
+        log.info("region = " + region);
 
-            log.info("[BuddyService] insert Image Name : {}", replaceFileName);
 
-            Buddy insertBuddy = modelMapper.map(buddyDTO, Buddy.class);
+        Account account = accountRepository.findById(buddyDTO.getMemberCode()).get();
+        buddy.setAccount(account);
+        log.info("account = " + account);
 
-            buddyRepository.save(insertBuddy);
 
-            result = 1;
-        } catch (Exception e) {
-            FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
-            throw new RuntimeException(e);
-        }
+//        buddy.setBuddyTitle(buddyDTO.getBuddyTitle());
+//        buddy.setBuddyContents(buddyDTO.getBuddyContents());
+//        buddy.setBuddyStatus(buddyDTO.getBuddyStatus());
+//        buddy.setBuddyAt(buddyDTO.getBuddyAt());
+//        buddy.setBuddyCreate(LocalDateTime.now().toString());
 
-        return (result > 0 ? "버디게시글 등록 성공" : "버디게시글 등록 실패");
+
+        buddyRepository.save(buddy);
+
+//        return "버디게시글 등록 성공" ;
+        return modelMapper.map(buddy , BuddyDTO.class);
     }
 
     @Transactional

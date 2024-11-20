@@ -13,7 +13,10 @@ import travelbuddy.function.community.buddy.dto.BuddyDTO;
 import travelbuddy.function.member.dto.AccountDTO;
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.repository.MyBuddyRepository;
+import travelbuddy.function.member.repository.MyScheduleRepository;
 import travelbuddy.function.member.service.MypageService;
+import travelbuddy.function.schedule.dto.ScheduleDTO;
+import travelbuddy.function.schedule.entity.Schedule;
 
 import java.util.Map;
 
@@ -23,10 +26,12 @@ public class MypageController {
 
     private static final Logger log = LoggerFactory.getLogger(MypageController.class);
     private final MypageService mypageService;
+    private final MyScheduleRepository myScheduleRepository;
 
     @Autowired
-    public MypageController(MypageService mypageService, MyBuddyRepository myBuddyRepository) {
+    public MypageController(MypageService mypageService, MyBuddyRepository myBuddyRepository, MyScheduleRepository myScheduleRepository) {
         this.mypageService = mypageService;
+        this.myScheduleRepository = myScheduleRepository;
     }
 
     /* =========================================== My정보 =========================================== */
@@ -88,6 +93,24 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정삭제성공", null));
     }
 
+    /* 내 일정 재생성 */
+    @Operation(summary = "일정재생성", description = "내 일정 재생성", tags = {"MypageController"})
+    @PostMapping(value = "/myschedule/{memberCode}/{scheCode}/recreate")
+    public ResponseEntity<ResponseDTO> recreateSchedule(
+            @PathVariable int memberCode,
+            @PathVariable int scheCode,
+            @RequestBody(required = false) ScheduleDTO newScheduleData
+    ) {
+        log.info("[ScheduleController] recreateSchedule() Start - 삭제할 scheCode: {}", scheCode);
+
+        if (newScheduleData == null) {
+            throw new IllegalArgumentException("Request body is missing. 스케쥴만든거 못찾겠다 꾀꼬리.");
+        }
+
+        Schedule recreateSchedule = mypageService.recreateSchedule(memberCode, scheCode, newScheduleData);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정재생성성공", recreateSchedule));
+    }
 
     /* =========================================== My커뮤니티 =========================================== */
 //    @Operation(summary = "내가쓴게시글조회요청", description = "내가쓴글조회및 페이징처리", tags = {"MypageController"})

@@ -22,13 +22,11 @@ import travelbuddy.function.community.buddy.entity.BuddyType;
 import travelbuddy.function.community.buddy.repository.BuddyTypeRepository;
 import travelbuddy.function.member.dto.AccountDTO;
 import travelbuddy.function.member.entity.Account;
-import travelbuddy.function.member.repository.MyBuddyMatchRepository;
-import travelbuddy.function.member.repository.MyBuddyRepository;
-import travelbuddy.function.member.repository.MyProfileRepository;
-import travelbuddy.function.member.repository.MyScheduleRepository;
+import travelbuddy.function.member.repository.*;
 import travelbuddy.function.schedule.dto.ScheduleDTO;
 import travelbuddy.function.schedule.entity.Region;
 import travelbuddy.function.schedule.entity.Schedule;
+import travelbuddy.function.schedule.repository.AccommodationRepository;
 import travelbuddy.function.schedule.repository.RegionRepository;
 import travelbuddy.util.FileUploadUtils;
 
@@ -44,6 +42,9 @@ public class MypageService {
     private final BuddyTypeRepository buddyTypeRepository;
     private final RegionRepository regionRepository;
     private final MyScheduleRepository myScheduleRepository;
+    private final AccountRepository accountRepository;
+    private final AccommodationRepository accommodationRepository;
+    private final MemberAnswerRepository memberAnswerRepository;
     private final ModelMapper modelMapper;
 
     @Value("${image.image-dir}")
@@ -52,13 +53,16 @@ public class MypageService {
     private String IMAGE_URL;
 
     @Autowired
-    public MypageService(MyBuddyRepository myBuddyRepository, MyBuddyMatchRepository myBuddyMatchRepository, MyProfileRepository myProfileRepository, BuddyTypeRepository buddyTypeRepository, RegionRepository regionRepository, MyScheduleRepository myScheduleRepository, ModelMapper modelMapper) {
+    public MypageService(MyBuddyRepository myBuddyRepository, MyBuddyMatchRepository myBuddyMatchRepository, MyProfileRepository myProfileRepository, BuddyTypeRepository buddyTypeRepository, RegionRepository regionRepository, MyScheduleRepository myScheduleRepository, AccountRepository accountRepository, AccommodationRepository accommodationRepository, MemberAnswerRepository memberAnswerRepository, ModelMapper modelMapper) {
         this.myBuddyRepository = myBuddyRepository;
         this.myBuddyMatchRepository = myBuddyMatchRepository;
         this.myProfileRepository = myProfileRepository;
         this.buddyTypeRepository = buddyTypeRepository;
         this.regionRepository = regionRepository;
         this.myScheduleRepository = myScheduleRepository;
+        this.accountRepository = accountRepository;
+        this.accommodationRepository = accommodationRepository;
+        this.memberAnswerRepository = memberAnswerRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -191,6 +195,67 @@ public class MypageService {
         return "일정삭제성공공공공고옥오고오공고고공ㄱ";
     }
 
+    /* 일정 재생성 */
+    @Transactional
+    public Schedule recreateSchedule(int memberCode, int scheCode, ScheduleDTO newScheduleData) {
+        log.info("[mypageService] recreateSchedule() Start");
+        Schedule existingSchedule = myScheduleRepository.findById(scheCode)
+                .orElseThrow(() -> new RuntimeException("삭제할 스케줄을 찾을 수 없습니다."));
+
+        myScheduleRepository.delete(existingSchedule);
+        log.info("기존 스케줄 삭제 완료: {}", scheCode);
+
+//        Schedule newSchedule = new Schedule();
+//        newSchedule.setScheCode(newScheduleData.getScheCode());
+//        newSchedule.setRegion(newScheduleData.getRegion());
+//        newSchedule.setAccommodation(newScheduleData.getAccommodation());
+//        newSchedule.setAccount(existingSchedule.getAccount()); // FK 연결 유지
+//        newSchedule.setMemberAnswer(newScheduleData.getMemberAnswer());
+//        newSchedule.setScheList(newScheduleData.getScheList());
+//        newSchedule.setScheStartDate(newScheduleData.getScheStartDate());
+//        newSchedule.setScheEndDate(newScheduleData.getScheEndDate());
+//        newSchedule.setScheStartTime(newScheduleData.getScheStartTime());
+//        newSchedule.setScheEndTime(newScheduleData.getScheEndTime());
+//        newSchedule.setTravelTime(newScheduleData.getTravelTime());
+//        newSchedule.setScheTime(newScheduleData.getScheTime());
+//        myScheduleRepository.save(newSchedule);
+
+//        Schedule newSchedule = new Schedule(
+//                newSchedule.setScheCode(newScheduleData.getScheCode());
+//                newScheduleData.getRegion(),
+//                newScheduleData.getAccommodation(),
+//                existingSchedule.getAccount(), // FK 연결 유지
+//                newScheduleData.getMemberAnswer(),
+//                newScheduleData.getScheList(),
+//                newScheduleData.getScheStartDate(),
+//                newScheduleData.getScheEndDate(),
+//                newScheduleData.getScheStartTime(),
+//                newScheduleData.getScheEndTime(),
+//                newScheduleData.getTravelTime(),
+//                newScheduleData.getScheTime()
+//        );
+
+
+        Schedule newSchedule = new Schedule();
+        newSchedule.setScheCode(newScheduleData.getScheCode());
+        newSchedule.setRegion(regionRepository.findById(newScheduleData.getRegionCode()).orElseThrow(() -> new NoSuchElementException("Region with ID " + newScheduleData.getRegionCode() + " not found in the database")));
+        newSchedule.setAccommodation(accommodationRepository.findById(newScheduleData.getAccomCode()).orElseThrow(() -> new NoSuchElementException("Accom not found")));
+        newSchedule.setAccount(accountRepository.findById(newScheduleData.getMemberCode()).orElseThrow(() -> new NoSuchElementException("Member not found")));
+        newSchedule.setMemberAnswer(memberAnswerRepository.findById(newScheduleData.getMemberAnswerCode()).orElseThrow(() -> new NoSuchElementException("Answer not found")));
+        newSchedule.setScheList(newScheduleData.getScheList());
+        newSchedule.setScheStartDate(newScheduleData.getScheStartDate());
+        newSchedule.setScheEndDate(newScheduleData.getScheEndDate());
+        newSchedule.setScheStartTime(newScheduleData.getScheStartTime());
+        newSchedule.setScheEndTime(newScheduleData.getScheEndTime());
+        newSchedule.setTravelTime(newScheduleData.getTravelTime());
+        newSchedule.setScheTime(newScheduleData.getScheTime());
+
+        myScheduleRepository.save(newSchedule);
+        log.info("새 일정 만들어지나?: {}", scheCode);
+
+        log.info("[mypageService] recreateSchedule() End");
+        return newSchedule;
+    }
 
 
 

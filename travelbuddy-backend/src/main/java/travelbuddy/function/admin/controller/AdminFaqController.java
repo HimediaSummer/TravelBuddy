@@ -14,7 +14,6 @@ import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.admin.service.AdminFaqService;
 import travelbuddy.function.community.qnafaq.controller.QnaController;
 import travelbuddy.function.community.qnafaq.dto.FaqDTO;
-import travelbuddy.function.community.qnafaq.dto.QnaDTO;
 
 @RestController
 @RequestMapping("/admin")

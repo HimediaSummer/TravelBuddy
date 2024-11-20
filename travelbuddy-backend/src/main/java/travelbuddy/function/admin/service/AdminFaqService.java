@@ -90,11 +90,13 @@ public class AdminFaqService {
     /*문의 답변같은 수정으로 진행?*/
     public Object updateFaq(int faqCode, FaqDTO faqDTO) {
 
-        FqType fqType = fqTypeRepository.findById(faqDTO.getFqTypeCode()).orElseThrow();
+//        FqType fqType = fqTypeRepository.findById(faqDTO.getFqTypeCode()).orElseThrow();
         Faq foundFaq = adminFaqRepository.findById(faqCode).get();
-        foundFaq.setFqType(fqType);
+        foundFaq.setFaqContents(faqDTO.getFaqContents());
+//        foundFaq.setFqType(fqType);
         adminFaqRepository.save(foundFaq);
-        return (foundFaq != null)? "수정 성공" : "수정 실패";
+        return modelMapper.map(foundFaq, FaqDTO.class);
+//                (foundFaq != null)? "수정 성공" : "수정 실패";
     }
 
     /*FAQ 를 삭제한다.*/

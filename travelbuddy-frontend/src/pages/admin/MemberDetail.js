@@ -14,6 +14,7 @@ function MemberDetail () {
 
     const [memberSuspension, setIsMemberSuspension] = useState('N');
     const [memberDeletion, setIsMemberDeletion] = useState('N');
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const params = useParams();
     const memberData = useSelector((state) => state.memberReducer);
@@ -32,19 +33,21 @@ function MemberDetail () {
                 setIsMemberSuspension(member.memberSuspension);
                 setIsMemberDeletion(member.memberDeletion); 
             }
-        }, []
+        }, [member.memberCode]
     );
 
     const onClickChangeHandlerSus = () => {
-        const newSuspensionStatus = memberSuspension === 'Y' ? 'Y' : 'N';
-        dispatch(toggleMemberSuspensionAPI(params,newSuspensionStatus))
+        const newSuspensionStatus = (memberSuspension === 'Y' ? 'Y':'N');
+        dispatch(toggleMemberSuspensionAPI(params))
         .then(
         () => {
             setIsMemberSuspension(newSuspensionStatus);
             if (newSuspensionStatus !== 'Y') {
                 alert("계정을 정지상태로 변경합니다.");
+                navigate(`/members`);
             } else {
                 alert("정지 상태를 해제합니다.");
+                navigate(`/members`);
             }
         })
         .catch(error => {
@@ -53,15 +56,17 @@ function MemberDetail () {
     };
 
     const onClickChangeHandlerDel = () => {
-        const newDeletionStatus = memberDeletion === 'Y' ? 'Y' : 'N';
-        dispatch(toggleMemberDeletionAPI(params,newDeletionStatus))
+        const newDeletionStatus = (memberDeletion === 'Y' ? 'Y' : 'N');
+        dispatch(toggleMemberDeletionAPI(params))
         .then(
         () => {
             setIsMemberDeletion(newDeletionStatus);
             if (newDeletionStatus !== 'Y') {
                 alert("계정을 삭제상태로 변경합니다.");
+                navigate(`/members`);
             } else {
                 alert("삭제 상태를 해제합니다.");
+                navigate(`/members`);
             }
         })
         .catch(error => {

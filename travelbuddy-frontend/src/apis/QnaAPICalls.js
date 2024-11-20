@@ -2,7 +2,15 @@ import { GET_QNAS, GET_QNA, POST_QNA, DELETE_QNA, GET_QNAANSWER, POST_QNAANSWER,
 
     // 관리자가 QnA 리스트를 전체 불러온다.(paging 처리)
 export const callQnaListForAdminAPI = ({currentPage}) => {
-    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/qnas`;
+    
+    let requestURL;
+    if (currentPage !== undefined || currentPage !== null) {
+        requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/qnas?offset=${currentPage}`;
+        console.log('지금 나의 주소는?',requestURL);
+    } else {
+        requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/qnas`;
+    }
+    
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'GET',
@@ -11,12 +19,19 @@ export const callQnaListForAdminAPI = ({currentPage}) => {
                 Accept: '*/*'
             }
         }).then((response) => response.json());
-        dispatch({type: GET_QNAS, payload: result });
+        if (result.status !== null) {
+            dispatch({type: GET_QNAS, payload: result });
+        }
     }}
 
     // 회원이 자신이 작성한 QnA 리스트를 전체 불러온다.(paging 처리)
 export const callQnaListAPI = ({currentPage}) => {
-    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/cs/qnas`;
+    let requestURL;
+    if (currentPage !== undefined || currentPage !== null) {
+        requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/cs/qnas?offset=${currentPage}`;
+    }else {
+        requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/cs/qnas`;
+    }
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'GET',
@@ -57,7 +72,7 @@ export const insertQnaAPI = (qnaDTO) => {
         dispatch({type: POST_QNA, payload: result });
     }}
 
-    // 관리자든 회원이든 QnA 답변을 삭제한다.
+    // 관리자든 회원이든 QnA 삭제한다.
 export const deleteQnaAPI = (qnaCode) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/cs/qnas/${qnaCode}/deleteqna`;
     return async (dispatch, getState) => {

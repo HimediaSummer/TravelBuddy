@@ -50,7 +50,11 @@ function MyBuddy() {
                     </thead>
                     <tbody>
                         {buddy.map((item, index) => (
-                            <tr key={index}>
+                            <tr 
+                                key={index} 
+                                onClick={() => navigate(`/mypage/mybuddy/${item.buddyCode}`)}
+                                style={{ cursor: 'pointer' }}
+                            >
                                 <td>
                                     <input type="checkbox" id={`select-${index}`} onClick={() => {}} />
                                 </td>

@@ -29,7 +29,7 @@ function App() {
           <Route path="/mypage" element={<Mypage />}>
             <Route path="/mypage/myProfile" element={<MyProfile />} />
             <Route path="/mypage/myBuddy" element={<MyBuddy />} />
-            <Route path="/mypage/myBuddyDetail/:buddyCode" element={<MyBuddyDetail />} />
+            <Route path="/mypage/myBuddy/:buddyCode" element={<MyBuddyDetail />} />
           </Route>
         </Route>
       </Routes>

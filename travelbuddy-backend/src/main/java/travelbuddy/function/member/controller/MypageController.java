@@ -142,14 +142,14 @@ public class MypageController {
     }
 
     @Operation(summary = "게시글상세조회요청", description = "내가쓴글상세조회", tags = {"MypageController"})
-    @GetMapping("/mybuddylist/{buddyCode}")
+    @GetMapping("/mybuddy/{buddyCode}")
     public ResponseEntity<ResponseDTO> getBuddyDetail(@PathVariable("buddyCode") int buddyCode) {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글세부내용및신청회원조회성공", mypageService.getBuddyDetail(buddyCode)));
     }
 
     @Operation(summary = "게시글매칭상태수정", description = "매칭신청상태 1 : 신청 , 2: 수락 , 3: 거절", tags = {"MypageController"})
-    @PutMapping("/mybuddylist/{buddyCode}/applystatus")
+    @PutMapping("/mybuddy/{buddyCode}/applystatus")
     public ResponseEntity<ResponseDTO> getBuddyApplyStatus(
             @PathVariable("buddyCode") int buddyCode,
             @RequestParam("buddyMatchCode") int buddyMatchCode,
@@ -162,7 +162,7 @@ public class MypageController {
 
     /* 내가 쓴글 수정 */
     @Operation(summary = "게시글수정", description = "내가쓴글수정", tags = {"MypageController"})
-    @PutMapping(value = "/mybuddylist/{buddyCode}/update")
+    @PutMapping(value = "/mybuddy/{buddyCode}/update")
     public ResponseEntity<ResponseDTO> updateBuddy(@ModelAttribute BuddyDTO buddyDTO, @RequestParam(required = false) MultipartFile buddyImg) {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글수정성공", mypageService.updateBuddy(buddyDTO, buddyImg)));
@@ -170,7 +170,7 @@ public class MypageController {
 
     /* 내가 쓴글 삭제 */
     @Operation(summary = "게시글삭제", description = "내가쓴글삭제", tags = {"MypageController"})
-    @DeleteMapping(value = "/mybuddylist/{buddyCode}/delete")
+    @DeleteMapping(value = "/mybuddy/{buddyCode}/delete")
     public ResponseEntity<ResponseDTO> deleteBuddy(@PathVariable int buddyCode) {
 
         mypageService.deleteBuddyCode(buddyCode);

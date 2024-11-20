@@ -290,7 +290,7 @@ public class MypageService {
 
         BuddyDTO buddyDTO = modelMapper.map(getBuddyDetail, BuddyDTO.class);
         if (getBuddyDetail.getAccount() != null) {
-            buddyDTO.setMemberCode(getBuddyDetail.getAccount().getMemberCode());
+            buddyDTO.setMemberName(getBuddyDetail.getAccount().getMemberName());
         }
 
         List<BuddyMatchDataDTO> buddyMatchDataDTOList = buddyMatchDataList.stream().map(matchData -> {

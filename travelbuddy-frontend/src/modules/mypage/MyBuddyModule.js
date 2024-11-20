@@ -7,7 +7,7 @@ export const GET_BUDDY = 'GET_BUDDY';
 export const getBuddy = createAction(GET_BUDDY);
 
 /* 리듀서 */
-const mypageBuddyReducer = (state = [], action) => {
+const myBuddyReducer = (state = [], action) => {
 
     console.log('Reducer received action:', action);
 
@@ -31,4 +31,4 @@ const mypageBuddyReducer = (state = [], action) => {
     }
 };
 
-export default mypageBuddyReducer;
+export default myBuddyReducer;

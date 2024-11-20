@@ -36,7 +36,7 @@ public class MypageController {
 
     /* =========================================== My정보 =========================================== */
     @Operation(summary = "회원정보조회", description = "내가입정보조회", tags = {"MypageController"})
-    @GetMapping()
+    @GetMapping("/myprofile")
     public ResponseEntity<ResponseDTO> selectMyProfile() {
         log.info("[MypageService] seleceMyProfile Start");
 
@@ -55,9 +55,9 @@ public class MypageController {
     }
 
     @Operation(summary = "회원탈퇴", description = "회원숨김수정", tags = {"MypageController"})
-    @PutMapping("/putdelete/{memberCode}")
+    @PutMapping("/deletion/{memberCode}")
     public ResponseEntity<ResponseDTO> putDeleteAccount(@PathVariable int memberCode) {
-        log.info("[MypageService] updateMyProfile Start");
+        log.info("[MypageService] deletionMyProfile Start");
 
         mypageService.putDeleteAccount(memberCode);
 

@@ -3,8 +3,10 @@ import Schedule from './components/products/Schedule';
 import Main from './components/products/Main';
 import Members from './pages/admin/Members';
 import MemberDetail from './pages/admin/MemberDetail';
-import MyPage from './pages/member/mypage/Mypage';
-import MypageBuddy from './components/products/MypageBuddy';
+import Mypage from './pages/member/mypage/Mypage';
+import MyProfile from './pages/member/mypage/MyProfile';
+import MyBuddy from './pages/member/mypage/MyBuddy';
+import MyBuddyDetail from './pages/member/mypage/MyBuddyDetail';
 import Qnas from './pages/admin/Qnas';
 import QnaDetail from './pages/admin/QnaDetail ';
 
@@ -22,10 +24,13 @@ function App() {
           <Route path="MemberDetail/:memberCode" element={ <MemberDetail/>} />
           <Route path="Qnas" element={ <Qnas/> }/>
           <Route path="QnaDetail/:qnaCode" element={ <QnaDetail/>} />
-          <Route path="MyPage" element={<MyPage />}>
-            <Route path="MyBuddy" element={<MypageBuddy />} />
-            <Route path="MyBudddyMatch" element= {<MypageBuddyDetail />} />
-          </Route> 
+          
+          {/* Mypage */}
+          <Route path="/mypage" element={<Mypage />}>
+            <Route path="/mypage/myProfile" element={<MyProfile />} />
+            <Route path="/mypage/myBuddy" element={<MyBuddy />} />
+            <Route path="/mypage/myBuddyDetail/:buddyCode" element={<MyBuddyDetail />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

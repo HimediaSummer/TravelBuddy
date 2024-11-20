@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
-import mypageBuddyReducer from './MypageBuddyModule.js';
+import myBuddyReducer from './mypage/MyBuddyModule.js';
 import memberReducer from './MemberModule.js'
 import qnaReducer from './QnaModule.js';
+import myProfileReducer from './mypage/MyProfileModule.js';
 
 const rootReducer = combineReducers({
-	mypageBuddyReducer,
-	
+	myBuddyReducer,
+	myProfileReducer,
 	memberReducer,
 	qnaReducer
 });

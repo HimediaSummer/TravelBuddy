@@ -205,37 +205,6 @@ public class MypageService {
         myScheduleRepository.delete(existingSchedule);
         log.info("기존 스케줄 삭제 완료: {}", scheCode);
 
-//        Schedule newSchedule = new Schedule();
-//        newSchedule.setScheCode(newScheduleData.getScheCode());
-//        newSchedule.setRegion(newScheduleData.getRegion());
-//        newSchedule.setAccommodation(newScheduleData.getAccommodation());
-//        newSchedule.setAccount(existingSchedule.getAccount()); // FK 연결 유지
-//        newSchedule.setMemberAnswer(newScheduleData.getMemberAnswer());
-//        newSchedule.setScheList(newScheduleData.getScheList());
-//        newSchedule.setScheStartDate(newScheduleData.getScheStartDate());
-//        newSchedule.setScheEndDate(newScheduleData.getScheEndDate());
-//        newSchedule.setScheStartTime(newScheduleData.getScheStartTime());
-//        newSchedule.setScheEndTime(newScheduleData.getScheEndTime());
-//        newSchedule.setTravelTime(newScheduleData.getTravelTime());
-//        newSchedule.setScheTime(newScheduleData.getScheTime());
-//        myScheduleRepository.save(newSchedule);
-
-//        Schedule newSchedule = new Schedule(
-//                newSchedule.setScheCode(newScheduleData.getScheCode());
-//                newScheduleData.getRegion(),
-//                newScheduleData.getAccommodation(),
-//                existingSchedule.getAccount(), // FK 연결 유지
-//                newScheduleData.getMemberAnswer(),
-//                newScheduleData.getScheList(),
-//                newScheduleData.getScheStartDate(),
-//                newScheduleData.getScheEndDate(),
-//                newScheduleData.getScheStartTime(),
-//                newScheduleData.getScheEndTime(),
-//                newScheduleData.getTravelTime(),
-//                newScheduleData.getScheTime()
-//        );
-
-
         Schedule newSchedule = new Schedule();
         newSchedule.setScheCode(newScheduleData.getScheCode());
         newSchedule.setRegion(regionRepository.findById(newScheduleData.getRegionCode()).orElseThrow(() -> new NoSuchElementException("Region with ID " + newScheduleData.getRegionCode() + " not found in the database")));

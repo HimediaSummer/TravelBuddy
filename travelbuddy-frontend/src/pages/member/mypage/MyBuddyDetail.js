@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getBuddyDetail } from "../../../modules/mypage/MyBuddyDetailModule.js"
 
-function MyBuddy() {
+function MyBuddyDetail() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -80,5 +80,4 @@ function MyBuddy() {
     );
 }
 
-export default MyBuddy;
-
+export default MyBuddyDetail;

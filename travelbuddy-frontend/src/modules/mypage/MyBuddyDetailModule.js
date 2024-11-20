@@ -7,14 +7,14 @@ export const GET_BUDDY_DETAIL = 'GET_BUDDY_DETAIL';
 export const getBuddyDetail = createAction(GET_BUDDY_DETAIL);
 
 /* 리듀서 */
-const mypageBuddyDetailReducer = (state = [], action) => {
+const myBuddyDetailReducer = (state = [], action) => {
 
     console.log('Reducer received action:', action);
 
 	switch (action.type) {
         case 'myBuddy/GET_BUDDY_DETAIL':
 
-            console.log('Reducer is myBuddy', action.payload);
+            console.log('Reducer is myBuddyDetail', action.payload);
 
             if (!Array.isArray(action.payload)) {
                 console.error('Payload is not an array:', action.payload);
@@ -31,4 +31,4 @@ const mypageBuddyDetailReducer = (state = [], action) => {
     }
 };
 
-export default mypageBuddyDetailReducer;
+export default myBuddyDetailReducer;

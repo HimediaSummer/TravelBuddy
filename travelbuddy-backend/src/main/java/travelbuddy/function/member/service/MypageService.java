@@ -252,20 +252,32 @@ public class MypageService {
 //    }
 
     /* 내가쓴버디게시글조회 */
-    public Object selectBuddyList(int memberCode) {
+    public List<Map<String, Object>> selectBuddyList(int memberCode) {
         log.info("[MypageService] selectBuddyList() Start");
         System.out.println("text memberbuddy" + memberCode);
 
-        Account account = myProfileRepository.findById(memberCode)
-                .orElseThrow(() -> new EntityNotFoundException("Account not found with memberCode: " + memberCode));
+        List<Object[]> results = myBuddyRepository.findAllByAccount(memberCode);
 
-        Buddy buddy = (Buddy) myBuddyRepository.findByAccount(account)
-                .orElseThrow(() -> new RuntimeException("Member not found with memberCode: " + memberCode));
+        List<Map<String, Object>> buddyList = new ArrayList<>();
+        for (Object[] result : results) {
+            Map<String, Object> buddyMap = new HashMap<>();
+            Buddy buddy = (Buddy) result[0];
+            String regionName = (String) result[1];
+            String buddyTypeName = (String) result[2];
+            String memberName = (String) result[3];
+            buddyMap.put("buddyTitle", buddy.getBuddyTitle());
+            buddyMap.put("buddyCode", buddy.getBuddyCode());
+            buddyMap.put("buddyCreate", buddy.getBuddyCreate());
+            buddyMap.put("buddyStatus", buddy.getBuddyStatus());
+            buddyMap.put("buddyCount", buddy.getBuddyCount());
+            buddyMap.put("memberName", memberName);
+            buddyMap.put("regionName", regionName);
+            buddyMap.put("buddyTypeName", buddyTypeName);
 
-        System.out.println("text memberbuddy123" + memberCode);
-
+            buddyList.add(buddyMap);
+        }
         log.info("[MypageService] selectBuddyList() End");
-        return modelMapper.map(buddy, Buddy.class);
+        return buddyList;
     }
 
     /* 내가쓴버디게시글상세조회및신청회원목록조회 */

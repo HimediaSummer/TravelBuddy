@@ -10,7 +10,13 @@ import java.util.Optional;
 
 public interface MyBuddyRepository extends JpaRepository<Buddy, Integer> {
 
-    Optional<Object> findByAccount(Account account);
+    @Query("SELECT b, r.regionName, t.buddyTypeName, a.memberName " +
+            "FROM Buddy b " +
+            "JOIN b.region r " +
+            "JOIN b.buddyType t " +
+            "JOIN b.account a " +
+            "WHERE a.memberCode = :memberCode")
+    List<Object[]> findAllByAccount(int memberCode);
 
     Optional<Object> findByBuddyCode(int buddyCode);
 }

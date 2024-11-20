@@ -19,14 +19,17 @@ function MyBuddy() {
             })   
             .then((data) => {
                 console.log('Fetched Data:', data);
-                setBuddy(data.data); 
+                setBuddy(data.data || []); 
                 console.log('setBuddy 발동', data);
-                console.log('buddy 잘 뜨나',buddy);
             })
             .catch((error) => {
                 console.error('Error fetching buddy:', error);
             });
-    }, [dispatch]);
+    }, []);
+
+    useEffect(() => {
+        console.log('Buddy State:', buddy);
+    }, [buddy]);
 
     if (buddy.length === 0) {
         return <p>게시글을 작성 해 주세요</p>;
@@ -34,13 +37,32 @@ function MyBuddy() {
 
     return (
         <div>
-            <ul>
-                <li key={buddy}>
-                    <h3>{buddy.buddyTitle}</h3>  {/* buddyTitle 출력 */}
-                    <p>{buddy.buddyContents}</p> {/* buddyContents 출력 */}
-                    <p>{buddy.buddyCreate}</p>  {/* buddyCount 출력 */}
-                </li>
-            </ul>
+            <table>
+                    <thead>
+                        <th>
+                            <input type="checkbox" id="selectAll" onclick="selectAllRows(this)" />
+                        </th>
+                        <th>버디</th>
+                        <th>지역</th>
+                        <th>제목</th>
+                        <th>작성일</th>
+                        <th>상태</th>
+                    </thead>
+                    <tbody>
+                        {buddy.map((item, index) => (
+                            <tr key={index}>
+                                <td>
+                                    <input type="checkbox" id={`select-${index}`} onClick={() => {}} />
+                                </td>
+                                <td>{item.buddyTypeName}</td>
+                                <td>{item.regionName}</td>
+                                <td>{item.buddyTitle}</td>
+                                <td>{item.buddyCreate}</td>
+                                <td>{item.buddyStatus}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+            </table>
         </div>
     );
 }

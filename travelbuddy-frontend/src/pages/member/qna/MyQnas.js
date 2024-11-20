@@ -24,10 +24,9 @@ function MyQnas() {
     }
 
     useEffect(() => {
-        setStart((currentPage - 1) * 5);
         dispatch(
             callQnaListForAdminAPI({
-                currentPage: { currentPage },
+                currentPage: currentPage 
             })
         );
     }, [currentPage]);

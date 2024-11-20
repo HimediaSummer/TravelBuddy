@@ -9,7 +9,7 @@ function MyQnaDetail() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const params = useParams();
-    const {qnaCode} = params;
+    const { qnaCode } = params;
     const qnaData = useSelector((state) => state.qnaReducer);
     const { data } = qnaData;
     const { qnaDTO, qnaAnswerDTO } = data || {};
@@ -49,16 +49,29 @@ function MyQnaDetail() {
                             </tr>
 
                             <tr>
-                                <td colSpan={4}>{qnaDTO.qnaContents}</td>
+                                <td>문의 내용</td>
+                                <td colSpan={5}>
+                                    <input
+                                        type="text"
+                                        style={{
+                                            width: "500px",
+                                            height: "100px",
+                                        }}
+                                        readOnly
+                                        value={qnaDTO.qnaContents}
+                                    />
+                                </td>
                             </tr>
 
                             <tr>
                                 <td>답변</td>
-                                <td>{qnaAnswerDTO.ansContents}</td>
+                                <td><input
+                    type="text"
+                    name='ansContents'
+                    style={{width: '500px', height: '100px'}}
+                    readOnly
+                    value={qnaAnswerDTO.ansContents}/></td>
                             </tr>
-
-                            <tr></tr>
-                            <tr></tr>
                         </>
                     ) : (
                         <tr>

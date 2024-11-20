@@ -33,6 +33,7 @@ function MyQna() {
             second: '2-digit',
             hour12: false
         }).replace(/\. /g, '-').replace(',', '');
+        
         const updatedQnaDTO = {...qnaDTO, qnaCreate: formattedDate};
         dispatch(insertQnaAPI(updatedQnaDTO));
         alert('문의가 등록되었습니다.');

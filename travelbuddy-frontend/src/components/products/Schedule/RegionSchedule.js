@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Map from './Map';
 
 function RegionSchedule({ onNext }) {
 
@@ -6,6 +7,7 @@ function RegionSchedule({ onNext }) {
 	const [regionDetails, setRegionDetails] = useState([]);
 	const [selectedRegion, setSelectedRegion] = useState(null);
 	const [selectedRegionDetails, setSelectedRegionDetails] = useState(null);
+	const [isToggleOpen, setIsToggleOpen] = useState(true);
 
 	// 장소 전체
 	useEffect(() => {
@@ -63,20 +65,20 @@ function RegionSchedule({ onNext }) {
 					</div>
 					<div className="region-scroll">
 						<div className='regions'>
-						{region.map((region) => (
-							<div className="region-item2" key={region.regionCode}>
-								<div className="region-item">
-									<img src={`/Img/${region.regionThumbnailImg}`} alt={region.regionName} width={'150px'} height={'150px'} style={{ borderRadius: '15px' }} />
+							{region.map((region) => (
+								<div className="region-item2" key={region.regionCode}>
+									<div className="region-item">
+										<img src={`/Img/${region.regionThumbnailImg}`} alt={region.regionName} width={'150px'} height={'150px'} style={{ borderRadius: '15px' }} />
+									</div>
+									<div className='region-wordMargin'>
+										{region.regionName}
+									</div>
+									<button
+										type='button'
+										className={`region-button ${selectedRegion && selectedRegion.regionCode === region.regionCode ? 'selected' : ''}`}
+										onClick={() => handleRegionSelect(region)}></button>
 								</div>
-								<div className='region-wordMargin'>
-									{region.regionName}
-								</div>
-								<button 
-                           type='button' 
-                           className={`region-button ${selectedRegion && selectedRegion.regionCode === region.regionCode ? 'selected' : ''}`} 
-                           onClick={() => handleRegionSelect(region)}></button>
-							</div>
-						))}
+							))}
 						</div>
 					</div>
 				</form>
@@ -87,12 +89,15 @@ function RegionSchedule({ onNext }) {
 							<img src={`/Img/${selectedRegionDetails.regionImg}`} alt={selectedRegionDetails.regionName} width={'500px'} height={'300px'} />
 							<h3>{selectedRegionDetails.regionName}</h3>
 							<p>{selectedRegionDetails.regionDescription}</p>
-							<div style={{display: 'flex', justifyContent: 'flex-end'}}>
-							<button className="region-button2" onClick={onNext}>다음</button>
+							<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+								<button className="region-button2" onClick={onNext}>다음</button>
 							</div>
 						</div>
 					) : ('')}
 				</div>
+							<div style={{marginTop: '100px'}}>
+							<Map />
+							</div>
 			</div>
 		</div>
 	);

@@ -154,6 +154,9 @@ function DateSchedule({ onNext }) {
 					</div>
 					{/* Loading */}
 				</form>
+				<div>
+					<img src='/Img/schedulemain.PNG' alt='main'/>
+				</div>
 			</div>
 		</div>
 	);

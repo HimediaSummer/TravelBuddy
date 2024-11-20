@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Map from './Map';
 
 function AccomSchedule({ onNext }) {
 
@@ -93,8 +94,10 @@ function AccomSchedule({ onNext }) {
 					) : (
 						''
 					)}
-
 				</div>
+				<div style={{marginTop: '100px'}}>
+							<Map />
+							</div>
 				{/* 테스트 잔디확인용 */}
 			</div>
 		</div>

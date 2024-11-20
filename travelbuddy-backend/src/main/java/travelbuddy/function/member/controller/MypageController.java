@@ -68,16 +68,19 @@ public class MypageController {
     /* =========================================== My일정 =========================================== */
     /* 내 일정 목록 조회 */
     @Operation(summary = "일정조회", description = "일정목록조회", tags = {"MypageController"})
-    @GetMapping("/myschedule/{memberCode}")
-    public ResponseEntity<ResponseDTO> selectMySchedule(@PathVariable int memberCode) {
+    @GetMapping("/myschedule")
+    public ResponseEntity<ResponseDTO> selectMyScheList() {
         log.info("[MypageService] selectMySchedule Start");
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정조회", mypageService.selectMySchedule(memberCode)));
+        int memberCode = 1002; // 하드코딩된 memberCode
+        List<Map<String, Object>> scheList = mypageService.selectMyScheList(memberCode);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정조회", scheList));
     }
 
     /* 내 일정 세부 조회 */
     @Operation(summary = "일정상세조회", description = "일정상세조회", tags = {"MypageController"})
-    @GetMapping("/myschedule/{memberCode}/{scheCode}")
+    @GetMapping("/myschedule/{scheCode}")
     public ResponseEntity<ResponseDTO> getDetailSchedule(@PathVariable int scheCode) {
         log.info("[MypageService] selectMySchedule Start");
 

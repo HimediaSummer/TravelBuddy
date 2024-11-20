@@ -7,6 +7,7 @@ import Mypage from './pages/member/mypage/Mypage';
 import MyProfile from './pages/member/mypage/MyProfile';
 import MyBuddy from './pages/member/mypage/MyBuddy';
 import MyBuddyDetail from './pages/member/mypage/MyBuddyDetail';
+import MySchedule from './pages/member/mypage/MySchedule';
 import Qnas from './pages/admin/Qnas';
 import QnaDetail from './pages/admin/QnaDetail ';
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/mypage/myProfile" element={<MyProfile />} />
             <Route path="/mypage/myBuddy" element={<MyBuddy />} />
             <Route path="/mypage/myBuddy/:buddyCode" element={<MyBuddyDetail />} />
+            <Route path="/mypage/mySchedule" element={<MySchedule />} />
           </Route>
         </Route>
       </Routes>

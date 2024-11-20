@@ -152,17 +152,26 @@ public class MypageService {
 
     /* =========================================== My일정 =========================================== */
     /* 내 일정 목록 조회 */
-    public Object selectMySchedule(int memberCode) {
-        log.info("[MypageService] selectMySchedule() Start");
+    public List<Map<String, Object>> selectMyScheList(int memberCode) {
+        log.info("[MypageService] selectMyScheList() Start");
 
-        List<Schedule> scheduleList =  myScheduleRepository.findByMemberCode(memberCode);
+        List<Object[]> results =  myScheduleRepository.findByMemberCode(memberCode);
 
-        if (scheduleList.isEmpty()) {
-            throw new RuntimeException("해당 회원의 일정이 없습니다. memberCode: " + memberCode);
-        }
+        List<Map<String, Object>> scheList = new ArrayList<>();
+            for (Object[] result : results) {
+                Map<String, Object> scheMap = new HashMap<>();
+                Schedule schedule = (Schedule) result[0];
+                String regionName = (String) result[1];
+                scheMap.put("scheList", schedule.getScheList());
+                scheMap.put("scheCode", schedule.getScheCode());
+                scheMap.put("scheStartDate", schedule.getScheStartDate());
+                scheMap.put("scheEndDate", schedule.getScheEndDate());
+                scheMap.put("regionName", regionName);
 
-        log.info("[MypageService] selectMySchedule() END");
-        return scheduleList;
+                scheList.add(scheMap);
+            }
+        log.info("[MypageService] selectMyScheList() END");
+        return scheList;
     }
 
     /* 내 일정 상세 조회 */

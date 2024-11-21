@@ -31,10 +31,10 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
         }}
 
         // 게시글 작성한다.
-    export const callBuddyRegistAPI = (updateForm) => {
+    export const callBuddyRegistAPI = ({form}) => {
         const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies/buddyRegist`;
         console.log("callBuddyRegistAPI 갔다옴");
-        console.log("API form = ", updateForm);
+        console.log("API form = ", form);
         return async (dispatch, getState) => {
             const result = await fetch(requestURL, {
                 method: 'POST',
@@ -43,12 +43,12 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
                     Accept: '*/*',
                     Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
                 },
-                body: JSON.stringify(updateForm)
+                body: JSON.stringify({form})
             }).then((response) => response.json());
 
             console.log("[BuddyAPICalls] callBuddyRegistAPI result : ", result);
             console.log("API응답:",result);
-            dispatch({type: POST_BUDDY, payload: result });
+            dispatch({type: POST_BUDDY, payload: result});
         }}
 
     // export const callBuddyTypeAPI = () => {

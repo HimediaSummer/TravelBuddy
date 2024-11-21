@@ -77,7 +77,7 @@ function BuddyRegist() {
         }).replace(/\./g,'-').replace(',','');
 
         const updateForm = {...form, buddyCreate: formattedDate};
-        dispatch(callBuddyRegistAPI(updateForm));
+        dispatch(callBuddyRegistAPI({form: updateForm}));
         alert("완료")
         navigate('/buddies');
     }

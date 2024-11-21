@@ -96,17 +96,18 @@ public class MypageController {
 
     /* 내 일정 삭제 */
     @Operation(summary = "일정삭제", description = "내 일정 삭제", tags = {"MypageController"})
-    @DeleteMapping(value = "/myschedule/{memberCode}/{scheCode}/delete")
-    public ResponseEntity<ResponseDTO> deleteSchedule(@PathVariable int memberCode, @PathVariable int scheCode) {
+    @DeleteMapping(value = "/myschedule/delete")
+    public ResponseEntity<ResponseDTO> deleteSchedule(@RequestBody List<Integer> scheCodes) {
+        log.info("Received schedule delete request: {}", scheCodes);
 
-        mypageService.deleteScheCode(memberCode, scheCode);
+        mypageService.deleteScheCode(scheCodes);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정삭제성공", null));
     }
 
     /* 내 일정 재생성 */
     @Operation(summary = "일정재생성", description = "내 일정 재생성", tags = {"MypageController"})
-    @PostMapping(value = "/myschedule/{memberCode}/{scheCode}/recreate")
+    @PostMapping(value = "/myschedule/{scheCode}/recreate")
     public ResponseEntity<ResponseDTO> recreateSchedule(
             @PathVariable int memberCode,
             @PathVariable int scheCode,

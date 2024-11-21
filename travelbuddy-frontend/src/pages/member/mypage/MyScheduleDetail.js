@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getScheDetail } from "../../../modules/mypage/MyScheduleDetailModule.js"
+import { getSchedule } from "../../../modules/mypage/MyScheduleModule.js"
 
 function MyScheduleDetail() {
 

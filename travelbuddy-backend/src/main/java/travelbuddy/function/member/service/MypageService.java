@@ -143,7 +143,7 @@ public class MypageService {
     public Object putDeleteAccount(int memberCode) {
         log.info("[MypageService] 숨김설정시작: memberCode = {}", memberCode);
 
-        Account account = (Account) myProfileRepository.findById(memberCode)
+        Account account = (Account) myProfileRepository.findByMemberCode(memberCode)
                 .orElseThrow(() -> new RuntimeException("숨김처리할 회원을 찾을 수 없습니다."));
 
         account.setMemberDeletion("Y");
@@ -343,9 +343,9 @@ public class MypageService {
         List<BuddyMatchData> buddyMatchDataList = myBuddyMatchRepository.findByBuddyCode(buddyCode);
 
         BuddyDTO buddyDTO = modelMapper.map(getBuddyDetail, BuddyDTO.class);
-//        if (getBuddyDetail.getAccount() != null) {
-//            buddyDTO.setMemberName(getBuddyDetail.getAccount().getMemberName());
-//        }
+        if (getBuddyDetail.getAccount() != null) {
+            buddyDTO.setMemberName(getBuddyDetail.getAccount().getMemberName());
+        }
 
         List<BuddyMatchDataDTO> buddyMatchDataDTOList = buddyMatchDataList.stream().map(matchData -> {
             BuddyMatchDataDTO bmdd = new BuddyMatchDataDTO();

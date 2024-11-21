@@ -6,6 +6,7 @@ import MemberDetail from './pages/admin/MemberDetail';
 import Mypage from './pages/member/mypage/Mypage';
 import MyProfile from './pages/member/mypage/MyProfile';
 import MyPutProfile from './pages/member/mypage/MyPutProfile';
+import MyDeletion from './pages/member/mypage/MyDeletion';
 import MyBuddy from './pages/member/mypage/MyBuddy';
 import MyBuddyDetail from './pages/member/mypage/MyBuddyDetail';
 import MySchedule from './pages/member/mypage/MySchedule';
@@ -32,6 +33,7 @@ function App() {
           <Route path="/mypage" element={<Mypage />}>
             <Route path="/mypage/myProfile" element={<MyProfile />} />
             <Route path="/mypage/updateMyProfile" element={<MyPutProfile />} />
+            <Route path="/mypage/deletion" element={<MyDeletion />} />
             <Route path="/mypage/myBuddy" element={<MyBuddy />} />
             <Route path="/mypage/myBuddy/:buddyCode" element={<MyBuddyDetail />} />
             <Route path="/mypage/mySchedule" element={<MySchedule />} />

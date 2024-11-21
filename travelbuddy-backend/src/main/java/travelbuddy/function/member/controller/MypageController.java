@@ -59,10 +59,14 @@ public class MypageController {
     }
 
     @Operation(summary = "회원탈퇴", description = "회원숨김수정", tags = {"MypageController"})
-    @PutMapping("/deletion/{memberCode}")
-    public ResponseEntity<ResponseDTO> putDeleteAccount(@PathVariable int memberCode) {
+    @PutMapping("/deletion")
+    public ResponseEntity<ResponseDTO> putDeleteAccount(@RequestBody Map<String, Object> requestBody) {
         log.info("[MypageService] deletionMyProfile Start");
 
+//        HttpSession session = request.getSession();
+//        Integer memberCode = (Integer) session.getAttribute("memberCode");
+
+        int memberCode = (int) requestBody.get("memberCode");
         mypageService.putDeleteAccount(memberCode);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원숨김ㅃㅃ", null));

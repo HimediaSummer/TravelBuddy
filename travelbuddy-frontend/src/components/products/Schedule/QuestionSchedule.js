@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function QuestionSchedule({ onNext }) {
+function QuestionSchedule({ onNext, setTravelData }) {
 
 	const [qTheme, setQTheme] = useState([]);
 	const [answers, setAnswers] = useState([]);
@@ -80,6 +80,18 @@ function QuestionSchedule({ onNext }) {
 				answer: answer.answer
 			}
 		]);
+
+		setTravelData(prevData => ({
+			...prevData,
+			questions: [
+				...prevData.questions,
+				{
+					questCode: selectedQuestions[currentQuestionIndex].questCode,
+					answerCode: answer.answerCode,
+					answer: answer.answer
+				}
+			]
+		}));
 
 		// 답변을 선택한 후 다음 질문으로 넘어가기
 		setCurrentQuestionIndex(prevIndex => {

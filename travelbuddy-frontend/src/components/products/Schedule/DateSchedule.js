@@ -17,9 +17,9 @@ function DateSchedule({ onNext, startDate, setStartDate, endDate, setEndDate }) 
 	const [region, setRegion] = useState([]);
 	const [qTheme, setQTheme] = useState([]);
 
+function DateSchedule({ onNext, setTravelData }) {
 	// 모달
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	//   const [selectedDate, setSelectedDate] = useState(new Date());
 
 	// 날짜
 	// const [startDate, setStartDate] = useState();
@@ -38,6 +38,12 @@ function DateSchedule({ onNext, startDate, setStartDate, endDate, setEndDate }) 
 			return;
 		}
 		setIsModalOpen(false);
+		setTravelData(prevData => ({
+			...prevData,
+			startDate,
+			endDate
+		}));
+		onNext();
 	};
 
 	// 날짜 선택 최대 5일

@@ -14,6 +14,23 @@ function Schedule() {
 	// 선택한 장소/날짜 출력하기 도전중
 	const [startDate, setStartDate] = useState();
 	const [endDate, setEndDate] = useState();
+	const [currentStep, setCurrentStep] = useState(0); // 컴포넌트 바꾸기
+	const [selectedRegion, setSelectedRegion] = useState(null); // 지역값 전달하기 도전중
+	const [travelData, setTravelData] = useState({
+		startDate: "",
+		endDate: "",
+		accommodations: [],
+		regions: [],
+		questions: []
+	});
+
+	// const travelData = {
+	// 	startDate: "2024-12-1",
+	// 	endDate: "2024-12-05",
+	// 	accommodations: ["Hotel"],
+	// 	regions: ["Seoul"],
+	// 	questions: ["활동위주의 여행이좋아"]
+	// };
 
 	// 각 단계 컴포넌트들
 	const steps = [
@@ -22,7 +39,34 @@ function Schedule() {
 		<AccomSchedule onNext={() => setCurrentStep(3)}  selectedRegion={selectedRegion}/>,
 		<QuestionSchedule onNext={() => setCurrentStep(4)} />,
 		<Summary />
+		<DateSchedule
+			onNext={() => setCurrentStep(1)}
+			setTravelData={setTravelData}
+		/>,
+		<RegionSchedule
+			onNext={() => setCurrentStep(2)}
+			selectedRegion={selectedRegion}
+			setSelectedRegion={setSelectedRegion}
+			setTravelData={setTravelData}
+		/>,
+		<AccomSchedule
+			onNext={() => setCurrentStep(3)}
+			setTravelData={setTravelData}
+		/>,
+		<QuestionSchedule
+			onNext={() => setCurrentStep(4)}
+			setTravelData={setTravelData}
+		/>,
+		<Summary travelData={travelData} />
 	];
+	// const steps = [
+	// 	<DateSchedule onNext={() => setCurrentStep(1)} />,
+	// 	<RegionSchedule onNext={() => setCurrentStep(2)} selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion}/>,
+	// 	<AccomSchedule onNext={() => setCurrentStep(3)}  selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion}/>,
+	// 	<QuestionSchedule onNext={() => setCurrentStep(4)} />,
+	// 	<Summary travelData={travelData} />
+	// ];
+
 
 	return (
 		<div className="App">

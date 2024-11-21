@@ -3,50 +3,50 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
-    callNoticeDetailForAdminAPI
-} from '../../../apis/NoticeAPICalls';
-import { updateNoticeAPI } from '../../../apis/NoticeAPICalls';
-import { deleteNoticeAPI } from '../../../apis/NoticeAPICalls';
+    callUseinfoDetailForAdminAPI
+} from '../../../apis/UseinfoAPICalls';
+import { updateUseinfoAPI } from '../../../apis/UseinfoAPICalls';
+import { deleteUseinfoAPI } from '../../../apis/UseinfoAPICalls';
 
-function NoticeDetail () {
+function UseinfoDetail () {
 
-    const [noticeContents, setNoticeContents] = useState("");
+    const [useinfoContents, setUseinfoContents] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const params = useParams();
-    const {noticeCode} = params;
-    const noticeData = useSelector((state) => state.noticeReducer) || {};
-    const notice = noticeData.data;
+    const {useinfoCode} = params;
+    const useinfoData = useSelector((state) => state.useinfoReducer) || {};
+    const useinfo = useinfoData.data;
 
     useEffect (
         () => {
-            dispatch(callNoticeDetailForAdminAPI(noticeCode))
+            dispatch(callUseinfoDetailForAdminAPI(useinfoCode))
         } , []
     );
 
     useEffect(() => {
-        if (notice) {
-            setNoticeContents(notice.noticeContents || ""); // API 데이터 로드 후 상태 초기화
+        if (useinfo) {
+            setUseinfoContents(useinfo.useinfoContents || ""); // API 데이터 로드 후 상태 초기화
         }
-    }, [notice]);
+    }, [useinfo]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         console.log(`${name}:${value}`);
-        setNoticeContents((state) => (value));
+        setUseinfoContents((state) => (value));
     }
 
     const onClickChangeHandlerUpdate = () => {
-        const updateData = { noticeContents };
-        dispatch(updateNoticeAPI(noticeCode, updateData));
+        const updateData = { useinfoContents };
+        dispatch(updateUseinfoAPI(useinfoCode, updateData));
         alert('내용을 수정하였습니다.');
-        navigate(`/notices`);
+        navigate(`/Useinfos`);
     };
 
     const onClickChangeHandlerDelete = () => {
-        dispatch(deleteNoticeAPI(noticeCode));
-        alert('공지사항을 삭제하였습니다.');
-        navigate(`/notices`);
+        dispatch(deleteUseinfoAPI(useinfoCode));
+        alert('사용설명서를 삭제하였습니다.');
+        navigate(`/Useinfos`);
     };
 
     return (
@@ -54,28 +54,28 @@ function NoticeDetail () {
         <table>
             <thead>
                 <tr>
-                <th>공지사항</th>
+                <th>사용설명서</th>
                 </tr>
             </thead>
             <tbody>
-                {notice ? (
+                {useinfo ? (
                     <>
                 <tr>
                 <td>제목</td>
-                <td>{notice.noticeTitle}</td>
+                <td>{useinfo.useinfoTitle}</td>
                 <td>게시글번호</td>
-                <td>{notice.noticeCode}</td>
+                <td>{useinfo.useinfoCode}</td>
                 </tr>123
 
                 <tr>
-                    <td>공지 내용</td>
+                    <td>내용</td>
                 <td colSpan={5}>
                 <input
                     type="text"
                     style={{width: '500px', height: '100px'}}
                     onChange={handleInputChange}
-                    name='noticeContents'
-                    value={ noticeContents || notice.noticeContents } />
+                    name='useinfoContents'
+                    value={ useinfoContents || useinfo.useinfoContents } />
                     </td>
                 </tr>
                 
@@ -97,4 +97,4 @@ function NoticeDetail () {
     );
 }
 
-export default NoticeDetail;
+export default UseinfoDetail;

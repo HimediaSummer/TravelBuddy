@@ -13,8 +13,11 @@ import MyNoticeDetail from './pages/member/notice/MyNoticeDetail';
 import Qnas from './pages/admin/Qna/Qnas';
 import QnaDetail from './pages/admin/Qna/QnaDetail ';
 import Faq from './pages/admin/Faq/Faq';
-import FaqDetail from './pages/admin/Faq/FaqDetail';
 import Faqs from './pages/admin/Faq/Faqs';
+import FaqDetail from './pages/admin/Faq/FaqDetail';
+import Useinfo from './pages/admin/Useinfo/Useinfo';
+import Useinfos from './pages/admin/Useinfo/Useinfos';
+import UseinfoDetail from './pages/admin/Useinfo/UseinfoDetail';
 import MyFaqs from './pages/member/faq/MyFaqs';
 import MyQnas from './pages/member/qna/MyQnas';
 import MyQna from './pages/member/qna/MyQna';
@@ -41,6 +44,9 @@ function App() {
           <Route path="MyQnas" element={ <MyQnas/> }/>
           <Route path="MyQna" element={ <MyQna/> }/>
           <Route path="MyQnaDetail/:qnaCode" element={ <MyQnaDetail/>} />
+          <Route path="Useinfo" element={<Useinfo />}/>
+          <Route path="Useinfos" element={<Useinfos />}/>
+          <Route path="UseinfoDetail/:useinfoCode" element={<UseinfoDetail />}/>
           <Route path="Notice" element={<Notice />}/>
           <Route path="Notices" element={<Notices />}/>
           <Route path="NoticeDetail/:noticeCode" element={<NoticeDetail />}/>

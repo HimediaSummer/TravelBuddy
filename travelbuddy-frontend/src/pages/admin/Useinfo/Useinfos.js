@@ -1,20 +1,19 @@
-import NoticeCSS from './NoticeCSS.css';
+import UseinfoCSS from './UseinfoCSS.css';
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
-import { callNoticeListForAdminAPI } from "../../../apis/NoticeAPICalls";
+import { callUseinfoListForAdminAPI } from "../../../apis/UseinfoAPICalls";
 
-function Notices() {
+function Useinfos() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const notice = useSelector((state) => state.noticeReducer) || {};
-    const noticeList = notice.data || {};
-    const pageInfo = notice.pageInfo || {};
+    const useinfo = useSelector((state) => state.useinfoReducer) || {};
+    const useinfoList = useinfo.data || {};
+    const pageInfo = useinfo.pageInfo || {};
 
-    console.log('나 noticeList',noticeList);
-
+    console.log('나 useinfoList',useinfoList);
 
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -27,26 +26,26 @@ function Notices() {
 
     useEffect(
         () => {
-            dispatch(callNoticeListForAdminAPI(
+            dispatch(callUseinfoListForAdminAPI(
                 {currentPage: currentPage}
             ));
         }, [currentPage]
     );
 
-    const onClickTableTr = (noticeCode) => {
-        navigate(`/noticeDetail/${noticeCode}`, { replace: false });
+    const onClickTableTr = (useinfoCode) => {
+        navigate(`/useinfoDetail/${useinfoCode}`, { replace: false });
     };
 
     const onClickNavigation = () => {
-        navigate(`/Notice`);
+        navigate(`/Useinfo`);
     };
 
 
     return (
         <>
-         <div className={NoticeCSS.bodyDiv}>
-                    <h2>공지사항</h2>
-                <table className={NoticeCSS.productTable}>
+         <div className={UseinfoCSS.bodyDiv}>
+                    <h2>사용설명서</h2>
+                <table className={UseinfoCSS.productTable}>
                     <colgroup>
                         <col width="10%" />
                         <col width="35%" />
@@ -66,28 +65,28 @@ function Notices() {
                         </tr>
                     </thead>
                     <tbody>
-                        {Array.isArray(noticeList) &&
-                            noticeList.map((n) => (
+                        {Array.isArray(useinfoList) &&
+                            useinfoList.map((u) => (
                                 <tr
-                                    key={n.noticeCode}
-                                    onClick={() => onClickTableTr(n.noticeCode)}
+                                    key={u.useinfoCode}
+                                    onClick={() => onClickTableTr(u.useinfoCode)}
                                 >
-                                    <td>{n.noticeCode}</td>
-                                    <td colSpan={3}>{n.noticeTitle}</td>
-                                    <td>{n.noticeCount}</td>
-                                    <td>{n.noticeCreate}</td>
-                                    <td>{n.noticeAt}</td>
+                                    <td>{u.useinfoCode}</td>
+                                    <td colSpan={3}>{u.useinfoTitle}</td>
+                                    <td>{u.useinfoCount}</td>
+                                    <td>{u.useinfoCreate}</td>
+                                    <td>{u.useinfoAt}</td>
                                 </tr>
                             ))}
                     </tbody>
                 </table>
             </div>
             <div style={{ listStyleType: "none", display: "flex" }}>
-                { Array.isArray(noticeList) &&
+                { Array.isArray(useinfoList) &&
                 <button 
                     onClick={() => setCurrentPage(currentPage - 1)} 
                     disabled={currentPage === 1}
-                    className={ NoticeCSS.pagingBtn }
+                    className={ UseinfoCSS.pagingBtn }
                 >
                     &lt;
                 </button>
@@ -96,15 +95,15 @@ function Notices() {
                 <li key={num} onClick={() => setCurrentPage(num)}>
                     <button
                         style={ currentPage === num ? {backgroundColor : 'skyblue' } : null}
-                        className={ NoticeCSS.pagingBtn }
+                        className={ UseinfoCSS.pagingBtn }
                     >
                         {num}
                     </button>
                 </li>
                 ))}
-                { Array.isArray(noticeList) &&
+                { Array.isArray(useinfoList) &&
                 <button 
-                    className={ NoticeCSS.pagingBtn }
+                    className={ UseinfoCSS.pagingBtn }
                     onClick={() => setCurrentPage(currentPage + 1)} 
                     disabled={currentPage === pageInfo.pageEnd  || pageInfo.total == 0}
                 >
@@ -116,4 +115,4 @@ function Notices() {
         </>
     );
 }
-export default Notices;
+export default Useinfos;

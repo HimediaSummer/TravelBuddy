@@ -4,6 +4,7 @@ import memberReducer from './MemberModule.js'
 import qnaReducer from './QnaModule.js';
 import faqReducer from './FaqModule.js';
 import noticeReducer from './NoticeModule.js';
+import useinfoReducer from './UseinfoModule.js';
 
 
 const rootReducer = combineReducers({
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
 	memberReducer,
 	qnaReducer,
 	faqReducer,
-	noticeReducer
+	noticeReducer,
+	useinfoReducer
 });
 
 export default rootReducer;

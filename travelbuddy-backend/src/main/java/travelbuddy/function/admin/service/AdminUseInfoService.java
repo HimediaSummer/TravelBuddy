@@ -94,7 +94,6 @@ public class AdminUseInfoService {
 
         Useinfo updateUseinfo = adminUseInfoRepository.findById(useinfoCode).orElse(null);
         updateUseinfo.setUseinfoContents(useinfoDTO.getUseinfoContents());
-        updateUseinfo.setUseinfoCreate(useinfoDTO.getUseinfoCreate());
         adminUseInfoRepository.save(updateUseinfo);
 
         log.info("[AdminUseInfoService] updateUseInfo end");

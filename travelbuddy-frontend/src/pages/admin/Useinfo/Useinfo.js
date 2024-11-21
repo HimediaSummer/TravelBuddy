@@ -2,27 +2,27 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { insertNoticeAPI } from '../../../apis/NoticeAPICalls';
+import { insertUseinfoAPI } from '../../../apis/UseinfoAPICalls';
 
-function Notice () {
+function Useinfo () {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [noticeDTO, setNoticeDTO] = useState({});
-    console.log('noticeDTO 에는?',noticeDTO);
+    const [useinfoDTO, setUseinfoDTO] = useState({});
+    console.log('useinfoDTO 에는?',useinfoDTO);
 
     const cancleQnaInsert = () => {
-        navigate(`/Notices`);
+        navigate(`/Useinfos`);
     };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         console.log(`${name}:${value}`);
-        setNoticeDTO((prevState) => ({ ...prevState, [name]: value }));
+        setUseinfoDTO((prevState) => ({ ...prevState, [name]: value }));
 };
 
-const inserNotice = () => {
+const inserUseinfo = () => {
     const now = new Date();
         const formattedDate = now.toLocaleString('ko-KR', {
             year: 'numeric',
@@ -34,17 +34,17 @@ const inserNotice = () => {
             hour12: false
         }).replace(/\. /g, '-').replace(',', '');
         
-        const updatedQnaDTO = {...noticeDTO, noticeCreate: formattedDate};
-    dispatch(insertNoticeAPI(updatedQnaDTO));
-    alert('공지사항이 등록되었습니다.');
-    navigate(`/Notices`);
+        const updatedUseinfoDTO = {...useinfoDTO, useinfoCreate: formattedDate};
+    dispatch(insertUseinfoAPI(updatedUseinfoDTO));
+    alert('사용설명서가 등록되었습니다.');
+    navigate(`/Useinfos`);
 };
 
     return (
         <div>
         <h2>공지사항</h2>
         <button onClick={cancleQnaInsert}>취소</button>
-        <button onClick={inserNotice}>작성완료</button>
+        <button onClick={inserUseinfo}>작성완료</button>
         <table>
             <thead>
                 <tr>
@@ -56,8 +56,8 @@ const inserNotice = () => {
                     <td>
                         <input
                             type="text"
-                            name="noticeTitle"
-                            value={noticeDTO.noticeTitle}
+                            name="useinfoTitle"
+                            value={useinfoDTO.useinfoTitle}
                             placeholder="제목을 입력하세요"
                             onChange={handleInputChange}
                             required
@@ -67,8 +67,8 @@ const inserNotice = () => {
                     <td>은폐여부</td>
                     <td>
                         <select
-                            name="noticeAt"
-                            value={noticeDTO.noticeAt}
+                            name="useinfoAt"
+                            value={useinfoDTO.useinfoAt}
                             onChange={handleInputChange}
                             required
                         >
@@ -84,8 +84,8 @@ const inserNotice = () => {
                     <td>
                         <input
                             type="text"
-                            name="noticeContents"
-                            value={noticeDTO.noticeContents}
+                            name="useinfoContents"
+                            value={useinfoDTO.useinfoContents}
                             placeholder="내용을 입력하세요."
                             onChange={handleInputChange}
                             required
@@ -102,4 +102,4 @@ const inserNotice = () => {
     );
 }
 
-export default Notice;
+export default Useinfo;

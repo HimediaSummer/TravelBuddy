@@ -30,6 +30,7 @@ public class AdminUseInfoController {
     @Operation(summary = "관리자페이지 설명서 리스트 조회 요청", description = "관리자페이지 설명서 조회 및 페이징 처리가 진행됩니다.", tags={"AdminUseInfoController"})
     @GetMapping("/useinfos")
     public ResponseEntity<ResponseDTO> selectUseInfoListWithPaging(
+
             @RequestParam(name="offset", defaultValue = "1") String offset) {
 
         log.info("[AdminUseInfoController] selectUseInfoListWithPaging() start" + offset);
@@ -37,6 +38,7 @@ public class AdminUseInfoController {
         int total = adminUseInfoService.selectUseInfoTotal();
 
         Criteria cri = new Criteria(Integer.valueOf(offset), 10);
+
         PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
 
         pagingResponseDTO.setData(adminUseInfoService.selectUseInfoListWithPaging(cri));

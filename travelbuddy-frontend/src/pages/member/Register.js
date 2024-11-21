@@ -19,7 +19,7 @@ function Register() {
     const [form, setForm] = useState({
         memberName: '',
         memberPassword: '',
-        memberName: '',
+        memberFullName: '',
         memberEmail: ''
     });
     useEffect(() => {

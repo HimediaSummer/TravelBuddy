@@ -19,6 +19,9 @@ import travelbuddy.function.member.repository.MemberRepository;
 import travelbuddy.jwt.TokenProvider;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 @Service
 public class AuthService {
@@ -29,6 +32,7 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final ModelMapper modelMapper;
     private final AuthorityRepository authorityRepository;
+    private Map<String ,String > verificationCodeMap = new HashMap<>();
 
     @Autowired
     public AuthService(MemberRepository memberRepository, PasswordEncoder passwordEncoder,
@@ -133,5 +137,75 @@ public class AuthService {
         log.info("[AuthService] signup() End.");
 
         return accountDTO;
+    }
+
+    public String findid(String memberEmail) {
+
+        if (memberEmail == null || memberEmail.trim().isEmpty()) {
+            log.error("[AuthService] 필수항목에 빈문자열이 존재합니다.");
+            throw new DuplicatedMemberNameException("이메일을 입력해주세요.");
+        }
+
+        if (!memberEmail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
+            throw new DuplicatedMemberNameException("올바른 형식의 이메일를 입력해주세요.");
+        }
+
+        Account account = memberRepository.findByMemberEmail(memberEmail);
+
+        return (account != null) ? account.getMemberName() : null;
+    }
+
+    public String findpw(String memberEmail) {
+
+        if (memberEmail == null || memberEmail.trim().isEmpty()) {
+            log.error("[AuthService] 필수항목에 빈문자열이 존재합니다.");
+            throw new DuplicatedMemberNameException("이메일을 입력해주세요.");
+        }
+
+        if (!memberEmail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
+            throw new DuplicatedMemberNameException("올바른 형식의 이메일을 입력해주세요.");
+        }
+
+        Account account = memberRepository.findByMemberEmail(memberEmail);
+
+        if (account == null) {
+            log.info("[AuthService] findpw() Required User Not Found!");
+            return null; // 사용자 없음, null 반환
+        }
+
+        // 6자리 랜덤 인증 코드 생성
+        String randomCode = String.format("%06d", new Random().nextInt(999999));
+        verificationCodeMap.put(memberEmail, randomCode); // 인증 코드 저장
+
+        log.info("[AuthService] 인증 코드 생성: {}", randomCode);
+        return randomCode; // 인증 코드를 반환
+    }
+
+    public boolean resetpw(String memberEmail, String verificationCode, String newPassword) {
+        String VerificationCode = verificationCodeMap.get(memberEmail);
+
+        if (VerificationCode == null) {
+            log.info("[AuthService] 인증 코드가 존재하지 않습니다.");
+            return false;
+        }
+
+        if (!verificationCode.equals(VerificationCode)) {
+            log.info("[AuthService] 인증 코드가 일치하지 않습니다.");
+            return false;
+        }
+
+        Account account = memberRepository.findByMemberEmail(memberEmail);
+        if (account == null) {
+            log.info("[AuthService] User Not Found!");
+            return false;
+        }
+
+        account.setMemberPassword(passwordEncoder.encode(newPassword));
+        memberRepository.save(account);
+
+        verificationCodeMap.remove(memberEmail);
+
+        log.info("[AuthService] 비밀번호 재설정 완료");
+        return true;
     }
 }

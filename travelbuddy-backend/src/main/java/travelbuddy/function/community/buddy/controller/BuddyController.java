@@ -70,11 +70,11 @@ public class BuddyController {
 //        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상품 수정 성공",  buddyService.updateBuddy(buddyDTO, productImage)));
 //    }
 
-    @Operation(summary = "버디 유형 이름 요청", description = "버디 유형 이름 정보가 출력됩니다.", tags = {"BuddyController"})
-    @GetMapping("/buddies/getBuddyType")
-    public ResponseEntity<ResponseDTO> selectFqType() {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"버디Type 조회 성공",buddyService.selectBuddyType()));
-    }
+//    @Operation(summary = "버디 유형 이름 요청", description = "버디 유형 이름 정보가 출력됩니다.", tags = {"BuddyController"})
+//    @GetMapping("/buddies/getBuddyType")
+//    public ResponseEntity<ResponseDTO> selectFqType() {
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"버디Type 조회 성공",buddyService.selectBuddyType()));
+//    }
 
 
 }

@@ -7,7 +7,6 @@ import { callBuddyRegistAPI } from "../../../apis/BuddyAPICalls";
 function BuddyRegist() {
 
     const dispatch = useDispatch();
-    console.log("dispatch = ", dispatch);
     const navigate = useNavigate();
     const buddy = useSelector(state => state.buddiesReducer);
 
@@ -15,23 +14,23 @@ function BuddyRegist() {
     const [imageUrl, setImageUrl] = useState();
     const imageInput = useRef();
 
-    const [form, setForm] = useState({
+    const [form, setForm] = useState(
         // buddyTitle: "",
-        // buddyContent: "",
+        // buddyContents: "",
         // buddyTypeCode: "",
-        // buddyImage: "",
         // regionCode: "", 
-        // buddyStatus: ""
-    });
+        // buddyStatus: "",
+        // buddyImg: ""
+    );
 
     console.log("form = ", form);
 
-    useEffect(() => {
-        if(buddy.status == 201) {
-            console.log("[Buddy] Register SUCCESS {}", buddy);
-            navigate("/buddies", { replace: true })
-        }
-    }, [buddy]);
+    // useEffect(() => {
+    //     if(buddy.status == 201) {
+    //         console.log("[Buddy] Register SUCCESS {}", buddy);
+    //         navigate("/buddies", { replace: true })
+    //     }
+    // }, [buddy]);
 
     useEffect(() => {
         if (image) {
@@ -77,7 +76,9 @@ function BuddyRegist() {
         }).replace(/\./g,'-').replace(',','');
 
         const updateForm = {...form, buddyCreate: formattedDate};
-        dispatch(callBuddyRegistAPI({form: updateForm}));
+        dispatch(callBuddyRegistAPI(updateForm));
+
+        console.log("전송 데이터", updateForm);
         alert("완료")
         navigate('/buddies');
     }
@@ -123,7 +124,7 @@ function BuddyRegist() {
             </div>
             <div>
                 <div>
-                    <div>
+                    {/* <div>
                         {imageUrl && (
                             <img
                                 src={imageUrl}
@@ -132,7 +133,7 @@ function BuddyRegist() {
                         )}
                         <input
                             type="file"
-                            name="buddyImage"
+                            name="buddyImg"
                             accept="image/jpg, image/png, image/jpeg, image/gif"
                             onChange={onChangeImageUpload}
                             ref={imageInput}
@@ -142,7 +143,7 @@ function BuddyRegist() {
                         >
                             이미지 업로드
                         </button>
-                    </div>
+                    </div> */}
                 </div>
                 <div>
                     <table>
@@ -152,6 +153,7 @@ function BuddyRegist() {
                                     <input
                                     name="memberCode"
                                     value={1001}
+                                    readOnly
                                     />
                                 </td>
                                 <td>

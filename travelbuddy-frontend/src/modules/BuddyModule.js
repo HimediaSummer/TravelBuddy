@@ -16,7 +16,7 @@ const actions = createActions({
 	[GET_BUDDY]: () => {},
 	// [GET_QNAANSWER]: () => {},
 	// [GET_BUDDYTYPE]: () => {},
-	[POST_BUDDY]: () => {},
+	[POST_BUDDY]: () => {}
 	// [POST_REGISTER]: () => {}
 });
 
@@ -28,7 +28,7 @@ const buddiesReducer = handleActions(
 			return payload;
 		},
 		[GET_BUDDY]: (state, { payload }) => {
-			// console.log("리듀서에서 받은 payload", payload);
+			console.log("리듀서에서 받은 payload", payload);
 			return payload;
 		},
 		// [GET_QNAANSWER]: (state, { payload }) => {

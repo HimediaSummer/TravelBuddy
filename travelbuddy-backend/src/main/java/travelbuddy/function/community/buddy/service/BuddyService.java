@@ -108,13 +108,14 @@ public class BuddyService {
     public Object selectBuddyDetail(int buddyCode) {
         log.info("[BuddyService] selectBuddyDetail() Start");
 
+
         Buddy buddy = buddyRepository.findById(buddyCode).get();
-        Account account = accountRepository.findById(buddy.getAccount().getMemberCode()).get();
-        buddy.setBuddyImg(IMAGE_URL + buddy.getBuddyImg());
-        buddy.setAccount(account);
-        buddyRepository.save(buddy);
+//        Account account = accountRepository.findById(buddy.getAccount().getMemberCode()).get();
+//        buddy.setBuddyImg(IMAGE_URL + buddy.getBuddyImg());
+//        buddy.setAccount(account);
+//        buddyRepository.save(buddy);
         BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
-        buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
+//        buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
 
         log.info("[BuddyService} selectBuddyDetail() END");
 

@@ -14,6 +14,8 @@ import Error from './pages/Error';
 import Buddies from './pages/member/comunity/Buddy';
 import BuddyDetail from './pages/member/comunity/BuddyDetail';
 import BuddyRegist from './pages/member/comunity/BuddyRegist';
+import FindId from './pages/member/FindId';
+import FindPw from './pages/member/FindPw';
 
 function App() {
 
@@ -40,6 +42,8 @@ function App() {
           <Route path="buddies" element={<Buddies />} />
           <Route path="buddyDetail/:buddyCode" element={ <BuddyDetail/>} />
           <Route path="buddyRegist" element={ <BuddyRegist/>} />
+          <Route path='/findid' element={ <FindId/> }/>
+          <Route path='/findpw' element={ <FindPw/> }/>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -130,4 +130,5 @@ public class ScheduleController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정 생성을 위한 데이터 수집 성공!", scheduleService.scheduling(scheduleDTO)));
     }
 
+    
 }

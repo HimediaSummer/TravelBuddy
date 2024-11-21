@@ -1,6 +1,5 @@
 package travelbuddy.function.schedule.service;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,13 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.entity.MemberAnswer;
@@ -268,48 +262,4 @@ public class ScheduleService {
         return answerDTOList;
     }
 
-    public String summarySchedule(String startDate, String endDate, List<String> accommodations, List<String> regions, List<String> questions) {
-        RestTemplate restTemplate = new RestTemplate();
-        String apiUrl = "https://api.openai.com/v1/chat/completions"; // ChatGPT API URL
-
-        // 요청 본문 구성
-        Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("model", "gpt-3.5-turbo");
-        requestBody.put("messages", Arrays.asList(
-            Map.of("role", "user", "content", "여행 일정 생성 요청: " + startDate + "부터 " + endDate + "까지의 여행 일정, 숙소: " + accommodations + ", 지역: " + regions + ", 질문: " + questions)
-        ));
-
-        // API 호출
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
-        ResponseEntity<Map> response = restTemplate.postForEntity(apiUrl, requestEntity, Map.class);
-
-        // // 응답에서 일정 추출
-        // Map<String, Object> responseBody = (Map<String, Object>) response.getBody(); // 응답 본문을 Map으로 변환
-        // String summarySchedule = (String) ((List<Map<String, Object>>) responseBody.get("choices")).get(0).get("message").get("content");
-        
-        // 응답 본문을 Map으로 변환
-        Map<String, Object> responseBody = (Map<String, Object>) response.getBody();
-
-        // "choices" key가 List<Map<String, Object>> 형태인지 확인
-        Object choicesObject = responseBody.get("choices");
-        if (choicesObject instanceof List) {
-            List<Map<String, Object>> choices = (List<Map<String, Object>>) choicesObject;
-
-            // choices의 첫 번째 항목에서 "message"를 가져오고, 그것도 Map<String, Object>로 변환
-            Map<String, Object> message = (Map<String, Object>) choices.get(0).get("message");
-            
-            // "message"에서 "content"를 가져오기
-            String summarySchedule = (String) message.get("content");
-
-            return summarySchedule;
-        } else {
-            // 예상된 형태가 아닐 경우 예외 처리
-            throw new RuntimeException("Unexpected response format: 'choices' is not a list.");
-        }
-
-        // return summarySchedule;
-    }
 }

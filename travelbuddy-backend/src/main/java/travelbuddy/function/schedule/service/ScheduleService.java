@@ -282,7 +282,6 @@ public class ScheduleService {
         // API 호출
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer " + System.getenv("REACT_APP_OPENAI_API_KEY")); // 환경 변수에서 API 키 가져오기
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
         ResponseEntity<Map> response = restTemplate.postForEntity(apiUrl, requestEntity, Map.class);

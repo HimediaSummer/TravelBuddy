@@ -94,7 +94,6 @@ public class AdminNoticeService {
 
         Notice updateNotice = adminNoticeRepository.findById(noticeCode).orElse(null);
         updateNotice.setNoticeContents(noticeDTO.getNoticeContents());
-        updateNotice.setNoticeCreate(noticeDTO.getNoticeCreate());
         adminNoticeRepository.save(updateNotice);
 
         log.info("[AdminNoticeService] updateNotice() end");

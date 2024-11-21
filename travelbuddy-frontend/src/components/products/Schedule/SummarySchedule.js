@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react';
+import OpenAI from "openai";
 
 function SummarySchedule({ travelData }) {
 	const [schedule, setSchedule] = useState('');
 	const [loading, setLoading] = useState(false);
 
+	const openai = new OpenAI();
 	const handleGenerateSchedule = async () => {
 		setLoading(true);
 		try {
-			const response = await fetch('http://localhost:8080/schedule/summaryschedule', {
+			// const response = await fetch('http://localhost:8080/schedule/summaryschedule', {
+			const response = await fetch(openai.chat.completions.create, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${process.env.REACT_APP_GPT_API_KEY}`
 				},
-				body: JSON.stringify(travelData), // travelData는 날짜, 숙소, 지역, 질문지 정보를 포함해야 함
+				// body: JSON.stringify(travelData), // travelData는 날짜, 숙소, 지역, 질문지 정보를 포함해야 함
+				body: JSON.stringify({
+					travelData,
+					model: "gpt-4o-mini",
+					messages: [
+					  { role: "user", content: "travelData를 사용해서 여행계획 짜줘" },
+					],
+					temperature: 1.0,
+					max_tokens: 20,
+				  }),
 			});
 			const data = await response.json();
 			setSchedule(data.schedule); // API에서 받은 일정 설정

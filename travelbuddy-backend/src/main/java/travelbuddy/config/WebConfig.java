@@ -1,3 +1,9 @@
+package travelbuddy.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 //package travelbuddy.config;
 //
 //import org.springframework.beans.factory.annotation.Value;
@@ -20,3 +26,14 @@
 //                .addResourceLocations(ADD_RESOURCE_LOCATION);
 //    }
 //}
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000") // React 실행 주소
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*")
+                .allowCredentials(true);
+    }
+}

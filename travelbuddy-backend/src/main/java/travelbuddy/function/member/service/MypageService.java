@@ -12,8 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import travelbuddy.common.Criteria;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
 import travelbuddy.function.community.buddy.dto.BuddyMatchDataDTO;
 import travelbuddy.function.community.buddy.entity.Buddy;
@@ -260,6 +265,43 @@ public class MypageService {
 //
 //    }
 
+//    public List<Map<String, Object>> selectBuddyList(int memberCode, int pageNum, int pageSize) {
+//        log.info("[MypageService] selectBuddyList() Start");
+//        System.out.println("text memberbuddy" + memberCode);
+//
+//        Pageable paging = PageRequest.of(pageNum - 1, pageSize, Sort.by("buddy.buddyCode").descending());
+//
+//        Page<Object[]> result = myBuddyRepository.findAllByAccount(memberCode, paging);
+//
+//        List<Map<String, Object>> buddyList = result.getContent().stream().map(record -> {
+//            Map<String, Object> buddyMap = new HashMap<>();
+//            Buddy buddy = (Buddy) record[0];
+//            String regionName = (String) record[1];
+//            String buddyTypeName = (String) record[2];
+//            String memberName = (String) record[3];
+//
+//            buddyMap.put("buddyTitle", buddy.getBuddyTitle());
+//            buddyMap.put("buddyCode", buddy.getBuddyCode());
+//            buddyMap.put("buddyCreate", buddy.getBuddyCreate());
+//            buddyMap.put("buddyStatus", buddy.getBuddyStatus());
+//            buddyMap.put("buddyCount", buddy.getBuddyCount());
+//            buddyMap.put("memberName", memberName);
+//            buddyMap.put("regionName", regionName);
+//            buddyMap.put("buddyTypeName", buddyTypeName);
+//
+//            return buddyMap;
+//        }).collect(Collectors.toList());
+//
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("buddyList", buddyList);
+//        response.put("currentPage", result.getNumber() + 1);
+//        response.put("totalPages", result.getTotalPages());
+//        response.put("totalElements", result.getTotalElements());
+//
+//        log.info("[MypageService] selectBuddyList() End");
+//        return response;
+//    }
+
     /* 내가쓴버디게시글조회 */
     public List<Map<String, Object>> selectBuddyList(int memberCode) {
         log.info("[MypageService] selectBuddyList() Start");
@@ -285,9 +327,12 @@ public class MypageService {
 
             buddyList.add(buddyMap);
         }
+
         log.info("[MypageService] selectBuddyList() End");
         return buddyList;
     }
+
+
 
     /* 내가쓴버디게시글상세조회및신청회원목록조회 */
     public Map<String, Object> getBuddyDetail(int buddyCode) {
@@ -298,9 +343,9 @@ public class MypageService {
         List<BuddyMatchData> buddyMatchDataList = myBuddyMatchRepository.findByBuddyCode(buddyCode);
 
         BuddyDTO buddyDTO = modelMapper.map(getBuddyDetail, BuddyDTO.class);
-        if (getBuddyDetail.getAccount() != null) {
-            buddyDTO.setMemberName(getBuddyDetail.getAccount().getMemberName());
-        }
+//        if (getBuddyDetail.getAccount() != null) {
+//            buddyDTO.setMemberName(getBuddyDetail.getAccount().getMemberName());
+//        }
 
         List<BuddyMatchDataDTO> buddyMatchDataDTOList = buddyMatchDataList.stream().map(matchData -> {
             BuddyMatchDataDTO bmdd = new BuddyMatchDataDTO();
@@ -465,4 +510,6 @@ public class MypageService {
         System.out.println("buddyMatchData=============== = " + buddyMatchData);
         log.info("[MypageService] deleteMatch() End");
     }
+
+
 }

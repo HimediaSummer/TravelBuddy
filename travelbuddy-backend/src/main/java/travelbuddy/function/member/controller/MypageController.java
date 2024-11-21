@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import travelbuddy.common.Criteria;
+import travelbuddy.common.PageDTO;
+import travelbuddy.common.PagingResponseDTO;
 import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
 import travelbuddy.function.member.dto.AccountDTO;
@@ -134,6 +137,23 @@ public class MypageController {
 //
 //        return ResponseEntity.ok().body
 //                (new ResponseDTO(HttpStatus.OK, "내가쓴글조회성공", pagingResponseDTO));
+//    }
+
+//    @Operation(summary = "게시글조회요청", description = "내가쓴글목록조회페이징", tags = {"MypageController"})
+//    @GetMapping("/mybuddy")
+//    public ResponseEntity<ResponseDTO> selectBuddyList(@RequestParam(name = "offset", defaultValue = "1")String offset) {
+//
+//        int memberCode = 1002; // 하드코딩된 memberCode
+//
+//        int total = mypageService.selectMyBuddyTotal();
+//        Criteria cri = new Criteria(Integer.valueOf(offset), 10);
+//        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
+//        pagingResponseDTO.setData(mypageService.selectBuddyList(cri));
+//        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
+//
+//        Map<String, Object> response = mypageService.selectBuddyList(memberCode, page, size);
+//
+//        return ResponseEntity.ok(response);
 //    }
 
     @Operation(summary = "게시글조회요청", description = "내가쓴글목록조회", tags = {"MypageController"})

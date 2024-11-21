@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { getProfile } from "../../../modules/mypage/MyBuddyModule.js"
+import { getProfile } from "../../../modules/mypage/MyProfileModule.js"
 
 function MyProfile() {
 
@@ -55,6 +55,10 @@ function MyProfile() {
                  ))}
             </ul>
             ) : (<p>Loading...</p>)}
+            
+            <button onClick={() => navigate('/mypage/updatemyprofile')}>
+                        수정하기
+                    </button>
         </div>
     );
 }

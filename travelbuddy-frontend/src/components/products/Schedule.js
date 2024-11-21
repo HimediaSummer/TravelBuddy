@@ -8,9 +8,8 @@ import QuestionSchedule from './Schedule/QuestionSchedule';
 import Summary from './Schedule/SummarySchedule';
 
 function Schedule() {
-	const [currentStep, setCurrentStep] = useState(0); // z컴포넌트 바꾸기?
 	// 장소값 전달하기 도전중
-	const [selectedRegion, setSelectedRegion] = useState(null);
+	// const [selectedRegion, setSelectedRegion] = useState(null);
 	// 선택한 장소/날짜 출력하기 도전중
 	const [startDate, setStartDate] = useState();
 	const [endDate, setEndDate] = useState();
@@ -34,30 +33,30 @@ function Schedule() {
 
 	// 각 단계 컴포넌트들
 	const steps = [
-		<DateSchedule onNext={() => setCurrentStep(1)} startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}/>,
-		<RegionSchedule onNext={() => setCurrentStep(2)} selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion}/>,
-		<AccomSchedule onNext={() => setCurrentStep(3)}  selectedRegion={selectedRegion}/>,
-		<QuestionSchedule onNext={() => setCurrentStep(4)} />,
-		<Summary />
-		<DateSchedule
-			onNext={() => setCurrentStep(1)}
-			setTravelData={setTravelData}
-		/>,
-		<RegionSchedule
-			onNext={() => setCurrentStep(2)}
-			selectedRegion={selectedRegion}
-			setSelectedRegion={setSelectedRegion}
-			setTravelData={setTravelData}
-		/>,
-		<AccomSchedule
-			onNext={() => setCurrentStep(3)}
-			setTravelData={setTravelData}
-		/>,
-		<QuestionSchedule
-			onNext={() => setCurrentStep(4)}
-			setTravelData={setTravelData}
-		/>,
-		<Summary travelData={travelData} />
+		<DateSchedule onNext={() => setCurrentStep(1)} startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} setTravelData={setTravelData}/>,
+		<RegionSchedule onNext={() => setCurrentStep(2)} selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion} setTravelData={setTravelData}/>,
+		<AccomSchedule onNext={() => setCurrentStep(3)}  selectedRegion={selectedRegion} setTravelData={setTravelData}/>,
+		<QuestionSchedule onNext={() => setCurrentStep(4)} setTravelData={setTravelData}/>,
+		<Summary travelData={travelData}/>
+		// <DateSchedule
+		// 	onNext={() => setCurrentStep(1)}
+		// 	setTravelData={setTravelData}
+		// />,
+		// <RegionSchedule
+		// 	onNext={() => setCurrentStep(2)}
+		// 	selectedRegion={selectedRegion}
+		// 	setSelectedRegion={setSelectedRegion}
+		// 	setTravelData={setTravelData}
+		// />,
+		// <AccomSchedule
+		// 	onNext={() => setCurrentStep(3)}
+		// 	setTravelData={setTravelData}
+		// />,
+		// <QuestionSchedule
+		// 	onNext={() => setCurrentStep(4)}
+		// 	setTravelData={setTravelData}
+		// />,
+		// <Summary travelData={travelData} />
 	];
 	// const steps = [
 	// 	<DateSchedule onNext={() => setCurrentStep(1)} />,

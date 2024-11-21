@@ -9,7 +9,7 @@ import 'moment/locale/ko';
 Modal.setAppElement('#root');
 moment.locale('ko');
 
-function DateSchedule({ onNext, startDate, setStartDate, endDate, setEndDate }) {
+function DateSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, setTravelData }) {
 
 	const [currentStep, setCurrentStep] = useState(0); // z컴포넌트 바꾸기?
 	//   const [message, setMessage] = useState('');
@@ -17,7 +17,7 @@ function DateSchedule({ onNext, startDate, setStartDate, endDate, setEndDate }) 
 	const [region, setRegion] = useState([]);
 	const [qTheme, setQTheme] = useState([]);
 
-function DateSchedule({ onNext, setTravelData }) {
+// function DateSchedule({ onNext, setTravelData }) {
 	// 모달
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -43,7 +43,6 @@ function DateSchedule({ onNext, setTravelData }) {
 			startDate,
 			endDate
 		}));
-		onNext();
 	};
 
 	// 날짜 선택 최대 5일

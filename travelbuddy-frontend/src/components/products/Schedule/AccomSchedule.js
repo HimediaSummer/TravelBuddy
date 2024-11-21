@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Map from './Map';
 
-function AccomSchedule({ onNext, selectedRegion }) {
-function AccomSchedule({ onNext, setTravelData }) {
+function AccomSchedule({ onNext, selectedRegion, setTravelData }) {
+// function AccomSchedule({ onNext, setTravelData }) {
 
 	const [accom, setAccom] = useState([]);
 	const [selectedAccom, setSelectedAccom] = useState(null);

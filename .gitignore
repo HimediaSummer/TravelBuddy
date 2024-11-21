@@ -6,6 +6,9 @@ build/
 !**/src/test/**/build/
 /..gradle/
 /**/..gradle/
+.env
+/..env/
+/**/..env/
 
 ### STS ###
 .apt_generated

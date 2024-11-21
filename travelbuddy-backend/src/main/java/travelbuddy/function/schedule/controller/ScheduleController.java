@@ -1,5 +1,6 @@
 package travelbuddy.function.schedule.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.schedule.dto.ScheduleDTO;
+import travelbuddy.function.schedule.dto.TravelDataDTO;
 import travelbuddy.function.schedule.service.ScheduleService;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/schedule")
@@ -130,6 +130,25 @@ public class ScheduleController {
         System.out.println("머 갖고잇어" + scheduleDTO);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정 생성을 위한 데이터 수집 성공!", scheduleService.scheduling(scheduleDTO)));
+    }
+
+    @PostMapping("/summaryschedule")
+    public ResponseEntity<ResponseDTO> summarySchedule(@RequestBody TravelDataDTO travelData) {
+        // travelData에서 필요한 정보 추출
+        String startDate = travelData.getStartDate();
+        String endDate = travelData.getEndDate();
+        List<String> accommodations = travelData.getAccommodations();
+        List<String> regions = travelData.getRegions();
+        List<String> questions = travelData.getQuestions();
+
+        // 여기서 ChatGPT API를 호출하여 일정을 생성하는 로직을 추가합니다.
+        // 예를 들어, scheduleService.summarySchedule(startDate, endDate, accommodations, regions, questions);
+        System.out.println("스케줄데이터" + travelData);
+        // 생성된 일정을 반환
+        String summarySchedule = scheduleService.summarySchedule(startDate, endDate, accommodations, regions, questions);
+        System.out.println("생성된스케줄데이터" + summarySchedule);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정 생성 성공", summarySchedule));
     }
 
 }

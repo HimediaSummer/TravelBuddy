@@ -21,6 +21,14 @@ function Schedule() {
 		<Summary />
 	];
 
+	const travelData = {
+		startDate: "2023-10-01",
+		endDate: "2023-10-07",
+		accommodations: ["Hotel A", "Hotel B"],
+		regions: ["Seoul", "Busan"],
+		questions: ["What to do?", "Where to eat?"]
+	};
+
 	return (
 		<div className="App">
 			<head>

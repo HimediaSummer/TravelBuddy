@@ -4,6 +4,32 @@ function SummarySchedule({ travelData }) {
 	const [schedule, setSchedule] = useState('');
 	const [loading, setLoading] = useState(false);
 
+	const handleGenerateSchedule = async () => {
+		setLoading(true);
+		try {
+			const response = await fetch('http://localhost:8080/schedule/summaryschedule', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(travelData), // travelData는 날짜, 숙소, 지역, 질문지 정보를 포함해야 함
+			});
+			const data = await response.json();
+			setSchedule(data.schedule); // API에서 받은 일정 설정
+			console.log('response' , response);
+			console.log('data');
+			console.log(data);
+			console.log('data.schedule');
+			console.log(data.schedule);
+			console.log('data.data');
+			console.log(data.data.schedule);
+		} catch (error) {
+			console.error('Error generating schedule:', error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	useEffect(() => {
 		// 초기화 또는 다른 로직이 필요할 경우 여기에 추가
 	}, []);

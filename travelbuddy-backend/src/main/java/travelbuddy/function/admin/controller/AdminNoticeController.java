@@ -55,19 +55,19 @@ public class AdminNoticeController {
     }
 
     @Operation(summary = "공지 등록 요청", description = "공지의 등록 처리가 진행됩니다.", tags = {"AdminNoticeController"})
-    @PostMapping("/notices/insertNotice")
+    @PostMapping("/notices/insertnotice")
     public ResponseEntity<ResponseDTO> insertNotice(@RequestBody NoticeDTO noticeDTO) {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 등록 완료",adminNoticeService.insertNotice(noticeDTO)));
     }
 
     @Operation(summary = "공지 수정 요청", description = "공지의 수정 처리가 진행됩니다.", tags = {"AdminNoticeController"})
-    @PutMapping("/notices/{noticeCode}/updateNotice")
+    @PutMapping("/notices/{noticeCode}/updatenotice")
     public ResponseEntity<ResponseDTO> insertNotice(@PathVariable int noticeCode, @RequestBody NoticeDTO noticeDTO) {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 수정 완료",adminNoticeService.updateNotice(noticeCode,noticeDTO)));
     }
 
     @Operation(summary = "공지 삭제 요청", description = "공지의 삭제 처리가 진행됩니다.", tags = {"AdminNoticeController"})
-    @DeleteMapping("/notices/{noticeCode}/deleteNotice")
+    @DeleteMapping("/notices/{noticeCode}/deletenotice")
     public ResponseEntity<ResponseDTO> insertNotice(@PathVariable int noticeCode) {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 삭제 완료",adminNoticeService.deleteNotice(noticeCode)));
     }

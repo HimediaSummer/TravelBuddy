@@ -38,220 +38,222 @@ DROP TABLE IF EXISTS tbl_faq;
 DROP TABLE IF EXISTS tbl_fq_type;
 
 CREATE TABLE
-    IF NOT EXISTS tbl_fq_type (
-                                  fq_type_code INT NOT NULL AUTO_INCREMENT COMMENT '문의유형코드',
-                                  fq_type_name VARCHAR(30) NOT NULL COMMENT '문의유형이름',
-                                  PRIMARY KEY (fq_type_code)
+	IF NOT EXISTS tbl_fq_type (
+		                          fq_type_code INT NOT NULL AUTO_INCREMENT COMMENT '문의유형코드',
+		                          fq_type_name VARCHAR(30) NOT NULL COMMENT '문의유형이름',
+		                          PRIMARY KEY (fq_type_code)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = 'FAQ QnA 유형';
 
 -- 테이블 생성 (PK, AUTO_INCREMENT, ENGINE, COMMENT, FK 포함)
 CREATE TABLE
-    IF NOT EXISTS tbl_faq (
-                              faq_code INT NOT NULL AUTO_INCREMENT COMMENT '문의코드',
-                              fq_type_code INT NOT NULL COMMENT '문의유형코드',
-                              faq_title VARCHAR(100) NOT NULL COMMENT 'faq제목',
-                              faq_contents VARCHAR(500) NOT NULL COMMENT 'faq내용',
-                              faq_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
-                              PRIMARY KEY (faq_code),
-                              FOREIGN KEY (fq_type_code) REFERENCES tbl_fq_type (fq_type_code) ON DELETE CASCADE
+	IF NOT EXISTS tbl_faq (
+		                      faq_code INT NOT NULL AUTO_INCREMENT COMMENT '문의코드',
+		                      fq_type_code INT NOT NULL COMMENT '문의유형코드',
+		                      faq_title VARCHAR(100) NOT NULL COMMENT 'faq제목',
+		                      faq_contents VARCHAR(500) NOT NULL COMMENT 'faq내용',
+		                      faq_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
+		                      PRIMARY KEY (faq_code),
+		                      FOREIGN KEY (fq_type_code) REFERENCES tbl_fq_type (fq_type_code) ON DELETE CASCADE
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = 'FAQ';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_authority (
-                                    authority_code INT NOT NULL AUTO_INCREMENT COMMENT '권한코드',
-                                    authority_name VARCHAR(20) NOT NULL COMMENT '권한이름',
-                                    PRIMARY KEY (authority_code)
+	IF NOT EXISTS tbl_authority (
+		                            authority_code INT NOT NULL AUTO_INCREMENT COMMENT '권한코드',
+		                            authority_name VARCHAR(20) NOT NULL COMMENT '권한이름',
+		                            PRIMARY KEY (authority_code)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '권한';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_account (
-                                  member_code INT NOT NULL AUTO_INCREMENT COMMENT '회원코드',
-                                  member_name VARCHAR(20) NOT NULL COMMENT '회원아이디',
-                                  member_password VARCHAR(255) NOT NULL COMMENT '회원비밀번호',
-                                  member_full_name VARCHAR(20) NOT NULL COMMENT '회원이름',
-                                  member_birthday DATE NOT NULL COMMENT '회원생년월일',
-                                  member_email VARCHAR(50) NOT NULL COMMENT '회원이메일',
-                                  member_phone VARCHAR(15) NOT NULL COMMENT '회원전화번호',
-                                  member_suspension VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '정지여부',
-                                  member_deletion VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '탈퇴여부',
-                                  member_like INT NULL DEFAULT 0 COMMENT '좋아요',
-                                  member_img TEXT NULL COMMENT '프로필사진',
-                                  authority_code INT NOT NULL COMMENT '권한코드',
-                                  member_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT  '가입일',
-                                  member_leave DATE NULL COMMENT '탈퇴일',
-                                  PRIMARY KEY (member_code),
-                                  FOREIGN KEY (authority_code) REFERENCES tbl_authority (authority_code) ON DELETE CASCADE
+	IF NOT EXISTS tbl_account (
+		                          member_code INT NOT NULL AUTO_INCREMENT COMMENT '회원코드',
+		                          member_name VARCHAR(20) NOT NULL COMMENT '회원아이디',
+		                          member_password VARCHAR(255) NOT NULL COMMENT '회원비밀번호',
+		                          member_full_name VARCHAR(20) NOT NULL COMMENT '회원이름',
+		                          member_birthday DATE NOT NULL COMMENT '회원생년월일',
+		                          member_email VARCHAR(50) NOT NULL COMMENT '회원이메일',
+		                          member_phone VARCHAR(15) NOT NULL COMMENT '회원전화번호',
+		                          member_suspension VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '정지여부',
+		                          member_deletion VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '탈퇴여부',
+		                          member_like INT NULL DEFAULT 0 COMMENT '좋아요',
+		                          member_img TEXT NULL COMMENT '프로필사진',
+		                          authority_code INT NOT NULL COMMENT '권한코드',
+		                          member_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT  '가입일',
+		                          member_leave DATE NULL COMMENT '탈퇴일',
+		                          PRIMARY KEY (member_code),
+		                          FOREIGN KEY (authority_code) REFERENCES tbl_authority (authority_code) ON DELETE CASCADE
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '회원 계정';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_verification (
-                                       verification_code INT NOT NULL AUTO_INCREMENT COMMENT '인증코드',
-                                       verification_number INT NOT NULL COMMENT '인증번호',
-                                       is_verified BOOLEAN NOT NULL COMMENT '인증여부',
-                                       verification_time DATETIME NOT NULL COMMENT '만료시간',
-                                       member_code INT NOT NULL COMMENT '회원코드',
-                                       PRIMARY KEY (verification_code),
-                                       FOREIGN KEY (member_code) REFERENCES tbl_account (member_code) ON DELETE CASCADE
+	IF NOT EXISTS tbl_verification (
+		                               verification_code INT NOT NULL AUTO_INCREMENT COMMENT '인증코드',
+		                               verification_number INT NOT NULL COMMENT '인증번호',
+		                               is_verified BOOLEAN NOT NULL COMMENT '인증여부',
+		                               verification_time DATETIME NOT NULL COMMENT '만료시간',
+		                               member_code INT NOT NULL COMMENT '회원코드',
+		                               PRIMARY KEY (verification_code),
+		                               FOREIGN KEY (member_code) REFERENCES tbl_account (member_code) ON DELETE CASCADE
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '인증';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_region (
-                                 region_code INT NOT NULL AUTO_INCREMENT COMMENT '지역코드',
-                                 region_name VARCHAR(30) NOT NULL COMMENT '지역명',
-                                 region_description VARCHAR(255) NOT NULL COMMENT '지역설명',
-                                 region_img TEXT NULL COMMENT '지역사진',
-                                 region_thumbnail_img TEXT NULL COMMENT '지역썸네일사진',
-                                 PRIMARY KEY (region_code)
+	IF NOT EXISTS tbl_region (
+		                         region_code INT NOT NULL AUTO_INCREMENT COMMENT '지역코드',
+		                         region_name VARCHAR(30) NOT NULL COMMENT '지역명',
+		                         region_description VARCHAR(255) NOT NULL COMMENT '지역설명',
+		                         region_img TEXT NULL COMMENT '지역사진',
+		                         region_thumbnail_img TEXT NULL COMMENT '지역썸네일사진',
+		                         PRIMARY KEY (region_code)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '지역';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_buddy_type (
-                                     buddy_type_code INT NOT NULL AUTO_INCREMENT COMMENT '버디유형코드',
-                                     buddy_type_name VARCHAR(50) NOT NULL COMMENT '버디유형이름',
-                                     PRIMARY KEY (buddy_type_code)
+	IF NOT EXISTS tbl_buddy_type (
+		                             buddy_type_code INT NOT NULL AUTO_INCREMENT COMMENT '버디유형코드',
+		                             buddy_type_name VARCHAR(50) NOT NULL COMMENT '버디유형이름',
+		                             PRIMARY KEY (buddy_type_code)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '버디 유형';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_buddy (
-                                buddy_code INT NOT NULL AUTO_INCREMENT COMMENT '버디코드',
-                                member_code INT NOT NULL COMMENT '회원코드',
-                                region_code INT NOT NULL COMMENT '지역코드',
-                                buddy_type_code INT NOT NULL COMMENT '버디유형코드',
-                                buddy_title VARCHAR(50) NOT NULL COMMENT '게시글제목',
-                                buddy_contents VARCHAR(500) NOT NULL COMMENT '게시글내용',
-                                buddy_create DATETIME NOT NULL COMMENT '게시글작성일',
-                                buddy_status VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '게시글상태',
-                                buddy_img TEXT NULL COMMENT '게시글이미지',
-                                buddy_count INT NOT NULL DEFAULT 0 COMMENT '조회수',
-                                buddy_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
-                                PRIMARY KEY (buddy_code),
-                                FOREIGN KEY (member_code) REFERENCES tbl_account (member_code) ON DELETE CASCADE,
-                                FOREIGN KEY (region_code) REFERENCES tbl_region (region_code) ON DELETE CASCADE,
-                                FOREIGN KEY (buddy_type_code) REFERENCES tbl_buddy_type (buddy_type_code) ON DELETE CASCADE
+	IF NOT EXISTS tbl_buddy (
+		                        buddy_code INT NOT NULL AUTO_INCREMENT COMMENT '버디코드',
+		                        member_code INT NOT NULL COMMENT '회원코드',
+		                        region_code INT NOT NULL COMMENT '지역코드',
+		                        buddy_type_code INT NOT NULL COMMENT '버디유형코드',
+		                        buddy_title VARCHAR(50) NOT NULL COMMENT '게시글제목',
+		                        buddy_contents VARCHAR(500) NOT NULL COMMENT '게시글내용',
+		                        buddy_create DATETIME NOT NULL COMMENT '게시글작성일',
+		                        buddy_status VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '게시글상태',
+		                        buddy_img TEXT NULL COMMENT '게시글이미지',
+		                        buddy_count INT NOT NULL DEFAULT 0 COMMENT '조회수',
+		                        buddy_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
+		                        PRIMARY KEY (buddy_code),
+		                        FOREIGN KEY (member_code) REFERENCES tbl_account (member_code) ON DELETE CASCADE,
+		                        FOREIGN KEY (region_code) REFERENCES tbl_region (region_code) ON DELETE CASCADE,
+		                        FOREIGN KEY (buddy_type_code) REFERENCES tbl_buddy_type (buddy_type_code) ON DELETE CASCADE
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '버디게시판';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_qna (
-                              qna_code INT NOT NULL AUTO_INCREMENT COMMENT '문의코드',
-                              fq_type_code INT NOT NULL COMMENT '문의유형코드',
-                              member_code INT NOT NULL COMMENT '회원코드',
-                              qna_title VARCHAR(100) NOT NULL COMMENT '문의제목',
-                              qna_contents VARCHAR(500) NOT NULL COMMENT '문의내용',
-                              qna_create DATETIME NOT NULL COMMENT '문의생성일',
-                              PRIMARY KEY (qna_code),
-                              FOREIGN KEY (fq_type_code) REFERENCES tbl_fq_type (fq_type_code) ON DELETE CASCADE,
-                              FOREIGN KEY (member_code) REFERENCES tbl_account (member_code) ON DELETE CASCADE
+	IF NOT EXISTS tbl_qna (
+		                      qna_code INT NOT NULL AUTO_INCREMENT COMMENT '문의코드',
+		                      fq_type_code INT NOT NULL COMMENT '문의유형코드',
+		                      member_code INT NOT NULL COMMENT '회원코드',
+		                      qna_title VARCHAR(100) NOT NULL COMMENT '문의제목',
+		                      qna_contents VARCHAR(500) NOT NULL COMMENT '문의내용',
+		                      qna_create DATETIME NOT NULL COMMENT '문의생성일',
+		                      PRIMARY KEY (qna_code),
+		                      FOREIGN KEY (fq_type_code) REFERENCES tbl_fq_type (fq_type_code) ON DELETE CASCADE,
+		                      FOREIGN KEY (member_code) REFERENCES tbl_account (member_code) ON DELETE CASCADE
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = 'QnA';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_notice (
-                                 notice_code INT NOT NULL AUTO_INCREMENT COMMENT '공지코드',
-                                 notice_title VARCHAR(100) NOT NULL COMMENT '공지제목',
-                                 notice_contents TEXT NOT NULL COMMENT '공지내용',
-                                 notice_create DATETIME NOT NULL COMMENT '등록일시',
-                                 notice_count INT NOT NULL DEFAULT 0 COMMENT '조회수',
-                                 notice_img VARCHAR(300) NULL COMMENT '이미지경로',
-                                 notice_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
-                                 PRIMARY KEY (notice_code)
+	IF NOT EXISTS tbl_notice (
+		                         notice_code INT NOT NULL AUTO_INCREMENT COMMENT '공지코드',
+		                         notice_title VARCHAR(100) NOT NULL COMMENT '공지제목',
+		                         notice_contents TEXT NOT NULL COMMENT '공지내용',
+		                         notice_create DATETIME NOT NULL COMMENT '등록일시',
+		                         notice_count INT NOT NULL DEFAULT 0 COMMENT '조회수',
+		                         notice_img VARCHAR(300) NULL COMMENT '이미지경로',
+		                         notice_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
+		                         PRIMARY KEY (notice_code)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '공지사항';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_qna_answer (
-                                     ans_code INT NOT NULL AUTO_INCREMENT COMMENT '답변코드',
-                                     qna_code INT NOT NULL COMMENT '문의코드',
-                                     ans_contents VARCHAR(500) NULL COMMENT '답변내용',
-                                     ans_create DATETIME NULL COMMENT '답변날짜',
-                                     PRIMARY KEY (ans_code),
-                                     FOREIGN KEY (qna_code) REFERENCES tbl_qna (qna_code) ON DELETE CASCADE
+	IF NOT EXISTS tbl_qna_answer (
+		                             ans_code INT NOT NULL AUTO_INCREMENT COMMENT '답변코드',
+		                             qna_code INT NOT NULL COMMENT '문의코드',
+		                             ans_contents VARCHAR(500) NULL COMMENT '답변내용',
+		                             ans_create DATETIME NULL COMMENT '답변날짜',
+		                             PRIMARY KEY (ans_code),
+		                             FOREIGN KEY (qna_code) REFERENCES tbl_qna (qna_code) ON DELETE CASCADE
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = 'QnA 답변';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_useinfo (
-                                  useinfo_code INT NOT NULL AUTO_INCREMENT COMMENT '설명서코드',
-                                  useinfo_title VARCHAR(50) NOT NULL COMMENT '설명서제목',
-                                  useinfo_contents TEXT NOT NULL COMMENT '설명서내용',
-                                  useinfo_create DATETIME NOT NULL COMMENT '등록일시',
-                                  useinfo_count INT NOT NULL DEFAULT 0 COMMENT '조회수',
-                                  useinfo_img VARCHAR(300) NULL COMMENT '이미지경로',
-                                  useinfo_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
-                                  PRIMARY KEY (useinfo_code)
+	IF NOT EXISTS tbl_useinfo (
+		                          useinfo_code INT NOT NULL AUTO_INCREMENT COMMENT '설명서코드',
+		                          useinfo_title VARCHAR(50) NOT NULL COMMENT '설명서제목',
+		                          useinfo_contents TEXT NOT NULL COMMENT '설명서내용',
+		                          useinfo_create DATETIME NOT NULL COMMENT '등록일시',
+		                          useinfo_count INT NOT NULL DEFAULT 0 COMMENT '조회수',
+		                          useinfo_img VARCHAR(300) NULL COMMENT '이미지경로',
+		                          useinfo_at VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '은폐여부',
+		                          PRIMARY KEY (useinfo_code)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '사용설명서';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_buddy_match_data (
-                                           buddy_match_code INT NOT NULL AUTO_INCREMENT COMMENT '버디매칭코드',
-                                           buddy_code INT NOT NULL COMMENT '버디코드',
-                                           apply_id VARCHAR(30) NULL COMMENT '신청자아이디',
-                                           apply_status INT NOT NULL DEFAULT '1' COMMENT '매칭신청',
-                                           PRIMARY KEY (buddy_match_code),
-                                           FOREIGN KEY (buddy_code) REFERENCES tbl_buddy (buddy_code) ON DELETE CASCADE
+	IF NOT EXISTS tbl_buddy_match_data (
+		                                   buddy_match_code INT NOT NULL AUTO_INCREMENT COMMENT '버디매칭코드',
+		                                   buddy_code INT NOT NULL COMMENT '버디코드',
+		                                   member_code INT NOT NULL COMMENT '회원코드',
+		                                   apply_id VARCHAR(30) NULL COMMENT '신청자아이디',
+		                                   apply_status INT NOT NULL DEFAULT '1' COMMENT '매칭신청',
+		                                   PRIMARY KEY (buddy_match_code),
+		                                   FOREIGN KEY (buddy_code) REFERENCES tbl_buddy (buddy_code) ON DELETE CASCADE,
+		                                   FOREIGN KEY (member_code) REFERENCES tbl_account (member_code) ON DELETE CASCADE
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '버디 매칭 데이터';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_question_naire_theme (
-                                               theme_code int NOT NULL AUTO_INCREMENT COMMENT '질문지테마코드',
-                                               question_theme VARCHAR(255) NULL COMMENT '질문지 테마',
-                                               PRIMARY KEY (theme_code)
+	IF NOT EXISTS tbl_question_naire_theme (
+		                                       theme_code int NOT NULL AUTO_INCREMENT COMMENT '질문지테마코드',
+		                                       question_theme VARCHAR(255) NULL COMMENT '질문지 테마',
+		                                       PRIMARY KEY (theme_code)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '질문지 테마';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_questionnaire (
-                                        quest_code INT NOT NULL AUTO_INCREMENT COMMENT '질문지코드',
-                                        question VARCHAR(255) NULL COMMENT '질문',
-                                        theme_code INT NOT NULL COMMENT '질문지테마코드',
-                                        PRIMARY KEY (quest_code),
-                                        FOREIGN KEY (theme_code) REFERENCES tbl_question_naire_theme (theme_code) ON DELETE CASCADE
+	IF NOT EXISTS tbl_questionnaire (
+		                                quest_code INT NOT NULL AUTO_INCREMENT COMMENT '질문지코드',
+		                                question VARCHAR(255) NULL COMMENT '질문',
+		                                theme_code INT NOT NULL COMMENT '질문지테마코드',
+		                                PRIMARY KEY (quest_code),
+		                                FOREIGN KEY (theme_code) REFERENCES tbl_question_naire_theme (theme_code) ON DELETE CASCADE
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '질문지';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_answer (
-                                 answer_code INT NOT NULL AUTO_INCREMENT COMMENT '답변코드',
-                                 answer TEXT NOT NULL COMMENT '답변',
-                                 quest_code INT NOT NULL COMMENT '질문지코드',
-                                 PRIMARY KEY (answer_code),
-                                 FOREIGN KEY (quest_code) REFERENCES tbl_questionnaire (quest_code) ON DELETE CASCADE
+	IF NOT EXISTS tbl_answer (
+		                         answer_code INT NOT NULL AUTO_INCREMENT COMMENT '답변코드',
+		                         answer TEXT NOT NULL COMMENT '답변',
+		                         quest_code INT NOT NULL COMMENT '질문지코드',
+		                         PRIMARY KEY (answer_code),
+		                         FOREIGN KEY (quest_code) REFERENCES tbl_questionnaire (quest_code) ON DELETE CASCADE
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '답변';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_member_answer (
-                                        member_answer_code INT NOT NULL AUTO_INCREMENT COMMENT '회원답변코드',
-                                        quest_code INT NOT NULL COMMENT '질문지코드',
-                                        answer_code INT NOT NULL COMMENT '답변코드',
-                                        PRIMARY KEY (member_answer_code),
-                                        FOREIGN KEY (answer_code) REFERENCES tbl_answer (answer_code) ON DELETE CASCADE,
-                                        FOREIGN KEY (quest_code) REFERENCES tbl_questionnaire (quest_code) ON DELETE CASCADE
+	IF NOT EXISTS tbl_member_answer (
+		                                member_answer_code INT NOT NULL AUTO_INCREMENT COMMENT '회원답변코드',
+		                                quest_code INT NOT NULL COMMENT '질문지코드',
+		                                answer_code INT NOT NULL COMMENT '답변코드',
+		                                PRIMARY KEY (member_answer_code),
+		                                FOREIGN KEY (answer_code) REFERENCES tbl_answer (answer_code) ON DELETE CASCADE,
+		                                FOREIGN KEY (quest_code) REFERENCES tbl_questionnaire (quest_code) ON DELETE CASCADE
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '회원답변';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_accommodation (
-                                        accom_code INT NOT NULL COMMENT '숙소코드',
-                                        accom_type VARCHAR(20) NULL COMMENT '숙소종류',
-                                        accom_name VARCHAR(100) NULL COMMENT '숙소이름',
-                                        accom_addres VARCHAR(100) NULL COMMENT '숙소주소',
-                                        accom_img TEXT NULL COMMENT '숙소사진',
-                                        accom_thumbnail_img TEXT NULL COMMENT '숙소썸네일사진',
-                                        PRIMARY KEY (accom_code)
+	IF NOT EXISTS tbl_accommodation (
+		                                accom_code INT NOT NULL COMMENT '숙소코드',
+		                                accom_type VARCHAR(20) NULL COMMENT '숙소종류',
+		                                accom_name VARCHAR(100) NULL COMMENT '숙소이름',
+		                                accom_addres VARCHAR(100) NULL COMMENT '숙소주소',
+		                                accom_img TEXT NULL COMMENT '숙소사진',
+		                                accom_thumbnail_img TEXT NULL COMMENT '숙소썸네일사진',
+		                                PRIMARY KEY (accom_code)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '숙소 테이블';
 
 CREATE TABLE
-    IF NOT EXISTS tbl_schedule (
-                                   sche_code INT NOT NULL AUTO_INCREMENT COMMENT '스케줄넘버',
-                                   region_code INT NOT NULL COMMENT '지역코드',
-                                   accom_code INT NOT NULL COMMENT '숙소코드',
-                                   member_code INT NOT NULL COMMENT '회원코드',
-                                   member_answer_code INT NOT NULL COMMENT '회원답변코드',
-                                   sche_list VARCHAR(255) NOT NULL COMMENT '생성된스케줄',
-                                   sche_start_date DATE NOT NULL COMMENT '여행시작날짜',
-                                   sche_end_date DATE NOT NULL COMMENT '여행종료날짜',
-                                   sche_start_time time NOT NULL COMMENT '여행시작날짜',
-                                   sche_end_time time NOT NULL COMMENT '여행종료날짜',
-                                   travel_time VARCHAR(100) NOT NULL COMMENT '이동시간',
-                                   sche_time VARCHAR(100) NOT NULL COMMENT '스케줄시간',
-                                   PRIMARY KEY (sche_code),
-                                   FOREIGN KEY (region_code) REFERENCES tbl_region (region_code) ON DELETE CASCADE,
-                                   FOREIGN KEY (accom_code) REFERENCES tbl_accommodation (accom_code) ON DELETE CASCADE,
-                                   FOREIGN KEY (member_code) REFERENCES tbl_account (member_code) ON DELETE CASCADE,
-                                   FOREIGN KEY (member_answer_code) REFERENCES tbl_member_answer (member_answer_code) ON DELETE CASCADE
+	IF NOT EXISTS tbl_schedule (
+		                           sche_code INT NOT NULL AUTO_INCREMENT COMMENT '스케줄넘버',
+		                           region_code INT NOT NULL COMMENT '지역코드',
+		                           accom_code INT NOT NULL COMMENT '숙소코드',
+		                           member_code INT NOT NULL COMMENT '회원코드',
+		                           member_answer_code INT NOT NULL COMMENT '회원답변코드',
+		                           sche_list VARCHAR(255) NOT NULL COMMENT '생성된스케줄',
+		                           sche_start_date DATE NOT NULL COMMENT '여행시작날짜',
+		                           sche_end_date DATE NOT NULL COMMENT '여행종료날짜',
+		                           sche_start_time time NOT NULL COMMENT '여행시작날짜',
+		                           sche_end_time time NOT NULL COMMENT '여행종료날짜',
+		                           travel_time VARCHAR(100) NOT NULL COMMENT '이동시간',
+		                           sche_time VARCHAR(100) NOT NULL COMMENT '스케줄시간',
+		                           PRIMARY KEY (sche_code),
+		                           FOREIGN KEY (region_code) REFERENCES tbl_region (region_code) ON DELETE CASCADE,
+		                           FOREIGN KEY (accom_code) REFERENCES tbl_accommodation (accom_code) ON DELETE CASCADE,
+		                           FOREIGN KEY (member_code) REFERENCES tbl_account (member_code) ON DELETE CASCADE,
+		                           FOREIGN KEY (member_answer_code) REFERENCES tbl_member_answer (member_answer_code) ON DELETE CASCADE
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '스케줄';
 
 -- tbl_question_type
@@ -996,11 +998,11 @@ VALUES
 
 -- tbl_OfferMemberData
 INSERT INTO
-    tbl_buddy_match_data (buddy_match_code, buddy_code, apply_id, apply_status)
+	tbl_buddy_match_data (buddy_match_code, buddy_code, member_code, apply_id, apply_status)
 VALUES
-    (1, 1, 'john_doe', 1),
-    (2, 2, 'jane_smith', 2),
-    (3, 3, 'alex_kim', 3);
+	(1, 1, 1001,'john_doe', 1),
+	(2, 2, 1002, 'jane_smith',2),
+	(3, 3, 1003, 'alex_kim', 3);
 
 -- tbl_question_naire_theme
 INSERT INTO

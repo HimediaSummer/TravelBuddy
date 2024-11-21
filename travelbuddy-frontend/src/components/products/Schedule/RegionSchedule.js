@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Map from './Map';
 
-function RegionSchedule({ onNext }) {
+function RegionSchedule({ onNext, selectedRegion, setSelectedRegion }) {
 
 	const [region, setRegion] = useState([]);
 	const [regionDetails, setRegionDetails] = useState([]);
-	const [selectedRegion, setSelectedRegion] = useState(null);
+	// const [selectedRegion, setSelectedRegion] = useState(null);
 	const [selectedRegionDetails, setSelectedRegionDetails] = useState(null);
 	const [isToggleOpen, setIsToggleOpen] = useState(true);
 
@@ -120,10 +120,10 @@ function RegionSchedule({ onNext }) {
 					) : ('')}
 				</div>
 							<div style={{marginTop: '100px'}}>
-								{selectedRegion && (
+								{selectedRegion ? (
 							// <Map latitude={selectedRegion.lat} longitude={selectedRegion.lng}/>
 							<Map regionName={selectedRegion.regionName}/>
-								)}
+								) : (<Map />)}
 							</div>
 			</div>
 		</div>

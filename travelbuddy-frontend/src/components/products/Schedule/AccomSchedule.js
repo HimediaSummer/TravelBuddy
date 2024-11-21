@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Map from './Map';
 
-function AccomSchedule({ onNext }) {
+function AccomSchedule({ onNext, setTravelData }) {
 
 	const [accom, setAccom] = useState([]);
-	const [accomDetails, setAccomDetails] = useState([]);
 	const [selectedAccom, setSelectedAccom] = useState(null);
 	const [selectedAccomDetails, setSelectedAccomDetails] = useState(null);
 
@@ -27,21 +26,13 @@ function AccomSchedule({ onNext }) {
 			.catch(error => console.error('Error fetching data:', error));
 	}, []);
 
-	// 숙소 상세
-	// useEffect(() => {
-	// 	// 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
-	// 	fetch(`http://localhost:8080/schedule/accom/1`)
-	// 		.then(response => response.json())
-	// 		.then(data => {
-	// 			setSelectedAccomDetails(data.data);
-	// 			console.log("상세 가져왓냐?", data);
-	// 		})
-	// 		.catch(error => console.error('Error fetching data:', error));
-	// }, []);
-
 	// 버튼 누르면 상세 조회 뾰로롱
 	const handleAccomSelect = (accom) => {
 		setSelectedAccom(accom);
+		setTravelData(prevData => ({
+			...prevData,
+			accommodations: [...prevData.accommodations, accom]
+		}));
 
 		fetch(`http://localhost:8080/schedule/accom/${accom.accomCode}`)
 			.then(response => response.json())

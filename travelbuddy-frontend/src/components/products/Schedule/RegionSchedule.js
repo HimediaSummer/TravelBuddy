@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Map from './Map';
 
-function RegionSchedule({ onNext, selectedRegion, setSelectedRegion }) {
+function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelData }) {
 
 	const [region, setRegion] = useState([]);
-	const [regionDetails, setRegionDetails] = useState([]);
-	// const [selectedRegion, setSelectedRegion] = useState(null);
 	const [selectedRegionDetails, setSelectedRegionDetails] = useState(null);
-	const [isToggleOpen, setIsToggleOpen] = useState(true);
 
 	// 지역 위도/경도 하드코딩 
 	const regionCoordinates = {
@@ -42,9 +39,6 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion }) {
 					regionDescription: region.regionDescription,
 					regionImg: region.regionImg,
 					regionThumbnailImg: region.regionThumbnailImg
-					// ...region,
-					// lat: regionCoordinates[region.regionCode]?.lat,
-					// lng: regionCoordinates[region.regionCode]?.lng
 				}));
 				console.log("가져왓냐?", data);
 				setRegion(regions);
@@ -52,21 +46,13 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion }) {
 			.catch(error => console.error('Error fetching data:', error));
 	}, []);
 
-	// 장소 상세
-	// useEffect(() => {
-	//    // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
-	//    fetch(`http://localhost:8080/schedule/region/101`)
-	//       .then(response => response.json())
-	//       .then(data => {
-	//          setRegionDetails(data.data);
-	//          console.log("상세 가져왓냐?", data);
-	//       })
-	//       .catch(error => console.error('Error fetching data:', error));
-	// }, []);
-
 	// 장소 버튼 누르면 밑에 상세 조회 뾰롱
 	const handleRegionSelect = (region) => {
 		setSelectedRegion(region);
+		setTravelData(prevData => ({
+			...prevData,
+			regions: [...prevData.regions, region]
+		}));
 
 		fetch(`http://localhost:8080/schedule/region/${region.regionCode}`)
 			.then(response => response.json())

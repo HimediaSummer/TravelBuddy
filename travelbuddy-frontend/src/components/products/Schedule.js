@@ -13,13 +13,13 @@ function Schedule() {
 	const [selectedRegion, setSelectedRegion] = useState(null);
 
 	const travelData = {
-		startDate: "2023-10-01",
-		endDate: "2023-10-07",
-		accommodations: ["Hotel A", "Hotel B"],
-		regions: ["Seoul", "Busan"],
-		questions: ["What to do?", "Where to eat?"]
+		startDate: "2024-12-1",
+		endDate: "2024-12-05",
+		accommodations: ["Hotel"],
+		regions: ["Seoul"],
+		questions: ["식당위주의 여행이좋아"]
 	};
-	
+
 	// 각 단계 컴포넌트들
 	const steps = [
 		<DateSchedule onNext={() => setCurrentStep(1)} />,

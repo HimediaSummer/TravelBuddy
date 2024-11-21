@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Map from './Map';
 
-function AccomSchedule({ onNext }) {
+function AccomSchedule({ onNext, selectedRegion }) {
 
 	const [accom, setAccom] = useState([]);
 	const [accomDetails, setAccomDetails] = useState([]);
 	const [selectedAccom, setSelectedAccom] = useState(null);
 	const [selectedAccomDetails, setSelectedAccomDetails] = useState(null);
 
+	console.log('지역 가져왓냐!!!!!!!', selectedRegion);
+	console.log('이름이머에여!!!!!!!!!!!!', selectedRegion.regionName);
 	// 숙소
 	useEffect(() => {
 		fetch('http://localhost:8080/schedule/accom')
@@ -78,16 +80,16 @@ function AccomSchedule({ onNext }) {
 						</div>
 					</div>
 				</form>
-				<div id='chat-box3'>
+				<div id='chat-box3' style={{display: selectedAccomDetails? 'block' : 'none'}}>
 					{selectedAccomDetails ? (
 						<div>
-							<img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'500px'} height={'300px'} />
+							<img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'300px'} height={'200px'} />
 							<p>
 								{/* <img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'50px'} height={'50px'}/> */}
 								{selectedAccomDetails.accomType}</p>
 							<p>{selectedAccomDetails.accomName}</p>
 							<p>{selectedAccomDetails.accomAddres}</p>
-							<div style={{display: 'flex', justifyContent: 'flex-end'}}>
+							<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 								<button className='accom-button2' onClick={onNext}>다음</button>
 							</div>
 						</div>
@@ -95,9 +97,17 @@ function AccomSchedule({ onNext }) {
 						''
 					)}
 				</div>
-				<div style={{marginTop: '100px'}}>
-							<Map />
-							</div>
+				{/* <div style={{marginTop: '100px'}}>
+					{selectedRegion ? 
+							(<Map regionName={selectedRegion.regionName}/>) : (<Map />)
+					}
+							</div> */}
+				<div style={{ marginTop: '100px' }}>
+					{selectedAccomDetails && selectedRegion ? (
+						// <Map latitude={selectedRegion.lat} longitude={selectedRegion.lng}/>
+						<Map regionName={selectedRegion.regionName} style={{ width: '500px', height: '800px' }} />
+					) : (<Map regionName={selectedRegion.regionName} style={{ width: '900px', height: '800px' }} />)}
+				</div>
 				{/* 테스트 잔디확인용 */}
 			</div>
 		</div>

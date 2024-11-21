@@ -9,7 +9,7 @@ import 'moment/locale/ko';
 Modal.setAppElement('#root');
 moment.locale('ko');
 
-function DateSchedule({ onNext }) {
+function DateSchedule({ onNext, startDate, setStartDate, endDate, setEndDate }) {
 
 	const [currentStep, setCurrentStep] = useState(0); // z컴포넌트 바꾸기?
 	//   const [message, setMessage] = useState('');
@@ -22,8 +22,8 @@ function DateSchedule({ onNext }) {
 	//   const [selectedDate, setSelectedDate] = useState(new Date());
 
 	// 날짜
-	const [startDate, setStartDate] = useState();
-	const [endDate, setEndDate] = useState();
+	// const [startDate, setStartDate] = useState();
+	// const [endDate, setEndDate] = useState();
 	const [selectedRange, setSelectedRange] = useState([null, null]);
 	// 페이지 오면 모달 자동으로 열리게
 	useEffect(
@@ -76,7 +76,7 @@ function DateSchedule({ onNext }) {
 	return (
 		<div class="depart-airport">
 			<div class="chat-container">
-				<form class="chat-form" action="post">
+				<form class="chat-form" action="post" style={{margin: '10px'}}>
 					<div id="chat-box2">
 						<h2>날짜 선택</h2>
 					</div>
@@ -154,8 +154,9 @@ function DateSchedule({ onNext }) {
 					</div>
 					{/* Loading */}
 				</form>
+				{/* <div style={{marginTop: '100px'}}> */}
 				<div>
-					<img src='/Img/schedulemain.PNG' alt='main'/>
+					<img src='/Img/schedulemain.PNG' alt='main' width={'800px'}/>
 				</div>
 			</div>
 		</div>

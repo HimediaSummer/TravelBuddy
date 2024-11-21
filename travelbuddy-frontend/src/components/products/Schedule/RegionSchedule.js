@@ -7,7 +7,7 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion }) {
 	const [regionDetails, setRegionDetails] = useState([]);
 	// const [selectedRegion, setSelectedRegion] = useState(null);
 	const [selectedRegionDetails, setSelectedRegionDetails] = useState(null);
-	const [isToggleOpen, setIsToggleOpen] = useState(true);
+	const [isToggleOpen, setIsToggleOpen] = useState(false);
 
 	// 지역 위도/경도 하드코딩 
 	const regionCoordinates = {
@@ -107,10 +107,10 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion }) {
 					</div>
 				</form>
 				{/* 선택된 지역 상세 정보 출력 */}
-				<div id="chat-box3">
+				<div id="chat-box3" style={{display: selectedRegionDetails? 'block':'none'}}>
 					{selectedRegionDetails ? (
 						<div>
-							<img src={`/Img/${selectedRegionDetails.regionImg}`} alt={selectedRegionDetails.regionName} width={'500px'} height={'300px'} />
+							<img src={`/Img/${selectedRegionDetails.regionImg}`} alt={selectedRegionDetails.regionName} width={'300px'} height={'200px'} />
 							<h3>{selectedRegionDetails.regionName}</h3>
 							<p>{selectedRegionDetails.regionDescription}</p>
 							<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -122,8 +122,8 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion }) {
 							<div style={{marginTop: '100px'}}>
 								{selectedRegion ? (
 							// <Map latitude={selectedRegion.lat} longitude={selectedRegion.lng}/>
-							<Map regionName={selectedRegion.regionName}/>
-								) : (<Map />)}
+							<Map regionName={selectedRegion.regionName} style={{width: '500px', height: '800px'}}/>
+								) : (<Map style={{width: '900px', height: '800px'}} />)}
 							</div>
 			</div>
 		</div>

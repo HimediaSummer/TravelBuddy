@@ -80,7 +80,15 @@ function Members() {
                                         <button>일정</button>
                                     </td>
                                     <td>
-                                        <button>정상</button>
+                                        {
+                                        (m.memberSuspension === 'N' && m.memberDeletion === 'N')
+                                        ? <button>정상</button> : 
+                                        (m.memberSuspension === 'Y' && m.memberDeletion === 'N') 
+                                        ? <button>정지</button> :
+                                        (m.memberSuspension === 'N' && m.memberDeletion === 'Y')
+                                        ? <button>탈퇴</button> :
+                                        <p></p>
+                                        }
                                     </td>
                                     <td>{m.memberCreate}</td>
                                 </tr>
@@ -101,7 +109,7 @@ function Members() {
                 {pageNumber.map((num) => (
                 <li key={num} onClick={() => setCurrentPage(num)}>
                     <button
-                        style={ currentPage === num ? {backgroundColor : 'orange' } : null}
+                        style={ currentPage === num ? {backgroundColor : 'skyblue' } : null}
                         className={ MemberCSS.pagingBtn }
                     >
                         {num}

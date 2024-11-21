@@ -104,14 +104,12 @@ public class AdminFaqService {
     public Object deleteFaq(int faqCode) {
 
         int result = 0;
-
-        if(adminFaqRepository.findById(faqCode).isEmpty()) {
-            return (result > 0) ? "삭제 성공" : "삭제 실패";
-        }
         Faq faq = adminFaqRepository.findById(faqCode).get();
-        adminFaqRepository.delete(faq);
-        result = 1;
 
+        if(adminFaqRepository.findById(faqCode).isPresent()) {
+            adminFaqRepository.delete(faq);
+            result = 1;
+        }
         return (result > 0) ? "삭제 성공" : "삭제 실패";
     }
 }

@@ -45,7 +45,7 @@ public class QnaController {
 
         pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 요청", pagingResponseDTO));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 완료", pagingResponseDTO));
     }
 
     /*값만 잘 추출되는지 확인하기 위해 만든 메소드 (추후 없애도 됨)*/
@@ -58,27 +58,25 @@ public class QnaController {
     @GetMapping("/qnas/{qnaCode}")
     public ResponseEntity<ResponseDTO> selectQnaDetail(@PathVariable int qnaCode){
         QnaDetailDTO qnaDetailDTO = (QnaDetailDTO) qnaService.selectQna(qnaCode);
-        System.out.println("qnaDetailDTO = " + qnaDetailDTO);
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnA 상세정보 조회 요청",qnaDetailDTO));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnA 상세정보 조회 완료",qnaDetailDTO));
     }
 
     @Operation(summary = "qna 등록 요청", description = "QnA 등록이 진행됩니다.", tags = {"QnaController"})
     @PostMapping("/qnas/insertqna")
     public ResponseEntity<ResponseDTO> insertQna(@RequestBody QnaDTO qnaDTO) {
-        System.out.println("qnaDTO = " + qnaDTO);
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "Qna 입력 요청", qnaService.insertQna(qnaDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "Qna 입력 완료", qnaService.insertQna(qnaDTO)));
     }
 
     @Operation(summary = "qna 수정 요청", description = "QnA의 수정 처리가 진행됩니다.", tags = {"QnaController"})
     @PutMapping("/qnas/{qnaCode}/updateqna")
     public ResponseEntity<ResponseDTO> updateQna(@PathVariable int qnaCode, @RequestBody QnaDTO qnaDTO){
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnA 수정 요청",qnaService.updateQna(qnaCode, qnaDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnA 수정 완료",qnaService.updateQna(qnaCode, qnaDTO)));
     }
 
     @Operation(summary = "qna 삭제 요청", description = "QnA의 삭제 처리가 진행됩니다.", tags = {"QnaController"})
     @DeleteMapping("/qnas/{qnaCode}/deleteqna")
     public ResponseEntity<ResponseDTO> deleteQna(@PathVariable int qnaCode){
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnA 삭제 요청",qnaService.deleteQna(qnaCode)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnA 삭제 완료",qnaService.deleteQna(qnaCode)));
     }
 
 }

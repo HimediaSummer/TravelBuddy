@@ -1,20 +1,18 @@
-import MyQnaCSS from "./MyQnas.css";
+import MyFaqsCSS from "../../member/faq/MyFaqsCSS.css";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState, useRef } from "react";
 
-import { callQnaListForAdminAPI } from "../../../apis/QnaAPICalls";
+import { callFaqListForAdminAPI } from "../../../apis/FaqAPICalls";
 
-function MyQnas() {
+function Faqs() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const qna = useSelector((state) => state.qnaReducer) || {};
-    const qnaList = qna.data || {};
-    const { data = {}, pageInfo = {} } = qnaList;
+    const faq = useSelector((state) => state.faqReducer) || {};
+    const faqList = faq.data || {};
+    const { data = {}, pageInfo = {} } = faqList;
 
-    const [start, setStart] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageEnd, setPageEnd] = useState(1);
 
     const pageNumber = [];
     if (pageInfo) {
@@ -25,28 +23,28 @@ function MyQnas() {
 
     useEffect(() => {
         dispatch(
-            callQnaListForAdminAPI({
-                currentPage: currentPage 
+            callFaqListForAdminAPI({
+                currentPage: currentPage,
             })
         );
     }, [currentPage]);
 
-
-    const onClickTableTr = (qnaCode) => {
-        navigate(`/MyqnaDetail/${qnaCode}`, { replace: false });
+    const onClickTableTr = (faqCode) => {
+        navigate(`/FaqDetail/${faqCode}`, { replace: false });
     };
 
     const onClickNavigation = () => {
-        navigate(`/MyQna`);
+        navigate(`/Faq`);
     };
+
+
 
 
     return (
         <>
-            <div className={MyQnaCSS.bodyDiv}>
-                <h2>문의(Q&A)<button onClick={onClickNavigation}>작성</button></h2>
-               
-                <table className={MyQnaCSS.productTable}>
+            <div className={MyFaqsCSS.bodyDiv}>
+                <h2>FAQ</h2>
+                <table className={MyFaqsCSS.productTable}>
                     <colgroup>
                         <col width="5%" />
                         <col width="5%" />
@@ -60,32 +58,35 @@ function MyQnas() {
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>번호</th>
+                            <th>게시글 번호</th>
                             <th>유형</th>
-                            <th colSpan={5}>제목</th>
-                            <th>작성자</th>
-                            <th>답변상태</th>
-                            <th>작성일</th>
+                            <th>제목</th>
+                            <th>은폐여부</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {Array.isArray(data) &&
-                            data.map((q) => {
-                                return(
-                                <tr
-                                    key={q.qnaDTO.qnaCode}
+                            data.map((f) => {
+                                return (
+                                    <tr key={f.faqCode}
                                     onClick={() =>
-                                        onClickTableTr(q.qnaDTO.qnaCode)
-                                    }
-                                >
-                                    <td>{q.qnaDTO.qnaCode}</td>
-                                    <td>{q.qnaDTO.fqTypeCode}</td>
-                                    <td colSpan={5}>{q.qnaDTO.qnaContents}</td>
-                                    <td>{q.qnaDTO.memberCode}</td>
-                                    <td>{q.qnaAnswerDTO.ansCode}</td>
-                                    <td>{q.qnaDTO.qnaCreate}</td>
-                                </tr>
-                            )})}
+                                        onClickTableTr(f.faqCode)
+                                    }>
+                                        <td>{f.faqCode}</td>
+                                        <td>{f.fqTypeCode}</td>
+                                        <td>{f.faqTitle}</td>
+                                        <td>
+                                            {f.faqAt === "N" ? (
+                                                <button>공개</button>
+                                            ) : (
+                                                <button>비공개</button>
+                                            )}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                     </tbody>
                 </table>
             </div>
@@ -96,11 +97,11 @@ function MyQnas() {
                     justifyContent: "center",
                 }}
             >
-                {Array.isArray(qnaList) && (
+                {Array.isArray(data) && (
                     <button
                         onClick={() => setCurrentPage(currentPage - 1)}
                         disabled={currentPage === 1}
-                        className={MyQnaCSS.pagingBtn}
+                        className={MyFaqsCSS.pagingBtn}
                     >
                         &lt;
                     </button>
@@ -113,15 +114,15 @@ function MyQnas() {
                                     ? { backgroundColor: "skyBlue" }
                                     : null
                             }
-                            className={MyQnaCSS.pagingBtn}
+                            className={MyFaqsCSS.pagingBtn}
                         >
                             {num}
                         </button>
                     </li>
                 ))}
-                {Array.isArray(qnaList) && (
+                {Array.isArray(data) && (
                     <button
-                        className={MyQnaCSS.pagingBtn}
+                        className={MyFaqsCSS.pagingBtn}
                         onClick={() => setCurrentPage(currentPage + 1)}
                         disabled={
                             currentPage === pageInfo.pageEnd ||
@@ -132,8 +133,9 @@ function MyQnas() {
                     </button>
                 )}
             </div>
+            <button onClick={onClickNavigation}>작성</button>
         </>
     );
 }
 
-export default MyQnas;
+export default Faqs;

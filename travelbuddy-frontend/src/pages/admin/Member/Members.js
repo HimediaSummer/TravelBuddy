@@ -1,21 +1,19 @@
-import MemberDetail from "./MemberDetail";
 import MemberCSS from "./Members.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
-import { callMemberListForAdminAPI } from "../../apis/MemberAPICalls";
+import { callMemberListForAdminAPI } from "../../../apis/MemberAPICalls";
 
 function Members() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const member = useSelector((state) => state.memberReducer) || {};
     const memberList = member.data || {};
-    const {data = {} , pageInfo = {}} = memberList;
+    const pageInfo = member.pageInfo || {};
 
-    const [start, setStart] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageEnd, setPageEnd] = useState(1);
+
 
     const pageNumber = [];
     if (pageInfo) {
@@ -25,12 +23,9 @@ function Members() {
     }
 
     useEffect(() => {
-        setStart((currentPage - 1) * 5);
-        dispatch(
-            callMemberListForAdminAPI({
-                currentPage: {currentPage},
-            })
-        );
+        dispatch(callMemberListForAdminAPI(
+                {currentPage: currentPage}
+            ));
     }, [currentPage]);
 
     const onClickTableTr = (memberCode) => {
@@ -67,8 +62,8 @@ function Members() {
                         </tr>
                     </thead>
                     <tbody>
-                        {Array.isArray(data) &&
-                            data.map((m) => (
+                        {Array.isArray(memberList) &&
+                            memberList.map((m) => (
                                 <tr
                                     key={m.memberCode}
                                     onClick={() => onClickTableTr(m.memberCode)}
@@ -93,48 +88,35 @@ function Members() {
                     </tbody>
                 </table>
             </div>
-            <div
-                style={{
-                    listStyleType: "none",
-                    display: "flex",
-                    justifyContent: "center",
-                }}
-            >
-                {Array.isArray(memberList) && (
-                    <button
-                        onClick={() => setCurrentPage(currentPage - 1)}
-                        disabled={currentPage === 1}
-                        className={MemberCSS.pagingBtn}
-                    >
-                        &lt;
-                    </button>
-                )}
+            <div style={{ listStyleType: "none", display: "flex" }}>
+                { Array.isArray(memberList) &&
+                <button 
+                    onClick={() => setCurrentPage(currentPage - 1)} 
+                    disabled={currentPage === 1}
+                    className={ MemberCSS.pagingBtn }
+                >
+                    &lt;
+                </button>
+                }
                 {pageNumber.map((num) => (
-                    <li key={num} onClick={() => setCurrentPage(num)}>
-                        <button
-                            style={
-                                currentPage === num
-                                    ? { backgroundColor: "skyBlue" }
-                                    : null
-                            }
-                            className={MemberCSS.pagingBtn}
-                        >
-                            {num}
-                        </button>
-                    </li>
-                ))}
-                {Array.isArray(memberList) && (
+                <li key={num} onClick={() => setCurrentPage(num)}>
                     <button
-                        className={MemberCSS.pagingBtn}
-                        onClick={() => setCurrentPage(currentPage + 1)}
-                        disabled={
-                            currentPage === pageInfo.pageEnd ||
-                            pageInfo.total == 0
-                        }
+                        style={ currentPage === num ? {backgroundColor : 'orange' } : null}
+                        className={ MemberCSS.pagingBtn }
                     >
-                        &gt;
+                        {num}
                     </button>
-                )}
+                </li>
+                ))}
+                { Array.isArray(memberList) &&
+                <button 
+                    className={ MemberCSS.pagingBtn }
+                    onClick={() => setCurrentPage(currentPage + 1)} 
+                    disabled={currentPage === pageInfo.pageEnd  || pageInfo.total == 0}
+                >
+                    &gt;
+                </button>
+                }
             </div>
         </>
     );

@@ -1,10 +1,9 @@
-// import QnaDetail from "./QnaDetail";
 import QnaCSS from "./Qnas.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
-import { callQnaListAPI } from "../../apis/QnaAPICalls";
+import { callQnaListForAdminAPI } from "../../../apis/QnaAPICalls";
 
 function Qnas() {
     const navigate = useNavigate();
@@ -12,6 +11,7 @@ function Qnas() {
     const qna = useSelector((state) => state.qnaReducer) || {};
     const qnaList = qna.data || {};
     const { data = {}, pageInfo = {} } = qnaList;
+    console.log('나 qnaList',qnaList);
 
     const [start, setStart] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -25,10 +25,12 @@ function Qnas() {
     }
 
     useEffect(() => {
-        setStart((currentPage - 1) * 5);
+        console.log(currentPage
+            
+        )
         dispatch(
-            callQnaListAPI({
-                currentPage: { currentPage },
+            callQnaListForAdminAPI({
+                currentPage: currentPage
             })
         );
     }, [currentPage]);

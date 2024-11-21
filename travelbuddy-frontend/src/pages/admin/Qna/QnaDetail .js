@@ -2,15 +2,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import {
-    callQnaDetailForAdminAPI
-} from '../../apis/QnaAPICalls';
-import {
-    insertQnaAnswerAPI} from '../../apis/QnaAPICalls';
-import {
-    deleteQnaAPI} from '../../apis/QnaAPICalls';
-import {
-    deleteQnaAnswerAPI} from '../../apis/QnaAPICalls';
+import {callQnaDetailForAdminAPI} from '../../../apis/QnaAPICalls';
+import {insertQnaAnswerAPI} from '../../../apis/QnaAPICalls';
+import {deleteQnaAPI} from '../../../apis/QnaAPICalls';
+import {deleteQnaAnswerAPI} from '../../../apis/QnaAPICalls';
 
 function QnaDetail () {
 

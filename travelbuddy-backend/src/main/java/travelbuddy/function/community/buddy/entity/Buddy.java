@@ -1,16 +1,9 @@
 package travelbuddy.function.community.buddy.entity;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.schedule.entity.Region;
 
@@ -24,15 +17,15 @@ public class Buddy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int buddyCode;          // 버디코드 PK
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST , fetch = FetchType.EAGER)
     @JoinColumn(name = "member_code")
     private Account account;  // 회원코드 FK
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST , fetch = FetchType.EAGER)
     @JoinColumn(name = "region_code")
     private Region region;          // 지역코드 FK
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST , fetch = FetchType.EAGER)
     @JoinColumn(name = "buddy_type_code")
     private BuddyType buddyType;    // 버디타입코드 FK
 

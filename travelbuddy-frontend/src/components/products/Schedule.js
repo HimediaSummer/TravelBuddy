@@ -9,12 +9,14 @@ import Summary from './Schedule/SummarySchedule';
 
 function Schedule() {
 	const [currentStep, setCurrentStep] = useState(0); // z컴포넌트 바꾸기?
+	// 지역값 전달하기 도전중
+	const [selectedRegion, setSelectedRegion] = useState(null);
 
 	// 각 단계 컴포넌트들
 	const steps = [
 		<DateSchedule onNext={() => setCurrentStep(1)} />,
-		<RegionSchedule onNext={() => setCurrentStep(2)} />,
-		<AccomSchedule onNext={() => setCurrentStep(3)} />,
+		<RegionSchedule onNext={() => setCurrentStep(2)} selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion}/>,
+		<AccomSchedule onNext={() => setCurrentStep(3)}  selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion}/>,
 		<QuestionSchedule onNext={() => setCurrentStep(4)} />,
 		<Summary />
 	];

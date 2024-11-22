@@ -13,9 +13,7 @@ function Notices() {
     const noticeList = notice.data || {};
     const pageInfo = notice.pageInfo || {};
 
-    console.log('나 noticeList',noticeList);
-
-
+    
     const [currentPage, setCurrentPage] = useState(1);
 
     const pageNumber = [];

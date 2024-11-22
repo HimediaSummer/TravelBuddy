@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "tbl_account")    // 테이블명
@@ -56,6 +58,16 @@ public class Account {
     @ManyToOne
     @JoinColumn(name ="authority_code")
     private Authority authority;
+
+    @PreUpdate
+    @PrePersist
+    private void updateMemberLeave() {
+        if ("Y".equalsIgnoreCase(memberDeletion)) {
+            this.memberLeave = String.valueOf(LocalDate.now());
+        } else {
+            this.memberLeave = null;
+        }
+    }
 
     public Account() {
     }

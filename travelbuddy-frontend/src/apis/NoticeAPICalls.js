@@ -69,7 +69,7 @@ export const callNoticeDetailAPI = (noticeCode) => {
     }}
 
            // 관리자가 Notice 1개를 작성한다.
-export const insertNoticeAPI = ({ noticeDTO }) => {
+export const insertNoticeAPI = ({noticeDTO}) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/notices/insertnotice`;
     console.log('지금 나의 주소는 ? ',requestURL);
     for (const pair of noticeDTO.entries()) {
@@ -80,8 +80,6 @@ export const insertNoticeAPI = ({ noticeDTO }) => {
         const result = await fetch(requestURL, {
             method: 'POST',
             headers: {
-                // 'Content-Type': 'application/json',
-                enctype: "multipart/form-data",
                 Accept: '*/*'
             },
             body: noticeDTO

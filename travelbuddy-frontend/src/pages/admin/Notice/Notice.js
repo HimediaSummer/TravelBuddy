@@ -17,7 +17,6 @@ function Notice() {
         noticeContents: '',
         noticeCreate: '',
         noticeCount: 0,
-        noticeImg: '',
         noticeAt: ''
     });
 
@@ -38,7 +37,7 @@ function Notice() {
     const onChangeImageUpload = (e) => {
         const image = e.target.files[0];
         if (image && image.size > 10048576) {
-            alert('이미지 크기는 1MB 이하여야 합니다.');
+            alert('이미지 크기는 10MB 이하여야 합니다.');
             e.target.value = ''; // 입력 초기화
             return;
         }
@@ -83,7 +82,7 @@ function Notice() {
             formData.append('noticeCount', noticeDTO.noticeCount);
             formData.append('noticeAt', noticeDTO.noticeAt);
             
-            if (image) {formData.append('noticeImg', image);}
+            if (image) {formData.append('noticeImage', image);}
             console.log('이미지가 있으면 이거 있어야 돼',image)
 
             dispatch(insertNoticeAPI({noticeDTO: formData}));    
@@ -172,7 +171,7 @@ function Notice() {
                     <tr>
                         <td></td>
                         <td>
-                            ☑️ 이미지첨부는 최대 1MB입니다.
+                            ☑️ 이미지첨부는 최대 10MB입니다.
                             <br />
                             PNG,JPG,JPEG만 가능합니다.
                         </td>

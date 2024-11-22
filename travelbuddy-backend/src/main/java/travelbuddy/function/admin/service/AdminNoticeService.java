@@ -86,7 +86,7 @@ public class AdminNoticeService {
 
     /*공지 1개를 등록한다.*/
     @Transactional
-    public Object insertNotice(NoticeDTO noticeDTO, MultipartFile noticeImg) {
+    public Object insertNotice(NoticeDTO noticeDTO, MultipartFile noticeImage) {
         log.info("[AdminNoticeService] insertNotice() start");
 
         String imageName = UUID.randomUUID().toString().replace("-", "");
@@ -96,7 +96,7 @@ public class AdminNoticeService {
         try {
 
             /* 설명. util 패키지에 FileUploadUtils 추가 */
-            replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, noticeImg);
+            replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, noticeImage);
 
             noticeDTO.setNoticeImg(replaceFileName);
 

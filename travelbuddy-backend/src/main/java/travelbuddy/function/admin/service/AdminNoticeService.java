@@ -4,20 +4,25 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import travelbuddy.common.Criteria;
 import travelbuddy.function.admin.repository.AdminNoticeRepository;
 import travelbuddy.function.community.notice.controller.NoticeController;
 import travelbuddy.function.community.notice.dto.NoticeDTO;
 import travelbuddy.function.community.notice.entity.Notice;
+import travelbuddy.util.FileUploadUtils;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
+
 
 @Service
 public class AdminNoticeService {
@@ -25,6 +30,12 @@ public class AdminNoticeService {
     private static final Logger log = LoggerFactory.getLogger(NoticeController.class);
     private final AdminNoticeRepository adminNoticeRepository;
     private final ModelMapper modelMapper;
+
+    /* 설명. 이미지 파일 저장 경로와 응답용 URL (WebConfig 설정파일 추가하기) */
+    @Value("${image.image-dir}")
+    private String IMAGE_DIR;
+    @Value("${image.image-url}")
+    private String IMAGE_URL;
 
     @Autowired
     public AdminNoticeService(AdminNoticeRepository adminNoticeRepository, ModelMapper modelMapper) {
@@ -75,15 +86,36 @@ public class AdminNoticeService {
 
     /*공지 1개를 등록한다.*/
     @Transactional
-    public Object insertNotice(NoticeDTO noticeDTO) {
+    public Object insertNotice(NoticeDTO noticeDTO, MultipartFile noticeImg) {
         log.info("[AdminNoticeService] insertNotice() start");
 
-        Notice newNotice = modelMapper.map(noticeDTO, Notice.class);
-        adminNoticeRepository.save(newNotice);
+        String imageName = UUID.randomUUID().toString().replace("-", "");
+        String replaceFileName = null;
+        int result = 0;
 
-        log.info("[AdminNoticeService] insertNotice() end");
+        try {
 
-        return modelMapper.map(newNotice, NoticeDTO.class);
+            /* 설명. util 패키지에 FileUploadUtils 추가 */
+            replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, noticeImg);
+
+            noticeDTO.setNoticeImg(replaceFileName);
+
+            log.info("[ProductService] insert Image Name : {}", replaceFileName);
+
+            Notice newNotice = modelMapper.map(noticeDTO, Notice.class);
+
+            adminNoticeRepository.save(newNotice);
+
+            result = 1;
+
+            log.info("[AdminNoticeService] insertNotice() end");
+
+        } catch (Exception e) {
+            FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
+            throw new RuntimeException(e);
+        }
+
+        return (result > 0) ? "상품 입력 성공" : "상품 입력 실패";
     }
 
     /*공지 1개를 수정한다.*/

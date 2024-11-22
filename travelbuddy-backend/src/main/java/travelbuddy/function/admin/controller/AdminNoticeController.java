@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import travelbuddy.common.Criteria;
 import travelbuddy.common.PageDTO;
 import travelbuddy.common.PagingResponseDTO;
@@ -58,19 +59,19 @@ public class AdminNoticeController {
 
     @Operation(summary = "공지 등록 요청", description = "공지의 등록 처리가 진행됩니다.", tags = {"AdminNoticeController"})
     @PostMapping("/notices/insertnotice")
-    public ResponseEntity<ResponseDTO> insertNotice(@RequestBody NoticeDTO noticeDTO) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 등록 완료",adminNoticeService.insertNotice(noticeDTO)));
+    public ResponseEntity<ResponseDTO> insertNotice(@ModelAttribute NoticeDTO noticeDTO, MultipartFile noticeImg) {
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 등록 성공",adminNoticeService.insertNotice(noticeDTO, noticeImg)));
     }
 
     @Operation(summary = "공지 수정 요청", description = "공지의 수정 처리가 진행됩니다.", tags = {"AdminNoticeController"})
     @PutMapping("/notices/{noticeCode}/updatenotice")
     public ResponseEntity<ResponseDTO> insertNotice(@PathVariable int noticeCode, @RequestBody NoticeDTO noticeDTO) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 수정 완료",adminNoticeService.updateNotice(noticeCode,noticeDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 수정 성공",adminNoticeService.updateNotice(noticeCode,noticeDTO)));
     }
 
     @Operation(summary = "공지 삭제 요청", description = "공지의 삭제 처리가 진행됩니다.", tags = {"AdminNoticeController"})
     @DeleteMapping("/notices/{noticeCode}/deletenotice")
     public ResponseEntity<ResponseDTO> insertNotice(@PathVariable int noticeCode) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 삭제 완료",adminNoticeService.deleteNotice(noticeCode)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 삭제 성공",adminNoticeService.deleteNotice(noticeCode)));
     }
 }

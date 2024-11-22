@@ -19,7 +19,6 @@ import travelbuddy.function.member.dto.AccountDTO;
 @RequestMapping("/admin")
 public class AdminAccountController {
 
-    /*Log 를 찍기 위해서 가져오다. 로그.*/
     private static final Logger log = LoggerFactory.getLogger(AdminAccountController.class);
 
     private final AdminAccountService adminAccountService;
@@ -49,7 +48,7 @@ public class AdminAccountController {
         /*2. pageDTO(criteria(보고싶은페이지, 한페이지에 뿌릴 개수), 전체 회원 수)
          * 화면에서 페이징 처리를 계산해서 추출 한다.*/
         pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
-        /*===================================================*/
+        /*=====================================================*/
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 요청", pagingResponseDTO));
     }

@@ -16,9 +16,24 @@ import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.entity.MemberAnswer;
 import travelbuddy.function.member.repository.AccountRepository;
 import travelbuddy.function.member.repository.MemberAnswerRepository;
-import travelbuddy.function.schedule.dto.*;
-import travelbuddy.function.schedule.entity.*;
-import travelbuddy.function.schedule.repository.*;
+import travelbuddy.function.schedule.dto.AccommodationDTO;
+import travelbuddy.function.schedule.dto.AnswerDTO;
+import travelbuddy.function.schedule.dto.QuestionNaireThemeDTO;
+import travelbuddy.function.schedule.dto.QuestionnaireDTO;
+import travelbuddy.function.schedule.dto.RegionDTO;
+import travelbuddy.function.schedule.dto.ScheduleDTO;
+import travelbuddy.function.schedule.entity.Accommodation;
+import travelbuddy.function.schedule.entity.Answer;
+import travelbuddy.function.schedule.entity.QuestionNaireTheme;
+import travelbuddy.function.schedule.entity.Questionnaire;
+import travelbuddy.function.schedule.entity.Region;
+import travelbuddy.function.schedule.entity.Schedule;
+import travelbuddy.function.schedule.repository.AccommodationRepository;
+import travelbuddy.function.schedule.repository.AnswerRepository;
+import travelbuddy.function.schedule.repository.QuestionNaireThemeRepository;
+import travelbuddy.function.schedule.repository.QuestionnaireRepository;
+import travelbuddy.function.schedule.repository.RegionRepository;
+import travelbuddy.function.schedule.repository.ScheduleRepository;
 
 @Service
 public class ScheduleService {
@@ -246,4 +261,5 @@ public class ScheduleService {
 
         return answerDTOList;
     }
+
 }

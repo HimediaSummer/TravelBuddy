@@ -2,21 +2,21 @@ package travelbuddy.function.community.buddy.dto;
 
 public class BuddyMatchDataDTO {
 
-  private int buddyMatchCode;
-  private int buddyCode;
-  private String applyId;
-  private int applyStatus;
-
+  private int buddyMatchCode;   // 버디매칭코드
+  private int buddyCode;        // 버디코드
+  private int memberCode;       // 회원코드
+  private String applyId;       // 신청자 아이디
+  private int applyStatus;      // 신청상태
 
   public BuddyMatchDataDTO() {
   }
 
-  public BuddyMatchDataDTO(int buddyMatchCode, int buddyCode, String applyId, int applyStatus) {
+  public BuddyMatchDataDTO(int buddyMatchCode, int buddyCode, int memberCode, String applyId, int applyStatus) {
     this.buddyMatchCode = buddyMatchCode;
     this.buddyCode = buddyCode;
+    this.memberCode = memberCode;
     this.applyId = applyId;
     this.applyStatus = applyStatus;
-
   }
 
   public int getBuddyMatchCode() {
@@ -35,6 +35,14 @@ public class BuddyMatchDataDTO {
     this.buddyCode = buddyCode;
   }
 
+  public int getMemberCode() {
+    return memberCode;
+  }
+
+  public void setMemberCode(int memberCode) {
+    this.memberCode = memberCode;
+  }
+
   public String getApplyId() {
     return applyId;
   }
@@ -47,9 +55,8 @@ public class BuddyMatchDataDTO {
     return applyStatus;
   }
 
-  public void setApplyStatus(int apply_status) {
-    this.applyStatus = apply_status;
-
+  public void setApplyStatus(int applyStatus) {
+    this.applyStatus = applyStatus;
   }
 
   @Override
@@ -57,6 +64,7 @@ public class BuddyMatchDataDTO {
     return "BuddyMatchDataDTO{" +
             "buddyMatchCode=" + buddyMatchCode +
             ", buddyCode=" + buddyCode +
+            ", memberCode=" + memberCode +
             ", applyId='" + applyId + '\'' +
             ", applyStatus=" + applyStatus +
             '}';

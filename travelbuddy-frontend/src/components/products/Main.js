@@ -62,7 +62,7 @@ function Main() {
 
   return (
     <div className="Main">
-        {/* <head>
+        <head>
             <meta charset="UTF-8" />
             <script src="https://kit.fontawesome.com/9e9931aed0.js" crossorigin="anonymous"></script>
             <link rel="stylesheet" href="/CSS/media.css"/>
@@ -70,14 +70,14 @@ function Main() {
             <link rel="stylesheet" href="/CSS/slide.css"/>
             <link rel="stylesheet" href="/CSS/style.css"/>
             <title>Travel Buddy</title>
-        </head> */}
+        </head>
 
         {loginModal ? <LoginModal setLoginModal={setLoginModal} /> : null}
         <body>
-            <header className="header">
+            <header class="header">
                 <h1>
-                    <div className="header-click">
-                        <i className="fa-solid fa-globe"></i>
+                    <div class="header-click">
+                        <i class="fa-solid fa-globe"></i>
                             <a href="http://travel-buddy.me/">Travel Buddy</a>
                     </div>
                 </h1>
@@ -97,77 +97,77 @@ function Main() {
                         </li>
                         
                     </ul>
-                    <button className="header_toogleBtn">
-                        <i className="fas fa-bars"></i>
+                    <button class="header_toogleBtn">
+                        <i class="fas fa-bars"></i>
                     </button>
             </header>
             
             {/* main */}
-            <main className="wrap">
+            <main class="wrap">
                 <div class="content-wrap">
-                <ul className="slides">
+                <ul class="slides">
                     <input type="radio" name="radio-btn" id="img-1" checked />
-                    <li className="slide-container">
-                    <div className="slide">
+                    <li class="slide-container">
+                    <div class="slide">
                         <img src="/Img/schedulemain.PNG" alt="Busan"/>
                     </div>
-                    <div className="nav">
+                    <div class="nav">
                     <label for="img-6" class="prev">&#x2039;</label>
                     <label for="img-2" class="next">&#x203a;</label>
                     </div>
                     </li>
 
                     <input type="radio" name="radio-btn" id="img-2" />
-                    <li className="slide-container">
-                        <div className="slide">
+                    <li class="slide-container">
+                        <div class="slide">
                             <img src="/Img/schedulemain2.PNG" />
                         </div>
-                    <div className="nav">
+                    <div class="nav">
                         <label for="img-1" class="prev">&#x2039;</label>
                         <label for="img-3" class="next">&#x203a;</label>
                     </div>
                     </li>
                     <input type="radio" name="radio-btn" id="img-3" />
-                    <li className="slide-container">
-                        <div className="slide">
-                            <img src="/Img/gangwon.PNG" />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="/Img/gangwon.jpg" />
                         </div>
-                    <div className="nav">
+                    <div class="nav">
                         <label for="img-2" class="prev">&#x2039;</label>
                         <label for="img-4" class="next">&#x203a;</label>
                     </div>
                     </li>
                     <input type="radio" name="radio-btn" id="img-4" />
-                    <li className="slide-container">
-                        <div className="slide">
-                            <img src="/Img/seoul.PNG" />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="/Img/seoul.jpg" />
                         </div>
-                    <div className="nav">
+                    <div class="nav">
                         <label for="img-3" class="prev">&#x2039;</label>
                         <label for="img-5" class="next">&#x203a;</label>
                     </div>
                     </li>
                     <input type="radio" name="radio-btn" id="img-5" />
-                    <li className="slide-container">
+                    <li class="slide-container">
                         <div class="slide">
-                            <img src="/Img/incheon.PNG" />
+                            <img src="/Img/incheon.jpg" />
                         </div>
-                    <div className="nav">
+                    <div class="nav">
                         <label for="img-4" class="prev">&#x2039;</label>
                         <label for="img-6" class="next">&#x203a;</label>
                     </div>
                     </li>
                     <input type="radio" name="radio-btn" id="img-6" />
-                    <li className="slide-container">
+                    <li class="slide-container">
                         <div class="slide">
-                            <img src="/Img/jeju.PNG" />
+                            <img src="/Img/jeju.jpg" />
                         </div>
-                    <div className="nav">
+                    <div class="nav">
                         <label for="img-5" class="prev">&#x2039;</label>
                         <label for="img-1" class="next">&#x203a;</label>
                     </div>
                     </li>
-                    <li className="nav-dots">
+                    <li class="nav-dots">
                         <label for="img-1" class="nav-dot" id="img-dot-1"></label>
                         <label for="img-2" class="nav-dot" id="img-dot-2"></label>
                         <label for="img-3" class="nav-dot" id="img-dot-3"></label>
@@ -176,39 +176,39 @@ function Main() {
                         <label for="img-6" class="nav-dot" id="img-dot-6"></label>
                     </li>
                 </ul>
-                <div className="subtitle">
+                <div class="subtitle">
                     <h2>여행의 모든 것 "트래블 버디"에 오신 것을 환영합니다</h2>
                     <a href="#chat-box">여행계획부터 두근거리는 여행 사이트</a>
                 </div>
             </div>
                 
-            <div className="popular-city-title">
-                <i id="location-icon"className="fa-solid fa-location-dot"></i>
+            <div class="popular-city-title">
+                <i id="location-icon"class="fa-solid fa-location-dot"></i>
                 <h3>한국 여행 인기 도시</h3>
             </div>
-            <div className="popular-city-list">
-                <div className="city-box">
-                    <img src="/Img/seoul.PNG"/>
+            <div class="popular-city-list">
+                <div class="city-box">
+                    <img src="/Img/seoul.jpg"/>
                     <p id="city-title">seoul</p>
                     <p>서울</p>
                 </div>
-                <div className="city-box">
-                    <img src="/Img/busan.PNG"/>
+                <div class="city-box">
+                    <img src="/Img/busan.jpg"/>
                     
                     <p id="city-title">Busan</p>
                     <p>부산</p>
                 </div>
-                <div className="city-box">
-                    <img src="/Img/jeju.PNG"/>
+                <div class="city-box">
+                    <img src="/Img/jeju.jpg"/>
                     <p id="city-title">Jeju</p>
                     <p>제주</p>
                 </div>
             </div>
             </main>
             {/* Footer */}
-            <footer className="footer">
+            <footer class="footer">
                 <div>
-                    <div className="icon">
+                    <div class="icon">
                         <a href="https://travel-buddy.me"><i id="icon"class="fa-brands fa-github"></i></a>
                         <a href="https://github.com/HimediaSummer/TravelBuddy" ><i id="icon" class="fa-solid fa-blog"></i></a>
                     </div>

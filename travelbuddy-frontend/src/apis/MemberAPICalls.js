@@ -90,8 +90,16 @@ export const callRegisterAPI = ({ form }) => {
 	};
 };
 
-export const callMemberListForAdminAPI = ({currentPage}) => {
-    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members`;
+export const callMemberListForAdminAPI = ( {currentPage} ) => {
+
+    let requestURL;
+    if (currentPage !== undefined || currentPage !== null) {
+        requestURL =`http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members?offset=${currentPage}`;
+        console.log('지금 나의 주소는?',requestURL);
+    } else {
+        requestURL =`http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members`;
+        console.log('지금 나의 주소는?',requestURL);
+    }
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'GET',
@@ -100,8 +108,11 @@ export const callMemberListForAdminAPI = ({currentPage}) => {
                 Accept: '*/*'
             }
         }).then((response) => response.json());
-        dispatch({type: GET_MEMBERS, payload: result });
-    }}
+        if (result.status !== null) {
+			dispatch({type: GET_MEMBERS, payload: result.data });
+		}
+    };
+};
     
 export const callMemberDetailForAdminAPI = ({memberCode}) => {
         const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members/${memberCode}`;

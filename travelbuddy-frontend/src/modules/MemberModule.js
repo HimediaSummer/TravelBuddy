@@ -24,6 +24,7 @@ const actions = createActions({
 const memberReducer = handleActions(
 	{
 		[GET_MEMBERS]: (state, { payload }) => {
+			console.log('백엔드에서의 응답',payload);
 			return payload;
 		},
 		[GET_MEMBER]: (state, { payload }) => {

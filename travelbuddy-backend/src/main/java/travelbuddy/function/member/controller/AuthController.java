@@ -3,10 +3,13 @@ package travelbuddy.function.member.controller;
 
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.member.dto.AccountDTO;
+import travelbuddy.function.member.dto.TokenDTO;
 import travelbuddy.function.member.service.AuthService;
 
 import java.util.Map;
@@ -120,4 +124,11 @@ public class AuthController {
                 .ok()
                 .body(new ResponseDTO(HttpStatus.OK, "비밀번호가 재설정되었습니다.", null));
     }
+
+//    @PostMapping("/social-login")
+//    public ResponseEntity<LoginResponse> doSocialLogin(@RequestBody @Valid SocialLoginRequest request) {
+//
+//        return ResponseEntity.created(URI.create("/social-login"))
+//                .body(userService.doSocialLogin(request));
+//    }
 }

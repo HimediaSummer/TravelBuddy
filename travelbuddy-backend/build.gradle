@@ -33,6 +33,11 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+//    /*구글 로그인 API 사용을 위한 의존성*/
+//    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client', version: '2.5.4'
+//    implementation 'com.google.auth:google-auth-library-oauth2-http:1.16.0'
+//    implementation 'com.google.api-client:google-api-client:2.2.0'
+
     /* 설명. JWT 토큰을 사용하기 위한 라이브러리 */
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'

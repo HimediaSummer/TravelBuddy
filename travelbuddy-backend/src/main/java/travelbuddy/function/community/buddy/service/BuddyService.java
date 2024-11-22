@@ -124,24 +124,64 @@ public class BuddyService {
     }
 
     @Transactional
-    public Object insertBuddy(BuddyDTO buddyDTO) {
+    public Object insertBuddy(BuddyDTO buddyDTO, MultipartFile buddyImg) {
         log.info("[BuddyService] insertBuddy() Start");
         log.info("[BuddyService] buddy: {}", buddyDTO);
 
-        Buddy buddy = modelMapper.map(buddyDTO, Buddy.class);
+        String imageName = UUID.randomUUID().toString().replace("-", "");
+        String replaceFileName = null;
+        int result = 0;
 
-        BuddyType buddyType = buddyTypeRepository.findById(buddyDTO.getBuddyTypeCode()).get();
-        buddy.setBuddyType(buddyType);
-        log.info("buddyType = " + buddyType);
+        try {
 
-        Region region = regionRepository.findById(buddyDTO.getRegionCode()).get();
-        buddy.setRegion(region);
-        log.info("region = " + region);
+            if(buddyImg != null && !buddyImg.isEmpty()) {
+                /* 설명. util 패키지에 FileUploadUtils 추가 */
+                replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, buddyImg);
+
+                buddyDTO.setBuddyImg(replaceFileName); // 업로드한 파일 이름 설정
+
+                log.info("[ProductService] insert Image Name : {}", replaceFileName);
+            } else  {
+                buddyDTO.setBuddyImg(buddyDTO.getBuddyImg());
+            }
+
+            Buddy insertBuddy = modelMapper.map(buddyDTO, Buddy.class);
+
+            BuddyType buddyType = buddyTypeRepository.findById(buddyDTO.getBuddyTypeCode()).get();
+            insertBuddy.setBuddyType(buddyType);
+            log.info("buddyType = " + buddyType);
+
+            Region region = regionRepository.findById(buddyDTO.getRegionCode()).get();
+            insertBuddy.setRegion(region);
+            log.info("region = " + region);
 
 
-        Account account = accountRepository.findById(buddyDTO.getMemberCode()).get();
-        buddy.setAccount(account);
-        log.info("account = " + account);
+            Account account = accountRepository.findById(buddyDTO.getMemberCode()).get();
+            insertBuddy.setAccount(account);
+            log.info("account = " + account);
+
+            buddyRepository.save(insertBuddy);
+
+            result = 1;
+        } catch (Exception e) {
+            FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
+            throw new RuntimeException(e);
+        }
+
+//        Buddy buddy = modelMapper.map(buddyDTO, Buddy.class);
+//
+//        BuddyType buddyType = buddyTypeRepository.findById(buddyDTO.getBuddyTypeCode()).get();
+//        buddy.setBuddyType(buddyType);
+//        log.info("buddyType = " + buddyType);
+//
+//        Region region = regionRepository.findById(buddyDTO.getRegionCode()).get();
+//        buddy.setRegion(region);
+//        log.info("region = " + region);
+//
+//
+//        Account account = accountRepository.findById(buddyDTO.getMemberCode()).get();
+//        buddy.setAccount(account);
+//        log.info("account = " + account);
 
 
 //        buddy.setBuddyTitle(buddyDTO.getBuddyTitle());
@@ -151,10 +191,10 @@ public class BuddyService {
 //        buddy.setBuddyCreate(LocalDateTime.now().toString());
 
 
-        buddyRepository.save(buddy);
+//        buddyRepository.save(buddy);
 
-//        return "버디게시글 등록 성공" ;
-        return modelMapper.map(buddy , BuddyDTO.class);
+        return (result > 0 ) ? "버디게시글 등록 성공" : "게시글 등록 실패";
+//        return modelMapper.map(buddy , BuddyDTO.class);
     }
 
     @Transactional

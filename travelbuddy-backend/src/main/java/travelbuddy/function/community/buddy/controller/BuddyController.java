@@ -57,9 +57,9 @@ public class BuddyController {
 
     @Operation(summary = "버디 게시글 등록 요청", description = "해당 버디 게시글 등록이 진행됩니다.", tags = { "BuddyController" })
     @PostMapping(value = "/buddies/buddyRegist")
-    public ResponseEntity<ResponseDTO> insertBuddy(@RequestBody BuddyDTO buddyDTO) {
+    public ResponseEntity<ResponseDTO> insertBuddy(@ModelAttribute BuddyDTO buddyDTO, MultipartFile buddyImg) {
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 등록 성공", buddyService.insertBuddy(buddyDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 등록 성공", buddyService.insertBuddy(buddyDTO, buddyImg)));
 
     }
 

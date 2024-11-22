@@ -124,7 +124,7 @@ function BuddyRegist() {
             </div>
             <div>
                 <div>
-                    {/* <div>
+                    <div>
                         {imageUrl && (
                             <img
                                 src={imageUrl}
@@ -143,7 +143,7 @@ function BuddyRegist() {
                         >
                             이미지 업로드
                         </button>
-                    </div> */}
+                    </div>
                 </div>
                 <div>
                     <table>

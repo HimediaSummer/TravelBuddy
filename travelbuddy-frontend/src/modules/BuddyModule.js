@@ -40,7 +40,7 @@ const buddiesReducer = handleActions(
 		[POST_BUDDY]: (state, { payload }) => {
 			console.log("리듀서에서 받은 payload", payload);
 			return payload;
-		},
+		}
 		// [POST_REGISTER]: (state, { payload }) => {
 		// 	return payload;
 		// }

@@ -32,6 +32,15 @@ import MyPutBuddy from './pages/member/mypage/MyPutBuddy';
 import MySchedule from './pages/member/mypage/MySchedule';
 import MyScheduleDetail from './pages/member/mypage/MyScheduleDetail';
 
+import Login from './pages/member/Login';
+import Register from './pages/member/Register';
+import Error from './pages/Error';
+import Buddies from './pages/member/comunity/Buddy';
+import BuddyDetail from './pages/member/comunity/BuddyDetail';
+import BuddyRegist from './pages/member/comunity/BuddyRegist';
+import FindId from './pages/member/FindId';
+import FindPw from './pages/member/FindPw';
+
 function App() {
 
   return (
@@ -76,6 +85,16 @@ function App() {
             <Route path="/mypage/mySchedule" element={<MySchedule />} />
             <Route path="/mypage/mySchedule/:scheCode" element={<MyScheduleDetail />} />
           </Route>
+          
+
+          <Route path="/login" element={ <Login/> } />
+          <Route path="/signup" element={ <Register/> } />
+          <Route path="*" element={ <Error/> }/>
+          <Route path="buddies" element={<Buddies />} />
+          <Route path="buddyDetail/:buddyCode" element={ <BuddyDetail/>} />
+          <Route path="buddyRegist" element={ <BuddyRegist/>} />
+          <Route path='/findid' element={ <FindId/> }/>
+          <Route path='/findpw' element={ <FindPw/> }/>
         </Route>
       </Routes>
     </BrowserRouter>

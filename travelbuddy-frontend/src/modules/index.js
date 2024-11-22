@@ -8,6 +8,7 @@ import useinfoReducer from './UseinfoModule.js';
 
 import myProfileReducer from './mypage/MyProfileModule.js';
 import myScheduleReducer from './mypage/MyScheduleModule.js';
+import buddiesReducer from './BuddyModule.js';
 
 const rootReducer = combineReducers({
 	myBuddyReducer,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
 	qnaReducer,
 	faqReducer,
 	noticeReducer,
-	useinfoReducer
+	useinfoReducer,
+	buddiesReducer
 });
 
 export default rootReducer;

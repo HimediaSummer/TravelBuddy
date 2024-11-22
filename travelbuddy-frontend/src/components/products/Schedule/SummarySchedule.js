@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ScheduleMap from './ScheduleMap';
 
 function SummarySchedule({ travelData }) {
 	const [schedule, setSchedule] = useState('');
@@ -89,6 +90,9 @@ function SummarySchedule({ travelData }) {
 						</div>
 					</div>
 				</form>
+			<div className="chat-box3" style={{marginTop: '100px'}}>
+				<ScheduleMap />
+			</div>
 			</div>
 		</div>
 	);

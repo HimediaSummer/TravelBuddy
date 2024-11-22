@@ -17,8 +17,6 @@ import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.schedule.dto.ScheduleDTO;
 import travelbuddy.function.schedule.service.ScheduleService;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/schedule")
 public class ScheduleController {
@@ -132,4 +130,5 @@ public class ScheduleController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정 생성을 위한 데이터 수집 성공!", scheduleService.scheduling(scheduleDTO)));
     }
 
+    
 }

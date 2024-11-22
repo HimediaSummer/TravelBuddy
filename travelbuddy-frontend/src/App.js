@@ -22,6 +22,19 @@ import MyFaqs from './pages/member/faq/MyFaqs';
 import MyQnas from './pages/member/qna/MyQnas';
 import MyQna from './pages/member/qna/MyQna';
 import MyQnaDetail from './pages/member/qna/MyQnaDetail';
+import Members from './pages/admin/Members';
+import MemberDetail from './pages/admin/MemberDetail';
+import Mypage from './pages/member/mypage/Mypage';
+import MyProfile from './pages/member/mypage/MyProfile';
+import MyPutProfile from './pages/member/mypage/MyPutProfile';
+import MyDeletion from './pages/member/mypage/MyDeletion';
+import MyBuddy from './pages/member/mypage/MyBuddy';
+import MyBuddyDetail from './pages/member/mypage/MyBuddyDetail';
+import MyPutBuddy from './pages/member/mypage/MyPutBuddy';
+import MySchedule from './pages/member/mypage/MySchedule';
+import MyScheduleDetail from './pages/member/mypage/MyScheduleDetail';
+import Qnas from './pages/admin/Qnas';
+import QnaDetail from './pages/admin/QnaDetail ';
 
 function App() {
 
@@ -55,6 +68,18 @@ function App() {
           <Route path="MyPage" element={<MyPage />}>
             <Route path="MyBuddyList" element={<MypageBuddyList />} />
           </Route> 
+          
+          {/* Mypage */}
+          <Route path="/mypage" element={<Mypage />}>
+            <Route path="/mypage/myProfile" element={<MyProfile />} />
+            <Route path="/mypage/updateMyProfile" element={<MyPutProfile />} />
+            <Route path="/mypage/deletion" element={<MyDeletion />} />
+            <Route path="/mypage/myBuddy" element={<MyBuddy />} />
+            <Route path="/mypage/myBuddy/:buddyCode" element={<MyBuddyDetail />} />
+            <Route path="/mypage/myBuddy/:buddyCode/update" element={<MyPutBuddy />} />
+            <Route path="/mypage/mySchedule" element={<MySchedule />} />
+            <Route path="/mypage/mySchedule/:scheCode" element={<MyScheduleDetail />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

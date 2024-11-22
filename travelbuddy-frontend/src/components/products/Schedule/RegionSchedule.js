@@ -105,8 +105,6 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 					<div class='chat-container-r'>
 					<div id="chat-box2-r">
 						<button type='button' onClick={() => tabChange('select')}>장소 선택</button>
-					</div>
-					<div id="chat-box2-r">
 						<button type='button' onClick={() => tabChange('search')}>장소 검색</button>
 					</div>
 					</div>
@@ -135,7 +133,7 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 					)}
 					{ regionTab === 'search' && (
 					<div className='region-search'>
-						<input type='text' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown}/>
+						<input type='text' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
 						<button className="region-button2" onClick={onNext}>다음</button>
 					</div>
 					)}

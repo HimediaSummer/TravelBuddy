@@ -250,8 +250,6 @@ function Map({ regionName, style }) {
 		const scriptId = 'kakao-map-script';
 		let script = document.getElementById(scriptId);
 
-		console.log('key 잘 갖고잇지?', apiKey);
-
 		// 스크립트가 이미 존재하면 로드된 상태라고 판단
 		if (!script) {
 			// 스크립트가 없다면 새로 생성
@@ -291,7 +289,7 @@ function Map({ regionName, style }) {
 						center: new window.kakao.maps.LatLng(37.5665, 126.9780),
 						level: 5
 					};
-					const map = new window.kakao.mpas.Map(container, options);
+					const map = new window.kakao.maps.Map(container, options);
 					setMapInstance(map); // 지도 객체 상태로 저장
 					console.log('지도야??????????',map);
 				}

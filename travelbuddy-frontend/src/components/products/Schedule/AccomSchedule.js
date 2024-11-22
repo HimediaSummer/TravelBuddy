@@ -89,8 +89,6 @@ function AccomSchedule({ onNext, selectedRegion, setTravelData }) {
 				<div class='chat-container-r'>
 					<div id="chat-box2-r">
 						<button type='button' onClick={() => tabChange('select')}>숙소 선택</button>
-					</div>
-					<div id="chat-box2-r">
 						<button type='button' onClick={() => tabChange('search')}>숙소 검색</button>
 					</div>
 					</div>
@@ -116,7 +114,7 @@ function AccomSchedule({ onNext, selectedRegion, setTravelData }) {
 					)}
 					{ accomTab === 'search' && (
 					<div className='region-search'>
-						<input type='text' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown}/>
+						<input type='text' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
 						<button className='accom-button2' onClick={onNext}>다음</button>
 					</div>
 					)}
@@ -152,9 +150,9 @@ function AccomSchedule({ onNext, selectedRegion, setTravelData }) {
 					{selectedAccomDetails && selectedRegion && isToggleOpen && accomTab === 'select' ? (
 						// <Map latitude={selectedRegion.lat} longitude={selectedRegion.lng}/>
 						<Map regionName={selectedRegion.regionName} style={{ width: '500px', height: '800px' }} />
-					) : (<Map regionName={selectedRegion.regionName} style={{ width: '900px', height: '800px' }} />)}
+					) : (<Map regionName={selectedRegion.regionName} style={{ width: '800px', height: '800px' }} />)}
 					{accomTab === 'search' && (
-						<Map regionName={searchQuery} style={{ width: '900px', height: '800px' }} />
+						<Map regionName={searchQuery} style={{ width: '800px', height: '800px' }} />
 					)}
 				</div>
 				{/* 테스트 잔디확인용 */}

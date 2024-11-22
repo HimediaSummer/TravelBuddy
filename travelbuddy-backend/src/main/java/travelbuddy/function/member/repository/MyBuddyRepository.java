@@ -1,6 +1,7 @@
 package travelbuddy.function.member.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import travelbuddy.function.community.buddy.entity.Buddy;
@@ -25,4 +26,8 @@ public interface MyBuddyRepository extends JpaRepository<Buddy, Integer> {
             "JOIN FETCH b.buddyType " +
             "WHERE b.buddyCode = :buddyCode")
     Buddy findByBuddyCode(@Param("buddyCode") int buddyCode);
+
+    @Modifying
+    @Query("DELETE FROM Buddy b WHERE b.buddyCode IN :buddyCodes")
+    void deleteByBuddyCode(@Param("buddyCodes") List<Integer> buddyCodes);
 }

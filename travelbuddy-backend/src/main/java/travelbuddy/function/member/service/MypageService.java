@@ -398,6 +398,7 @@ public class MypageService {
     }
 
     /* 내가쓴버디게시글수정 */
+    // 게시글 수정시 이전데이터 가져오기
     @Transactional
     public Map<String, Object> updateBuddy(int buddyCode, BuddyDTO buddyDTO, MultipartFile buddyImg) {
         log.info("Service: Updating buddy with buddyCode {}", buddyCode);
@@ -455,6 +456,7 @@ public class MypageService {
         return response;
     }
 
+    // 게시글 수정폼
     @Transactional
     public Map<String, Object> getBuddyDetailWithLists(int buddyCode) {
         log.info("Service: Fetching buddy detail and related lists for buddyCode {}", buddyCode);
@@ -509,15 +511,12 @@ public class MypageService {
 
     /* 내가쓴버디게시글삭제 */
     @Transactional
-    public Object deleteBuddyCode(int buddyCode) {
-        log.info("[MypageService] 삭제 시작: buddyCode = {}", buddyCode);
+    public Object deleteBuddyCode(List<Integer> buddyCodes) {
+        log.info("[MypageService] 삭제 시작: buddyCode = {}", buddyCodes);
 
-        Buddy buddy = myBuddyRepository.findById(buddyCode)
-                .orElseThrow(() -> new RuntimeException("삭제할 게시글을 찾을 수 없습니다."));
+        myBuddyRepository.deleteByBuddyCode(buddyCodes);
 
-        myBuddyRepository.delete(buddy);
-
-        log.info("[MypageService] 삭제 완료: buddyCode = {}", buddyCode);
+        log.info("[MypageService] 삭제 완료: buddyCode = {}", buddyCodes);
 
         return "return 게시글 삭제 성공";
     }

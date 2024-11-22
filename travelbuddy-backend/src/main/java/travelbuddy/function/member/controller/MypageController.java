@@ -205,6 +205,7 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 수정 성공", null));
 //        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글수정성공", mypageService.updateBuddy(buddyDTO, buddyImg)));
     }
+    /* 내가 쓴글 이전 데이터불러오기 */
     @GetMapping("/mybuddy/{buddyCode}/update")
     public ResponseEntity<ResponseDTO> getUpdateData(@PathVariable int buddyCode) {
         // 수정 페이지 데이터 반환
@@ -212,31 +213,12 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 수정 데이터 반환 성공", responseData));
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /* 내가 쓴글 삭제 */
     @Operation(summary = "게시글삭제", description = "내가쓴글삭제", tags = {"MypageController"})
-    @DeleteMapping(value = "/mybuddy/{buddyCode}/delete")
-    public ResponseEntity<ResponseDTO> deleteBuddy(@PathVariable int buddyCode) {
+    @DeleteMapping(value = "/mybuddy/delete")
+    public ResponseEntity<ResponseDTO> deleteBuddy(@RequestBody List<Integer> buddyCodes) {
 
-        mypageService.deleteBuddyCode(buddyCode);
+        mypageService.deleteBuddyCode(buddyCodes);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글삭제성공", null));
     }

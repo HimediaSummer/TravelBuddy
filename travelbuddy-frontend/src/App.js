@@ -22,8 +22,6 @@ import MyFaqs from './pages/member/faq/MyFaqs';
 import MyQnas from './pages/member/qna/MyQnas';
 import MyQna from './pages/member/qna/MyQna';
 import MyQnaDetail from './pages/member/qna/MyQnaDetail';
-import Members from './pages/admin/Members';
-import MemberDetail from './pages/admin/MemberDetail';
 import Mypage from './pages/member/mypage/Mypage';
 import MyProfile from './pages/member/mypage/MyProfile';
 import MyPutProfile from './pages/member/mypage/MyPutProfile';
@@ -33,8 +31,6 @@ import MyBuddyDetail from './pages/member/mypage/MyBuddyDetail';
 import MyPutBuddy from './pages/member/mypage/MyPutBuddy';
 import MySchedule from './pages/member/mypage/MySchedule';
 import MyScheduleDetail from './pages/member/mypage/MyScheduleDetail';
-import Qnas from './pages/admin/Qnas';
-import QnaDetail from './pages/admin/QnaDetail ';
 
 function App() {
 

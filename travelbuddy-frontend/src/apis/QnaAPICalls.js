@@ -10,7 +10,6 @@ export const callQnaListForAdminAPI = ({currentPage}) => {
     } else {
         requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/qnas`;
     }
-    
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'GET',

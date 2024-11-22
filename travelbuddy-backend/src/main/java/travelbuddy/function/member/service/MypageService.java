@@ -198,21 +198,6 @@ public class MypageService {
         return "........거북이되는중";
     }
 
-//        Optional<Schedule> optionalSchedule = myScheduleRepository.findById(scheCode);
-//
-//        Schedule schedule = optionalSchedule.orElseThrow(() ->
-//                new RuntimeException("Schedule not found for id: " + scheCode));
-
-//        if (schedule.getAccount() == null || schedule.getAccount().getMemberCode() != memberCode) {
-//            throw new RuntimeException("Schedule does not belong to the member with memberCode: " + memberCode);
-//        }
-
-//        myScheduleRepository.delete(schedule);
-//
-//        log.info("[MypageService] 삭제 완료: scheCode = {}", scheCode);
-//        return "일정삭제성공공공공고옥오고오공고고공ㄱ";
-//    }
-
     /* 일정 재생성 */
     @Transactional
     public Schedule recreateSchedule(int memberCode, int scheCode, ScheduleDTO newScheduleData) {
@@ -337,19 +322,30 @@ public class MypageService {
     }
 
 
-
     /* 내가쓴버디게시글상세조회및신청회원목록조회 */
     public Map<String, Object> getBuddyDetail(int buddyCode) {
         log.info("[MypageService] getBuddyDetail() Start");
 
-        Buddy getBuddyDetail = myBuddyRepository.findById(buddyCode).get();
-//        buddy.setBuddyImageUrl(IMAGE_URL + buddy.getBuddyImageUrl());
+        Buddy getBuddyDetail = myBuddyRepository.findByBuddyCode(buddyCode);
         List<BuddyMatchData> buddyMatchDataList = myBuddyMatchRepository.findByBuddyCode(buddyCode);
 
-        BuddyDTO buddyDTO = modelMapper.map(getBuddyDetail, BuddyDTO.class);
-        if (getBuddyDetail.getAccount() != null) {
-            buddyDTO.setMemberName(getBuddyDetail.getAccount().getMemberName());
-        }
+        log.info("BuddyEntityaaaaaaaaaa:" + getBuddyDetail);
+
+        // BuddyDTO와 Buddy 직접매핑
+        BuddyDTO buddyDTO = new BuddyDTO();
+        buddyDTO.setBuddyCode(getBuddyDetail.getBuddyCode());
+        buddyDTO.setMemberCode(getBuddyDetail.getAccount().getMemberCode());
+        buddyDTO.setRegionCode(getBuddyDetail.getRegion().getRegionCode());
+        buddyDTO.setBuddyTypeCode(getBuddyDetail.getBuddyType().getBuddyTypeCode());
+        buddyDTO.setBuddyTitle(getBuddyDetail.getBuddyTitle());
+        buddyDTO.setBuddyContents(getBuddyDetail.getBuddyContents());
+        buddyDTO.setBuddyCreate(getBuddyDetail.getBuddyCreate().toString());
+        buddyDTO.setBuddyStatus(getBuddyDetail.getBuddyStatus());
+        buddyDTO.setBuddyImg(getBuddyDetail.getBuddyImg());
+        buddyDTO.setBuddyCount(getBuddyDetail.getBuddyCount());
+        buddyDTO.setBuddyAt(getBuddyDetail.getBuddyAt());
+
+        System.out.println("Manually Mapped BuddyDTO: " + buddyDTO);
 
         List<BuddyMatchDataDTO> buddyMatchDataDTOList = buddyMatchDataList.stream().map(matchData -> {
             BuddyMatchDataDTO bmdd = new BuddyMatchDataDTO();
@@ -365,6 +361,11 @@ public class MypageService {
         Map<String, Object> result = new HashMap<>();
         result.put("getBuddyDetail", buddyDTO);
         result.put("getBuddyMatchList", buddyMatchDataDTOList);
+        result.put("regionName", getBuddyDetail.getRegion().getRegionName());
+        result.put("memberName", getBuddyDetail.getAccount().getMemberName());
+        result.put("buddyTypeName", getBuddyDetail.getBuddyType().getBuddyTypeName());
+
+        System.out.println("result = " + result);
 
         log.info("[MypageService] getBuddyDetail() END");
 
@@ -488,8 +489,7 @@ public class MypageService {
         System.out.println("buddyMatchDataDTO = " + buddyMatchDataDTO);
 
         int buddyCode = getMatchData.getBuddy().getBuddyCode();
-        Object buddy = myBuddyRepository.findByBuddyCode(buddyCode)
-                .orElseThrow(() -> new IllegalArgumentException("No Buddy found for buddyCode: " + buddyCode));
+        Object buddy = myBuddyRepository.findByBuddyCode(buddyCode);
 
         System.out.println("buddy1234 = " + buddy);
 

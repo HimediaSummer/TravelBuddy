@@ -2,6 +2,7 @@ package travelbuddy.function.member.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import travelbuddy.function.community.buddy.entity.Buddy;
 import travelbuddy.function.member.entity.Account;
 
@@ -18,5 +19,10 @@ public interface MyBuddyRepository extends JpaRepository<Buddy, Integer> {
             "WHERE a.memberCode = :memberCode")
     List<Object[]> findAllByAccount(int memberCode);
 
-    Optional<Object> findByBuddyCode(int buddyCode);
+    @Query("SELECT b FROM Buddy b " +
+            "JOIN FETCH b.region " +
+            "JOIN FETCH b.account " +
+            "JOIN FETCH b.buddyType " +
+            "WHERE b.buddyCode = :buddyCode")
+    Buddy findByBuddyCode(@Param("buddyCode") int buddyCode);
 }

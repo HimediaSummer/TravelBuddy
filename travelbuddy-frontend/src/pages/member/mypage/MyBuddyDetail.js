@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getBuddy } from "../../../modules/mypage/MyBuddyModule.js"
+import { putBuddy } from "../../../modules/mypage/MyBuddyModule.js"
 
 function MyBuddyDetail() {
 
@@ -10,6 +11,9 @@ function MyBuddyDetail() {
     const dispatch = useDispatch();
     const { buddyCode } = useParams(); 
     const [buddyDetail, setBuddyDetail] = useState({});
+    const [regionName, setRegionName] = useState(""); // 지역명
+    const [buddyTypeName, setBuddyTypeName] = useState(""); // 버디 유형
+    const [memberName, setMemberName] = useState(""); // 작성자 이름
     const [buddyMatch, setBuddyMatch] = useState([]);
 
     console.log('Buddy Code:', buddyCode);
@@ -27,6 +31,9 @@ function MyBuddyDetail() {
             .then((data) => {
                 console.log('Fetched Data:', data);
                 setBuddyDetail(data.data.getBuddyDetail); 
+                setRegionName(data.data.regionName); 
+                setBuddyTypeName(data.data.buddyTypeName); 
+                setMemberName(data.data.memberName); 
                 setBuddyMatch(data.data.getBuddyMatchList);
                 console.log('setBuddyDetail 발동', data);
             })
@@ -39,14 +46,14 @@ function MyBuddyDetail() {
         <div>
             <h3>내가 쓴 버디 게시글 상세 조회</h3>
             <ul>
-                <li key={buddyDetail}>
+                <li key={buddyDetail.buddyCode}>
                     <p>제목 : {buddyDetail.buddyTitle}</p> 
                     <p>내용 : {buddyDetail.buddyContents}</p>
                     <p>이미지 : {buddyDetail.buddyImg}</p>   
-                    <p>지역 : {buddyDetail.regionName}</p> 
+                    <p>지역 : {regionName}</p> 
                     <p>작성일자 : {buddyDetail.buddyCreate}</p>  
-                    <p>작성자 : {buddyDetail.memberName}</p>  
-                    <p>버디유형 : {buddyDetail.buddyTypeName}</p> 
+                    <p>작성자 : {memberName}</p>  
+                    <p>버디유형 : {buddyTypeName}</p> 
                 </li>
             </ul>
 
@@ -76,6 +83,10 @@ function MyBuddyDetail() {
                     ))}
                 </tbody>
             </table>
+            <button onClick={() => navigate(`/mypage/mybuddy/${buddyCode}/update`)}>
+                수정하기
+            </button>
+
         </div>
     );
 }

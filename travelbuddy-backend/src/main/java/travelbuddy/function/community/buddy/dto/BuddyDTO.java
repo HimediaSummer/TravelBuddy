@@ -12,10 +12,6 @@ public class BuddyDTO {
     private String buddyImg;        // 게시글 이미지경로
     private int buddyCount;         // 조회수
     private String buddyAt;         // 은폐여부
-    private String regionName;
-    private String buddyTypeName;
-    private String memberName;
-
 
     public BuddyDTO() {
     }
@@ -32,9 +28,6 @@ public class BuddyDTO {
         this.buddyImg = buddyImg;
         this.buddyCount = buddyCount;
         this.buddyAt = buddyAt;
-        this.regionName = regionName;
-        this.buddyTypeName = buddyTypeName;
-        this.memberName = memberName;
     }
 
     public int getBuddyCode() {
@@ -125,29 +118,6 @@ public class BuddyDTO {
         this.buddyAt = buddyAt;
     }
 
-    public String getRegionName() {
-        return regionName;
-    }
-
-    public void setRegionName(String regionName) {
-        this.regionName = regionName;
-    }
-
-    public String getBuddyTypeName() {
-        return buddyTypeName;
-    }
-
-    public void setBuddyTypeName(String buddyTypeName) {
-        this.buddyTypeName = buddyTypeName;
-    }
-
-    public String getMemberName() {
-        return memberName;
-    }
-
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
-    }
 
     @Override
     public String toString() {
@@ -163,9 +133,6 @@ public class BuddyDTO {
                 ", buddyImg='" + buddyImg + '\'' +
                 ", buddyCount=" + buddyCount +
                 ", buddyAt='" + buddyAt + '\'' +
-                ", regionName='" + regionName + '\'' +
-                ", buddyTypeName='" + buddyTypeName + '\'' +
-                ", memberName='" + memberName + '\'' +
                 '}';
     }
 }

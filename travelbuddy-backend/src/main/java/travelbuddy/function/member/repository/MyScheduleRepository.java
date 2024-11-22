@@ -17,11 +17,6 @@ public interface MyScheduleRepository extends JpaRepository<Schedule, Integer> {
             "WHERE a.memberCode = :memberCode")
     List<Object[]> findByMemberCode(int memberCode);
 
-//    void deleteByScheCode(Integer scheCode);
-
-//    @Query("DELETE FROM Schedule s WHERE s.scheCode = :scheCode AND s.account.memberCode = :memberCode")
-//    void deleteSchedule(@Param("scheCode") int scheCode, @Param("memberCode") int memberCode);
-
     @Modifying
     @Query("DELETE FROM Schedule s WHERE s.scheCode IN :scheCodes")
     void deleteByScheCode(@Param("scheCodes") List<Integer> scheCodes);

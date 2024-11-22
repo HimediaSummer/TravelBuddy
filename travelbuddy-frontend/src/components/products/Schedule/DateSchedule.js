@@ -35,7 +35,6 @@ function DateSchedule({ onNext, setTravelData }) {
 			startDate,
 			endDate
 		}));
-		onNext();
 	};
 
 	// 날짜 선택 최대 5일

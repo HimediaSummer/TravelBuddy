@@ -289,10 +289,39 @@ legend {
 	color: #1F709E;
 }
 
+#chat-box2-r {
+	background-color: var(--background-color);
+	text-align: center;
+	justify-content: center;
+	/* font-size: xx-large; */
+	font-weight: bold;
+	color: #1F709E;
+	
+}
+
+#chat-box2-r>button {
+	padding: 20px;
+	border: none;
+	background-color: var(--background-color);
+	cursor: pointer;
+	font-size: x-large;
+	font-weight: bold;
+	color: black;
+}
+
+#chat-box2-r>button:hover {
+	color: #1F709E;
+}
+
+#chat-box2-r>button:focus {
+	color: #1F709E;
+}
+
 #chat-box3 {
-	width: 500px;
+	width: 300px;
 	height: auto;
 	background-color: var(--background-color);
+	/* background-color: lightgray; */
 	text-align: left;
 	flex-wrap: wrap;
 	justify-content: flex-start;
@@ -353,10 +382,27 @@ select,
 
 .chat-container {
 	display: flex;
-	justify-content: space-evenly;
+	/* justify-content: space-evenly; */
+	justify-content: flex-start;
+	gap: 50px;
 	border-radius: 4px;
 	font-size: large;
 	flex-wrap: wrap;
+	margin-left: 80px;
+	margin-bottom: 80px;
+	height: auto; /* 또는 적절한 높이 설정 */
+    max-height: 100vh; /* 전체 높이 사용 */
+}
+
+.chat-container-q {
+	display: flex;
+	justify-content: space-evenly;
+	/* justify-content: flex-start;
+	gap: 50px; */
+	border-radius: 4px;
+	font-size: large;
+	flex-wrap: wrap;
+	margin-left: 80px;
 	margin-bottom: 80px;
 	height: auto; /* 또는 적절한 높이 설정 */
     max-height: 100vh; /* 전체 높이 사용 */
@@ -378,6 +424,10 @@ select,
 .chat-form,
 .chat-answer {
 	margin: 10%, 5%;
+}
+
+.chat-form {
+	width: 437px;
 }
 
 .chat-form>div {
@@ -829,6 +879,25 @@ select,
 	margin-top: 20px; /* 위쪽 여백 추가 */
 }
 
+.region-search {
+	position: relative;
+	overflow-y: auto; /* 세로 스크롤 가능 */
+	height: 100%;
+    /*max-height: 3350px; /* 최대 높이 설정 (필요에 따라 조정) */
+    max-height: 1200px; /* 최대 높이 설정 (필요에 따라 조정) */
+	min-height: 600px;
+    border-radius: 5px; /* 모서리 둥글게 */
+	padding: 10px; /* 내부 여백 추가 */
+	margin-top: 20px; /* 위쪽 여백 추가 */
+	width: 100%;
+}
+
+.region-search input {
+	position: absolute;
+	top: 10px;
+	width: 100%;
+}
+
 .regions {
 	margin-top: 550%;
 }
@@ -950,7 +1019,7 @@ select,
 }
 
 .accom-scroll {
-	overflow-y: auto; /* 세로 스크롤 가능 */
+	/* overflow-y: auto; 세로 스크롤 가능 */
 	height: 100%;
     /*max-height: 3350px; /* 최대 높이 설정 (필요에 따라 조정) */
     max-height: 1200px; /* 최대 높이 설정 (필요에 따라 조정) */
@@ -1043,4 +1112,9 @@ select,
 .quest-button2:hover {
     background-color: var(--accent-color); /* 마우스 오버 시 배경색 변경 */
     color: black; /* 마우스 오버 시 글자 색상 변경 */
+}
+
+.searchStyle {
+	border: 1px solid #8CC8EA;
+	
 }

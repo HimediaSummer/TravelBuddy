@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Map from './Map';
 
-function AccomSchedule({ onNext, setTravelData }) {
+function AccomSchedule({ onNext, selectedRegion, setTravelData }) {
+// function AccomSchedule({ onNext, setTravelData }) {
 
 	const [accom, setAccom] = useState([]);
 	const [selectedAccom, setSelectedAccom] = useState(null);
 	const [selectedAccomDetails, setSelectedAccomDetails] = useState(null);
+	const [isToggleOpen, setIsToggleOpen] = useState(true);
+	const [accomTab, setAccomTab] = useState('select');
 
+	// 카카오지도 검색
+	const [searchQuery, setSearchQuery] = useState('');
+	const [searchResults, setSearchResults] =  useState([]);
+
+	console.log('지역 가져왓냐!!!!!!!', selectedRegion);
+	console.log('이름이머에여!!!!!!!!!!!!', selectedRegion.regionName);
 	// 숙소
 	useEffect(() => {
 		fetch('http://localhost:8080/schedule/accom')
@@ -43,16 +52,50 @@ function AccomSchedule({ onNext, setTravelData }) {
 		console.log("Selected Accommodation:", accom);
 	};
 
+	// 엔터키 처리 이벤트
+	const handleKeyDown = e => {
+		if(e.key === 'Enter') {
+			e.preventDefault();
+			handleSearchSubmit();
+		}
+	};
+
+	// 토글토글
+	const toggle = () => {
+		setIsToggleOpen(prevState => !prevState);
+	};
+
+	const tabChange = (tab) => {
+		setAccomTab(tab);
+	};
+
+	// 검색어 입력 처리
+	const handleSearchChange  = e => {
+		setSearchQuery(e.target.value);
+	};
+
+	// 검색 처리
+	const handleSearchSubmit = () => {
+		setSelectedAccom({
+			regionName: searchQuery
+		});
+	};
+
+
 	return (
 		<div class="tema-title">
 			<div class="chat-container">
 				<form class="chat-form" action="post">
-					<div id="chat-box2">
-						<h2>숙소 선택</h2>
+				<div class='chat-container-r'>
+					<div id="chat-box2-r">
+						<button type='button' onClick={() => tabChange('select')}>숙소 선택</button>
+						<button type='button' onClick={() => tabChange('search')}>숙소 검색</button>
+					</div>
 					</div>
 					<div class="tema-title">
 						<legend>선호하는 숙소형태를 선택해주세요.</legend>
 					</div>
+					{ accomTab === 'select' && (
 					<div className='accom-scroll'>
 						<div className='accoms'>
 							{accom.map((accom) => (
@@ -68,17 +111,29 @@ function AccomSchedule({ onNext, setTravelData }) {
 							))}
 						</div>
 					</div>
+					)}
+					{ accomTab === 'search' && (
+					<div className='region-search'>
+						<input type='text' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
+						<button className='accom-button2' onClick={onNext}>다음</button>
+					</div>
+					)}
 				</form>
-				<div id='chat-box3'>
+				<div>
+					<button onClick={toggle} style={{display: accomTab === 'search' ? 'none' : 'block'}}>
+						{isToggleOpen ? '<' : '>'}
+					</button>
+				</div>
+				<div id='chat-box3' style={{display: selectedAccomDetails && isToggleOpen && accomTab === 'select' ? 'block' : 'none'}}>
 					{selectedAccomDetails ? (
 						<div>
-							<img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'500px'} height={'300px'} />
+							<img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'300px'} height={'200px'} />
 							<p>
 								{/* <img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'50px'} height={'50px'}/> */}
 								{selectedAccomDetails.accomType}</p>
 							<p>{selectedAccomDetails.accomName}</p>
 							<p>{selectedAccomDetails.accomAddres}</p>
-							<div style={{display: 'flex', justifyContent: 'flex-end'}}>
+							<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 								<button className='accom-button2' onClick={onNext}>다음</button>
 							</div>
 						</div>
@@ -86,9 +141,20 @@ function AccomSchedule({ onNext, setTravelData }) {
 						''
 					)}
 				</div>
-				<div style={{marginTop: '100px'}}>
-							<Map />
-							</div>
+				{/* <div style={{marginTop: '100px'}}>
+					{selectedRegion ?
+							(<Map regionName={selectedRegion.regionName}/>) : (<Map />)
+					}
+							</div> */}
+				<div style={{ marginTop: '100px' }}>
+					{selectedAccomDetails && selectedRegion && isToggleOpen && accomTab === 'select' ? (
+						// <Map latitude={selectedRegion.lat} longitude={selectedRegion.lng}/>
+						<Map regionName={selectedRegion.regionName} style={{ width: '500px', height: '800px' }} />
+					) : (<Map regionName={selectedRegion.regionName} style={{ width: '800px', height: '800px' }} />)}
+					{accomTab === 'search' && (
+						<Map regionName={searchQuery} style={{ width: '800px', height: '800px' }} />
+					)}
+				</div>
 				{/* 테스트 잔디확인용 */}
 			</div>
 		</div>

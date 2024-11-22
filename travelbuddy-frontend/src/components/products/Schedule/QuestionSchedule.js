@@ -110,7 +110,7 @@ function QuestionSchedule({ onNext, setTravelData }) {
 	const currentQuestion = selectedQuestions[currentQuestionIndex];
 	return (
 		<div class="tema-title">
-			<div class="chat-container">
+			<div class="chat-container-q">
 				<form class="chat-form" action="post">
 					<div id="chat-box2">
 						<h2>질문 선택</h2>

@@ -250,16 +250,20 @@ function Map({ regionName, style }) {
 		const scriptId = 'kakao-map-script';
 		let script = document.getElementById(scriptId);
 
-		// script가 이미 존재하지 않으면 새로 생성
+		console.log('key 잘 갖고잇지?', apiKey);
+
+		// 스크립트가 이미 존재하면 로드된 상태라고 판단
 		if (!script) {
+			// 스크립트가 없다면 새로 생성
 			script = document.createElement('script');
 			script.id = scriptId;
 			script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false&libraries=services`;
 			script.type = 'text/javascript';
 			document.head.appendChild(script);
-		}
-
+			
+			// 스크립트 로딩 후 온로드 이벤트 설정
 		script.onload = () => {
+			console.log('야로드야됏냐??????????????????');
 			if (window.kakao && window.kakao.maps) {
 				window.kakao.maps.load(() => {
 					const container = document.getElementById('map');
@@ -268,14 +272,32 @@ function Map({ regionName, style }) {
 							center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 기본 좌표 설정
 							level: 5,
 						};
-
 						const map = new window.kakao.maps.Map(container, options);
 						setMapInstance(map); // 지도 객체 상태로 저장
+						console.log('ㅈㅣ도야!!!!!!!', map);
 					}
 				});
 			}
 		};
+	} else {
 
+		// 스크립트가 이미 존재하면 온로드를 바로 실행
+		if(window.kakao && window.kakao.maps) {
+			console.log('이미로드됏다~!');
+			window.kakao.maps.load(() => {
+				const container = document.getElementById('map');
+				if(!mapInstance) {
+					const options = {
+						center: new window.kakao.maps.LatLng(37.5665, 126.9780),
+						level: 5
+					};
+					const map = new window.kakao.mpas.Map(container, options);
+					setMapInstance(map); // 지도 객체 상태로 저장
+					console.log('지도야??????????',map);
+				}
+			});
+		}
+	}
 		// cleanup: 스크립트가 제거될 때 중복 제거
 		return () => {
 			if (script && document.head.contains(script)) {
@@ -286,10 +308,11 @@ function Map({ regionName, style }) {
 
 	// regionName 변경 시 마커 업데이트
 	useEffect(() => {
+		console.log('지금지역어디야!!!!!!!!!', regionName);
 		if (mapInstance && regionName) {
 			const geocoder = new window.kakao.maps.services.Geocoder();
 
-			// 새로운 검색어가 있을 때 이전 마커를 삭제
+			// 새로운 검색어가 있을 때 이전 마커 삭제
 			if (currentMarker) {
 				currentMarker.setMap(null); // 이전 마커 제거
 			}
@@ -316,6 +339,12 @@ function Map({ regionName, style }) {
 			});
 		}
 	}, [regionName, mapInstance]); // regionName이 변경될 때마다 실행
+
+	console.log(
+		mapInstance,
+		regionName,
+		currentMarker
+	);
 
 	return <div id="map" style={style} />;
 }

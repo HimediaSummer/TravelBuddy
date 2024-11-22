@@ -193,13 +193,43 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글매칭신청자상태수정", null));
     }
 
+
     /* 내가 쓴글 수정 */
     @Operation(summary = "게시글수정", description = "내가쓴글수정", tags = {"MypageController"})
     @PutMapping(value = "/mybuddy/{buddyCode}/update")
-    public ResponseEntity<ResponseDTO> updateBuddy(@ModelAttribute BuddyDTO buddyDTO, @RequestParam(required = false) MultipartFile buddyImg) {
+    public ResponseEntity<ResponseDTO> updateBuddy(@PathVariable int buddyCode, @ModelAttribute BuddyDTO buddyDTO, @RequestParam(required = false) MultipartFile buddyImg) {
+        log.info("Controller: PUT request for buddyCode {}", buddyCode);
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글수정성공", mypageService.updateBuddy(buddyDTO, buddyImg)));
+        mypageService.updateBuddy(buddyCode, buddyDTO, buddyImg);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 수정 성공", null));
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글수정성공", mypageService.updateBuddy(buddyDTO, buddyImg)));
     }
+    @GetMapping("/mybuddy/{buddyCode}/update")
+    public ResponseEntity<ResponseDTO> getUpdateData(@PathVariable int buddyCode) {
+        // 수정 페이지 데이터 반환
+        Map<String, Object> responseData = mypageService.getBuddyDetailWithLists(buddyCode);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 수정 데이터 반환 성공", responseData));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /* 내가 쓴글 삭제 */
     @Operation(summary = "게시글삭제", description = "내가쓴글삭제", tags = {"MypageController"})

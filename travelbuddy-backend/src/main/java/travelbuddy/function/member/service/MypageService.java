@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import travelbuddy.common.Criteria;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
 import travelbuddy.function.community.buddy.dto.BuddyMatchDataDTO;
+import travelbuddy.function.community.buddy.dto.BuddyTypeDTO;
 import travelbuddy.function.community.buddy.entity.Buddy;
 import travelbuddy.function.community.buddy.entity.BuddyMatchData;
 import travelbuddy.function.community.buddy.entity.BuddyType;
@@ -28,6 +29,7 @@ import travelbuddy.function.community.buddy.repository.BuddyTypeRepository;
 import travelbuddy.function.member.dto.AccountDTO;
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.repository.*;
+import travelbuddy.function.schedule.dto.RegionDTO;
 import travelbuddy.function.schedule.dto.ScheduleDTO;
 import travelbuddy.function.schedule.entity.Region;
 import travelbuddy.function.schedule.entity.Schedule;
@@ -397,64 +399,112 @@ public class MypageService {
 
     /* 내가쓴버디게시글수정 */
     @Transactional
-    public Object updateBuddy(BuddyDTO buddyDTO, MultipartFile buddyImg){
-        log.info("[MypageService] updateBuddy() Start");
-        log.info("[MypageService] buddyDTO : {}", buddyDTO);
+    public Map<String, Object> updateBuddy(int buddyCode, BuddyDTO buddyDTO, MultipartFile buddyImg) {
+        log.info("Service: Updating buddy with buddyCode {}", buddyCode);
 
-        String replaceFileName = null;
-        int result = 0;
-
-        try {
-
-            Buddy buddy = myBuddyRepository.findById(buddyDTO.getBuddyCode()).get();
-            String oriImage = buddy.getBuddyImg();
-            log.info("[updateBuddy] oriImage : {}", oriImage);
-
-
-            if (buddyDTO.getRegionCode() != 0) {
-                Region region = regionRepository.findById(buddyDTO.getRegionCode())
-                        .orElseThrow(() -> new EntityNotFoundException("Region not found for ID: " + buddyDTO.getRegionCode()));
-                buddy.setRegion(region);
-            }
-
-            if (buddyDTO.getBuddyTypeCode() != 0) {
-                BuddyType buddyType = buddyTypeRepository.findById(buddyDTO.getBuddyTypeCode())
-                        .orElseThrow(() -> new EntityNotFoundException("BuddyType not found for ID: " + buddyDTO.getBuddyTypeCode()));
-                buddy.setBuddyType(buddyType);
-            }
-            if (buddyDTO.getBuddyTitle() != null) {
-                buddy.setBuddyTitle(buddyDTO.getBuddyTitle());
-            }
-            if (buddyDTO.getBuddyContents() != null) {
-                buddy.setBuddyContents(buddyDTO.getBuddyContents());
-            }
-            if (buddyDTO.getBuddyCreate() != null) {
-                buddy.setBuddyCreate(buddyDTO.getBuddyCreate());
-            }
-
-            if(buddyImg != null){
-                String imageName = UUID.randomUUID().toString().replace("-", "");
-                replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, buddyImg);
-                log.info("[updateBuddy] InsertFileName : {}", replaceFileName);
-
-                buddy.setBuddyImg(replaceFileName);	// 새로운 파일 이름으로 update
-                log.info("[updateBuddy] deleteImage : {}", oriImage);
-
-                boolean isDelete = FileUploadUtils.deleteFile(IMAGE_DIR, oriImage);
-                log.info("[update] isDelete : {}", isDelete);
-            } else {
-                buddy.setBuddyImg(oriImage);
-            }
-
-            result = 1;
-        } catch (
-                IOException e) {
-            log.info("[updateBuddy] Exception!!");
-            FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
-            throw new RuntimeException(e);
+        // 1. 게시글 조회
+        Buddy buddy = myBuddyRepository.findByBuddyCode(buddyCode);
+        if (buddy == null) {
+            throw new RuntimeException("수정할 게시글을 찾을 수 없습니다.");
         }
-        log.info("[MypageService] updateBuddy End ");
-        return (result > 0) ? "내가쓴글 수정 성공" : "퉤퉤퉤";
+
+        // 2. 지역 및 버디 유형 조회
+        Region region = regionRepository.findById(buddyDTO.getRegionCode())
+                .orElseThrow(() -> new RuntimeException("유효하지 않은 지역 코드입니다."));
+        BuddyType buddyType = buddyTypeRepository.findById(buddyDTO.getBuddyTypeCode())
+                .orElseThrow(() -> new RuntimeException("유효하지 않은 버디 유형 코드입니다."));
+
+        // 3. 게시글 수정
+        buddy.setBuddyTitle(buddyDTO.getBuddyTitle());
+        buddy.setBuddyContents(buddyDTO.getBuddyContents());
+        buddy.setRegion(region); // 지역 정보 수정
+        buddy.setBuddyType(buddyType); // 버디 유형 수정
+
+        // 4. 이미지 처리
+//        if (buddyImg != null && !buddyImg.isEmpty()) {
+//            // 이미지 파일 저장 로직 추가 (예: 파일 경로 저장)
+//            String imagePath = fileService.saveFile(buddyImg);
+//            buddy.setBuddyImg(imagePath);
+//        }
+
+        // 5. 변경된 게시글 저장
+        myBuddyRepository.save(buddy);
+
+        log.info("Service: Buddy updated successfully");
+
+        // 6. 수정 후 필요한 데이터 반환
+        BuddyDTO updatedBuddyDTO = new BuddyDTO();
+        updatedBuddyDTO.setBuddyCode(buddy.getBuddyCode());
+        updatedBuddyDTO.setBuddyTitle(buddy.getBuddyTitle());
+        updatedBuddyDTO.setBuddyContents(buddy.getBuddyContents());
+        updatedBuddyDTO.setRegionCode(buddy.getRegion().getRegionCode());
+        updatedBuddyDTO.setBuddyTypeCode(buddy.getBuddyType().getBuddyTypeCode());
+        updatedBuddyDTO.setBuddyImg(buddy.getBuddyImg());
+
+        // 지역 및 버디 유형 목록 추가 반환 (수정 폼에 활용 가능)
+        List<Region> regions = regionRepository.findAll();
+        List<BuddyType> buddyTypes = buddyTypeRepository.findAll();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("updatedBuddy", updatedBuddyDTO);
+        response.put("regions", regions);
+        response.put("buddyTypes", buddyTypes);
+
+        log.info("Service: Response data for buddy update: {}", response);
+
+        return response;
+    }
+
+    @Transactional
+    public Map<String, Object> getBuddyDetailWithLists(int buddyCode) {
+        log.info("Service: Fetching buddy detail and related lists for buddyCode {}", buddyCode);
+
+        // 1. 게시글 데이터 조회
+        Buddy buddy = myBuddyRepository.findByBuddyCode(buddyCode);
+        if (buddy == null) {
+            throw new RuntimeException("게시글을 찾을 수 없습니다.");
+        }
+
+        // 2. 게시글 데이터를 DTO로 변환
+        BuddyDTO buddyDTO = new BuddyDTO();
+        buddyDTO.setBuddyCode(buddy.getBuddyCode());
+        buddyDTO.setMemberCode(
+                buddy.getAccount() != null ? buddy.getAccount().getMemberCode() : null
+        ); // Account가 null일 가능성 방어
+        buddyDTO.setRegionCode(
+                buddy.getRegion() != null ? buddy.getRegion().getRegionCode() : null
+        ); // Region이 null일 가능성 방어
+        buddyDTO.setBuddyTypeCode(
+                buddy.getBuddyType() != null ? buddy.getBuddyType().getBuddyTypeCode() : null
+        ); // BuddyType이 null일 가능성 방어
+        buddyDTO.setBuddyTitle(buddy.getBuddyTitle());
+        buddyDTO.setBuddyContents(buddy.getBuddyContents());
+        buddyDTO.setBuddyCreate(
+                buddy.getBuddyCreate() != null ? buddy.getBuddyCreate().toString() : null
+        ); // 작성일자가 null일 가능성 방어
+        buddyDTO.setBuddyStatus(buddy.getBuddyStatus());
+        buddyDTO.setBuddyImg(buddy.getBuddyImg());
+        buddyDTO.setBuddyCount(buddy.getBuddyCount());
+        buddyDTO.setBuddyAt(buddy.getBuddyAt());
+
+        log.info("Service: Converted BuddyDTO {}", buddyDTO);
+
+        // 3. 지역 및 버디 유형 목록 조회
+        List<Region> regions = regionRepository.findAll();
+        List<BuddyType> buddyTypes = buddyTypeRepository.findAll();
+
+        log.info("Service: Regions fetched: {}", regions);
+        log.info("Service: Buddy types fetched: {}", buddyTypes);
+
+        // 4. 결과 데이터 구성
+        Map<String, Object> result = new HashMap<>();
+        result.put("getBuddyDetail", buddyDTO); // 게시글 데이터
+        result.put("regions", regions);        // 지역 전체 목록
+        result.put("buddyTypes", buddyTypes);  // 버디 유형 전체 목록
+
+        log.info("Service: Final response data for buddyCode {}: {}", buddyCode, result);
+
+        return result;
     }
 
     /* 내가쓴버디게시글삭제 */
@@ -514,6 +564,5 @@ public class MypageService {
         System.out.println("buddyMatchData=============== = " + buddyMatchData);
         log.info("[MypageService] deleteMatch() End");
     }
-
 
 }

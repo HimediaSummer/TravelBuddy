@@ -57,8 +57,11 @@ function MyProfile() {
             ) : (<p>Loading...</p>)}
             
             <button onClick={() => navigate('/mypage/updatemyprofile')}>
-                        수정하기
-                    </button>
+                수정하기
+            </button>
+            <button onClick={() => navigate('/mypage/deletion')}>
+                탈퇴
+            </button>
         </div>
     );
 }

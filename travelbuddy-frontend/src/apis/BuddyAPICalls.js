@@ -40,7 +40,6 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
             const result = await fetch(requestURL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
                     Accept: '*/*',
                     Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
                 },

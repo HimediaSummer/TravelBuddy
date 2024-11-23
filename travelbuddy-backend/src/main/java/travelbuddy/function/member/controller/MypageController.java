@@ -177,16 +177,30 @@ public class MypageController {
         Map<String, Object> buddyDetail = mypageService.getBuddyDetail(buddyCode);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글세부내용조회성공", buddyDetail));
-
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글세부내용및신청회원조회성공", mypageService.getBuddyDetail(buddyCode)));
     }
 
     @Operation(summary = "게시글매칭상태수정", description = "매칭신청상태 1 : 신청 , 2: 수락 , 3: 거절", tags = {"MypageController"})
-    @PutMapping("/mybuddy/{buddyCode}/applystatus")
+    @PutMapping("/mybuddy/{buddyCode}")
     public ResponseEntity<ResponseDTO> getBuddyApplyStatus(
             @PathVariable("buddyCode") int buddyCode,
-            @RequestParam("buddyMatchCode") int buddyMatchCode,
-            @RequestParam("applyStatus") int applyStatus) {
+            @RequestBody Map<String, Object> requestBody) {
+
+        System.out.println("Buddy Code: " + buddyCode);
+        System.out.println("Request Body: " + requestBody);
+
+        // 검증: applyStatus가 1, 2, 3 중 하나인지 확인
+        if (!requestBody.containsKey("buddyMatchCode") || !requestBody.containsKey("applyStatus")) {
+            return ResponseEntity.badRequest().body(
+                    new ResponseDTO(HttpStatus.BAD_REQUEST, "Missing required fields", null)
+            );
+        }
+
+        int buddyMatchCode = (int) requestBody.get("buddyMatchCode");
+        int applyStatus = (int) requestBody.get("applyStatus");
+
+        System.out.println("Buddy Code: " + buddyCode);
+        System.out.println("Buddy Match Code: " + buddyMatchCode);
+        System.out.println("Apply Status: " + applyStatus);
 
         mypageService.updateApplyStatus(buddyCode, buddyMatchCode, applyStatus);
 

@@ -381,11 +381,11 @@ public class MypageService {
 
         List<BuddyMatchData> buddyMatchData = myBuddyMatchRepository.findByBuddyCode(buddyCode);
 
-        int countApplyStatus = (int) buddyMatchData.stream()
-                .filter(data -> data.getApplyStatus() == 2)
-                .count();
+        // 2. 수락 상태 (applyStatus == 2)가 이미 존재하는지 검증
+        boolean hasAccepted = buddyMatchData.stream()
+                .anyMatch(data -> data.getApplyStatus() == 2);
 
-        if (countApplyStatus > 1 && applyStatus == 2) {
+        if (hasAccepted && applyStatus == 2) {
             throw new IllegalStateException("이미 수락한 신청자가 존재합니다.");
         }
 
@@ -395,6 +395,8 @@ public class MypageService {
                 .orElseThrow(() -> new EntityNotFoundException("BuddyMatchData not found with buddyMatchCode: " + buddyMatchCode));
 
         matchDataToUpdate.setApplyStatus(applyStatus);
+        myBuddyMatchRepository.save(matchDataToUpdate);;
+        log.info("[MypageService] updateBuddyApplyStatus() End");
     }
 
     /* 내가쓴버디게시글수정 */

@@ -8,26 +8,56 @@ function MyBuddy() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [buddy, setBuddy] = useState("");
-    const [selectedRows, setSelectedRows] = useState([]);
+    const [selectedRows, setSelectedRows] = useState([]); // 선택된 행
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
+    const [totalItems, setTotalItems] = useState(0); // 전체 게시글 수
+    const itemsPerPage = 10; // 페이지당 항목 수
 
-    useEffect(
-        () => {
-            fetch('/mypage/mybuddy')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })   
-            .then((data) => {
-                console.log('Fetched Data:', data);
-                setBuddy(data.data || []); 
-                console.log('setBuddy 발동', data);
-            })
-            .catch((error) => {
-                console.error('Error fetching buddy:', error);
-            });
-    }, []);
+    // 데이터 가져오기
+    const fetchBuddyData = (page) => {
+        fetch(`/mypage/mybuddy?offset=${page}`)
+        .then((response) => {
+            if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log("Fetched Data:", data);
+            setBuddy(data.data.data || []); // 게시글 데이터
+            setTotalItems(data.data.pageInfo.total); // 전체 게시글 수
+        })
+        .catch((error) => {
+            console.error("Error fetching buddy:", error);
+        });
+    };
+
+
+
+
+
+
+
+
+
+    // useEffect(
+    //     () => {
+    //         fetch('/mypage/mybuddy')
+    //         .then((response) => {
+    //             if (!response.ok) {
+    //                 throw new Error(`HTTP error! status: ${response.status}`);
+    //             }
+    //             return response.json();
+    //         })   
+    //         .then((data) => {
+    //             console.log('Fetched Data:', data);
+    //             setBuddy(data.data || []); 
+    //             console.log('setBuddy 발동', data);
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error fetching buddy:', error);
+    //         });
+    // }, []);
 
     useEffect(() => {
         console.log('Buddy State:', buddy);

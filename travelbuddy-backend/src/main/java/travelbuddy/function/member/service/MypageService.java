@@ -234,71 +234,24 @@ public class MypageService {
 
 
     /* =========================================== My커뮤니티 =========================================== */
-    //    public int selectMypagePostTotal() {
-//        log.info("[MypageService] selectMyPostTotal() Start");
-//        List<Buddy> mypagePostList = myBuddyRepository.Buddy(1001);
-//        log.info("[MypageService] selectMyPostTotal()끝");
-//        return mypagePostList.size();
-//    }
+    public int selectBuddyTotal() {
+        log.info("[MyService] selectBuddyListTotal() Start");
+        int memberCode = 1002;
+        int total = myBuddyRepository.countByMemberCode(memberCode);
 
-//    public Object selectMypagePostList(Criteria cri) {
-//        log.info("[MypageService] selectMyPostList Start11");
-//
-//        int index = cri.getPageNum() -1;
-//        int count = cri.getAmount();
-//        Pageable paging = PageRequest.of(index, count, Sort.by("buddyCode").descending());
-//
-//        Page<Buddy> result = myBuddyRepository.findByMemberCode(1001, paging);
-//        List<Buddy> mypagePostList = (List<Buddy>)result.getContent(); // List<MemberBuddyData> 추출
-//
-//        log.info("[MypageService] selectMypagePostList End");
-//        return mypagePostList.stream().map(mypagePost -> modelMapper.map(mypagePost, BuddyDTO.class)).collect(Collectors.toList());
-//
-//    }
+        return total;
+    }
 
-//    public List<Map<String, Object>> selectBuddyList(int memberCode, int pageNum, int pageSize) {
-//        log.info("[MypageService] selectBuddyList() Start");
-//        System.out.println("text memberbuddy" + memberCode);
-//
-//        Pageable paging = PageRequest.of(pageNum - 1, pageSize, Sort.by("buddy.buddyCode").descending());
-//
-//        Page<Object[]> result = myBuddyRepository.findAllByAccount(memberCode, paging);
-//
-//        List<Map<String, Object>> buddyList = result.getContent().stream().map(record -> {
-//            Map<String, Object> buddyMap = new HashMap<>();
-//            Buddy buddy = (Buddy) record[0];
-//            String regionName = (String) record[1];
-//            String buddyTypeName = (String) record[2];
-//            String memberName = (String) record[3];
-//
-//            buddyMap.put("buddyTitle", buddy.getBuddyTitle());
-//            buddyMap.put("buddyCode", buddy.getBuddyCode());
-//            buddyMap.put("buddyCreate", buddy.getBuddyCreate());
-//            buddyMap.put("buddyStatus", buddy.getBuddyStatus());
-//            buddyMap.put("buddyCount", buddy.getBuddyCount());
-//            buddyMap.put("memberName", memberName);
-//            buddyMap.put("regionName", regionName);
-//            buddyMap.put("buddyTypeName", buddyTypeName);
-//
-//            return buddyMap;
-//        }).collect(Collectors.toList());
-//
-//        Map<String, Object> response = new HashMap<>();
-//        response.put("buddyList", buddyList);
-//        response.put("currentPage", result.getNumber() + 1);
-//        response.put("totalPages", result.getTotalPages());
-//        response.put("totalElements", result.getTotalElements());
-//
-//        log.info("[MypageService] selectBuddyList() End");
-//        return response;
-//    }
+    // Buddy 목록 페이징
+    public List<Map<String, Object>> selectBuddyListPaging(Criteria cri) {
+        log.info("[MyService] selectBuddyListPaging() Start");
 
-    /* 내가쓴버디게시글조회 */
-    public List<Map<String, Object>> selectBuddyList(int memberCode) {
-        log.info("[MypageService] selectBuddyList() Start");
-        System.out.println("text memberbuddy" + memberCode);
+        int memberCode = 1002;
+        int index = cri.getPageNum() - 1;
+        int count = cri.getAmount();
+        Pageable paging = PageRequest.of(index, count, Sort.by("buddyCode").descending());
 
-        List<Object[]> results = myBuddyRepository.findAllByAccount(memberCode);
+        Page<Object[]> results = myBuddyRepository.findAllBuddyListPaging(memberCode, paging);
 
         List<Map<String, Object>> buddyList = new ArrayList<>();
         for (Object[] result : results) {
@@ -319,9 +272,45 @@ public class MypageService {
             buddyList.add(buddyMap);
         }
 
-        log.info("[MypageService] selectBuddyList() End");
+
+        log.info("[AdminAccountService] selectMemberListWithPaging() End");
         return buddyList;
     }
+
+
+
+
+
+
+    /* 내가쓴버디게시글조회 */
+//    public List<Map<String, Object>> selectBuddyList(int memberCode) {
+//        log.info("[MypageService] selectBuddyList() Start");
+//        System.out.println("text memberbuddy" + memberCode);
+//
+//        List<Object[]> results = myBuddyRepository.findAllByAccount(memberCode);
+//
+//        List<Map<String, Object>> buddyList = new ArrayList<>();
+//        for (Object[] result : results) {
+//            Map<String, Object> buddyMap = new HashMap<>();
+//            Buddy buddy = (Buddy) result[0];
+//            String regionName = (String) result[1];
+//            String buddyTypeName = (String) result[2];
+//            String memberName = (String) result[3];
+//            buddyMap.put("buddyTitle", buddy.getBuddyTitle());
+//            buddyMap.put("buddyCode", buddy.getBuddyCode());
+//            buddyMap.put("buddyCreate", buddy.getBuddyCreate());
+//            buddyMap.put("buddyStatus", buddy.getBuddyStatus());
+//            buddyMap.put("buddyCount", buddy.getBuddyCount());
+//            buddyMap.put("memberName", memberName);
+//            buddyMap.put("regionName", regionName);
+//            buddyMap.put("buddyTypeName", buddyTypeName);
+//
+//            buddyList.add(buddyMap);
+//        }
+//
+//        log.info("[MypageService] selectBuddyList() End");
+//        return buddyList;
+//    }
 
 
     /* 내가쓴버디게시글상세조회및신청회원목록조회 */

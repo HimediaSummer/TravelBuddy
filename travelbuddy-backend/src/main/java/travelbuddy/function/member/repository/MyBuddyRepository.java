@@ -1,5 +1,7 @@
 package travelbuddy.function.member.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -33,4 +35,15 @@ public interface MyBuddyRepository extends JpaRepository<Buddy, Integer> {
 
     @Query("SELECT b FROM Buddy b WHERE b.buddyCode IN :buddyCodes")
     List<Buddy> findByBuddyCodeIn(@Param("buddyCodes") List<Integer> buddyCodes);
+
+    @Query("SELECT b, r.regionName, t.buddyTypeName, a.memberName " +
+            "FROM Buddy b " +
+            "JOIN b.region r " +
+            "JOIN b.buddyType t " +
+            "JOIN b.account a " +
+            "WHERE a.memberCode = :memberCode")
+    Page<Object[]> findAllBuddyListPaging(@Param("memberCode") int memberCode, Pageable pageable);
+
+    @Query("SELECT COUNT(b) FROM Buddy b WHERE b.account.memberCode = :memberCode")
+    int countByMemberCode(@Param("memberCode") int memberCode);
 }

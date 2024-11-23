@@ -126,49 +126,37 @@ public class MypageController {
     }
 
     /* =========================================== My커뮤니티 =========================================== */
-//    @Operation(summary = "내가쓴게시글조회요청", description = "내가쓴글조회및 페이징처리", tags = {"MypageController"})
-//    @GetMapping("/mybuddypost")
-//    public ResponseEntity<ResponseDTO> selectMypagePostList(
-//            @RequestParam(name = "offset", defaultValue = "1")String offset) {
-//
-//        log.info("[MypageController]selectMyPostList" + offset);
-//
-//        int total = mypageService.selectMypagePostTotal();
-//
-//        Criteria cri = new Criteria(Integer.valueOf(offset), 10);
-//        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
-//
-//        pagingResponseDTO.setData(mypageService.selectMypagePostList(cri));
-//        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
-//
-//        return ResponseEntity.ok().body
-//                (new ResponseDTO(HttpStatus.OK, "내가쓴글조회성공", pagingResponseDTO));
-//    }
-
-//    @Operation(summary = "게시글조회요청", description = "내가쓴글목록조회페이징", tags = {"MypageController"})
-//    @GetMapping("/mybuddy")
-//    public ResponseEntity<ResponseDTO> selectBuddyList(@RequestParam(name = "offset", defaultValue = "1")String offset) {
-//
-//        int memberCode = 1002; // 하드코딩된 memberCode
-//
-//        int total = mypageService.selectMyBuddyTotal();
-//        Criteria cri = new Criteria(Integer.valueOf(offset), 10);
-//        PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
-//        pagingResponseDTO.setData(mypageService.selectBuddyList(cri));
-//        pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
-//
-//        Map<String, Object> response = mypageService.selectBuddyList(memberCode, page, size);
-//
-//        return ResponseEntity.ok(response);
-//    }
-
-    @Operation(summary = "게시글조회요청", description = "내가쓴글목록조회", tags = {"MypageController"})
+    @Operation(summary = "게시글조회요청", description = "내가쓴글페이지목록조회", tags = {"MypageController"})
     @GetMapping("/mybuddy")
-    public ResponseEntity<ResponseDTO> selectBuddyList() {
-        int memberCode = 1002; // 하드코딩된 memberCode
-        List<Map<String, Object>> buddyList = mypageService.selectBuddyList(memberCode);
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글목록조회성공", buddyList));
+    public ResponseEntity<ResponseDTO> selectBuddyListPaging(
+            @RequestParam(name = "offset", defaultValue = "1") int offset) {
+        log.info("[MypageController] selectBuddyListPaging : " + offset);
+
+        int total = mypageService.selectBuddyTotal();
+        Criteria cri = new Criteria(offset, 10);
+        List<Map<String, Object>> buddyList = mypageService.selectBuddyListPaging(cri);
+
+        PagingResponseDTO response = new PagingResponseDTO();
+        response.setData(buddyList);
+        response.setPageInfo(new PageDTO(cri, total));
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", response));
+
     }
+
+
+
+
+
+
+
+//    @Operation(summary = "게시글조회요청", description = "내가쓴글목록조회", tags = {"MypageController"})
+//    @GetMapping("/mybuddy")
+//    public ResponseEntity<ResponseDTO> selectBuddyList() {
+//        int memberCode = 1002; // 하드코딩된 memberCode
+//        List<Map<String, Object>> buddyList = mypageService.selectBuddyList(memberCode);
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글목록조회성공", buddyList));
+//    }
 
     @Operation(summary = "게시글상세조회요청", description = "내가쓴글상세조회", tags = {"MypageController"})
     @GetMapping("/mybuddy/{buddyCode}")

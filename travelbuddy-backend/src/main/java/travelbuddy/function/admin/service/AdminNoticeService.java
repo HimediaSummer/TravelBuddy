@@ -78,6 +78,7 @@ public class AdminNoticeService {
         log.info("[AdminNoticeService] selectNotice() start");
 
         Notice notice = adminNoticeRepository.findById(noticeCode).orElse(null);
+        notice.setNoticeImg(IMAGE_URL + notice.getNoticeImg());
 
         log.info("[AdminNoticeService] selectNotice() end");
 
@@ -95,10 +96,16 @@ public class AdminNoticeService {
 
         try {
 
+            if (noticeImage == null) {
+                noticeDTO.setNoticeImg("");
+
+            } else {
+
             /* 설명. util 패키지에 FileUploadUtils 추가 */
             replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, noticeImage);
-
             noticeDTO.setNoticeImg(replaceFileName);
+
+            }
 
             log.info("[ProductService] insert Image Name : {}", replaceFileName);
 
@@ -110,12 +117,13 @@ public class AdminNoticeService {
 
             log.info("[AdminNoticeService] insertNotice() end");
 
+
         } catch (Exception e) {
             FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
             throw new RuntimeException(e);
         }
 
-        return (result > 0) ? "상품 입력 성공" : "상품 입력 실패";
+        return (result > 0) ? "공지 등록 성공" : "공지 등록 실패";
     }
 
     /*공지 1개를 수정한다.*/

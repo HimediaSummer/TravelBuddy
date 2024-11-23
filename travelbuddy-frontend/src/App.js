@@ -42,25 +42,30 @@ function App() {
         <Route path="/">
           <Route index element={ <Main/> }/>          
           <Route path="Schedule" element={ <Schedule /> }/>   
+
+          {/*ADMIN 페이지*/}
+          <Route path="Notices" element={<Notices />}/>
+          <Route path="NoticeDetail/:noticeCode" element={<NoticeDetail />}/>
+          <Route path="Notice" element={<Notice />}/>
           <Route path="Members" element={ <Members/> }/>
           <Route path="MemberDetail/:memberCode" element={ <MemberDetail/>} />
           <Route path="Qnas" element={ <Qnas/> }/>
           <Route path="QnaDetail/:qnaCode" element={ <QnaDetail/>} />
           <Route path="Faq" element={ <Faq/> }/>
           <Route path="FaqDetail/:faqCode" element={ <FaqDetail/> }/>
-          <Route path="Faqs" element={ <Faqs/> }/>  //
+          <Route path="Faqs" element={ <Faqs/> }/>
+          <Route path="Useinfo" element={<Useinfo />}/>
+          <Route path="Useinfos" element={<Useinfos />}/>
+          <Route path="UseinfoDetail/:useinfoCode" element={<UseinfoDetail />}/>
+
+          {/* CS 페이지 */}
           <Route path="MyFaqs" element={ <MyFaqs/> }/>
           <Route path="MyQnas" element={ <MyQnas/> }/>
           <Route path="MyQna" element={ <MyQna/> }/>
           <Route path="MyQnaDetail/:qnaCode" element={ <MyQnaDetail/>} />
-          <Route path="Useinfo" element={<Useinfo />}/>
-          <Route path="Useinfos" element={<Useinfos />}/>
-          <Route path="UseinfoDetail/:useinfoCode" element={<UseinfoDetail />}/>
-          <Route path="Notice" element={<Notice />}/>
-          <Route path="Notices" element={<Notices />}/>
-          <Route path="NoticeDetail/:noticeCode" element={<NoticeDetail />}/>
           <Route path="MyNotices" element={<MyNotices />}/>
           <Route path="MyNoticeDetail/:noticeCode" element={<MyNoticeDetail />}/>
+
           <Route path="MyPage" element={<MyPage />}>
             <Route path="MyBuddyList" element={<MypageBuddyList />} />
           </Route> 

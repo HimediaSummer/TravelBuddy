@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+import { Editor } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
+
 import { insertNoticeAPI } from "../../../apis/NoticeAPICalls";
 
 function Notice() {
@@ -9,6 +12,7 @@ function Notice() {
     const dispatch = useDispatch();
 
     const imageInput = useRef();
+    const editorRef = useRef();
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState();
 
@@ -59,6 +63,27 @@ function Notice() {
         setNoticeDTO({ ...noticeDTO, [name]: value });
     };
 
+    const onChange = () => {
+        const data = editorRef.current.getInstance().getHTML();
+        setNoticeDTO( (state) => ({...state, noticeContents: data}));
+        console.log(data);
+    };
+
+    useEffect (
+        () => {
+            if (editorRef.current) {
+                const editorInstance = editorRef.current.getInstance();
+                editorInstance.removeHook('addImageBlobHook');
+                editorInstance.addHook('addImageBlobHook', async (blob, callback) => {
+                    setImage(blob);
+        
+                      // 로컬 미리보기 URL 생성
+                    const previewUrl = URL.createObjectURL(blob);
+                    callback(previewUrl, 'image');
+                });
+            }
+        }, []);
+
     const insertNotice = () => {
         const now = new Date();
         const formattedDate = now
@@ -73,38 +98,34 @@ function Notice() {
             })
             .replace(/\. /g, "-")
             .replace(",", "");
+        const viewAt = 'N';
 
             const formData = new FormData();
 
             formData.append('noticeTitle', noticeDTO.noticeTitle);
-            formData.append('noticeContents', noticeDTO.noticeContents);
+            formData.append('noticeContents', editorRef.current.getInstance().getHTML());
             formData.append('noticeCreate', formattedDate);
             formData.append('noticeCount', noticeDTO.noticeCount);
-            formData.append('noticeAt', noticeDTO.noticeAt);
+            formData.append('noticeAt', viewAt);
             
-            if (image) {formData.append('noticeImage', image);}
+            if (image) {formData.append('noticeImage', image)}
             console.log('이미지가 있으면 이거 있어야 돼',image)
 
-            dispatch(insertNoticeAPI({noticeDTO: formData}));    
-
-            alert("공지사항이 등록되었습니다.");
-            navigate(`/Notices`);
+            try {
+                dispatch(insertNoticeAPI({ noticeDTO: formData }));
+                alert("공지사항이 등록되었습니다.");
+                navigate(`/Notices`);
+            } catch (error) {
+                console.error("공지사항 등록 실패", error);
+            }
         };
 
+
     return (
-        <div>
-            <h2>공지사항</h2>
+        <>
             <button onClick={cancleNoticeInsert}>취소</button>
             <button onClick={insertNotice}>작성완료</button>
-            <table>
-                <thead>
-                    <tr></tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>제목</td>
-                        <td>
-                            <input
+                        <input
                                 type="text"
                                 name="noticeTitle"
                                 value={noticeDTO.noticeTitle}
@@ -114,72 +135,19 @@ function Notice() {
                                 maxLength={100}
                                 style={{ width: "350px" }}
                             />
-                        </td>
-                        <td>은폐여부</td>
-                        <td>
-                            <select
-                                name="noticeAt"
-                                value={noticeDTO.noticeAt}
-                                onChange={handleInputChange}
-                                required
-                            >
-                                <option value="">선택</option>
-                                <option value={"N"}>공개</option>
-                                <option value={"Y"}>비공개</option>
-                            </select>
-                        </td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td colSpan={3}>
-                            <input
-                                type="text"
-                                name="noticeContents"
-                                value={noticeDTO.noticeContents}
-                                placeholder="내용을 입력하세요."
-                                onChange={handleInputChange}
-                                required
-                                maxLength={500}
-                                style={{ width: "600px" }}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>이미지</td>
-                            <img
-                            src={imageUrl}
-                            alt="preview"
-                            style={{ maxWidth: '200px' }} 
-							/>
-                        <td>
-                            <input 
-                            style={{ display: 'none' }}
-							type="file"
-							name="noticeImg"
-							accept="image/jpg,image/png,image/jpeg,image/gif"
-							onChange={onChangeImageUpload}
-							ref={imageInput} />
-                        </td>
-                        <td>
-                            <button 
-                            onClick={onClickImageUpload}>
-                                첨부
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            ☑️ 이미지첨부는 최대 10MB입니다.
-                            <br />
-                            PNG,JPG,JPEG만 가능합니다.
-                        </td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <Editor
+        initialValue=" "
+        placeholder="내용을 입력하세요."
+        previewStyle="vertical"
+        height="600px"
+        initialEditType="wysiwyg"
+        useCommandShortcut={false}
+        hideModeSwitch={true}
+        ref={editorRef}
+        onChange={onChange}
+        autofocus={true}
+        />
+        </>
     );
 }
 

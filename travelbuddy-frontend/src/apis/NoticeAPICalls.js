@@ -88,6 +88,26 @@ export const insertNoticeAPI = ({noticeDTO}) => {
         console.log('백엔드에서 가져온 값',result);
     }}
 
+               // 관리자가 사진을 업로드한다.
+export const insertImageAPI = ({noticeDTO}) => {
+    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/notices/insertnotice`;
+    console.log('지금 나의 주소는 ? ',requestURL);
+    for (const pair of noticeDTO.entries()) {
+        console.log(`${pair[0]}: ${pair[1]}`);
+    }
+    console.log('백엔드 대문 앞');
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: 'POST',
+            headers: {
+                Accept: '*/*'
+            },
+            body: noticeDTO
+        }).then((response) => response.json());
+        dispatch({type: POST_NOTICE, payload: result });
+        console.log('백엔드에서 가져온 값',result);
+    }}
+
                // 관리자가 Notice 1개를 수정한다.
 export const updateNoticeAPI = (noticeCode, updateData) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/notices/${noticeCode}/updatenotice`;

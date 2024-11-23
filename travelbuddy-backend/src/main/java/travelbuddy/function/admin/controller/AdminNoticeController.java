@@ -59,7 +59,7 @@ public class AdminNoticeController {
 
     @Operation(summary = "공지 등록 요청", description = "공지의 등록 처리가 진행됩니다.", tags = {"AdminNoticeController"})
     @PostMapping("/notices/insertnotice")
-    public ResponseEntity<ResponseDTO> insertNotice(@ModelAttribute NoticeDTO noticeDTO, MultipartFile noticeImage) {
+    public ResponseEntity<ResponseDTO> insertNotice(@ModelAttribute NoticeDTO noticeDTO, @RequestParam(value = "noticeImage", required = false) MultipartFile noticeImage) {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 등록 성공",adminNoticeService.insertNotice(noticeDTO, noticeImage)));
     }
 

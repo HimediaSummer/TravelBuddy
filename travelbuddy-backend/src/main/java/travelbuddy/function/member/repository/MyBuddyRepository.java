@@ -30,4 +30,7 @@ public interface MyBuddyRepository extends JpaRepository<Buddy, Integer> {
     @Modifying
     @Query("DELETE FROM Buddy b WHERE b.buddyCode IN :buddyCodes")
     void deleteByBuddyCode(@Param("buddyCodes") List<Integer> buddyCodes);
+
+    @Query("SELECT b FROM Buddy b WHERE b.buddyCode IN :buddyCodes")
+    List<Buddy> findByBuddyCodeIn(@Param("buddyCodes") List<Integer> buddyCodes);
 }

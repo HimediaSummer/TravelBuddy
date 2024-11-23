@@ -13,6 +13,7 @@ import travelbuddy.common.PageDTO;
 import travelbuddy.common.PagingResponseDTO;
 import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
+import travelbuddy.function.community.buddy.entity.BuddyMatchData;
 import travelbuddy.function.member.dto.AccountDTO;
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.repository.MyBuddyRepository;
@@ -219,6 +220,7 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 수정 성공", null));
 //        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글수정성공", mypageService.updateBuddy(buddyDTO, buddyImg)));
     }
+
     /* 내가 쓴글 이전 데이터불러오기 */
     @GetMapping("/mybuddy/{buddyCode}/update")
     public ResponseEntity<ResponseDTO> getUpdateData(@PathVariable int buddyCode) {
@@ -239,9 +241,11 @@ public class MypageController {
 
     /* 내가 신청한 게시글, 신청상태 조회 */
     @Operation(summary = "신청게시글조회", description = "내가매칭신청한게시글조회", tags = {"MypageController"})
-    @GetMapping(value = "/mymatch/{memberCode}")
-    public ResponseEntity<ResponseDTO> seleteMatch(@PathVariable int memberCode) {
+    @GetMapping(value = "/mymatch")
+    public ResponseEntity<ResponseDTO> seleteMatch() {
         log.info("[MypageController] seleteMatch() Start");
+
+        int memberCode = 1002;
 
         Object matchData = mypageService.selectMatch(memberCode);
 
@@ -251,10 +255,11 @@ public class MypageController {
 
     /* 신청취소(삭제) */
     @Operation(summary = "신청취소", description = "신청취소삭제", tags = {"MypageController"})
-    @DeleteMapping(value = "/mymatch/{memberCode}/delete")
-    public ResponseEntity<ResponseDTO> deleteMatch(@PathVariable int memberCode) {
+    @DeleteMapping(value = "/mymatch")
+    public ResponseEntity<ResponseDTO> deleteMatch() {
         log.info("[MypageController] deleteMatch() Start");
-        log.info("Delete Request - memberCode: {}", memberCode);
+
+        int memberCode = 1002;
 
         mypageService.deleteMatch(memberCode);
 

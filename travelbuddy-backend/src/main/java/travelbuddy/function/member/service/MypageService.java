@@ -527,26 +527,37 @@ public class MypageService {
     public Object selectMatch(int memberCode) {
         log.info("[MypageService] selectMatch() Start");
 
-        BuddyMatchData getMatchData = myBuddyMatchRepository.findByMemberCode(memberCode)
-                .orElseThrow(() -> new IllegalArgumentException("No matching data found for memberCode: " + memberCode));
+        List<BuddyMatchData> matchDataList = myBuddyMatchRepository.findByMemberCodeMatch
+                (memberCode);
+        if (matchDataList.isEmpty()) {
+            throw new EntityNotFoundException("No matching data found for memberCode: " + memberCode);
+        }
 
-        BuddyMatchDataDTO buddyMatchDataDTO = new BuddyMatchDataDTO();
-        buddyMatchDataDTO.setBuddyMatchCode(getMatchData.getBuddyMatchCode());
-        buddyMatchDataDTO.setBuddyCode(getMatchData.getBuddy().getBuddyCode());
-        buddyMatchDataDTO.setMemberCode(getMatchData.getAccount().getMemberCode());
-        buddyMatchDataDTO.setApplyId(getMatchData.getApplyId());
-        buddyMatchDataDTO.setApplyStatus(getMatchData.getApplyStatus());
+        List<BuddyMatchDataDTO> buddyMatchDataDTOList = new ArrayList<>();
+        List<Integer> buddyCodeList = new ArrayList<>();
 
-        System.out.println("buddyMatchDataDTO = " + buddyMatchDataDTO);
+        for (BuddyMatchData matchData : matchDataList) {
+            // DTO로 변환
+            BuddyMatchDataDTO buddyMatchDataDTO = new BuddyMatchDataDTO();
+            buddyMatchDataDTO.setBuddyMatchCode(matchData.getBuddyMatchCode());
+            buddyMatchDataDTO.setBuddyCode(matchData.getBuddy().getBuddyCode());
+            buddyMatchDataDTO.setMemberCode(matchData.getAccount().getMemberCode());
+            buddyMatchDataDTO.setApplyId(matchData.getApplyId());
+            buddyMatchDataDTO.setApplyStatus(matchData.getApplyStatus());
+            buddyMatchDataDTOList.add(buddyMatchDataDTO);
 
-        int buddyCode = getMatchData.getBuddy().getBuddyCode();
-        Object buddy = myBuddyRepository.findByBuddyCode(buddyCode);
+            // BuddyCode 수집
+            buddyCodeList.add(matchData.getBuddy().getBuddyCode());
+        }
 
-        System.out.println("buddy1234 = " + buddy);
+        List<Buddy> buddyList = myBuddyRepository.findByBuddyCodeIn(buddyCodeList);
+        if (buddyList.isEmpty()) {
+            throw new EntityNotFoundException("No buddy found for buddyCodes: " + buddyCodeList);
+        }
 
         Map<String, Object> response = new HashMap<>();
-        response.put("buddyMatchData", buddyMatchDataDTO);
-        response.put("buddyDetails", buddy);
+        response.put("buddyMatchDataList", buddyMatchDataDTOList);
+        response.put("buddyList", buddyList);
 
         log.info("[MypageService] selectMatch() End");
         return response;

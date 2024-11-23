@@ -16,4 +16,7 @@ public interface MyBuddyMatchRepository extends JpaRepository<BuddyMatchData, In
 
     @Query("SELECT bmd FROM BuddyMatchData bmd WHERE bmd.account.memberCode = :memberCode")
     Optional<BuddyMatchData> findByMemberCode(@Param("memberCode") int memberCode);
+
+    @Query("SELECT bmd FROM BuddyMatchData bmd WHERE bmd.account.memberCode = :memberCode")
+    List<BuddyMatchData> findByMemberCodeMatch(@Param("memberCode") int memberCode);
 }

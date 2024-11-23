@@ -11,13 +11,13 @@ services:
   # Back-end : SpringBoot REST API Server
   backend-server:
     build:
-      context: ./rest-api-server
+      context: ./travelbuddy-backend
       dockerfile: Dockerfile
-    container_name: my-rest-server
+    container_name: travelbuddy-backend
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/ohgi_restaurant
-      SPRING_DATASOURCE_USERNAME: ohgiraffers
-      SPRING_DATASOURCE_PASSWORD: ohgiraffers
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tbdb
+      SPRING_DATASOURCE_USERNAME: travelbuddy
+      SPRING_DATASOURCE_PASSWORD: travelbuddy
     ports:
       - "8080:8080"
     volumes:
@@ -31,9 +31,9 @@ services:
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: qwer1234
-      MYSQL_DATABASE: ohgi_restaurant
-      MYSQL_USER: ohgiraffers
-      MYSQL_PASSWORD: ohgiraffers
+      MYSQL_DATABASE: tbdb
+      MYSQL_USER: travelbuddy
+      MYSQL_PASSWORD: travelbuddy
       TZ: Asia/Seoul
     ports:
       - "3306:3306"

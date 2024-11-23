@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelbuddy.common.Criteria;
@@ -20,7 +22,10 @@ import travelbuddy.function.community.qnafaq.entity.QnaAnswer;
 import travelbuddy.function.community.qnafaq.repository.FqTypeRepository;
 import travelbuddy.function.community.qnafaq.repository.QnaAnswerRepository;
 import travelbuddy.function.community.qnafaq.repository.QnaRepository;
+import travelbuddy.function.member.entity.Account;
+import travelbuddy.function.member.repository.AccountRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,16 +36,18 @@ public class QnaService {
     private QnaRepository qnaRepository;
     private FqTypeRepository fqTypeRepository;
     private QnaAnswerRepository qnaAnswerRepository;
+    private AccountRepository accountRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public QnaService(ModelMapper modelMapper, FqTypeRepository fqTypeRepository, QnaAnswerRepository qnaAnswerRepository, QnaRepository qnaRepository) {
+    public QnaService(ModelMapper modelMapper, AccountRepository accountRepository, FqTypeRepository fqTypeRepository, QnaAnswerRepository qnaAnswerRepository, QnaRepository qnaRepository) {
         this.modelMapper = modelMapper;
+        this.accountRepository = accountRepository;
         this.fqTypeRepository = fqTypeRepository;
         this.qnaAnswerRepository = qnaAnswerRepository;
         this.qnaRepository = qnaRepository;
     }
-
+//    리스트의 총 합을 구한다.
     public int selectQnaTotal() {
         log.info("[QnaService] selectQnaTotal() Start");
 
@@ -69,6 +76,7 @@ public class QnaService {
             QnaDTO qnaDTO = modelMapper.map(qna, QnaDTO.class);
             qnaDTO.setMemberCode(qna.getAccount().getMemberCode());
 
+
             QnaAnswer qnaAnswer = qnaAnswerRepository.findByQna(qna);
             QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
 
@@ -83,28 +91,21 @@ public class QnaService {
         return qnaList.stream().map((Qna) -> modelMapper.map(Qna, QnaDTO.class));
     }
 
-    /*공지 1개의 세부 정보를 확인한다.*/
+    /*문의 1개의 상세 정보를 확인한다.*/
     public Object selectQna(int qnaCode) {
 
         log.info("[QnaService] selectQna start");
 
-        Qna qna = qnaRepository.findById(qnaCode).orElse(null);
-        QnaAnswer qnaAnswer = null;
-
-        if (qna != null) {
-            qnaAnswer = qnaAnswerRepository.findByQna(qna);
-        }
-
-        System.out.println("qna = " + qna);
-        System.out.println("qnaAnswer = " + qnaAnswer);
-
-
+        Qna qna = qnaRepository.findById(qnaCode).get();
+        QnaAnswer qnaAnswer = qnaAnswerRepository.findByQna(qna);
         QnaDTO qnaDTO = modelMapper.map(qna , QnaDTO.class);
         QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
 
-        QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO, qnaDTO);
+        qnaDTO.setMemberCode(qna.getAccount().getMemberCode());
 
-        log.info("[QnaService] selectQna end");
+        QnaDetailDTO qnaDetailDTO = new QnaDetailDTO(qnaAnswerDTO,qnaDTO);
+
+        log.info("[AdminQnaService] selectQna() end");
 
         return qnaDetailDTO;
 
@@ -114,27 +115,21 @@ public class QnaService {
     @Transactional
     public Object insertQna(QnaDTO qnaDTO) {
 
-        System.out.println("[insertQna] qnaDTO = " + qnaDTO);
-
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        int memberCode = Integer.parseInt(userDetails.getUsername());
+        FqType fqType = fqTypeRepository.findById(qnaDTO.getFqTypeCode()).orElseThrow();
+        Account account = accountRepository.findById(qnaDTO.getMemberCode()).orElseThrow();
         Qna insertqna = modelMapper.map(qnaDTO, Qna.class);
-
-        FqType fqType = fqTypeRepository.findById(qnaDTO.getFqTypeCode()).orElseThrow(() -> new RuntimeException(("FqType not found")));
         insertqna.setFqType(fqType);
+        insertqna.setAccount(account);
         qnaRepository.save(insertqna);
 
-
         QnaAnswer qnaAnswer = new QnaAnswer();
-        qnaAnswer.setAnsCode(insertqna.getQnaCode());
         qnaAnswer.setQna(insertqna);
+        qnaAnswer.setAnsContents("");
         qnaAnswerRepository.save(qnaAnswer);
 
-        QnaDTO newQna = modelMapper.map(insertqna, QnaDTO.class);
-        QnaAnswerDTO newQnaAnswer = modelMapper.map(qnaAnswer,QnaAnswerDTO.class);
-        QnaDetailDTO qnaDetailDTO = new QnaDetailDTO();
-        qnaDetailDTO.setQnaDTO(newQna);
-        qnaDetailDTO.setQnaAnswerDTO(newQnaAnswer);
-
-        return qnaDetailDTO;
+        return "QnA 입력 성공";
 
     }
 
@@ -151,25 +146,21 @@ public class QnaService {
         qnaRepository.save(foundQna);
 
         return modelMapper.map(foundQna,QnaDTO.class);
-
-
-
     }
 
     /*본인이 작성한 qna 를 삭제한다. 다만 answer 에 null 이 아닐 경우에는 삭제 할수 없다.*/
     public Object deleteQna(int qnaCode) {
 
-        Qna qna = qnaRepository.findById(qnaCode).orElse(null);
+        Qna qna = qnaRepository.findById(qnaCode).get();
         QnaAnswer qnaAnswer = qnaAnswerRepository.findByQna(qna);
-        System.out.println("qna = " + qna);
-        System.out.println("qnaAnswer = " + qnaAnswer);
 
-        if (qnaAnswer.getAnsContents().isEmpty()) {
-            qnaRepository.delete(qna);
+        if (qnaAnswer.getAnsCreate() == null) {
             qnaAnswerRepository.delete(qnaAnswer);
-            return "QnA 가 삭제되었습니다.";
+            qnaRepository.delete(qna);
+
+            return "문의가 정상적으로 삭제되었습니다.";
         }
 
-        return "삭제 요청은 성공했으나 답변이 존재하여 삭제가 되지 않습니다.";
+        return "답변이 존재하여 삭제가 되지 않습니다.";
     }
 }

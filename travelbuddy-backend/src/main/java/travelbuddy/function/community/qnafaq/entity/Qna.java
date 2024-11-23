@@ -4,6 +4,8 @@ package travelbuddy.function.community.qnafaq.entity;
 import jakarta.persistence.*;
 import travelbuddy.function.member.entity.Account;
 
+import java.util.Optional;
+
 @Entity
 @Table(name = "tbl_qna")    // 테이블명
 public class Qna {
@@ -33,29 +35,13 @@ public class Qna {
     public Qna() {
     }
 
-    public Qna(int qnaCode, FqType fqType, Account account, String qnaTitle, String qnaContents, String qnaCreate) {
-        this.qnaCode = qnaCode;
-        this.fqType = fqType;
+    public Qna(Account account, FqType fqType, int qnaCode, String qnaContents, String qnaCreate, String qnaTitle) {
         this.account = account;
-        this.qnaTitle = qnaTitle;
+        this.fqType = fqType;
+        this.qnaCode = qnaCode;
         this.qnaContents = qnaContents;
         this.qnaCreate = qnaCreate;
-    }
-
-    public int getQnaCode() {
-        return qnaCode;
-    }
-
-    public void setQnaCode(int qnaCode) {
-        this.qnaCode = qnaCode;
-    }
-
-    public FqType getFqType() {
-        return fqType;
-    }
-
-    public void setFqType(FqType fqType) {
-        this.fqType = fqType;
+        this.qnaTitle = qnaTitle;
     }
 
     public Account getAccount() {
@@ -66,12 +52,20 @@ public class Qna {
         this.account = account;
     }
 
-    public String getQnaTitle() {
-        return qnaTitle;
+    public FqType getFqType() {
+        return fqType;
     }
 
-    public void setQnaTitle(String qnaTitle) {
-        this.qnaTitle = qnaTitle;
+    public void setFqType(FqType fqType) {
+        this.fqType = fqType;
+    }
+
+    public int getQnaCode() {
+        return qnaCode;
+    }
+
+    public void setQnaCode(int qnaCode) {
+        this.qnaCode = qnaCode;
     }
 
     public String getQnaContents() {
@@ -90,12 +84,20 @@ public class Qna {
         this.qnaCreate = qnaCreate;
     }
 
+    public String getQnaTitle() {
+        return qnaTitle;
+    }
+
+    public void setQnaTitle(String qnaTitle) {
+        this.qnaTitle = qnaTitle;
+    }
+
     @Override
     public String toString() {
         return "Qna{" +
-                "qnaCode=" + qnaCode +
+                "account=" + account +
+                ", qnaCode=" + qnaCode +
                 ", fqType=" + fqType +
-                ", account=" + account +
                 ", qnaTitle='" + qnaTitle + '\'' +
                 ", qnaContents='" + qnaContents + '\'' +
                 ", qnaCreate='" + qnaCreate + '\'' +

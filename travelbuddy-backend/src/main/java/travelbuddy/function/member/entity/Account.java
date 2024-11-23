@@ -7,15 +7,21 @@ import org.hibernate.annotations.DynamicInsert;
 import java.time.LocalDate;
 
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
+
+
 @Entity
-@Table(name = "tbl_account")    // 테이블명
 @DynamicInsert
+@Table(name = "tbl_account")
 public class Account {
 
     @Id
     @Column(name = "member_code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int memberCode;     // 멤버코드
+    private int memberCode;
+
 
     @Column(name = "member_name")
     private String memberName;
@@ -50,12 +56,14 @@ public class Account {
     private String memberImg;
 
     @Column(name = "member_create")
-    private String memberCreate;
+//    private String memberCreate;
+    private LocalDateTime memberCreate;
 
     @Column(name = "member_leave")
     private String memberLeave;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    @ColumnDefault("일반 사용자")
     @JoinColumn(name ="authority_code")
     private Authority authority;
 
@@ -72,7 +80,8 @@ public class Account {
     public Account() {
     }
 
-    public Account(Authority authority, String memberBirthday, int memberCode, String memberCreate, String memberDeletion, String memberEmail, String memberFullName, String memberImg, String memberLeave, int memberLike, String memberName, String memberPassword, String memberPhone, String memberSuspension) {
+
+    public Account(Authority authority, String memberBirthday, int memberCode, LocalDateTime memberCreate, String memberDeletion, String memberEmail, String memberFullName, String memberImg, String memberLeave, int memberLike, String memberName, String memberPassword, String memberPhone, String memberSuspension) {
         this.authority = authority;
         this.memberBirthday = memberBirthday;
         this.memberCode = memberCode;
@@ -113,11 +122,13 @@ public class Account {
         this.memberCode = memberCode;
     }
 
-    public String getMemberCreate() {
+
+    public LocalDateTime getMemberCreate() {
         return memberCreate;
     }
 
-    public void setMemberCreate(String memberCreate) {
+    public void setMemberCreate(LocalDateTime memberCreate) {
+
         this.memberCreate = memberCreate;
     }
 

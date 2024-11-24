@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
 import { callNoticeListAPI } from "../../../apis/NoticeAPICalls";
+import { appendNoticeCountAPI} from "../../../apis/NoticeAPICalls";
 
 function MyNotices() {
     const navigate = useNavigate();
@@ -13,7 +14,6 @@ function MyNotices() {
     const noticeList = notice.data || {};
     const pageInfo = notice.pageInfo || {};
 
-    console.log('나 noticeList',noticeList);
 
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -34,8 +34,16 @@ function MyNotices() {
     );
 
     const onClickTableTr = (noticeCode) => {
-        navigate(`/mynoticeDetail/${noticeCode}`, { replace: false });
+        const selectNotice = noticeList.find(n => n.noticeCode === noticeCode); // 선택한 공지사항 찾기
+        console.log('누구세요?',selectNotice)
+        const appendCount = {noticeCount:selectNotice.noticeCount};
+        console.log('선택한 녀석의',appendCount)
+        if (selectNotice) {
+            dispatch(appendNoticeCountAPI(noticeCode, appendCount)); // API 호출로 업데이트
+        }
+        navigate(`/mynoticeDetail/${noticeCode}`, { replace: false }); // 상세 페이지로 이동
     };
+
 
 
     return (

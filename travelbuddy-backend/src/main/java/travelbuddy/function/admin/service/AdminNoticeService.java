@@ -126,7 +126,7 @@ public class AdminNoticeService {
         return (result > 0) ? "공지 등록 성공" : "공지 등록 실패";
     }
 
-    /*공지 1개를 수정한다.*/
+    /*공지 1개의 본문을 수정한다.*/
     @Transactional
     public Object updateNotice(int noticeCode, NoticeDTO noticeDTO) {
 
@@ -137,6 +137,22 @@ public class AdminNoticeService {
         adminNoticeRepository.save(updateNotice);
 
         log.info("[AdminNoticeService] updateNotice() end");
+
+        return modelMapper.map(updateNotice, NoticeDTO.class);
+
+    }
+
+    /*공지 1개의 조회수를 올린다.*/
+    @Transactional
+    public Object appendNoticeCount(int noticeCode, NoticeDTO noticeDTO) {
+
+        log.info("[AdminNoticeService] appendNoticeCount() start");
+
+        Notice updateNotice = adminNoticeRepository.findById(noticeCode).orElse(null);
+        updateNotice.setNoticeCount(updateNotice.getNoticeCount() + 1);
+        adminNoticeRepository.save(updateNotice);
+
+        log.info("[AdminNoticeService] appendNoticeCount() end");
 
         return modelMapper.map(updateNotice, NoticeDTO.class);
 

@@ -4,7 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
-import { callNoticeListForAdminAPI } from "../../../apis/NoticeAPICalls";
+import { callNoticeListForAdminAPI} from "../../../apis/NoticeAPICalls";
+import { appendNoticeCountAPI} from "../../../apis/NoticeAPICalls";
 
 function Notices() {
     const navigate = useNavigate();
@@ -32,7 +33,14 @@ function Notices() {
     );
 
     const onClickTableTr = (noticeCode) => {
-        navigate(`/noticeDetail/${noticeCode}`, { replace: false });
+        const selectNotice = noticeList.find(n => n.noticeCode === noticeCode); // 선택한 공지사항 찾기
+        console.log('누구세요?',selectNotice)
+        const appendCount = {noticeCount:selectNotice.noticeCount};
+        console.log('선택한 녀석의',appendCount)
+        if (selectNotice) {
+            dispatch(appendNoticeCountAPI(noticeCode, appendCount)); // API 호출로 업데이트
+        }
+        navigate(`/noticeDetail/${noticeCode}`, { replace: false }); // 상세 페이지로 이동
     };
 
     const onClickNavigation = () => {
@@ -74,7 +82,13 @@ function Notices() {
                                     <td colSpan={3}>{n.noticeTitle}</td>
                                     <td>{n.noticeCount}</td>
                                     <td>{n.noticeCreate}</td>
-                                    <td>{n.noticeAt}</td>
+                                    <td>
+                                            {n.noticeAt === "N" ? (
+                                                <button>공개</button>
+                                            ) : (
+                                                <button>비공개</button>
+                                            )}
+                                        </td>
                                 </tr>
                             ))}
                     </tbody>

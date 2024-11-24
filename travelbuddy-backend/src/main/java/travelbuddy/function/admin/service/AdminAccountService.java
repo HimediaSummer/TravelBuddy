@@ -13,6 +13,7 @@ import travelbuddy.common.Criteria;
 import travelbuddy.function.admin.repository.AdminAccountRepository;
 import travelbuddy.function.member.dto.AccountDTO;
 import travelbuddy.function.member.entity.Account;
+import travelbuddy.function.member.repository.AccountRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,11 +24,13 @@ public class AdminAccountService {
     private static final Logger log = LoggerFactory.getLogger(AdminAccountService.class);
     private final AdminAccountRepository adminAccountRepository;
     private final ModelMapper modelMapper;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public AdminAccountService(AdminAccountRepository adminAccountRepository, ModelMapper modelMapper) {
+    public AdminAccountService(AdminAccountRepository adminAccountRepository, ModelMapper modelMapper, AccountRepository accountRepository) {
         this.adminAccountRepository = adminAccountRepository;
         this.modelMapper = modelMapper;
+        this.accountRepository = accountRepository;
     }
 
 
@@ -129,5 +132,12 @@ public class AdminAccountService {
         log.info("[AdminAccountService] toggleMemberDelesion() end");
 
         return modelMapper.map(member, AccountDTO.class);
+    }
+
+    public Object selectSearchMemberList(String search) {
+
+        List<Account> memberListWithSearchValue = accountRepository.findByMemberFullNameContaining(search);
+
+        return memberListWithSearchValue.stream().map(Account -> modelMapper.map(Account, AccountDTO.class)).collect(Collectors.toList());
     }
 }

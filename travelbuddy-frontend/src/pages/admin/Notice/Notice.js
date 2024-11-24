@@ -24,30 +24,30 @@ function Notice() {
         noticeAt: ''
     });
 
-    useEffect(() => {
-        /* 이미지 업로드시 미리보기 세팅 */
-        if (image) {
-            const fileReader = new FileReader();
-            fileReader.onload = (e) => {
-                const { result } = e.target;
-                if (result) {
-                    setImageUrl(result);
-                }
-            };
-            fileReader.readAsDataURL(image);
-        }
-    }, [image]);
+    // useEffect(() => {
+    //     /* 이미지 업로드시 미리보기 세팅 */
+    //     if (image) {
+    //         const fileReader = new FileReader();
+    //         fileReader.onload = (e) => {
+    //             const { result } = e.target;
+    //             if (result) {
+    //                 setImageUrl(result);
+    //             }
+    //         };
+    //         fileReader.readAsDataURL(image);
+    //     }
+    // }, [image]);
 
-    const onChangeImageUpload = (e) => {
-        const image = e.target.files[0];
-        if (image && image.size > 10048576) {
-            alert('이미지 크기는 10MB 이하여야 합니다.');
-            e.target.value = ''; // 입력 초기화
-            return;
-        }
-        setImage(image);
-        console.log('이 이미지는?', image);
-    };
+    // const onChangeImageUpload = (e) => {
+    //     const image = e.target.files[0];
+    //     if (image && image.size > 10048576) {
+    //         alert('이미지 크기는 10MB 이하여야 합니다.');
+    //         e.target.value = ''; // 입력 초기화
+    //         return;
+    //     }
+    //     setImage(image);
+    //     console.log('이 이미지는?', image);
+    // };
 
     const onClickImageUpload = () => {
         imageInput.current.click();

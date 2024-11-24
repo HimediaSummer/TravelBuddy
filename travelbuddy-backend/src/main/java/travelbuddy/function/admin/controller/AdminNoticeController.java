@@ -65,8 +65,14 @@ public class AdminNoticeController {
 
     @Operation(summary = "공지 수정 요청", description = "공지의 수정 처리가 진행됩니다.", tags = {"AdminNoticeController"})
     @PutMapping("/notices/{noticeCode}/updatenotice")
-    public ResponseEntity<ResponseDTO> insertNotice(@PathVariable int noticeCode, @RequestBody NoticeDTO noticeDTO) {
+    public ResponseEntity<ResponseDTO> insertNotice(@PathVariable int noticeCode, @ModelAttribute NoticeDTO noticeDTO) {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 수정 성공",adminNoticeService.updateNotice(noticeCode,noticeDTO)));
+    }
+
+    @Operation(summary = "공지 조회수+ 요청", description = "공지의 조회수+ 처리가 진행됩니다.", tags = {"AdminNoticeController"})
+    @PutMapping("/notices/{noticeCode}/appendcount")
+    public ResponseEntity<ResponseDTO> appendNoticeCount(@PathVariable int noticeCode, @ModelAttribute NoticeDTO noticeDTO) {
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 조회수+ 성공",adminNoticeService.appendNoticeCount(noticeCode,noticeDTO)));
     }
 
     @Operation(summary = "공지 삭제 요청", description = "공지의 삭제 처리가 진행됩니다.", tags = {"AdminNoticeController"})

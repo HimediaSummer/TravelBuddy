@@ -165,164 +165,395 @@
 
 // export default ScheduleMap;
 
-// 얘가 잘 되는거
+// 얘가 잘 되는거(하드코딩 임시 데이터 버전)
+// import React, { useEffect, useState } from 'react';
+
+// function ScheduleMap({ scheduleData }) {
+// 	const [mapInstance, setMapInstance] = useState(null);
+
+// 	useEffect(() => {
+// 		const apiKey = process.env.REACT_APP_KAKAOMAP_KEY.trim();
+// 		const scriptId = 'kakao-map-script';
+// 		let script = document.getElementById(scriptId);
+
+// 		if (!script) {
+// 			script = document.createElement('script');
+// 			script.id = scriptId;
+// 			script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false&libraries=services`;
+// 			script.type = 'text/javascript';
+// 			document.head.appendChild(script);
+
+// 			script.onload = () => {
+// 				if (window.kakao && window.kakao.maps) {
+// 					window.kakao.maps.load(() => {
+// 						const container = document.getElementById('map');
+// 						const options = {
+// 							center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 기본 위치
+// 							level: 9,
+// 						};
+// 						const map = new window.kakao.maps.Map(container, options);
+// 						setMapInstance(map);
+// 					});
+// 				}
+// 			};
+// 		} else {
+// 			if (window.kakao && window.kakao.maps) {
+// 				window.kakao.maps.load(() => {
+// 					const container = document.getElementById('map');
+// 					const options = {
+// 						center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 기본 위치
+// 						level: 9,
+// 					};
+// 					const map = new window.kakao.maps.Map(container, options);
+// 					setMapInstance(map);
+// 				});
+// 			}
+// 		}
+
+// 		return () => {
+// 			if (script && document.head.contains(script)) {
+// 				document.head.removeChild(script);
+// 			}
+// 		};
+// 	}, []);
+
+// 	useEffect(() => {
+// 		if (!mapInstance) return;  // mapInstance가 없으면 실행하지 않음
+
+// 		const dayOne = [
+// 			{
+// 				title: '제주공항',
+// 				latlng: new window.kakao.maps.LatLng(33.507304, 126.493437),
+// 			},
+// 			{
+// 				title: '[제주올레 16코스] 고내-광령 올레',
+// 				latlng: new window.kakao.maps.LatLng(33.468182, 126.337868),
+// 			},
+// 			{
+// 				title: '돈사돈 본점',
+// 				latlng: new window.kakao.maps.LatLng(33.480072, 126.464067),
+// 			},
+// 			{
+// 				title: '그랜드 하얏트 제주',
+// 				latlng: new window.kakao.maps.LatLng(33.485559, 126.481593),
+// 			},
+// 		];
+
+// 		const dayTwo = [
+// 			{
+// 				title: '그랜드 하얏트 제주',
+// 				latlng: new window.kakao.maps.LatLng(33.485559, 126.481593),
+// 			},
+// 			{
+// 				title: '애월 카페거리',
+// 				latlng: new window.kakao.maps.LatLng(33.463987, 126.309958),
+// 			},
+// 			{
+// 				title: '곽지해수욕장',
+// 				latlng: new window.kakao.maps.LatLng(33.451905, 126.305708),
+// 			},
+// 			{
+// 				title: '제주공항',
+// 				latlng: new window.kakao.maps.LatLng(33.507304, 126.493437),
+// 			},
+// 		];
+
+// 		const imageSrc =
+// 			'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
+
+// 		// 마커 추가
+// 		const addMarkers = (locations) => {
+// 			locations.forEach((location, index) => {
+// 				const imageSize = new window.kakao.maps.Size(24, 35);
+// 				const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+// 				const marker = new window.kakao.maps.Marker({
+// 					map: mapInstance,
+// 					position: location.latlng,
+// 					title: location.title,
+// 					image: markerImage,
+// 				});
+
+// 				// 첫 번째 마커 위치로 지도 이동
+// 				if (index === 0) {
+// 					mapInstance.setCenter(location.latlng);
+// 				}
+// 			});
+// 		};
+
+// 		// 첫날과 둘째날 마커 추가
+// 		addMarkers(dayOne);
+// 		addMarkers(dayTwo);
+
+
+// 		// 선 구성 좌표
+// 		const dayOneLinPath = [
+// 			new window.kakao.maps.LatLng(33.507304, 126.493437),
+// 			new window.kakao.maps.LatLng(33.468182, 126.337868),
+// 			new window.kakao.maps.LatLng(33.480072, 126.464067),
+// 			new window.kakao.maps.LatLng(33.485559, 126.481593),
+// 		];
+
+// 		const dayTwoLinePath = [
+// 			new window.kakao.maps.LatLng(33.485559, 126.481593),
+// 			new window.kakao.maps.LatLng(33.463987, 126.309958),
+// 			new window.kakao.maps.LatLng(33.451905, 126.305708),
+// 			new window.kakao.maps.LatLng(33.507304, 126.493437),
+// 		];
+
+// 		// 선 생성
+// 		const dayOnePolyLine = new window.kakao.maps.Polyline({
+// 			path: dayOneLinPath,
+// 			strokeWeight: 2,
+// 			strokeColor: '#8CC8EA',
+// 			strokeOpacity: 0.7,
+// 			strokeStyle: 'solid',
+// 		});
+
+// 		const dayTwoPolyLine = new window.kakao.maps.Polyline({
+// 			path: dayTwoLinePath,
+// 			strokeWeight: 2,
+// 			strokeColor: '#1F709E',
+// 			strokeOpacity: 0.7,
+// 			strokeStyle: 'solid',
+// 		});
+
+// 		// 지도에 선 표시
+// 		dayOnePolyLine.setMap(mapInstance);
+// 		dayTwoPolyLine.setMap(mapInstance);
+// 	}, [mapInstance]);  // mapInstance가 업데이트될 때마다 실행
+
+// 	return <div id="map" style={{ width: '600px', height: '600px' }} />;
+// }
+
+// export default ScheduleMap;
+
+// 해보자고
+// import React, { useEffect, useState } from 'react';
+
+// function ScheduleMap({ scheduleData }) {
+// 	const [mapInstance, setMapInstance] = useState(null);
+
+// 	useEffect(() => {
+// 		const apiKey = process.env.REACT_APP_KAKAOMAP_KEY.trim();
+// 		const scriptId = 'kakao-map-script';
+// 		let script = document.getElementById(scriptId);
+
+// 		if (!script) {
+// 			script = document.createElement('script');
+// 			script.id = scriptId;
+// 			script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false&libraries=services`;
+// 			script.type = 'text/javascript';
+// 			document.head.appendChild(script);
+
+// 			script.onload = () => {
+// 				if (window.kakao && window.kakao.maps) {
+// 					window.kakao.maps.load(() => {
+// 						const container = document.getElementById('map');
+// 						const options = {
+// 							center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 기본 위치
+// 							level: 9,
+// 						};
+// 						const map = new window.kakao.maps.Map(container, options);
+// 						setMapInstance(map);
+// 					});
+// 				}
+// 			};
+// 		} else {
+// 			if (window.kakao && window.kakao.maps) {
+// 				window.kakao.maps.load(() => {
+// 					const container = document.getElementById('map');
+// 					const options = {
+// 						center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 기본 위치
+// 						level: 9,
+// 					};
+// 					const map = new window.kakao.maps.Map(container, options);
+// 					setMapInstance(map);
+// 				});
+// 			}
+// 		}
+
+// 		return () => {
+// 			if (script && document.head.contains(script)) {
+// 				document.head.removeChild(script);
+// 			}
+// 		};
+// 	}, []);
+
+// 	useEffect(() => {
+// 		if (!mapInstance || !scheduleData.length) return;
+
+// 		const imageSrc =
+// 			'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
+
+// 		// 마커 추가
+// 		const addMarkers = (locations) => {
+// 			locations.forEach((location, index) => {
+// 				const imageSize = new window.kakao.maps.Size(24, 35);
+// 				const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+// 				const marker = new window.kakao.maps.Marker({
+// 					map: mapInstance,
+// 					position: location.latlng,
+// 					title: location.title,
+// 					image: markerImage,
+// 				});
+
+// 				// 첫 번째 마커 위치로 지도 이동
+// 				if (index === 0) {
+// 					mapInstance.setCenter(location.latlng);
+// 				}
+// 			});
+// 		};
+
+// 		// 일정에 맞는 마커 추가
+// 		addMarkers(scheduleData);
+
+// 		// 선 그리기
+// 		const linePath = scheduleData.map(location => location.latlng);
+// 		const polyLine = new window.kakao.maps.Polyline({
+// 			path: linePath,
+// 			strokeWeight: 3,
+// 			strokeColor: '#FF0000',
+// 			strokeOpacity: 0.7,
+// 			strokeStyle: 'solid',
+// 		});
+// 		polyLine.setMap(mapInstance);
+// 	}, [mapInstance, scheduleData]);
+
+// 	return <div id="map" style={{ width: '600px', height: '600px' }} />;
+// }
+
+// export default ScheduleMap;
+
+// 일자별 선 색깔 바꾸기
 import React, { useEffect, useState } from 'react';
 
-function ScheduleMap() {
-	const [mapInstance, setMapInstance] = useState(null);
+function ScheduleMap({ scheduleData }) {
+  const [mapInstance, setMapInstance] = useState(null);
 
-	useEffect(() => {
-		const apiKey = process.env.REACT_APP_KAKAOMAP_KEY.trim();
-		const scriptId = 'kakao-map-script';
-		let script = document.getElementById(scriptId);
+  // 날짜별로 선 색상을 다르게 지정할 수 있도록 색상 배열을 미리 준비
+  const colors = ['#FF6347', '#32CD32', '#1E90FF', '#FFD700', '#FF4500'];  // 색상 배열
 
-		if (!script) {
-			script = document.createElement('script');
-			script.id = scriptId;
-			script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false&libraries=services`;
-			script.type = 'text/javascript';
-			document.head.appendChild(script);
+  // 날짜별로 색상 할당 (배열 인덱스를 통해 순차적으로 색상 할당)
+  const getColorForDate = (date) => {
+    // 날짜별로 색상을 순차적으로 배정 (색상이 필요할 경우 추가)
+    const dateIndex = new Date(date).getTime();  // 날짜를 밀리초 단위로 바꿔서 유니크한 값 사용
+    return colors[dateIndex % colors.length]; // 날짜별 색상 순환
+  };
 
-			script.onload = () => {
-				if (window.kakao && window.kakao.maps) {
-					window.kakao.maps.load(() => {
-						const container = document.getElementById('map');
-						const options = {
-							center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 기본 위치
-							level: 9,
-						};
-						const map = new window.kakao.maps.Map(container, options);
-						setMapInstance(map);
-					});
-				}
-			};
-		} else {
-			if (window.kakao && window.kakao.maps) {
-				window.kakao.maps.load(() => {
-					const container = document.getElementById('map');
-					const options = {
-						center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 기본 위치
-						level: 9,
-					};
-					const map = new window.kakao.maps.Map(container, options);
-					setMapInstance(map);
-				});
-			}
-		}
+  useEffect(() => {
+    const apiKey = process.env.REACT_APP_KAKAOMAP_KEY.trim();
+    const scriptId = 'kakao-map-script';
+    let script = document.getElementById(scriptId);
 
-		return () => {
-			if (script && document.head.contains(script)) {
-				document.head.removeChild(script);
-			}
-		};
-	}, []);
+    if (!script) {
+      script = document.createElement('script');
+      script.id = scriptId;
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false&libraries=services`;
+      script.type = 'text/javascript';
+      document.head.appendChild(script);
 
-	useEffect(() => {
-		if (!mapInstance) return;  // mapInstance가 없으면 실행하지 않음
+      script.onload = () => {
+        if (window.kakao && window.kakao.maps) {
+          window.kakao.maps.load(() => {
+            const container = document.getElementById('map');
+            const options = {
+              center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 기본 위치
+              level: 9,
+            };
+            const map = new window.kakao.maps.Map(container, options);
+            setMapInstance(map);
+          });
+        }
+      };
+    } else {
+      if (window.kakao && window.kakao.maps) {
+        window.kakao.maps.load(() => {
+          const container = document.getElementById('map');
+          const options = {
+            center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 기본 위치
+            level: 9,
+          };
+          const map = new window.kakao.maps.Map(container, options);
+          setMapInstance(map);
+        });
+      }
+    }
 
-		const dayOne = [
-			{
-				title: '제주공항',
-				latlng: new window.kakao.maps.LatLng(33.507304, 126.493437),
-			},
-			{
-				title: '[제주올레 16코스] 고내-광령 올레',
-				latlng: new window.kakao.maps.LatLng(33.468182, 126.337868),
-			},
-			{
-				title: '돈사돈 본점',
-				latlng: new window.kakao.maps.LatLng(33.480072, 126.464067),
-			},
-			{
-				title: '그랜드 하얏트 제주',
-				latlng: new window.kakao.maps.LatLng(33.485559, 126.481593),
-			},
-		];
+    return () => {
+      if (script && document.head.contains(script)) {
+        document.head.removeChild(script);
+      }
+    };
+  }, []);
 
-		const dayTwo = [
-			{
-				title: '그랜드 하얏트 제주',
-				latlng: new window.kakao.maps.LatLng(33.485559, 126.481593),
-			},
-			{
-				title: '애월 카페거리',
-				latlng: new window.kakao.maps.LatLng(33.463987, 126.309958),
-			},
-			{
-				title: '곽지해수욕장',
-				latlng: new window.kakao.maps.LatLng(33.451905, 126.305708),
-			},
-			{
-				title: '제주공항',
-				latlng: new window.kakao.maps.LatLng(33.507304, 126.493437),
-			},
-		];
+  useEffect(() => {
+    if (!mapInstance || !scheduleData.length) return;
 
-		const imageSrc =
-			'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
+    // 날짜별로 일정 그룹화 (그룹화된 데이터)
+    const groupedByDate = scheduleData.reduce((acc, curr) => {
+      const date = curr.scheduledate;
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(curr);
+      return acc;
+    }, {});
 
-		// 마커 추가
-		const addMarkers = (locations) => {
-			locations.forEach((location, index) => {
-				const imageSize = new window.kakao.maps.Size(24, 35);
-				const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
-				const marker = new window.kakao.maps.Marker({
-					map: mapInstance,
-					position: location.latlng,
-					title: location.title,
-					image: markerImage,
-				});
+    // 마커 추가
+    const addMarkers = (locations) => {
+      locations.forEach((location, index) => {
+        if (!location.latlng) return;
+        const imageSrc =
+          'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
+        const imageSize = new window.kakao.maps.Size(24, 35);
+        const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+        const marker = new window.kakao.maps.Marker({
+          map: mapInstance,
+          position: location.latlng,
+          title: location.title,
+          image: markerImage,
+        });
 
-				// 첫 번째 마커 위치로 지도 이동
-				if (index === 0) {
-					mapInstance.setCenter(location.latlng);
-				}
-			});
-		};
+        // 첫 번째 마커 위치로 지도 이동
+        if (index === 0) {
+          mapInstance.setCenter(location.latlng);
+        }
+      });
+    };
 
-		// 첫날과 둘째날 마커 추가
-		addMarkers(dayOne);
-		addMarkers(dayTwo);
+    // 선 그리기
+    const drawLine = (locations, color) => {
+      const linePath = locations.map(location => location.latlng);
+      const polyLine = new window.kakao.maps.Polyline({
+        path: linePath,
+        strokeWeight: 3,
+        strokeColor: color, // 날짜별로 고유 색상 적용
+        strokeOpacity: 0.7,
+        strokeStyle: 'solid',
+      });
+      polyLine.setMap(mapInstance);
+    };
 
+    // 각 날짜별로 선을 그리며 마커도 추가
+    Object.keys(groupedByDate).forEach((date) => {
+      const locations = groupedByDate[date];
+      const color = getColorForDate(date); // 날짜별로 고유 색상 적용
 
-		// 선 구성 좌표
-		const dayOneLinPath = [
-			new window.kakao.maps.LatLng(33.507304, 126.493437),
-			new window.kakao.maps.LatLng(33.468182, 126.337868),
-			new window.kakao.maps.LatLng(33.480072, 126.464067),
-			new window.kakao.maps.LatLng(33.485559, 126.481593),
-		];
+      // 색상 로그 확인
+      console.log(`Color for ${date}:`, color);
 
-		const dayTwoLinePath = [
-			new window.kakao.maps.LatLng(33.485559, 126.481593),
-			new window.kakao.maps.LatLng(33.463987, 126.309958),
-			new window.kakao.maps.LatLng(33.451905, 126.305708),
-			new window.kakao.maps.LatLng(33.507304, 126.493437),
-		];
+      // 마커 추가
+      addMarkers(locations);
+      // 선 그리기
+      drawLine(locations, color);
+    });
+  }, [mapInstance, scheduleData]);
 
-		// 선 생성
-		const dayOnePolyLine = new window.kakao.maps.Polyline({
-			path: dayOneLinPath,
-			strokeWeight: 2,
-			strokeColor: '#8CC8EA',
-			strokeOpacity: 0.7,
-			strokeStyle: 'solid',
-		});
-
-		const dayTwoPolyLine = new window.kakao.maps.Polyline({
-			path: dayTwoLinePath,
-			strokeWeight: 2,
-			strokeColor: '#1F709E',
-			strokeOpacity: 0.7,
-			strokeStyle: 'solid',
-		});
-
-		// 지도에 선 표시
-		dayOnePolyLine.setMap(mapInstance);
-		dayTwoPolyLine.setMap(mapInstance);
-	}, [mapInstance]);  // mapInstance가 업데이트될 때마다 실행
-
-	return <div id="map" style={{ width: '600px', height: '600px' }} />;
+  return <div id="map" style={{ width: '600px', height: '600px' }} />;
 }
 
 export default ScheduleMap;
+
+
+
+

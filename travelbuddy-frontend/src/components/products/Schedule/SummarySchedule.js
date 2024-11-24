@@ -4,6 +4,8 @@ import ScheduleMap from './ScheduleMap';
 function SummarySchedule({ travelData }) {
 	const [schedule, setSchedule] = useState('');
 	const [loading, setLoading] = useState(false);
+	// 지도 표시 테스트중
+	const [scheduleData, setScheduleData] = useState([]); // 일정 데이터를 위한 state 추가
 
 	console.log('OpenAI API Key:', process.env.REACT_APP_OPENAI_API_KEY);
 	console.log('앞에서 가져온 데이터 : ', travelData);
@@ -56,7 +58,21 @@ function SummarySchedule({ travelData }) {
 			console.log('data.choices[0].message' , data.choices[0].message);
 			console.log('data.choices[0].message.content : ' , data.choices[0].message.content);
 			console.log('data 타입 : ' , typeof data.choices[0].message.content);
-			setSchedule(content); // 상태에 저장하거나 다른 작업 수행
+			// 지도 표시 테스트중
+			// setSchedule(content); // 상태에 저장하거나 다른 작업 수행
+
+						// 위도, 경도만 뽑아서 scheduleData에 저장
+						const extractedData = jsonData.map(item => {
+							return {
+								latlng: new window.kakao.maps.LatLng(item.latitude, item.longitude), // 위도, 경도 정보
+								title: item.sche_list,  // 장소명
+								scheduledate: item.scheduledate, // 날짜 정보 추가
+							};
+						});
+			
+						setScheduleData(extractedData);  // 일정 데이터를 상태에 저장
+			
+						setSchedule(content);
 		} catch (error) {
 			console.error('Error generating schedule:', error);
 		} finally {
@@ -108,7 +124,7 @@ function SummarySchedule({ travelData }) {
 					</div>
 				</form>
 			<div className="chat-box3" style={{marginTop: '100px'}}>
-				<ScheduleMap />
+				<ScheduleMap scheduleData={scheduleData} />
 			</div>
 			</div>
 		</div>

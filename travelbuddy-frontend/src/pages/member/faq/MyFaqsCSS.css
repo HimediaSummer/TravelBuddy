@@ -1,0 +1,58 @@
+.faq-list-Q {
+    list-style: none; /* 기본 불릿 제거 */
+    padding-left: 0;
+}
+.faq-list-A {
+    list-style: none; /* 기본 불릿 제거 */
+    padding-left: 0;
+}
+
+.faq-list-Q li::before {
+    content: 'Q: '; /* Q: 로 시작하게 만들기 */
+    font-weight: bold;
+    /* 또는 */
+    /* content: 'A: '; A: 로 시작하게 만들기 */
+}
+
+.faq-list-A li::before {
+    content: 'A: '; /* Q: 로 시작하게 만들기 */
+    font-weight: bold;
+    /* 또는 */
+    /* content: 'A: '; A: 로 시작하게 만들기 */
+}
+
+.faq-container {
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .faq-item {
+    margin: 10px 0;
+  }
+  
+  .faq-question {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .faq-question.active {
+    background-color: #d9edf7;
+  }
+  
+  .faq-answer {
+    margin-top: 5px;
+    padding: 10px 15px;
+    background-color: #f1f1f1;
+    border-left: 3px solid #31708f;
+    font-size: 14px;
+    color: #333;
+    border-radius: 0 5px 5px 5px;
+  }

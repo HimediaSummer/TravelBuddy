@@ -1,0 +1,37 @@
+### POST request: admin user login (localhost)
+POST localhost:8080/auth/login
+Content-Type:application/json
+Accept:*/*
+Access-Control-Allow-Origin:*
+
+{
+  "memberName": "admin",
+  "memberPassword": "1234"
+}
+
+### POST request: general user login (localhost)
+POST localhost:8080/auth/login
+Content-Type:application/json
+Accept:*/*
+Access-Control-Allow-Origin:*
+
+{
+  "memberName": "user01",
+  "memberPassword": "1234"
+}
+
+### POST request: general user signup (localhost)
+POST localhost:8080/auth/signup
+Content-Type:application/json
+Accept:*/*
+Access-Control-Allow-Origin:*
+
+{
+  "memberName": "user02",
+  "memberPassword": "1234",
+  "memberFullName": "KING",
+  "memberBirthday": "2024-11-13",
+  "memberEmail": "KING@gmail.com",
+  "memberPhone": "010-1234-5678"
+
+}

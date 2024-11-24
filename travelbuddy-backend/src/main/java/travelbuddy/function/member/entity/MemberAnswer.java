@@ -28,13 +28,19 @@ public class MemberAnswer {
   @JoinColumn(name="answer_code")
   private Answer answer;
 
+
+  @ManyToOne
+  @JoinColumn(name="member_code")
+  private Account Account;
+
   public MemberAnswer() {
   }
 
-  public MemberAnswer(int memberAnswerCode, Questionnaire questionnaire, Answer answer) {
+  public MemberAnswer(Account account, Answer answer, int memberAnswerCode, Questionnaire questionnaire) {
+    Account = account;
+    this.answer = answer;
     this.memberAnswerCode = memberAnswerCode;
     this.questionnaire = questionnaire;
-    this.answer = answer;
   }
 
   public int getMemberAnswerCode() {
@@ -61,12 +67,21 @@ public class MemberAnswer {
     this.answer = answer;
   }
 
+  public travelbuddy.function.member.entity.Account getAccount() {
+    return Account;
+  }
+
+  public void setAccount(travelbuddy.function.member.entity.Account account) {
+    Account = account;
+  }
+
   @Override
   public String toString() {
     return "MemberAnswer{" +
             "memberAnswerCode=" + memberAnswerCode +
             ", questionnaire=" + questionnaire +
             ", answer=" + answer +
+            ", Account=" + Account +
             '}';
   }
 }

@@ -22,11 +22,13 @@ public class AuthorityDTO {
     this.authorityCode = authorityCode;
   }
 
-  public String getAuthorityName() {
+  public String getauthorityName() {
     return authorityName;
   }
 
-  public void setAuthorityName(String authorityName) {
+  public void setauthorityName(String authorityName) {
+
+
     this.authorityName = authorityName;
   }
 

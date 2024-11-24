@@ -56,25 +56,26 @@ public class BuddyController {
     }
 
     @Operation(summary = "버디 게시글 등록 요청", description = "해당 버디 게시글 등록이 진행됩니다.", tags = { "BuddyController" })
-    @PostMapping(value = "/buddies/buddyRegist")
-    public ResponseEntity<ResponseDTO> insertBuddy(@ModelAttribute BuddyDTO buddyDTO, MultipartFile buddyImg) {
+    @PostMapping(value = "/buddyRegist")
+    public ResponseEntity<ResponseDTO> insertBuddy(@ModelAttribute BuddyDTO buddyDTO, @RequestParam(value = "buddyImage", required = false)MultipartFile buddyImg) {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 등록 성공", buddyService.insertBuddy(buddyDTO, buddyImg)));
 
     }
 
-//    @Operation(summary = "버디 게시글 요청", description = "해당 버디 게시글 수정이 진행됩니다.", tags = { "BuddyController" })
-//    @PutMapping(value = "/products")
-//    public ResponseEntity<ResponseDTO> updateProduct(@ModelAttribute BuddyDTO buddyDTO, MultipartFile productImage) {
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상품 수정 성공",  buddyService.updateBuddy(buddyDTO, productImage)));
-//    }
+    @Operation(summary = "버디 게시글 요청", description = "해당 버디 게시글 수정이 진행됩니다.", tags = { "BuddyController" })
+    @PutMapping(value = "/buddyUpdate/{buddyCode}")
+    public ResponseEntity<ResponseDTO> updateProduct(@ModelAttribute BuddyDTO buddyDTO,@RequestParam(value = "buddyImage", required = false) MultipartFile buddyImage) {
 
-//    @Operation(summary = "버디 유형 이름 요청", description = "버디 유형 이름 정보가 출력됩니다.", tags = {"BuddyController"})
-//    @GetMapping("/buddies/getBuddyType")
-//    public ResponseEntity<ResponseDTO> selectFqType() {
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"버디Type 조회 성공",buddyService.selectBuddyType()));
-//    }
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상품 수정 성공",  buddyService.updateBuddy(buddyDTO, buddyImage)));
+    }
+
+    @Operation(summary = "버디 게시글 삭제 요청", description = "해당 버디 게시글 삭제가 진행됩니다.", tags = { "BuddyController" })
+    @DeleteMapping(value = "/buddies/{buddyCode}")
+    public ResponseEntity<ResponseDTO> deleteBuddy(@PathVariable int buddyCode) {
+        buddyService.deleteBuddy(buddyCode);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 삭제 성공", null));
+    }
 
 
 }

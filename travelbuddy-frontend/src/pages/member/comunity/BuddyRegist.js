@@ -14,6 +14,14 @@ function BuddyRegist() {
     const [imageUrl, setImageUrl] = useState();
     const imageInput = useRef();
 
+    useEffect(() => {
+        if(buddy.status == 201){
+            console.log("[Login] Register SUCCESS {}", buddy);
+            navigate("/login", { replace: true })
+        }
+    },
+    [buddy]);
+
     const [form, setForm] = useState(
         // buddyTitle: "",
         // buddyContents: "",

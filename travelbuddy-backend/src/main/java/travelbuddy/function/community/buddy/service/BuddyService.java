@@ -110,11 +110,15 @@ public class BuddyService {
 
 
         Buddy buddy = buddyRepository.findById(buddyCode).get();
-//        Account account = accountRepository.findById(buddy.getAccount().getMemberCode()).get();
+        Account account = accountRepository.findById(buddy.getAccount().getMemberCode()).get();
+        buddy.setAccount(account);
 //        buddy.setBuddyImg(IMAGE_URL + buddy.getBuddyImg());
 //        buddy.setAccount(account);
 //        buddyRepository.save(buddy);
         BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
+        if(buddy.getAccount() != null) {
+            buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
+        }
 //        buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
 
         log.info("[BuddyService} selectBuddyDetail() END");
@@ -210,7 +214,7 @@ public class BuddyService {
             String oriImage = buddy.getBuddyImg();
             log.info("[upadteBuddy] oriImage : {}", oriImage);
 
-            buddy.setBuddyType((buddyDTO.getBuddyTypeCode()));
+            buddy.setBuddyType(buddyDTO.getBuddyTypeCode());
             buddy.setRegion(buddyDTO.getRegionCode());
             buddy.setBuddyTitle(buddyDTO.getBuddyTitle());
             buddy.setBuddyContents(buddyDTO.getBuddyContents());
@@ -244,8 +248,14 @@ public class BuddyService {
         return (result > 1 ) ? "상품 업데이트 성공" : "상품 업데이트 실패";
     }
 
-    public Object selectBuddyType() {
-        List<BuddyType> buddyTypeList = buddyTypeRepository.findAll();
-        return buddyTypeList.stream().map(BuddyType ->modelMapper.map(BuddyType, BuddyTypeDTO.class)).collect(Collectors.toList());
+    @Transactional
+    public void deleteBuddy(int buddyCode) {
+        log.info("[BuddyService] deleteBuddy() Start");
+
+        Buddy buddy = buddyRepository.findById(buddyCode)
+                .orElseThrow(() -> new RuntimeException("삭제할 게시글을 찾을 수 없습니다."));
+
+        buddyRepository.delete(buddy);
+        log.info("[BuddyService] deleteBuddy() End");
     }
 }

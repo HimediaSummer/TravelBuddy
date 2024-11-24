@@ -6,18 +6,14 @@ const initialState = [];
 /* 액션 */
 export const GET_BUDDIES = 'buddyBoard/buddies/GET_BUDDIES';
 export const GET_BUDDY = 'buddyBoard/buddies/GET_BUDDY';
-// export const GET_QNAANSWER = 'qna/GET_QNAANSWER';
-// export const GET_BUDDYTYPE = 'buddyBoard/GET_BUDDYTYPE';
-export const POST_BUDDY = 'buddyBoard/buddies/buddyRegist/POST_BUDDY';
-// export const POST_REGISTER = 'qna/POST_REGISTER';
+export const POST_BUDDY = 'buddyBoard/buddyRegist/POST_BUDDY';
+export const PUT_BUDDY = 'buddyBoard/buddyUpdate/PUT_BUDDY';
 
 const actions = createActions({
 	[GET_BUDDIES]: () => {},
 	[GET_BUDDY]: () => {},
-	// [GET_QNAANSWER]: () => {},
-	// [GET_BUDDYTYPE]: () => {},
-	[POST_BUDDY]: () => {}
-	// [POST_REGISTER]: () => {}
+	[POST_BUDDY]: () => {},
+	[PUT_BUDDY]: () => {}
 });
 
 /* 리듀서 */
@@ -31,19 +27,13 @@ const buddiesReducer = handleActions(
 			console.log("리듀서에서 받은 payload", payload);
 			return payload;
 		},
-		// [GET_QNAANSWER]: (state, { payload }) => {
-		// 	return payload;
-		// },
-		// [GET_BUDDYTYPE]: (state, { payload }) => {
-		// 	return payload;
-		// },
 		[POST_BUDDY]: (state, { payload }) => {
 			console.log("리듀서에서 받은 payload", payload);
 			return payload;
+		},
+		[PUT_BUDDY]: (state, { payload }) => {
+			return payload;
 		}
-		// [POST_REGISTER]: (state, { payload }) => {
-		// 	return payload;
-		// }
 	},
 	initialState
 );

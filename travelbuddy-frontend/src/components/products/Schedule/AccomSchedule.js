@@ -75,15 +75,34 @@ function AccomSchedule({ onNext, selectedRegion, setTravelData }) {
 		setSearchQuery(e.target.value);
 	};
 
+	// // 검색 처리
+	// const handleSearchSubmit = () => {
+	// 	if(searchQuery.trim()) {
+	// 		setSearchAddress(searchQuery);
+	// 		setSelectedAccom({
+	// 			regionName: searchQuery
+	// 		});
+	// 	}
+	// };
+
 	// 검색 처리
-	const handleSearchSubmit = () => {
-		if(searchQuery.trim()) {
-			setSearchAddress(searchQuery);
-			setSelectedAccom({
-				regionName: searchQuery
-			});
-		}
-	};
+const handleSearchSubmit = () => {
+    if(searchQuery.trim()) {
+        setSearchAddress(searchQuery);
+        const searchedAccom = {
+            // accomType: '검색',  // 또는 적절한 타입
+            accomName: '사용자 지정 숙소',
+            accomAddres: searchQuery  // 검색한 주소를 저장
+        };
+        
+        setSelectedAccom(searchedAccom);
+        // travelData에 검색한 숙소 정보 추가
+        setTravelData(prevData => ({
+            ...prevData,
+            accommodations: [...prevData.accommodations, searchedAccom]
+        }));
+    }
+};
 
 
 	return (

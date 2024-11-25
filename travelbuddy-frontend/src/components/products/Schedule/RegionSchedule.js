@@ -133,17 +133,21 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 					)}
 					{ regionTab === 'search' && (
 					<div className='region-search'>
+						<div style={{display: 'flex', textAlign: 'left'}}>
 						<input type='search' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
-						<button className="region-button2" onClick={onNext} disabled={!searchQuery}>다음</button>
+						<img src='/Img/search-icon.png' width={'35px'} height={'35px'} style={{cursor: 'pointer'}} onClick={handleSearchSubmit}/>
+						</div>
+						<button className="region-button2" onClick={onNext} disabled={!searchQuery} style={{marginTop: '0'}}>다음</button>
 					</div>
 					)}
 				</form>
-				<div>
+				{/* <div>
 					<button onClick={toggle} style={{display: regionTab === 'search' ? 'none' : 'block'}}>
 						{isToggleOpen ? '<' : '>'}
 					</button>
-				</div>
+				</div> */}
 				{/* 선택된 지역 상세 정보 출력 */}
+				<div style={{position: 'relative', display: 'flex'}}>
 				<div id="chat-box3" style={{display: selectedRegionDetails && isToggleOpen && regionTab === 'select' ? 'block':'none'}}>
 					{selectedRegionDetails ? (
 						<div>
@@ -155,6 +159,12 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 							</div>
 						</div>
 					) : ('')}
+				</div>
+				<div>
+					<button className='toggle-button' onClick={toggle} style={{display: regionTab === 'search' ? 'none' : 'block'}}>
+						{isToggleOpen ? '<' : '>'}
+					</button>
+				</div>
 				</div>
 							{/* <div style={{marginTop: '100px'}}>
 								{selectedRegion && isToggleOpen && regionTab === 'select' ? (

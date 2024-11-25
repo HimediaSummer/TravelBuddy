@@ -75,19 +75,18 @@ public class BuddyService {
 
         log.info("[BuddyService] selectBuddyListWithPaging() Start");
 
-        int index = criteria.getPageNum() - 1;
+        int index = criteria.getPageNum() -1;
         int count = criteria.getAmount();
         Pageable paging = PageRequest.of(index, count, Sort.by("buddyCode").descending());
         System.out.println("버디서비스 영역의 paging = " + paging);
 
 
+//        Page<Buddy> result = buddyRepository.findByBuddyStatus("N", paging);
         Page<Buddy> result = buddyRepository.findAll(paging);
         System.out.println("버디서비스영역의 result = " + result);
-        List<Buddy> buddyList = result.getContent();
+//        Page<Buddy> result = buddyRepository.findAll(paging);
+        List<Buddy> buddyList = (List<Buddy>) result.getContent();
         System.out.println("buddyList = " + buddyList);
-
-        Page<Object[]> results = buddyRepository.findAllBuddyListPaging(paging);
-
 
 
         for(int i = 0 ; i < buddyList.size() ; i++) {
@@ -274,6 +273,20 @@ public class BuddyService {
                 .orElseThrow(() -> new RuntimeException("삭제할 게시글을 찾을 수 없습니다."));
 
         buddyRepository.delete(buddy);
+
+        buddyRepository.updateBuddyCodesAfterDelete(buddyCode);
+
+        // 최대 buddy_code 값을 조회
+        Integer maxBuddyCode = buddyRepository.findMaxBuddyCode();
+
+        // AUTO_INCREMENT 값을 현재 최대값 + 1로 재설정
+        if (maxBuddyCode != null) {
+            buddyRepository.resetAutoIncrement(maxBuddyCode + 1);
+        } else {
+            // 테이블이 비어있는 경우 1로 설정
+            buddyRepository.resetAutoIncrement(1);
+        }
+
         log.info("[BuddyService] deleteBuddy() End");
     }
 }

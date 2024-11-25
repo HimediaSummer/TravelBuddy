@@ -3,7 +3,9 @@ package travelbuddy.function.community.buddy.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import travelbuddy.function.community.buddy.entity.Buddy;
 
 import java.util.List;
@@ -15,13 +17,16 @@ public interface BuddyRepository extends JpaRepository<Buddy, Integer> {
 
     Page<Buddy> findByBuddyStatus(String status, Pageable paging);
 
-    @Query("SELECT b, r.regionName, t.buddyTypeName, a.memberName " +
-            "FROM Buddy b " +
-            "JOIN b.region r " +
-            "JOIN b.buddyType t " +
-            "JOIN b.account a " +
-            "WHERE a.memberCode = :memberCode")
-    Page<Object[]> findAllBuddyListPaging(Pageable paging);
+    @Query(value = "ALTER TABLE tbl_buddy AUTO_INCREMENT = ?1", nativeQuery = true)
+    @Modifying
+    void resetAutoIncrement(int value);
+
+    @Query(value = "SELECT MAX(buddy_code) FROM tbl_buddy", nativeQuery = true)
+    Integer findMaxBuddyCode();
+
+    @Modifying
+    @Query(value = "UPDATE tbl_buddy SET buddy_code = buddy_code - 1 WHERE buddy_code > :deletedBuddyCode", nativeQuery = true)
+    void updateBuddyCodesAfterDelete(@Param("deletedBuddyCode") int deletedBuddyCode);
 
 //    List<Buddy> findByMemberCode();
 }

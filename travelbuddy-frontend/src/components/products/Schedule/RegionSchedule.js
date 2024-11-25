@@ -93,9 +93,19 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 
 	// 검색 처리
 	const handleSearchSubmit = () => {
-		setSelectedRegion({
-			regionName: searchQuery
-		});
+		if (searchQuery.trim()) {
+			const searchedRegion = {
+				regionName: searchQuery,
+				// 필요한 다른 필드들도 추가
+			};
+			
+			setSelectedRegion(searchedRegion);
+			// travelData에도 검색한 지역 정보 추가
+			setTravelData(prevData => ({
+				...prevData,
+				regions: [...prevData.regions, searchedRegion]
+			}));
+		}
 	};
 
 	return (

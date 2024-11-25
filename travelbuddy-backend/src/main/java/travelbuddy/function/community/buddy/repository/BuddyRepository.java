@@ -28,5 +28,7 @@ public interface BuddyRepository extends JpaRepository<Buddy, Integer> {
     @Query(value = "UPDATE tbl_buddy SET buddy_code = buddy_code - 1 WHERE buddy_code > :deletedBuddyCode", nativeQuery = true)
     void updateBuddyCodesAfterDelete(@Param("deletedBuddyCode") int deletedBuddyCode);
 
+//    List<Buddy> findByProductNameContaining(String search);
+
 //    List<Buddy> findByMemberCode();
 }

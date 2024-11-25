@@ -17,6 +17,7 @@ export const callBuddiesListAPI = ({currentPage}) => {
 		
     }}
     
+    
     //게시글 상세 조회
 export const callBuddyDetailAPI = ({buddyCode}) => {
         const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies/${buddyCode}`;

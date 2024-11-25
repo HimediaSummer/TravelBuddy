@@ -20,6 +20,9 @@ function Buddies() {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageEnd, setPageEnd] = useState(1);
 
+    const [selectedRegion, setSelectedRegion] = useState("");
+    const [selectedBuddyType, setSelectedBuddyType] = useState("");
+
     const pageNumber = [];
     if (pageInfo) {
         for (let i = 1; i <= pageInfo.pageEnd; i++) {
@@ -32,9 +35,11 @@ function Buddies() {
         dispatch(
 			callBuddiesListAPI({ 
 				currentPage:{ currentPage },
+                regionCode: selectedRegion,
+                buddyTypeCode: selectedBuddyType,
 			})
 		);
-    }, [currentPage]);
+    }, [currentPage, selectedRegion, selectedBuddyType]);
 
 
     const onClickTableTr = (buddyCode) => {
@@ -51,6 +56,22 @@ function Buddies() {
             <div >
                 <h2>버디매칭</h2>
                 <button onClick={onClickBuddyRegist}>게시글 작성</button>
+                <div>
+                    <label>지역 선택:</label>
+                    <select onChange={(e) => setSelectedRegion(e.target.value)}>
+                        <option value="">전체</option>
+                        <option value="101">서울</option>
+                        <option value="102">경기도</option>
+                        <option value="103">인천</option>
+                        <option value="104">강원도</option>
+                    </select>
+                    <label>버디 유형 선택:</label>
+                    <select onChange={(e) => setSelectedBuddyType(e.target.value)}>
+                        <option value="">전체</option>
+                        <option value="1">버디</option>
+                        <option value="2">여행객</option>
+                    </select>
+                </div>
                 <table >
                     <colgroup>
                         <col width="5%" />

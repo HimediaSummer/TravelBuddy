@@ -55,6 +55,13 @@ public class BuddyController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "버디게시글 상세정보 조회 성공", buddyService.selectBuddyDetail(buddyCode)));
     }
 
+//    @Operation(summary = "검색 버디 리스트 조회 요청", description = "검색어에 해당되는 버디 리스트 조회가 진행됩니다.", tags = { "BuddyController" })
+//    @GetMapping("/buddies/search")
+//    public ResponseEntity<ResponseDTO> selectSearchProductList(@RequestParam(name="s", defaultValue="all") String search) {
+//
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공",  buddyService.selectSearchBuddyList(search)));
+//    }
+
     @Operation(summary = "버디 게시글 등록 요청", description = "해당 버디 게시글 등록이 진행됩니다.", tags = { "BuddyController" })
     @PostMapping(value = "/buddyRegist")
     public ResponseEntity<ResponseDTO> insertBuddy(@ModelAttribute BuddyDTO buddyDTO, @RequestParam(value = "buddyImage", required = false)MultipartFile buddyImage) {

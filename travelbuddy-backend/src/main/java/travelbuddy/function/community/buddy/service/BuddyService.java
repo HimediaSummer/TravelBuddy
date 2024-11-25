@@ -106,6 +106,23 @@ public class BuddyService {
         }).collect(Collectors.toList());
     }
 
+//    public Object selectSearchBuddyList(String search) {
+//        log.info("[ProductService] selectSearchProductList() Start");
+//        log.info("[ProductService] searchValue : {}", search);
+//
+//        List<Buddy> buddyListWithSearchValue = buddyRepository.findByProductNameContaining(search);
+//
+//        log.info("[ProductService] buddyListWithSearchValue : {}", buddyListWithSearchValue);
+//
+////        for(int i = 0 ; i < buddyListWithSearchValue.size() ; i++) {
+////            buddyListWithSearchValue.get(i).setProductImageUrl(IMAGE_URL + buddyListWithSearchValue.get(i).getProductImageUrl());
+////        }
+//
+//        log.info("[ProductService] selectSearchProductList() End");
+//
+//        return buddyListWithSearchValue.stream().map(product -> modelMapper.map(product, BuddyDTO.class)).collect(Collectors.toList());
+//    }
+
     public Object selectBuddyDetail(int buddyCode) {
         log.info("[BuddyService] selectBuddyDetail() Start");
 
@@ -291,4 +308,5 @@ public class BuddyService {
 
         log.info("[BuddyService] deleteBuddy() End");
     }
+
 }

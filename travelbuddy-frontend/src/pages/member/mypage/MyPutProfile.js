@@ -13,7 +13,7 @@ function MyPutProfile() {
         memberFullName: "",
         memberEmail: "",
         memberPhone: "",
-        memberImg: null,
+        profileImg: null,
     });
 
     // 데이터 가져오기
@@ -35,11 +35,11 @@ function MyPutProfile() {
                     setProfile(data);
                     setFormData({
                         memberName: data.memberName || "",
-                        memberPassword: "", // 비밀번호는 초기화
+                        // memberPassword: "", // 비밀번호는 초기화
                         memberFullName: data.memberFullName || "",
                         memberEmail: data.memberEmail || "",
                         memberPhone: data.memberPhone || "",
-                        memberImg: null, // 이미지는 초기화
+                        profileImg: null, // 이미지는 초기화
                     });
                 }
                 setLoading(false); // 로딩 완료
@@ -63,10 +63,12 @@ function MyPutProfile() {
 
     // 파일 변경 핸들러
     const handleFileChange = (e) => {
+        const file = e.target.files[0];
         setFormData({
             ...formData,
-            memberImg: e.target.files[0],
+            profileImg: file,
         });
+        console.log("Selected file:", file ? file.name : "No file selected");
     };
 
     // 수정 요청 전송
@@ -76,25 +78,32 @@ function MyPutProfile() {
          // 수정하지 않은 필드는 기존 데이터(profile)의 값을 유지
         const updatedData = {
             memberName: formData.memberName && formData.memberName.trim() !== "" ? formData.memberName : profile.memberName,
-            memberPassword: formData.memberPassword && formData.memberPassword.trim() !== "" ? formData.memberPassword : profile.memberPassword,
+            // memberPassword: formData.memberPassword && formData.memberPassword.trim() !== "" ? formData.memberPassword : profile.memberPassword,
             memberFullName: formData.memberFullName && formData.memberFullName.trim() !== "" ? formData.memberFullName : profile.memberFullName,
             memberEmail: formData.memberEmail && formData.memberEmail.trim() !== "" ? formData.memberEmail : profile.memberEmail,
             memberPhone: formData.memberPhone && formData.memberPhone.trim() !== "" ? formData.memberPhone : profile.memberPhone,
-            memberImg: formData.memberImg || profile.memberImg, // 이미지 파일 처리
+             // 파일이 선택되었을 경우에만 새로운 파일 추가
+             profileImg: formData.profileImg ? formData.profileImg : null,
         };
 
         console.log('updatedData 너빈칸이냐',updatedData);
 
         // FormData 객체 생성
         const data = new FormData();
-        Object.keys(updatedData).forEach((key) => {
-        if (updatedData[key] !== undefined && updatedData[key] !== null && updatedData[key] !== "") {
-                data.append(key, updatedData[key]);
+        Object.keys(formData).forEach((key) => {
+            if (key !== "profileImg" && formData[key]) {
+                data.append(key, formData[key]); // 텍스트 필드 추가
             }
         });
 
+        // 파일 데이터 추가
+        if (formData.profileImg) {
+            data.append("profileImg", formData.profileImg); // 파일 추가
+            console.log(`점심나갈것같아아ㅏ아ㅏㅏ아아: ${formData.profileImg.name}`); // 파일 이름 출력
+        }
+
         for (let pair of data.entries()) {
-            console.log(`${pair[0]}: ${pair[1]}`);
+            console.log(`빠직로아콘빠직로아콘빠직로아콘빠직로아콘, ${pair[0]}: ${pair[1]}`);
         }
 
         fetch('/mypage/updatemyprofile', {
@@ -107,11 +116,12 @@ function MyPutProfile() {
                 }
                 return response.json();
             })
-            .then(() => {
+            .then((updatedProfile) => {
+                setProfile(updatedProfile);
                 alert("회원정보가 수정되었습니다.");
                 navigate('/mypage'); 
             })
-            .catch((error) => console.error("Error updating profile:", error));
+            .catch((error) => console.error("Error updating profile:단거", error));
     };
 
     return (
@@ -131,7 +141,7 @@ function MyPutProfile() {
                         />
                     </label>
                     <br/>
-                    <label>
+                    {/* <label>
                         비밀번호:
                         <input
                             type="password"
@@ -139,7 +149,7 @@ function MyPutProfile() {
                             value={formData.memberPassword}
                             onChange={handleInputChange}
                         />
-                    </label>
+                    </label> */}
                     <br/>
                     <label>
                         이름:
@@ -175,10 +185,26 @@ function MyPutProfile() {
                         이미지:
                         <input
                             type="file"
-                            name="memberImg"
+                            name="profileImg"
                             accept="image/*"
                             onChange={handleFileChange}
                         />
+                        {/* 프로필 이미지 미리보기 */}
+                        {formData.profileImg ? (
+                            <img
+                                src={URL.createObjectURL(formData.profileImg)}
+                                alt="Profile Preview"
+                                style={{ width: "100px", height: "100px" }}
+                            />
+                        ) : (
+                            profile.memberImg && (
+                                <img
+                                    src={`/path/to/images/${profile.memberImg}`} // 기존 이미지 경로
+                                    alt="Profile"
+                                    style={{ width: "100px", height: "100px" }}
+                                />
+                            )
+                        )}
                     </label>
                     <br/>
                     <button type="submit">수정완료</button>

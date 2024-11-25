@@ -1,6 +1,7 @@
 package travelbuddy.function.member.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,11 +53,22 @@ public class MypageController {
     @PutMapping("/updatemyprofile")
     public ResponseEntity<ResponseDTO> updateMyProfile(
             @ModelAttribute AccountDTO accountDTO,
-            @RequestParam(value = "memberImg", required = false) MultipartFile memberImg)
+            @RequestParam(value = "profileImg", required = false) MultipartFile profileImg)
     {
         log.info("[MypageService] updateMyProfile Start");
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원정보수정", mypageService.updateMyProfile(accountDTO,memberImg)));
+        // profileImg 처리 로그
+        if (profileImg != null && !profileImg.isEmpty()) {
+            log.info("[MypageController] profileImg Original Name: {}", profileImg.getOriginalFilename());
+            log.info("[MypageController] profileImg Size: {}", profileImg.getSize());
+        } else {
+            log.info("[MypageController] No profileImg provided.");
+        }
+
+        String savedFileName = mypageService.updateMyProfile(accountDTO, profileImg);
+        accountDTO.setMemberImg(savedFileName);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원정보수정", accountDTO));
     }
 
     @Operation(summary = "회원탈퇴", description = "회원숨김수정", tags = {"MypageController"})
@@ -75,15 +87,22 @@ public class MypageController {
 
     /* =========================================== My일정 =========================================== */
     /* 내 일정 목록 조회 */
-    @Operation(summary = "일정조회", description = "일정목록조회", tags = {"MypageController"})
+    @Operation(summary = "일정조회", description = "일정목록페이지조회", tags = {"MypageController"})
     @GetMapping("/myschedule")
-    public ResponseEntity<ResponseDTO> selectMyScheList() {
-        log.info("[MypageService] selectMySchedule Start");
+    public ResponseEntity<ResponseDTO> selectMyScheListPaging(
+            @RequestParam(name = "offset", defaultValue = "1") int offset) {
+        log.info("[MypageController] selectMyScheListPaging : " + offset);
 
-        int memberCode = 1002; // 하드코딩된 memberCode
-        List<Map<String, Object>> scheList = mypageService.selectMyScheList(memberCode);
+        int total = mypageService.selectScheTotal();
+        Criteria cri = new Criteria(offset, 10);
+        List<Map<String, Object>> scheList = mypageService.selectMyScheListPaging(cri);
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정조회", scheList));
+        PagingResponseDTO response = new PagingResponseDTO();
+        response.setData(scheList);
+        response.setPageInfo(new PageDTO(cri, total));
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "페이지조회 성공", response));
+
     }
 
     /* 내 일정 세부 조회 */
@@ -143,20 +162,6 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", response));
 
     }
-
-
-
-
-
-
-
-//    @Operation(summary = "게시글조회요청", description = "내가쓴글목록조회", tags = {"MypageController"})
-//    @GetMapping("/mybuddy")
-//    public ResponseEntity<ResponseDTO> selectBuddyList() {
-//        int memberCode = 1002; // 하드코딩된 memberCode
-//        List<Map<String, Object>> buddyList = mypageService.selectBuddyList(memberCode);
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글목록조회성공", buddyList));
-//    }
 
     @Operation(summary = "게시글상세조회요청", description = "내가쓴글상세조회", tags = {"MypageController"})
     @GetMapping("/mybuddy/{buddyCode}")

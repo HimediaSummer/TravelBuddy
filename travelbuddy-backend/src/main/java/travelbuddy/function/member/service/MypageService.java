@@ -3,10 +3,12 @@ package travelbuddy.function.member.service;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FilenameUtils;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,64 +82,84 @@ public class MypageService {
 
         List<Account> accountMyProfile = myProfileRepository.findById();
 
+        accountMyProfile.forEach(account ->
+                account.setMemberImg(account.getMemberImg() == null ? null : IMAGE_URL + account.getMemberImg())
+        );
+
         log.info("[MypageService] selectMyProfile() END");
         return accountMyProfile.stream().map(account -> modelMapper.map(account, AccountDTO.class)).collect(Collectors.toList());
     }
 
     /* 회원정보수정 */
     @Transactional
-    public Object updateMyProfile(AccountDTO accountDTO, MultipartFile memberImg) {
+    public String updateMyProfile(AccountDTO accountDTO, MultipartFile profileImg) {
         log.info("[MypageService] updateMyProfile() Start");
         log.info("[MypageService] accountDTO : {}", accountDTO);
 
-        String replaceFileName = null;
-        int result = 0;
+        // 1. DB에서 계정 조회
+        Account account = myProfileRepository.findByMemberCodeUpdate(accountDTO.getMemberCode())
+                .orElseThrow(() -> new EntityNotFoundException("멤버코드 못찾음: " + accountDTO.getMemberCode()));
 
-        try {
-            Account account = myProfileRepository.findByMemberCodeUpdate(accountDTO.getMemberCode())
-                    .orElseThrow(() -> new EntityNotFoundException("멤버코드못찾는대 " + accountDTO.getMemberCode()));
+        // 2. 기존 파일 삭제
+        String oldImage = account.getMemberImg();
 
-            String oriImage = account.getMemberImg();
-            log.info("[updateBuddy] oriImage : {}", oriImage);
+        String randomFileName = null;
 
-            if (accountDTO.getMemberFullName() != null) {
-                account.setMemberFullName(accountDTO.getMemberFullName());
-            }
-            if (accountDTO.getMemberPhone() != null) {
-                account.setMemberPhone(accountDTO.getMemberPhone());
-            }
-            if (accountDTO.getMemberEmail() != null) {
-                account.setMemberEmail(accountDTO.getMemberEmail());
-            }
-            if (accountDTO.getMemberPassword() != null) {
-                account.setMemberPassword(accountDTO.getMemberPassword());
-            }
-            if (accountDTO.getMemberName() != null) {
-                account.setMemberName(accountDTO.getMemberName());
-            }
+        // 3. 새 파일 처리
+        if (profileImg != null && !profileImg.isEmpty()) {
+            log.info("Uploading file: Original Name!!!!!!!!!!!!!!! = {}", profileImg.getOriginalFilename());
+            log.info("File Size!!!!!!!!!!!!!! = {}", profileImg.getSize());
+            log.info("Content Type!!!!!!!!!!!!!! = {}", profileImg.getContentType());
+            try {
+                randomFileName = UUID.randomUUID().toString().replace("-", "") + "." +
+                        FilenameUtils.getExtension(profileImg.getOriginalFilename());
+                File dest = new File("C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/" + randomFileName);
 
-            if (memberImg != null) {
-                String imageName = UUID.randomUUID().toString().replace("-", "");
-                replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, memberImg);
-                log.info("[updateMyProfile] InsertFileName : {}", replaceFileName);
+                // 파일 저장
+                profileImg.transferTo(dest);
+                log.info("File saved successfully to!!!!!!!!!!!!!!!!!!!!!!! {}", dest.getAbsolutePath());
+                log.info("[updateMyProfile] 새 파일 저장 완료: {}", randomFileName);
 
-                account.setMemberImg(replaceFileName);    // 새로운 파일 이름으로 update
-                log.info("[updateMyProfile] deleteImage : {}", oriImage);
+                // 기존 파일 삭제 (default.png는 제외)
+                if (oldImage != null && !oldImage.equals("default.png")) {
+                    File oldFile = new File("C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/" + oldImage);
+                    if (oldFile.exists() && oldFile.delete()) {
+                        log.info("[updateMyProfile] 기존 파일 삭제 완료: {}", oldImage);
+                    } else {
+                        log.warn("[updateMyProfile] 기존 파일 삭제 실패: {}", oldImage);
+                    }
+                }
 
-                boolean isDelete = FileUploadUtils.deleteFile(IMAGE_DIR, oriImage);
-                log.info("[update] isDelete : {}", isDelete);
-            } else {
-                account.setMemberImg(oriImage);
+            } catch (IOException e) {
+                log.error("[updateMyProfile] 파일 저장 중 오류 발생", e);
+                throw new RuntimeException("파일 저장 중 오류 발생", e);
             }
-            result = 1;
-        } catch (
-                IOException e) {
-            log.info("[updateBuddy] Exception!!");
-            FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
-            throw new RuntimeException("회원정보수정오류오류오류오류", e);
         }
-        log.info("[MypageService] updateBuddy End ");
-        return (result > 0) ? "내정보 수정성공" : "크리스탈";
+        // 기본값 설정: accountDTO의 값이 비어 있으면 기존 account의 값을 유지
+        if (accountDTO.getMemberEmail() == null || accountDTO.getMemberEmail().trim().isEmpty()) {
+            accountDTO.setMemberEmail(account.getMemberEmail());
+        }
+        if (accountDTO.getMemberFullName() == null || accountDTO.getMemberFullName().trim().isEmpty()) {
+            accountDTO.setMemberFullName(account.getMemberFullName());
+        }
+        if (accountDTO.getMemberPhone() == null || accountDTO.getMemberPhone().trim().isEmpty()) {
+            accountDTO.setMemberPhone(account.getMemberPhone());
+        }
+        if (accountDTO.getMemberPassword() == null || accountDTO.getMemberPassword().trim().isEmpty()) {
+            accountDTO.setMemberPassword(account.getMemberPassword());
+        }
+        if (accountDTO.getMemberName() == null || accountDTO.getMemberName().trim().isEmpty()) {
+            accountDTO.setMemberName(account.getMemberName());
+        }
+
+        // 5. 새로운 이미지 파일 이름 저장
+        if (randomFileName != null) {
+            account.setMemberImg(randomFileName);
+        }
+
+        myProfileRepository.save(account);
+
+        return randomFileName != null ? randomFileName : oldImage;
     }
 
     /* 회원숨김 */
@@ -159,24 +181,41 @@ public class MypageService {
 
     /* =========================================== My일정 =========================================== */
     /* 내 일정 목록 조회 */
-    public List<Map<String, Object>> selectMyScheList(int memberCode) {
-        log.info("[MypageService] selectMyScheList() Start");
+    public int selectScheTotal() {
+        log.info("[MyService] selectScheTotal() Start");
+        int memberCode = 1002;
+        int total = myBuddyRepository.countByMemberCode(memberCode);
 
-        List<Object[]> results =  myScheduleRepository.findByMemberCode(memberCode);
+        return total;
+    }
+
+    // Schedule 목록 페이징
+    public List<Map<String, Object>> selectMyScheListPaging(Criteria cri) {
+        log.info("[MyService] selectMyScheListPaging() Start");
+
+        int memberCode = 1002;
+        int index = cri.getPageNum() - 1;
+        int count = cri.getAmount();
+        Pageable paging = PageRequest.of(index, count, Sort.by("scheCode").descending());
+
+        Page<Object[]> results = myScheduleRepository.findAllScheListPaging(memberCode, paging);
 
         List<Map<String, Object>> scheList = new ArrayList<>();
-            for (Object[] result : results) {
-                Map<String, Object> scheMap = new HashMap<>();
-                Schedule schedule = (Schedule) result[0];
-                String regionName = (String) result[1];
-                scheMap.put("scheList", schedule.getScheList());
-                scheMap.put("scheCode", schedule.getScheCode());
-                scheMap.put("scheStartDate", schedule.getScheStartDate());
-                scheMap.put("scheEndDate", schedule.getScheEndDate());
-                scheMap.put("regionName", regionName);
+        for (Object[] result : results) {
+            Map<String, Object> scheMap = new HashMap<>();
+            Schedule schedule = (Schedule) result[0];
+            String regionName = (String) result[1];
+            scheMap.put("scheList", schedule.getScheList());
+            scheMap.put("scheCode", schedule.getScheCode());
+            scheMap.put("scheStartDate", schedule.getScheStartDate());
+            scheMap.put("scheEndDate", schedule.getScheEndDate());
+            scheMap.put("memberCode", schedule.getAccount().getMemberCode());
+            scheMap.put("regionName", regionName);
 
-                scheList.add(scheMap);
-            }
+            scheList.add(scheMap);
+        }
+        System.out.println("scheList11111111 = " + scheList);
+
         log.info("[MypageService] selectMyScheList() END");
         return scheList;
     }

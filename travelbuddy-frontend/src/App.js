@@ -3,8 +3,6 @@ import Schedule from './components/products/Schedule';
 import Main from './components/products/Main';
 import Members from './pages/admin/Member/Members';
 import MemberDetail from './pages/admin/Member/MemberDetail';
-import MyPage from './pages/member/mypage/Mypage';
-import MypageBuddyList from './components/products/MypageBuddyList';
 import Notice from './pages/admin/Notice/Notice';
 import Notices from './pages/admin/Notice/Notices';
 import NoticeDetail from './pages/admin/Notice/NoticeDetail';
@@ -51,28 +49,26 @@ function App() {
         {/* 자세한건 Schedule으로 이동바람 (컨트롤 좌클릭)  */}
         <Route path="/">
           <Route index element={ <Main/> }/>          
-          <Route path="Schedule" element={ <Schedule /> }/>   
-          <Route path="Members" element={ <Members/> }/>
-          <Route path="MemberDetail/:memberCode" element={ <MemberDetail/>} />
-          <Route path="Qnas" element={ <Qnas/> }/>
-          <Route path="QnaDetail/:qnaCode" element={ <QnaDetail/>} />
-          <Route path="Faq" element={ <Faq/> }/>
-          <Route path="FaqDetail/:faqCode" element={ <FaqDetail/> }/>
-          <Route path="Faqs" element={ <Faqs/> }/>  //
-          <Route path="MyFaqs" element={ <MyFaqs/> }/>
-          <Route path="MyQnas" element={ <MyQnas/> }/>
-          <Route path="MyQna" element={ <MyQna/> }/>
-          <Route path="MyQnaDetail/:qnaCode" element={ <MyQnaDetail/>} />
-          <Route path="Useinfo" element={<Useinfo />}/>
-          <Route path="Useinfos" element={<Useinfos />}/>
-          <Route path="UseinfoDetail/:useinfoCode" element={<UseinfoDetail />}/>
-          <Route path="Notice" element={<Notice />}/>
-          <Route path="Notices" element={<Notices />}/>
-          <Route path="NoticeDetail/:noticeCode" element={<NoticeDetail />}/>
-          <Route path="MyNotices" element={<MyNotices />}/>
-          <Route path="MyNoticeDetail/:noticeCode" element={<MyNoticeDetail />}/>
-          <Route path="MyPage" element={<MyPage />}>
-            <Route path="MyBuddyList" element={<MypageBuddyList />} />
+          <Route path="/Schedule" element={ <Schedule /> }/>   
+          <Route path="/Members" element={ <Members/> }/>
+          <Route path="/MemberDetail/:memberCode" element={ <MemberDetail/>} />
+          <Route path="/Qnas" element={ <Qnas/> }/>
+          <Route path="/QnaDetail/:qnaCode" element={ <QnaDetail/>} />
+          <Route path="/Faq" element={ <Faq/> }/>
+          <Route path="/FaqDetail/:faqCode" element={ <FaqDetail/> }/>
+          <Route path="/Faqs" element={ <Faqs/> }/>  //
+          <Route path="/MyFaqs" element={ <MyFaqs/> }/>
+          <Route path="/MyQnas" element={ <MyQnas/> }/>
+          <Route path="/MyQna" element={ <MyQna/> }/>
+          <Route path="/MyQnaDetail/:qnaCode" element={ <MyQnaDetail/>} />
+          <Route path="/Useinfo" element={<Useinfo />}/>
+          <Route path="/Useinfos" element={<Useinfos />}/>
+          <Route path="/UseinfoDetail/:useinfoCode" element={<UseinfoDetail />}/>
+          <Route path="/Notice" element={<Notice />}/>
+          <Route path="/Notices" element={<Notices />}/>
+          <Route path="/NoticeDetail/:noticeCode" element={<NoticeDetail />}/>
+          <Route path="/MyNotices" element={<MyNotices />}/>
+          <Route path="/MyNoticeDetail/:noticeCode" element={<MyNoticeDetail />}/>
           </Route> 
           
           {/* Mypage */}
@@ -88,8 +84,23 @@ function App() {
             <Route path="/mypage/mySchedule/:scheCode" element={<MyScheduleDetail />} />
           </Route>
           
+          {/* 회원 관련 */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Register />} />
 
-          <Route path="/login" element={ <Login/> } />
+          {/* 커뮤니티 */}
+          <Route path="/buddies" element={<Buddies />} />
+          <Route path="/buddyDetail/:buddyCode" element={<BuddyDetail />} />
+          <Route path="/buddyRegist" element={<BuddyRegist />} />
+
+          {/* 찾기 */}
+          <Route path="/findid" element={<FindId />} />
+          <Route path="/findpw" element={<FindPw />} />
+
+          {/* 오류 페이지 */}
+          <Route path="*" element={<Error />} />
+
+          {/* <Route path="/login" element={ <Login/> } />
           <Route path="/signup" element={ <Register/> } />
           <Route path="*" element={ <Error/> }/>
           <Route path="buddies" element={<Buddies />} />
@@ -97,7 +108,7 @@ function App() {
           <Route path="buddyRegist" element={ <BuddyRegist/>} />
           <Route path='/findid' element={ <FindId/> }/>
           <Route path='/findpw' element={ <FindPw/> }/>
-        </Route>
+        </Route> */}
       </Routes>
     </BrowserRouter>
   );

@@ -2,6 +2,7 @@ package travelbuddy.function.member.dto;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,6 +20,7 @@ public class AccountDTO implements UserDetails {
     private String memberDeletion;      // 회원탈퇴상태여부
     private int memberLike;         // 좋아요
     private String memberImg;        // 이미지경로
+//    private MultipartFile memberImg;
     private AuthorityDTO authority;     // 권한
     private String memberCreate;        // 회원생성일
     private String memberLeave;         // 회원탈퇴일

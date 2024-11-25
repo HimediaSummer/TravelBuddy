@@ -7,28 +7,37 @@ function MySchedule() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [schedule, setSchedule] = useState("");
+    const [schedule, setSchedule] = useState([]);
     const [selectedRows, setSelectedRows] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
+    const [totalItems, setTotalItems] = useState(0); // 전체 게시글 수
+    const itemsPerPage = 10; // 페이지당 항목 수
 
     // 데이터 가져오기
-    useEffect(
-        () => {
-            fetch('/mypage/myschedule')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })   
-            .then((data) => {
-                console.log('Fetched Data:', data);
-                setSchedule(data.data || []); 
-                console.log('setSchedule 발동', data);
-            })
-            .catch((error) => {
-                console.error('Error fetching schedule:', error);
-            });
-    }, []);
+    const fetchScheList = async (page) => {
+        try {
+            const response = await fetch(`/mypage/myschedule?offset=${page}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log("Fetched schedule data!!!!!!!!!!!!!!!!!!:", data);
+
+            // 데이터를 state에 설정
+            setSchedule(data.data.data || []); // 게시글 목록
+            setTotalItems(data.data.pageInfo.total || 0); // 전체 게시글 수
+            console.log("전체 일정 수:", data.data.pageInfo.total);
+            console.log("현재 페이지 데이터:", data.data.data);
+        } catch (error) {
+            console.error("Error fetching buddy list:", error);
+            alert("데이터를 가져오는 중 오류뿅콩뿅콩뿅콩뿅콩뿅콩뿅콩");
+        }
+    };
+
+    useEffect(() => {
+        fetchScheList(currentPage);
+    }, [currentPage]);
+
 
     // 전체 체크박스 선택
     const handleSelectAll = (e) => {
@@ -94,6 +103,9 @@ function MySchedule() {
         });
     };
     
+    // 총 페이지 수 계산
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
     return (
         <div>
             {schedule.length === 0 ? (
@@ -139,6 +151,31 @@ function MySchedule() {
             <button onClick={handleDeleteSelected}>삭제</button>
             </>
             )}
+            <br/>
+            {/* 페이지네이션 */}
+            <div style={{ marginTop: "20px" }}>
+                <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                >
+                {"<"}
+                </button>
+                {[...Array(totalPages).keys()].map((_, index) => (
+                <button
+                    key={index}
+                    onClick={() => setCurrentPage(index + 1)}
+                    disabled={currentPage === index + 1}
+                >
+                    {index + 1}
+                </button>
+                ))}
+                <button
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                >
+                {">"}
+                </button>
+            </div>
         </div>
     );
 }

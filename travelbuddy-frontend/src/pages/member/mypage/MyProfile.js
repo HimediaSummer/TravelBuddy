@@ -40,21 +40,33 @@ function MyProfile() {
     return (
         <div>
             {profile.length > 0 ? (
-            <ul>
-                 {profile.map((member, index) => (
-                <li key={index}>
-                    <p>아이디 : {member.memberName}</p>
-                    <p>이름 : {member.memberFullName}</p> 
-                    <p>생년월일 : {member.memberBirthday}</p>  
-                    <p>이메일 : {member.memberEmail}</p>
-                    <p>전화번호 : {member.memberPhone}</p>
-                    <p>가입날짜 : {member.memberCreate}</p>
-                    <p>프로필사진 : {member.memberImg || 'No Image'}</p>
-                    <p>좋아요 : {member.memberLike}</p>
-                </li>
-                 ))}
-            </ul>
-            ) : (<p>Loading...</p>)}
+                <ul>
+                    {profile.map((member, index) => (
+                        <li key={index}>
+                            <p>아이디 : {member.memberName}</p>
+                            <p>이름 : {member.memberFullName}</p> 
+                            <p>생년월일 : {member.memberBirthday}</p>  
+                            <p>이메일 : {member.memberEmail}</p>
+                            <p>전화번호 : {member.memberPhone}</p>
+                            <p>가입날짜 : {member.memberCreate}</p>
+                            <p>좋아요 : {member.memberLike}</p>
+
+                            {/* 이미지 추가 */}
+                            {member.memberImg ? (
+                                <img 
+                                    src={member.memberImg} 
+                                    alt={`${member.memberName}의 프로필 이미지`} 
+                                    style={{ width: '150px', height: '150px', borderRadius: '15%' }} 
+                                />
+                            ) : (
+                                <p>No Image</p>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>Loading...</p>
+            )}
             
             <button onClick={() => navigate('/mypage/updatemyprofile')}>
                 수정하기

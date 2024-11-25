@@ -273,6 +273,7 @@ public class MypageService {
 
 
     /* =========================================== My커뮤니티 =========================================== */
+    /* 내가 쓴 버디게시글 목록조회 */
     public int selectBuddyTotal() {
         log.info("[MyService] selectBuddyListTotal() Start");
         int memberCode = 1002;
@@ -315,41 +316,6 @@ public class MypageService {
         log.info("[AdminAccountService] selectMemberListWithPaging() End");
         return buddyList;
     }
-
-
-
-
-
-
-    /* 내가쓴버디게시글조회 */
-//    public List<Map<String, Object>> selectBuddyList(int memberCode) {
-//        log.info("[MypageService] selectBuddyList() Start");
-//        System.out.println("text memberbuddy" + memberCode);
-//
-//        List<Object[]> results = myBuddyRepository.findAllByAccount(memberCode);
-//
-//        List<Map<String, Object>> buddyList = new ArrayList<>();
-//        for (Object[] result : results) {
-//            Map<String, Object> buddyMap = new HashMap<>();
-//            Buddy buddy = (Buddy) result[0];
-//            String regionName = (String) result[1];
-//            String buddyTypeName = (String) result[2];
-//            String memberName = (String) result[3];
-//            buddyMap.put("buddyTitle", buddy.getBuddyTitle());
-//            buddyMap.put("buddyCode", buddy.getBuddyCode());
-//            buddyMap.put("buddyCreate", buddy.getBuddyCreate());
-//            buddyMap.put("buddyStatus", buddy.getBuddyStatus());
-//            buddyMap.put("buddyCount", buddy.getBuddyCount());
-//            buddyMap.put("memberName", memberName);
-//            buddyMap.put("regionName", regionName);
-//            buddyMap.put("buddyTypeName", buddyTypeName);
-//
-//            buddyList.add(buddyMap);
-//        }
-//
-//        log.info("[MypageService] selectBuddyList() End");
-//        return buddyList;
-//    }
 
 
     /* 내가쓴버디게시글상세조회및신청회원목록조회 */

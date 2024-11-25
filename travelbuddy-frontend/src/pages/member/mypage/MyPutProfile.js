@@ -1,7 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { putProfile } from '../../../modules/mypage/MyProfileModule';
 
 function MyPutProfile() {
     const navigate = useNavigate();
@@ -9,101 +7,98 @@ function MyPutProfile() {
     const [profile, setProfile] = useState({});
     const [formData, setFormData] = useState({
         memberName: "",
-        memberPassword: "",
         memberFullName: "",
         memberEmail: "",
         memberPhone: "",
         profileImg: null,
     });
+    const [previewImage, setPreviewImage] = useState(null); // 이미지 미리보기
 
     // 데이터 가져오기
     useEffect(() => {
-        fetch('/mypage/myprofile')
-            .then((response) => {
-                
-                console.log("Response status:", response.status);
+        async function fetchProfile() {
+            try {
+                const response = await fetch('/mypage/myprofile');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                return response.json();
-            })
-            .then((data) => {
+                const responseData = await response.json();
+                console.log("Fetched profile data:", responseData);
 
-                console.log("Fetched data 대답 대답 대답 대답 대답 대답:", data);
+                const data = responseData.data[0]; // 첫 번째 데이터만 추출
+                setProfile(data);
+                setFormData({
+                    memberName: data.memberName || "",
+                    memberFullName: data.memberFullName || "",
+                    memberEmail: data.memberEmail || "",
+                    memberPhone: data.memberPhone || "",
+                    profileImg: null,
+                });
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching profile:", error);
+            }
+        }
 
-                if (data) {
-                    setProfile(data);
-                    setFormData({
-                        memberName: data.memberName || "",
-                        // memberPassword: "", // 비밀번호는 초기화
-                        memberFullName: data.memberFullName || "",
-                        memberEmail: data.memberEmail || "",
-                        memberPhone: data.memberPhone || "",
-                        profileImg: null, // 이미지는 초기화
-                    });
-                }
-                setLoading(false); // 로딩 완료
-            })
-            .catch((error) => {
-                console.error('Error fetching profile:', error);
-            });
+        fetchProfile();
     }, []);
 
-    console.log('formData 이야아아아아아',formData);
-    console.log('profile 이야아아아아아',profile);
+    useEffect(() => {
+        if (formData.profileImg) {
+            const preview = URL.createObjectURL(formData.profileImg);
+            setPreviewImage(preview);
+            return () => URL.revokeObjectURL(preview);
+        } else {
+            setPreviewImage(null);
+        }
+    }, [formData.profileImg]);
 
-    // 입력 필드 변경 핸들러
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
+        setFormData((prevFormData) => ({
+            ...prevFormData,
             [name]: value,
-        });
+        }));
     };
 
-    // 파일 변경 핸들러
     const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setFormData({
-            ...formData,
-            profileImg: file,
-        });
-        console.log("Selected file:", file ? file.name : "No file selected");
+        const profileImg = e.target.files[0];
+        if (profileImg) {
+            const allowedExtensions = ["png", "jpg", "jpeg"];
+            const fileExtension = profileImg.name.split(".").pop().toLowerCase();
+            if (!allowedExtensions.includes(fileExtension)) {
+                alert("이미지는 .png, .jpg, .jpeg만 가능합니다.");
+                e.target.value = null;
+                return;
+            }
+            if (profileImg.size > 1048576) {
+                alert("이미지는 최대 1MB까지 첨부 가능합니다.");
+                e.target.value = null;
+                return;
+            }
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                profileImg,
+            }));
+        }
     };
 
-    // 수정 요청 전송
     const handleUpdate = (e) => {
         e.preventDefault();
-
-         // 수정하지 않은 필드는 기존 데이터(profile)의 값을 유지
-        const updatedData = {
-            memberName: formData.memberName && formData.memberName.trim() !== "" ? formData.memberName : profile.memberName,
-            // memberPassword: formData.memberPassword && formData.memberPassword.trim() !== "" ? formData.memberPassword : profile.memberPassword,
-            memberFullName: formData.memberFullName && formData.memberFullName.trim() !== "" ? formData.memberFullName : profile.memberFullName,
-            memberEmail: formData.memberEmail && formData.memberEmail.trim() !== "" ? formData.memberEmail : profile.memberEmail,
-            memberPhone: formData.memberPhone && formData.memberPhone.trim() !== "" ? formData.memberPhone : profile.memberPhone,
-             // 파일이 선택되었을 경우에만 새로운 파일 추가
-             profileImg: formData.profileImg ? formData.profileImg : null,
-        };
-
-        console.log('updatedData 너빈칸이냐',updatedData);
-
-        // FormData 객체 생성
         const data = new FormData();
         Object.keys(formData).forEach((key) => {
             if (key !== "profileImg" && formData[key]) {
-                data.append(key, formData[key]); // 텍스트 필드 추가
+                data.append(key, formData[key]);
             }
         });
-
-        // 파일 데이터 추가
         if (formData.profileImg) {
-            data.append("profileImg", formData.profileImg); // 파일 추가
-            console.log(`점심나갈것같아아ㅏ아ㅏㅏ아아: ${formData.profileImg.name}`); // 파일 이름 출력
-        }
-
-        for (let pair of data.entries()) {
-            console.log(`빠직로아콘빠직로아콘빠직로아콘빠직로아콘, ${pair[0]}: ${pair[1]}`);
+            data.append("profileImg", formData.profileImg);
+        } else {
+            data.append("profileImg", profile.memberImg || "default.png");
         }
 
         fetch('/mypage/updatemyprofile', {
@@ -116,101 +111,77 @@ function MyPutProfile() {
                 }
                 return response.json();
             })
-            .then((updatedProfile) => {
-                setProfile(updatedProfile);
+            .then(() => {
                 alert("회원정보가 수정되었습니다.");
-                navigate('/mypage'); 
+                navigate('/mypage');
             })
-            .catch((error) => console.error("Error updating profile:단거", error));
+            .catch((error) => console.error("Error updating profile:", error));
     };
 
     return (
         <div>
             <h3>회원 정보 수정</h3>
-            {loading ? (
-                <p>Loading...</p>
-            ) : (
-                <form onSubmit={handleUpdate}>
-                    <label>
-                        아이디:
-                        <input
-                            type="text"
-                            name="memberName"
-                            value={formData.memberName}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <br/>
-                    {/* <label>
-                        비밀번호:
-                        <input
-                            type="password"
-                            name="memberPassword"
-                            value={formData.memberPassword}
-                            onChange={handleInputChange}
-                        />
-                    </label> */}
-                    <br/>
-                    <label>
-                        이름:
-                        <input
-                            type="text"
-                            name="memberFullName"
-                            value={formData.memberFullName}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <br/>
-                    <label>
-                        이메일:
-                        <input
-                            type="email"
-                            name="memberEmail"
-                            value={formData.memberEmail}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <br/>
-                    <label>
-                        전화번호:
-                        <input
-                            type="text"
-                            name="memberPhone"
-                            value={formData.memberPhone}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <br/>
-                    <label>
-                        이미지:
-                        <input
-                            type="file"
-                            name="profileImg"
-                            accept="image/*"
-                            onChange={handleFileChange}
-                        />
-                        {/* 프로필 이미지 미리보기 */}
-                        {formData.profileImg ? (
-                            <img
-                                src={URL.createObjectURL(formData.profileImg)}
-                                alt="Profile Preview"
-                                style={{ width: "100px", height: "100px" }}
-                            />
-                        ) : (
-                            profile.memberImg && (
-                                <img
-                                    src={`/path/to/images/${profile.memberImg}`} // 기존 이미지 경로
-                                    alt="Profile"
-                                    style={{ width: "100px", height: "100px" }}
-                                />
-                            )
-                        )}
-                    </label>
-                    <br/>
-                    <button type="submit">수정완료</button>
-                    <button type="button" onClick={() => navigate('/mypage/myprofile')}>취소</button>
-                </form>
-            )}
+            <form onSubmit={handleUpdate}>
+                <label>
+                    아이디:
+                    <input
+                        type="text"
+                        name="memberName"
+                        value={formData.memberName || ""}
+                        onChange={handleInputChange}
+                    />
+                </label>
+                <br />
+                <label>
+                    이름:
+                    <input
+                        type="text"
+                        name="memberFullName"
+                        value={formData.memberFullName || ""}
+                        onChange={handleInputChange}
+                    />
+                </label>
+                <br />
+                <label>
+                    이메일:
+                    <input
+                        type="email"
+                        name="memberEmail"
+                        value={formData.memberEmail || ""}
+                        onChange={handleInputChange}
+                    />
+                </label>
+                <br />
+                <label>
+                    전화번호:
+                    <input
+                        type="text"
+                        name="memberPhone"
+                        value={formData.memberPhone || ""}
+                        onChange={handleInputChange}
+                    />
+                </label>
+                <br />
+                <label>
+                    이미지:
+                    <input
+                        type="file"
+                        name="profileImg"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                    />
+                    <br />
+                    <small>이미지는 최대 1MB까지 첨부 가능합니다. (.png, .jpg, .jpeg만 허용)</small>
+                    {previewImage ? (
+                        <img src={previewImage} alt="Profile Preview" style={{ width: "100px", height: "100px" }} />
+                    ) : profile.memberImg && (
+                        <img src={profile.memberImg} alt="Profile" style={{ width: "100px", height: "100px" }} />
+                    )}
+                </label>
+                <br />
+                <button type="submit">수정완료</button>
+                <button type="button" onClick={() => navigate('/mypage/myprofile')}>취소</button>
+            </form>
         </div>
     );
 }

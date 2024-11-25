@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { decodeJwt } from '../../../utils/tokenUtils';
+import { callGetMemberAPI } from '../../../apis/MemberAPICalls';
 
 import {
 	callbuddyDetailForAccountAPI,
@@ -15,6 +17,21 @@ function BuddyUpdate() {
     console.log("params에 담긴 buddyCode = ",buddyCode);
 	const buddyDetail = useSelector((state) => state.buddiesReducer);
 	console.log("buddyDetail = ",buddyDetail);
+	const member = useSelector(state => state.memberReducer);
+    const token = decodeJwt(window.localStorage.getItem("accessToken"));
+	console.log("member =" , member);
+    console.log("member type", typeof member);
+
+    console.log("token = ", token)
+    console.log("token type", typeof token);
+
+	useEffect(() => {
+        if(token) {
+            dispatch(callGetMemberAPI({ 
+                memberName: token.sub 
+            }));
+        }
+    }, []);
 
 	const [image, setImage] = useState(null);
 	const [imageUrl, setImageUrl] = useState(null);
@@ -41,13 +58,15 @@ function BuddyUpdate() {
 	useEffect(() => {
 		if (buddyDetail) {
 			setForm({
-				buddyCode: buddyDetail.buddyCode || '',
-				buddyTitle: buddyDetail.buddyTitle || '',
-				buddyContents: buddyDetail.buddyContents || '',
-				buddyStatus: buddyDetail.buddyStatus || '',
-				regionCode: buddyDetail.regionCode || '',
-				buddyTypeCode: buddyDetail.buddyTypeCode || '',
-				buddyAt: buddyDetail.buddyAt || ''
+				memberCode: member.data.memberCode,
+				buddyCode: buddyDetail.buddyCode ,
+				buddyTitle: buddyDetail.buddyTitle ,
+				buddyContents: buddyDetail.buddyContents ,
+				buddyStatus: buddyDetail.buddyStatus ,
+				regionCode: buddyDetail.regionCode ,
+				buddyTypeCode: buddyDetail.buddyTypeCode ,
+				buddyCreate: buddyDetail.buddyCreate,
+				buddyAt: buddyDetail.buddyAt 
 			});
 		}
 	}, [buddyDetail]);
@@ -84,16 +103,16 @@ function BuddyUpdate() {
 		// 수정모드
 		setModifyMode(true);
 		setForm({
-			buddyCode: buddyDetail.buddyCode,
-			buddyTitle: buddyDetail.buddyTitle,
-			buddyContents: buddyDetail.buddyContents,
-			buddyStatus: buddyDetail.buddyStatus,
-			regionCode: buddyDetail.regionCode,
-			buddyTypeCode: buddyDetail.buddyTypeCode,
-			buddyAt: buddyDetail.buddyAt
+				memberCode: member.data.memberCode,
+				buddyCode: buddyDetail.buddyCode ,
+				buddyTitle: buddyDetail.buddyTitle ,
+				buddyContents: buddyDetail.buddyContents ,
+				buddyStatus: buddyDetail.buddyStatus ,
+				regionCode: buddyDetail.regionCode ,
+				buddyTypeCode: buddyDetail.buddyTypeCode ,
+				buddyCreate: buddyDetail.buddyCreate,
+				buddyAt: buddyDetail.buddyAt 
 		});
-
-		console.log("setForm = ", form); //???? 왜 로그 안찍힘???
 	};
 
 	/* form 데이터 세팅 */
@@ -114,12 +133,14 @@ function BuddyUpdate() {
 		console.log('[BuddyUpdate] onClickBuddyUpdateHandler');
 
 		const formData = new FormData();
+		formData.append("memberCode", member.data.memberCode);
 		formData.append('buddyCode', form.buddyCode);
 		formData.append('buddyTitle', form.buddyTitle);
 		formData.append('buddyContents', form.buddyContents);
 		formData.append('buddyStatus', form.buddyStatus);
 		formData.append('regionCode', form.regionCode);
 		formData.append('buddyTypeCode', form.buddyTypeCode);
+		formData.append("buddyCreate", form.buddyCreate);
 		formData.append('buddyAt', form.buddyAt);
 
 		if (image) {
@@ -129,15 +150,16 @@ function BuddyUpdate() {
 		console.log('API로 가기 전 formData = ', formData);
 
 		dispatch(
-			callBuddyUpdateAPI({
+			callBuddyUpdateAPI(
 				// 상품 정보 업데이트
-				form: formData
-				// formData
-			})
+				// form: formData
+				formData
+			)
 		);
 
 		alert('상품을 수정했습니다.');
-		navigate('/buddyBoard/buddies', { replace: true });
+		navigate('/buddies', { replace: true});
+        window.location.reload();
 	};
 
 	console.log("Received buddyCode:", buddyCode);

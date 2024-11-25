@@ -34,10 +34,11 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
         }}
 
         // 게시글 작성한다.
-    export const callBuddyRegistAPI = (updateForm) => {
+    export const callBuddyRegistAPI = (formData) => {
         const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddyRegist`;
         console.log("callBuddyRegistAPI 갔다옴");
-        console.log("API form = ", updateForm);
+
+        console.log("API form = ", formData);
         return async (dispatch, getState) => {
             const result = await fetch(requestURL, {
                 method: 'POST',
@@ -47,18 +48,18 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
                         'Bearer ' + window.localStorage.getItem('accessToken')
                 },
                 // body: JSON.stringify(updateForm)
-                body: (updateForm)
-            }).then((response) => {
-                response.json()});
+                body: formData
+            }).then((response) => 
+                response.json());
 
-            console.log("accessToken = ", window.localStorage.getItem('accessToken'))
+            // console.log("accessToken = ", window.localStorage.getItem('accessToken'))
             console.log("[BuddyAPICalls] callBuddyRegistAPI result : ", result);
             console.log("API응답:",result);
             dispatch({type: POST_BUDDY, payload: result});
         }}
 
         //게시글 수정
-    export const callBuddyUpdateAPI = ({formData}) => {
+    export const callBuddyUpdateAPI = (formData) => {
         console.log('[callBuddyUpdateAPI 옴]');
 
         for (const pair of formData.entries()) {
@@ -67,7 +68,7 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
         
         console.log("API form = ", formData);
 
-        const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddyUpdate/`;
+        const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddyUpdate/${formData.buddyCode}`;
         console.log('callBuddyUpdateAPI 갔다오는거 확인');
         return async (dispatch, getState) => {
             const result = await fetch(requestURL, {
@@ -78,7 +79,7 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
 					    'Bearer ' + window.localStorage.getItem('accessToken')
                 },
                 // body: JSON.stringify(formData)
-                body: (formData)
+                body: formData
             }).then((response) => response.json());
             console.log("accessToken = ", window.localStorage.getItem('accessToken'))
             console.log("[BuddyAPICalls] callBuddyUpdateAPI result : ", result);

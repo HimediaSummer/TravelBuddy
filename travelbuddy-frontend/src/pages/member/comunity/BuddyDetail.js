@@ -19,6 +19,14 @@ function BuddyDetail () {
     const token = decodeJwt(window.localStorage.getItem("accessToken"));
     console.log("token = ", token)
     console.log("token type", typeof token);
+
+    useEffect(() => {
+        if(token) {
+            dispatch(callGetMemberAPI({ 
+                memberName: token.sub 
+            }));
+        }
+    }, []);
     
 
     const {data} = buddyData;
@@ -35,25 +43,23 @@ function BuddyDetail () {
     }, [dispatch, params]);
 
 
-    useEffect(() => {
-        dispatch(callGetMemberAPI({ memberName: token.sub }));
-    }, []);
+    // useEffect(() => {
+    //     dispatch(callGetMemberAPI({ memberName: token.sub }));
+    // }, []);
 
-    useEffect(() => {
-        dispatch(callGetMemberAPI({ memberName: token.sub }));
-    }, [dispatch, token.sub]);
+    // useEffect(() => {
+    //     dispatch(callGetMemberAPI({ memberName: token.sub }));
+    // }, [dispatch, token.sub]);
 
     console.log("token.sub = ", token?.sub);
     console.log("token.sub type = ", typeof token?.sub);
 
-    // const isAuthor = data?.memberCode === token.sub;
-    // console.log("data?.memberName", data?.memberName);
-    // console.log("isAuthor = ", isAuthor);
-    // console.log("isAuthor type = ", typeof isAuthor);
-    const memberCode = data?.account?.memberCode; // Account의 memberCode
-const memberName = data?.account?.memberName;
+    // const memberCode = data?.account?.memberCode; // Account의 memberCode
+    // const memberName = data?.account?.memberName;
 
-    const isAuthor = memberCode === parseInt(token?.sub);
+    // const isAuthor = memberCode === parseInt(token?.sub);
+
+    const isAuthor = member?.data?.memberCode === data?.memberCode;
 
     const onClickBuddyUpdate = () => {
         navigate(`/buddyUpdate/${data.buddyCode}`, {replace: false})
@@ -65,7 +71,9 @@ const memberName = data?.account?.memberName;
                 dispatch(callBuddyDeleteAPI(data.buddyCode))
                     .then(() => {
                         alert("게시글이 삭제되었습니다.");
-                        navigate('/buddyBoard/buddies'); // 삭제 후 목록 페이지로 이동
+                        // navigate('/buddyBoard/buddies'); // 삭제 후 목록 페이지로 이동
+                        navigate('/buddies', { replace: true});
+                        window.location.reload();
                     })
                     .catch((error) => {
                         console.error("Error deleting buddy:", error);
@@ -99,14 +107,29 @@ const memberName = data?.account?.memberName;
                             </tr>
 
                             <tr>
-                                <td colSpan={4}>{data.buddyContents}</td>
+                                <td>
+                                    <img
+                                        src={data.buddyImg}
+                                        alt='게시글 이미지'
+                                        style={{
+                                            maxWidth: '400px',
+                                            height: 'auto',
+                                            margin: '10px 0'
+                                        }}
+                                    />
+                                </td>
+                                <td colSpan={data.buddyImg ? 4 : 5}>{data.buddyContents}</td>
                             </tr>
 
                             <tr>
                                 <td></td>
                                 <td></td>
                                     <>
-                                        <td><button onClick={onClickBuddyUpdate}>게시글 수정</button></td>
+                                        {isAuthor && (
+                                            <td>
+                                                <button onClick={onClickBuddyUpdate}>게시글 수정</button>
+                                            </td>
+                                        )}
                                         {isAuthor && (
                                             <td>
                                                 <button onClick={onClickBuddyDelete}>게시글 삭제</button>

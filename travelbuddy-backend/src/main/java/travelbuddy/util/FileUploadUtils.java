@@ -40,16 +40,36 @@ public class FileUploadUtils {
 
     public static boolean deleteFile(String uploadDir, String fileName) {
 
-        boolean result = false;
-        Path uploadPath = Paths.get(uploadDir);
-
-        if(!Files.exists(uploadPath)) {
-            result = true;
+        // fileName이 null이거나 비어있으면 바로 true 반환
+        if(fileName == null || fileName.isEmpty()) {
+            return true;
         }
+
+        boolean result = false;
+//        Path uploadPath = Paths.get(uploadDir);
+
+//        if(!Files.exists(uploadPath)) {
+//            result = true;
+//        }
         try {
+            Path uploadPath = Paths.get(uploadDir);
+
+            if(!Files.exists(uploadPath)) {
+                result = true;
+            }
+
             Path filePath = uploadPath.resolve(fileName);
-            Files.delete(filePath);
-            result = true;
+
+            // 파일이 존재할 경우에만 삭제 시도
+            if(Files.exists(filePath)) {
+                Files.delete(filePath);
+                result = true;
+            } else {
+                result = true; // 파일이 이미 없는 경우도 성공으로 처리
+            }
+
+//            Files.delete(filePath);
+//            result = true;
         }catch (IOException ex){
 
             log.error("Could not delete file: {}", fileName, ex);

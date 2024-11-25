@@ -39,11 +39,12 @@ spring:
 ## ???? ??? ??? ??? ? ??? ?? ??
 image:
   # Local Dev
-#  add-resource-locations: classpath:/static/productimgs/
-#  add-resource-handler: /productimgs/**
+  add-resource-locations: classpath:/static/productimgs/
+  add-resource-handler: /productimgs/**
 #  # Local Dev
 #  image-dir: src/main/resources/static/productimgs
-#  image-url: http://localhost:8080/productimgs/
+  image-dir: build/resources/main/static/productimgs
+  image-url: http://localhost:8080/productimgs/
 #Docker(Local)
 # add-resource-locations: file:///springboot-app/productimgs/
 # add-resource-handler: /productimgs/**
@@ -51,11 +52,11 @@ image:
 # image-dir: /springboot-app/productimgs
 # image-url: http://localhost:8888/productimgs/
 # Docker(AWS)
-  add-resource-locations: file:///springboot-app/productimgs/
-  add-resource-handler: /productimgs/**
+#  add-resource-locations: file:///springboot-app/productimgs/
+#  add-resource-handler: /productimgs/**
 # Docker(AWS)
-  image-dir: /springboot-app/productimgs
-  image-url: http://travel-buddy.me:8080/productimgs/
+#  image-dir: /springboot-app/productimgs
+#  image-url: http://travel-buddy.me:8080/productimgs/
 
 
 # security(jwt) config

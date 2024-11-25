@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import travelbuddy.common.Criteria;
+import travelbuddy.common.PageDTO;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
 import travelbuddy.function.community.buddy.dto.BuddyTypeDTO;
 import travelbuddy.function.community.buddy.entity.Buddy;
@@ -28,8 +29,7 @@ import travelbuddy.util.FileUploadUtils;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,18 +75,19 @@ public class BuddyService {
 
         log.info("[BuddyService] selectBuddyListWithPaging() Start");
 
-        int index = criteria.getPageNum() -1;
+        int index = criteria.getPageNum() - 1;
         int count = criteria.getAmount();
         Pageable paging = PageRequest.of(index, count, Sort.by("buddyCode").descending());
         System.out.println("버디서비스 영역의 paging = " + paging);
 
 
-//        Page<Buddy> result = buddyRepository.findByBuddyStatus("N", paging);
         Page<Buddy> result = buddyRepository.findAll(paging);
         System.out.println("버디서비스영역의 result = " + result);
-//        Page<Buddy> result = buddyRepository.findAll(paging);
-        List<Buddy> buddyList = (List<Buddy>) result.getContent();
+        List<Buddy> buddyList = result.getContent();
         System.out.println("buddyList = " + buddyList);
+
+        Page<Object[]> results = buddyRepository.findAllBuddyListPaging(paging);
+
 
 
         for(int i = 0 ; i < buddyList.size() ; i++) {
@@ -112,7 +113,7 @@ public class BuddyService {
         Buddy buddy = buddyRepository.findById(buddyCode).get();
         Account account = accountRepository.findById(buddy.getAccount().getMemberCode()).get();
         buddy.setAccount(account);
-//        buddy.setBuddyImg(IMAGE_URL + buddy.getBuddyImg());
+        buddy.setBuddyImg(IMAGE_URL + buddy.getBuddyImg());
 //        buddy.setAccount(account);
 //        buddyRepository.save(buddy);
         BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
@@ -128,7 +129,7 @@ public class BuddyService {
     }
 
     @Transactional
-    public Object insertBuddy(BuddyDTO buddyDTO, MultipartFile buddyImg) {
+    public Object insertBuddy(BuddyDTO buddyDTO, MultipartFile buddyImage) {
         log.info("[BuddyService] insertBuddy() Start");
         log.info("[BuddyService] buddy: {}", buddyDTO);
 
@@ -138,15 +139,16 @@ public class BuddyService {
 
         try {
 
-            if(buddyImg != null && !buddyImg.isEmpty()) {
+            if(buddyImage != null && !buddyImage.isEmpty()) {
                 /* 설명. util 패키지에 FileUploadUtils 추가 */
-                replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, buddyImg);
+                replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, buddyImage);
 
                 buddyDTO.setBuddyImg(replaceFileName); // 업로드한 파일 이름 설정
 
                 log.info("[ProductService] insert Image Name : {}", replaceFileName);
+
             } else  {
-                buddyDTO.setBuddyImg(buddyDTO.getBuddyImg());
+                buddyDTO.setBuddyImg(null);
             }
 
             Buddy insertBuddy = modelMapper.map(buddyDTO, Buddy.class);
@@ -163,6 +165,8 @@ public class BuddyService {
             Account account = accountRepository.findById(buddyDTO.getMemberCode()).get();
             insertBuddy.setAccount(account);
             log.info("account = " + account);
+
+            insertBuddy.setBuddyCreate(LocalDateTime.now().toString());
 
             buddyRepository.save(insertBuddy);
 
@@ -214,13 +218,27 @@ public class BuddyService {
             String oriImage = buddy.getBuddyImg();
             log.info("[upadteBuddy] oriImage : {}", oriImage);
 
+            BuddyType buddyType = buddyTypeRepository.findById(buddyDTO.getBuddyTypeCode()).get();
             buddy.setBuddyType(buddyDTO.getBuddyTypeCode());
+            log.info("buddyType = " + buddyType);
+
+            Region region = regionRepository.findById(buddyDTO.getRegionCode()).get();
             buddy.setRegion(buddyDTO.getRegionCode());
+            log.info("region = " + region);
+
+
+            Account account = accountRepository.findById(buddyDTO.getMemberCode()).get();
+            buddy.setAccount(account);
+            log.info("account = " + account);
+
+//            buddy.setBuddyType(buddyDTO.getBuddyTypeCode());
+//            buddy.setRegion(buddyDTO.getRegionCode());
             buddy.setBuddyTitle(buddyDTO.getBuddyTitle());
             buddy.setBuddyContents(buddyDTO.getBuddyContents());
             buddy.setBuddyImg(buddyDTO.getBuddyImg());
             buddy.setBuddyStatus(buddyDTO.getBuddyStatus());
             buddy.setBuddyAt(buddyDTO.getBuddyAt());
+            buddy.setBuddyCreate(buddyDTO.getBuddyCreate());
 
             if(buddyImage != null) {
                 String imageName = UUID.randomUUID().toString().replace("-","");

@@ -3,32 +3,53 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { callBuddyRegistAPI } from "../../../apis/BuddyAPICalls";
+import { decodeJwt } from '../../../utils/tokenUtils';
+import { callGetMemberAPI } from '../../../apis/MemberAPICalls';
 
 function BuddyRegist() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const buddy = useSelector(state => state.buddiesReducer);
+    const member = useSelector(state => state.memberReducer);
+    const token = decodeJwt(window.localStorage.getItem("accessToken"));
+
+    useEffect(() => {
+        if(token) {
+            dispatch(callGetMemberAPI({ 
+                memberName: token.sub 
+            }));
+        }
+    }, []);
+
+    console.log("member =" , member);
+    console.log("member type", typeof member);
+
+    console.log("token = ", token)
+    console.log("token type", typeof token);
+
+    useEffect(() => {
+        // 로그인 상태 확인
+        const token = window.localStorage.getItem('accessToken');
+        if (!token) {
+            alert('로그인이 필요한 서비스입니다.');
+            navigate('/login');
+            return;
+        }
+    }, []);
 
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState();
     const imageInput = useRef();
 
-    useEffect(() => {
-        if(buddy.status == 201){
-            console.log("[Login] Register SUCCESS {}", buddy);
-            navigate("/login", { replace: true })
-        }
-    },
-    [buddy]);
-
     const [form, setForm] = useState(
-        // buddyTitle: "",
-        // buddyContents: "",
-        // buddyTypeCode: "",
-        // regionCode: "", 
-        // buddyStatus: "",
-        // buddyImg: ""
+        {
+        buddyTitle: "",
+        buddyContents: "",
+        buddyTypeCode: "",
+        regionCode: "", 
+        buddyStatus: "",
+        buddyCreate: ""
+    }
     );
 
     console.log("form = ", form);
@@ -40,6 +61,9 @@ function BuddyRegist() {
     //     }
     // }, [buddy]);
 
+
+
+    //이미지 업로드 시 미리보기 세팅
     useEffect(() => {
         if (image) {
             const fileReader = new FileReader();
@@ -72,23 +96,39 @@ function BuddyRegist() {
 
 
     const onClickBuddyRegistactionHandler = () => {
-        const now = new Date();
-        const formattedDate = now.toLocaleString('ko-KR', {
-            year: 'numeric',
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: false
-        }).replace(/\./g,'-').replace(',','');
+        
+        // const now = new Date();
+        // const formattedDate = now.toLocaleString('ko-KR', {
+        //     year: 'numeric',
+        //     month: "2-digit",
+        //     day: "2-digit",
+        //     hour: "2-digit",
+        //     minute: "2-digit",
+        //     second: "2-digit",
+        //     hour12: false
+        // }).replace(/\./g,'-').replace(',','');
 
-        const updateForm = {...form, buddyCreate: formattedDate};
-        dispatch(callBuddyRegistAPI(updateForm));
+        // const updateForm = {...form, buddyCreate: formattedDate};
 
-        console.log("전송 데이터", updateForm);
+        const formData = new FormData();
+
+        formData.append('memberCode', member.data.memberCode);
+        formData.append("buddyTitle", form.buddyTitle);
+        formData.append("buddyContents", form.buddyContents);
+        formData.append("buddyTypeCode", form.buddyTypeCode);
+        formData.append("regionCode", form.regionCode);
+        formData.append("buddyCreate", form.buddyCreate);
+
+        if(image) {
+            formData.append("buddyImage", image)
+        }
+
+        dispatch(callBuddyRegistAPI( formData));
+
+        console.log("전송 데이터", formData);
         alert("완료")
-        navigate('/buddies');
+        navigate('/buddies', { replace: true});
+        window.location.reload();
     }
 
     // const onClickBuddyRegistactionHandler = () => {
@@ -157,13 +197,6 @@ function BuddyRegist() {
                     <table>
                         <tbody>
                             <tr>
-                                <td>
-                                    <input
-                                    name="memberCode"
-                                    value={1001}
-                                    readOnly
-                                    />
-                                </td>
                                 <td>
                                     <label>게시글 제목</label>
                                 </td>

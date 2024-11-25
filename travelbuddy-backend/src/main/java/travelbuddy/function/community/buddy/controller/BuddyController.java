@@ -57,15 +57,20 @@ public class BuddyController {
 
     @Operation(summary = "버디 게시글 등록 요청", description = "해당 버디 게시글 등록이 진행됩니다.", tags = { "BuddyController" })
     @PostMapping(value = "/buddyRegist")
-    public ResponseEntity<ResponseDTO> insertBuddy(@ModelAttribute BuddyDTO buddyDTO, @RequestParam(value = "buddyImage", required = false)MultipartFile buddyImg) {
+    public ResponseEntity<ResponseDTO> insertBuddy(@ModelAttribute BuddyDTO buddyDTO, @RequestParam(value = "buddyImage", required = false)MultipartFile buddyImage) {
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 등록 성공", buddyService.insertBuddy(buddyDTO, buddyImg)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 등록 성공", buddyService.insertBuddy(buddyDTO, buddyImage)));
 
     }
 
     @Operation(summary = "버디 게시글 요청", description = "해당 버디 게시글 수정이 진행됩니다.", tags = { "BuddyController" })
     @PutMapping(value = "/buddyUpdate/{buddyCode}")
     public ResponseEntity<ResponseDTO> updateProduct(@ModelAttribute BuddyDTO buddyDTO,@RequestParam(value = "buddyImage", required = false) MultipartFile buddyImage) {
+
+        log.info("[BuddyController] insertBuddy 시작 ===================================");
+        log.info("[BuddyController] buddyDTO : {}", buddyDTO);
+        log.info("[BuddyController] memberCode : {}", buddyDTO.getMemberCode());
+        log.info("[BuddyController] buddyImage : {}", buddyImage != null ? buddyImage.getOriginalFilename() : "없음");
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상품 수정 성공",  buddyService.updateBuddy(buddyDTO, buddyImage)));
     }

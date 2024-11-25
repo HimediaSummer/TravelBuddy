@@ -327,119 +327,172 @@
 
 // export default ScheduleMap;
 
-// 해보자고
+// 주소로 찍어라
 // import React, { useEffect, useState } from 'react';
 
 // function ScheduleMap({ scheduleData }) {
-// 	const [mapInstance, setMapInstance] = useState(null);
+//   const [mapInstance, setMapInstance] = useState(null);
+//   const [geocoder, setGeocoder] = useState(null);
 
-// 	useEffect(() => {
-// 		const apiKey = process.env.REACT_APP_KAKAOMAP_KEY.trim();
-// 		const scriptId = 'kakao-map-script';
-// 		let script = document.getElementById(scriptId);
+//   // 날짜별 색상 배열 유지
+//   const colors = ['#FF6347', '#32CD32', '#1E90FF', '#FFD700', '#FF4500'];
 
-// 		if (!script) {
-// 			script = document.createElement('script');
-// 			script.id = scriptId;
-// 			script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false&libraries=services`;
-// 			script.type = 'text/javascript';
-// 			document.head.appendChild(script);
+//   const getColorForDate = (date) => {
+//     const dateIndex = new Date(date).getDate();
+//     return colors[dateIndex % colors.length];
+//   };
 
-// 			script.onload = () => {
-// 				if (window.kakao && window.kakao.maps) {
-// 					window.kakao.maps.load(() => {
-// 						const container = document.getElementById('map');
-// 						const options = {
-// 							center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 기본 위치
-// 							level: 9,
-// 						};
-// 						const map = new window.kakao.maps.Map(container, options);
-// 						setMapInstance(map);
-// 					});
-// 				}
-// 			};
-// 		} else {
-// 			if (window.kakao && window.kakao.maps) {
-// 				window.kakao.maps.load(() => {
-// 					const container = document.getElementById('map');
-// 					const options = {
-// 						center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 기본 위치
-// 						level: 9,
-// 					};
-// 					const map = new window.kakao.maps.Map(container, options);
-// 					setMapInstance(map);
-// 				});
-// 			}
-// 		}
+//   // 지도와 geocoder 초기화
+//   useEffect(() => {
+//     const apiKey = process.env.REACT_APP_KAKAOMAP_KEY.trim();
+//     const scriptId = 'kakao-map-script';
+//     let script = document.getElementById(scriptId);
 
-// 		return () => {
-// 			if (script && document.head.contains(script)) {
-// 				document.head.removeChild(script);
-// 			}
-// 		};
-// 	}, []);
+//     if (!script) {
+//       script = document.createElement('script');
+//       script.id = scriptId;
+//       // services 라이브러리 추가 (geocoder 사용을 위해)
+//       script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false&libraries=services`;
+//       script.type = 'text/javascript';
+//       document.head.appendChild(script);
 
-// 	useEffect(() => {
-// 		if (!mapInstance || !scheduleData.length) return;
+//       script.onload = () => {
+//         if (window.kakao && window.kakao.maps) {
+//           window.kakao.maps.load(() => {
+//             const container = document.getElementById('map');
+//             const options = {
+//               center: new window.kakao.maps.LatLng(37.5665, 126.9780),
+//               level: 9,
+//             };
+//             const map = new window.kakao.maps.Map(container, options);
+//             setMapInstance(map);
+//             // Geocoder 서비스 초기화
+//             setGeocoder(new window.kakao.maps.services.Geocoder());
+//           });
+//         }
+//       };
+//     }
 
-// 		const imageSrc =
-// 			'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
+//     return () => {
+//       if (script && document.head.contains(script)) {
+//         document.head.removeChild(script);
+//       }
+//     };
+//   }, []);
 
-// 		// 마커 추가
-// 		const addMarkers = (locations) => {
-// 			locations.forEach((location, index) => {
-// 				const imageSize = new window.kakao.maps.Size(24, 35);
-// 				const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
-// 				const marker = new window.kakao.maps.Marker({
-// 					map: mapInstance,
-// 					position: location.latlng,
-// 					title: location.title,
-// 					image: markerImage,
-// 				});
+//   // 주소로 좌표 변환하는 함수
+//   const getCoordinatesFromAddress = (address) => {
+//     return new Promise((resolve, reject) => {
+//       if (!geocoder) {
+//         reject(new Error('Geocoder not initialized'));
+//         return;
+//       }
 
-// 				// 첫 번째 마커 위치로 지도 이동
-// 				if (index === 0) {
-// 					mapInstance.setCenter(location.latlng);
-// 				}
-// 			});
-// 		};
+//       geocoder.addressSearch(address, (result, status) => {
+//         if (status === window.kakao.maps.services.Status.OK) {
+//           resolve(new window.kakao.maps.LatLng(result[0].y, result[0].x));
+//         } else {
+//           reject(new Error('Address not found'));
+//         }
+//       });
+//     });
+//   };
 
-// 		// 일정에 맞는 마커 추가
-// 		addMarkers(scheduleData);
+//   // 마커와 선 그리기
+//   useEffect(() => {
+//     if (!mapInstance || !scheduleData.length || !geocoder) return;
 
-// 		// 선 그리기
-// 		const linePath = scheduleData.map(location => location.latlng);
-// 		const polyLine = new window.kakao.maps.Polyline({
-// 			path: linePath,
-// 			strokeWeight: 3,
-// 			strokeColor: '#FF0000',
-// 			strokeOpacity: 0.7,
-// 			strokeStyle: 'solid',
-// 		});
-// 		polyLine.setMap(mapInstance);
-// 	}, [mapInstance, scheduleData]);
+//     // 모든 주소의 좌표 변환을 기다림
+//     const processScheduleData = async () => {
+//       try {
+//         // 날짜별로 일정 그룹화하고 좌표 변환
+//         const groupedByDate = {};
+        
+//         for (const item of scheduleData) {
+//           try {
+//             const coords = await getCoordinatesFromAddress(item.addres);
+//             if (!groupedByDate[item.scheduledate]) {
+//               groupedByDate[item.scheduledate] = [];
+//             }
+//             groupedByDate[item.scheduledate].push({
+//               ...item,
+//               latlng: coords
+//             });
+//           } catch (error) {
+//             console.error(`Error converting address: ${item.addres}`, error);
+//           }
+//         }
 
-// 	return <div id="map" style={{ width: '600px', height: '600px' }} />;
+//         // 마커 추가
+//         const addMarkers = (locations) => {
+//           locations.forEach((location, index) => {
+//             const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
+//             const imageSize = new window.kakao.maps.Size(24, 35);
+//             const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+            
+//             const marker = new window.kakao.maps.Marker({
+//               map: mapInstance,
+//               position: location.latlng,
+//               title: location.title,
+//               image: markerImage,
+//             });
+
+//             // 첫 번째 마커 위치로 지도 이동
+//             if (index === 0) {
+//               mapInstance.setCenter(location.latlng);
+//             }
+//           });
+//         };
+
+//         // 선 그리기
+//         const drawLine = (locations, color) => {
+//           const linePath = locations.map(location => location.latlng);
+//           const polyLine = new window.kakao.maps.Polyline({
+//             path: linePath,
+//             strokeWeight: 3,
+//             strokeColor: color,
+//             strokeOpacity: 0.7,
+//             strokeStyle: 'solid',
+//           });
+//           polyLine.setMap(mapInstance);
+//         };
+
+//         // 각 날짜별로 마커와 선 그리기
+//         Object.keys(groupedByDate).forEach((date) => {
+//           const locations = groupedByDate[date];
+//           const color = getColorForDate(date);
+//           addMarkers(locations);
+//           drawLine(locations, color);
+//         });
+
+//       } catch (error) {
+//         console.error('Error processing schedule data:', error);
+//       }
+//     };
+
+//     processScheduleData();
+//   }, [mapInstance, scheduleData, geocoder]);
+
+//   return <div id="map" style={{ width: '600px', height: '600px' }} />;
 // }
 
 // export default ScheduleMap;
 
-// 일자별 선 색깔 바꾸기
+// 위도/경도 가보자고
 import React, { useEffect, useState } from 'react';
 
 function ScheduleMap({ scheduleData }) {
   const [mapInstance, setMapInstance] = useState(null);
+  // geocoder는 더 이상 필요하지 않으므로 제거
 
-  // 날짜별로 선 색상을 다르게 지정할 수 있도록 색상 배열을 미리 준비
-  const colors = ['#FF6347', '#32CD32', '#1E90FF', '#FFD700', '#FF4500'];  // 색상 배열
+  const colors = ['#FF6347', '#32CD32', '#1E90FF', '#FFD700', '#FF4500'];
 
-  // 날짜별로 색상 할당 (배열 인덱스를 통해 순차적으로 색상 할당)
   const getColorForDate = (date) => {
-    // 날짜별로 색상을 순차적으로 배정 (색상이 필요할 경우 추가)
-    const dateIndex = new Date(date).getTime();  // 날짜를 밀리초 단위로 바꿔서 유니크한 값 사용
-    return colors[dateIndex % colors.length]; // 날짜별 색상 순환
+    const dateIndex = new Date(date).getDate();
+    return colors[dateIndex % colors.length];
   };
 
+  // 지도 초기화 (geocoder 관련 부분 제거)
   useEffect(() => {
     const apiKey = process.env.REACT_APP_KAKAOMAP_KEY.trim();
     const scriptId = 'kakao-map-script';
@@ -448,7 +501,7 @@ function ScheduleMap({ scheduleData }) {
     if (!script) {
       script = document.createElement('script');
       script.id = scriptId;
-      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false&libraries=services`;
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false`;
       script.type = 'text/javascript';
       document.head.appendChild(script);
 
@@ -457,7 +510,7 @@ function ScheduleMap({ scheduleData }) {
           window.kakao.maps.load(() => {
             const container = document.getElementById('map');
             const options = {
-              center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 기본 위치
+              center: new window.kakao.maps.LatLng(37.5665, 126.9780),
               level: 9,
             };
             const map = new window.kakao.maps.Map(container, options);
@@ -465,18 +518,6 @@ function ScheduleMap({ scheduleData }) {
           });
         }
       };
-    } else {
-      if (window.kakao && window.kakao.maps) {
-        window.kakao.maps.load(() => {
-          const container = document.getElementById('map');
-          const options = {
-            center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 기본 위치
-            level: 9,
-          };
-          const map = new window.kakao.maps.Map(container, options);
-          setMapInstance(map);
-        });
-      }
     }
 
     return () => {
@@ -486,73 +527,103 @@ function ScheduleMap({ scheduleData }) {
     };
   }, []);
 
-  useEffect(() => {
-    if (!mapInstance || !scheduleData.length) return;
+// 마커와 선 그리기
+useEffect(() => {
+  if (!mapInstance || !scheduleData.length) return;
 
-    // 날짜별로 일정 그룹화 (그룹화된 데이터)
-    const groupedByDate = scheduleData.reduce((acc, curr) => {
-      const date = curr.scheduledate;
-      if (!acc[date]) {
-        acc[date] = [];
+  const processScheduleData = () => {
+    // 데이터 확인을 위한 로그
+    console.log('Received scheduleData:', scheduleData);
+
+    // 날짜별로 데이터 그룹화
+    const groupedByDate = scheduleData.reduce((acc, item) => {
+      // 필수 데이터 유효성 검사
+      if (!item || !item.scheduledate) {
+        console.warn('Invalid item:', item);
+        return acc;
       }
-      acc[date].push(curr);
+
+      const date = item.scheduledate.split('T')[0];
+      if (!acc[date]) {
+          acc[date] = [];
+      }
+
+      // 위도/경도가 유효한 경우에만 추가
+      if (item.latitude && item.longitude) {
+          const lat = parseFloat(item.latitude);
+          const lng = parseFloat(item.longitude);
+
+          // 유효한 숫자인지 확인
+          if (!isNaN(lat) && !isNaN(lng)) {
+              acc[date].push({
+                  ...item,
+                  latlng: new window.kakao.maps.LatLng(lat, lng)
+              });
+          } else {
+              console.warn('Invalid coordinates:', item);
+          }
+      } else {
+          console.warn('Missing coordinates:', item);
+      }
       return acc;
     }, {});
 
-    // 마커 추가
-    const addMarkers = (locations) => {
-      locations.forEach((location, index) => {
-        if (!location.latlng) return;
-        const imageSrc =
-          'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
-        const imageSize = new window.kakao.maps.Size(24, 35);
-        const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
-        const marker = new window.kakao.maps.Marker({
-          map: mapInstance,
-          position: location.latlng,
-          title: location.title,
-          image: markerImage,
-        });
+    // 그룹화된 데이터 확인
+    console.log('Grouped data:', groupedByDate);
 
-        // 첫 번째 마커 위치로 지도 이동
-        if (index === 0) {
-          mapInstance.setCenter(location.latlng);
+    // 유효한 데이터가 있는 경우에만 처리
+    if (Object.keys(groupedByDate).length > 0) {
+      // 각 날짜별로 마커와 선 그리기
+      Object.entries(groupedByDate).forEach(([date, locations]) => {
+        if (locations.length > 0) {
+          const color = getColorForDate(date);
+
+          // 마커 추가
+          locations.forEach((location, index) => {
+            const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
+            const imageSize = new window.kakao.maps.Size(24, 35);
+            const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+            
+            const marker = new window.kakao.maps.Marker({
+              map: mapInstance,
+              position: location.latlng,
+              title: location.title || `Location ${index + 1}`,
+              image: markerImage,
+            });
+
+            // 첫 번째 날짜의 첫 번째 위치로 지도 중심 이동
+            if (index === 0 && date === Object.keys(groupedByDate)[0]) {
+              mapInstance.setCenter(location.latlng);
+            }
+          });
+
+          // 선 그리기
+          if (locations.length > 1) {
+            const linePath = locations.map(location => location.latlng);
+            const polyLine = new window.kakao.maps.Polyline({
+              path: linePath,
+              strokeWeight: 3,
+              strokeColor: color,
+              strokeOpacity: 0.7,
+              strokeStyle: 'solid',
+            });
+            polyLine.setMap(mapInstance);
+          }
         }
       });
-    };
+    } else {
+      console.warn('No valid data to display on map');
+    }
+  };
 
-    // 선 그리기
-    const drawLine = (locations, color) => {
-      const linePath = locations.map(location => location.latlng);
-      const polyLine = new window.kakao.maps.Polyline({
-        path: linePath,
-        strokeWeight: 3,
-        strokeColor: color, // 날짜별로 고유 색상 적용
-        strokeOpacity: 0.7,
-        strokeStyle: 'solid',
-      });
-      polyLine.setMap(mapInstance);
-    };
-
-    // 각 날짜별로 선을 그리며 마커도 추가
-    Object.keys(groupedByDate).forEach((date) => {
-      const locations = groupedByDate[date];
-      const color = getColorForDate(date); // 날짜별로 고유 색상 적용
-
-      // 색상 로그 확인
-      console.log(`Color for ${date}:`, color);
-
-      // 마커 추가
-      addMarkers(locations);
-      // 선 그리기
-      drawLine(locations, color);
-    });
-  }, [mapInstance, scheduleData]);
+  processScheduleData();
+}, [mapInstance, scheduleData]);
 
   return <div id="map" style={{ width: '600px', height: '600px' }} />;
 }
 
 export default ScheduleMap;
+
 
 
 

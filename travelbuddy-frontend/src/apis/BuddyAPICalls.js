@@ -2,7 +2,7 @@ import { GET_BUDDIES, GET_BUDDY, POST_BUDDY, PUT_BUDDY } from '../modules/BuddyM
 
 //게시글 전체조회
 export const callBuddiesListAPI = ({currentPage}) => {
-    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies`;
+    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies?offset`;
 	console.log('callBuddiesListAPI 갔다오는거 확인');
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {

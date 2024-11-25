@@ -101,9 +101,11 @@ function BuddyDetail () {
                                 <td>제목</td>
                                 <td>{data.buddyTitle}</td>
                                 <td>유형</td>
-                                <td>{data.buddyTypeCode}</td>
+                                <td>{data.buddyTypeName}</td>
+                                <td>지역</td>
+                                <td>{data.regionName}</td>
                                 <td>작성자</td>
-                                <td>{data.memberCode}</td>
+                                <td>{data.memberName}</td>
                             </tr>
 
                             <tr>

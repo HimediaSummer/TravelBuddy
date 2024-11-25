@@ -13,12 +13,15 @@ public class BuddyDTO {
     private String buddyImg;
     private int buddyCount;
     private String buddyAt;
+    private String memberName;
+    private String regionName;
+    private String buddyTypeName;
 
 
     public BuddyDTO() {
     }
 
-    public BuddyDTO(int buddyCode, int memberCode, int regionCode, int buddyTypeCode, String buddyTitle, String buddyContents, String buddyCreate, String buddyStatus, String buddyImg, int buddyCount, String buddyAt, String regionName, String buddyTypeName, String memberName) {
+    public BuddyDTO(int buddyCode, int memberCode, int regionCode, int buddyTypeCode, String buddyTitle, String buddyContents, String buddyCreate, String buddyStatus, String buddyImg, int buddyCount, String buddyAt, String memberName, String regionName, String buddyTypeName) {
         this.buddyCode = buddyCode;
         this.memberCode = memberCode;
         this.regionCode = regionCode;
@@ -30,6 +33,9 @@ public class BuddyDTO {
         this.buddyImg = buddyImg;
         this.buddyCount = buddyCount;
         this.buddyAt = buddyAt;
+        this.memberName = memberName;
+        this.regionName = regionName;
+        this.buddyTypeName = buddyTypeName;
     }
 
     public int getBuddyCode() {
@@ -120,6 +126,29 @@ public class BuddyDTO {
         this.buddyAt = buddyAt;
     }
 
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    public String getRegionName() {
+        return regionName;
+    }
+
+    public void setRegionName(String regionName) {
+        this.regionName = regionName;
+    }
+
+    public String getBuddyTypeName() {
+        return buddyTypeName;
+    }
+
+    public void setBuddyTypeName(String buddyTypeName) {
+        this.buddyTypeName = buddyTypeName;
+    }
 
     @Override
     public String toString() {
@@ -135,6 +164,9 @@ public class BuddyDTO {
                 ", buddyImg='" + buddyImg + '\'' +
                 ", buddyCount=" + buddyCount +
                 ", buddyAt='" + buddyAt + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", regionName='" + regionName + '\'' +
+                ", buddyTypeName='" + buddyTypeName + '\'' +
                 '}';
     }
 }

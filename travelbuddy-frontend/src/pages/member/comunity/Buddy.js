@@ -28,7 +28,7 @@ function Buddies() {
     }
 
     useEffect(() => {
-        setStart((currentPage - 1) * 5);
+        // setStart((currentPage - 1) * 5);
         dispatch(
 			callBuddiesListAPI({ 
 				currentPage:{ currentPage },
@@ -67,6 +67,7 @@ function Buddies() {
                         <tr>
                             <th>번호</th>
                             <th>유형</th>
+                            <th>지역</th>
                             <th colSpan={5}>제목</th>
                             <th>작성자</th>
                             <th>매칭신청</th>
@@ -84,9 +85,10 @@ function Buddies() {
                                     }
                                 >
                                     <td>{b.buddyCode}</td>
-                                    <td>{b.buddyTypeCode}</td>
+                                    <td>{b.buddyTypeName}</td>
+                                    <td>{b.regionName}</td>
                                     <td colSpan={5}>{b.buddyTitle}</td>
-                                    <td>{b.memberCode}</td>
+                                    <td>{b.memberName}</td>
                                     <td>{b.buddyStatus}</td>
                                     <td>{b.buddyCreate}</td>
                                 </tr>

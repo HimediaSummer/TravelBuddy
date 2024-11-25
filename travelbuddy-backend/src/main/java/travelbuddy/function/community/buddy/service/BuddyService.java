@@ -62,8 +62,8 @@ public class BuddyService {
     public int selectBuddyTotal() {
         log.info("[BuddyService] selectBuddyTotal() Start");
 
-        List<Buddy> buddyList = buddyRepository.findByBuddyStatus("N");
-//        List<Buddy> buddyList = buddyRepository.findAll();
+//        List<Buddy> buddyList = buddyRepository.findByBuddyStatus("N");
+        List<Buddy> buddyList = buddyRepository.findAll();
 
         log.info("[BuddyService] selectBuddyTotal() END");
 
@@ -85,13 +85,13 @@ public class BuddyService {
         Page<Buddy> result = buddyRepository.findAll(paging);
         System.out.println("버디서비스영역의 result = " + result);
 //        Page<Buddy> result = buddyRepository.findAll(paging);
-        List<Buddy> buddyList = (List<Buddy>) result.getContent();
+        List<Buddy> buddyList = result.getContent();
         System.out.println("buddyList = " + buddyList);
 
 
-        for(int i = 0 ; i < buddyList.size() ; i++) {
-            buddyList.get(i).setBuddyTitle(buddyList.get(i).getBuddyTitle());
-        }
+//        for(int i = 0 ; i < buddyList.size() ; i++) {
+//            buddyList.get(i).setBuddyTitle(buddyList.get(i).getBuddyTitle());
+//        }
 
         log.info("[BuddyService] selectBuddyListWithPaging() END");
 
@@ -100,6 +100,7 @@ public class BuddyService {
             BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
             if (buddy.getAccount() != null) {
                 buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
+                buddyDTO.setMemberName(buddy.getAccount().getMemberName());
             }
             return buddyDTO;
         }).collect(Collectors.toList());
@@ -118,6 +119,7 @@ public class BuddyService {
         BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
         if(buddy.getAccount() != null) {
             buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
+            buddyDTO.setMemberName(buddy.getAccount().getMemberName());
         }
 //        buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
 

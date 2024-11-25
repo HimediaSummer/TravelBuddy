@@ -12,7 +12,7 @@ function Faq() {
     console.log('FaqDTO 에는?',faqDTO);
 
     const cancleQnaInsert = () => {
-        navigate(`/Faqs`);
+        navigate(`/admin/faqs`);
     };
 
     const handleInputChange = (e) => {
@@ -25,7 +25,7 @@ function Faq() {
     const inserMyFaq = () => {
         dispatch(insertFaqAPI(faqDTO));
         alert('FAQ가 등록되었습니다.');
-        navigate(`/Faqs`);
+        navigate(`/admin/faqs`);
     };
 
     return (

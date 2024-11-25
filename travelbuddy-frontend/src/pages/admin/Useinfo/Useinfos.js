@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
 import { callUseinfoListForAdminAPI } from "../../../apis/UseinfoAPICalls";
+import { appendUseinfoCountAPI } from "../../../apis/UseinfoAPICalls";
 
 function Useinfos() {
     const navigate = useNavigate();
@@ -12,8 +13,6 @@ function Useinfos() {
     const useinfo = useSelector((state) => state.useinfoReducer) || {};
     const useinfoList = useinfo.data || {};
     const pageInfo = useinfo.pageInfo || {};
-
-    console.log('나 useinfoList',useinfoList);
 
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -32,12 +31,18 @@ function Useinfos() {
         }, [currentPage]
     );
 
-    const onClickTableTr = (useinfoCode) => {
-        navigate(`/useinfoDetail/${useinfoCode}`, { replace: false });
-    };
+// 상세페이지로 이동하면서, 조회수 카운트 올리기
+const onClickTableTr = (useinfoCode) => {
+    const selectUseinfo = useinfoList.find(n => n.useinfoCode === useinfoCode); // 선택한 공지사항 찾기
+    const appendCount = {useinfoCount:selectUseinfo.useinfoCount};
+   if (selectUseinfo) {
+        dispatch(appendUseinfoCountAPI(useinfoCode, appendCount)); // API 호출로 업데이트
+    }
+    navigate(`/admin/useinfos/${useinfoCode}`, { replace: false }); // 상세 페이지로 이동
+};
 
     const onClickNavigation = () => {
-        navigate(`/Useinfo`);
+        navigate(`/admin/useinfo`);
     };
 
 

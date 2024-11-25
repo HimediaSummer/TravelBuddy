@@ -14,6 +14,7 @@ function Faqs() {
 
     const [currentPage, setCurrentPage] = useState(1);
 
+
     const pageNumber = [];
     if (pageInfo) {
         for (let i = 1; i <= pageInfo.pageEnd; i++) {
@@ -30,14 +31,12 @@ function Faqs() {
     }, [currentPage]);
 
     const onClickTableTr = (faqCode) => {
-        navigate(`/FaqDetail/${faqCode}`, { replace: false });
+        navigate(`/admin/faqs/${faqCode}`, { replace: false });
     };
 
     const onClickNavigation = () => {
-        navigate(`/Faq`);
+        navigate(`/admin/faq`);
     };
-
-
 
 
     return (
@@ -46,14 +45,9 @@ function Faqs() {
                 <h2>FAQ</h2>
                 <table className={MyFaqsCSS.productTable}>
                     <colgroup>
-                        <col width="5%" />
-                        <col width="5%" />
-                        <col width="10%" />
-                        <col width="15%" />
-                        <col width="15%" />
                         <col width="10%" />
                         <col width="10%" />
-                        <col width="10%" />
+                        <col width="40%" />
                         <col width="10%" />
                     </colgroup>
                     <thead>
@@ -62,8 +56,6 @@ function Faqs() {
                             <th>유형</th>
                             <th>제목</th>
                             <th>은폐여부</th>
-                            <th></th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

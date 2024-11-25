@@ -19,6 +19,7 @@ import travelbuddy.function.community.notice.dto.NoticeDTO;
 import travelbuddy.function.community.notice.entity.Notice;
 import travelbuddy.util.FileUploadUtils;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,6 +37,7 @@ public class AdminNoticeService {
     private String IMAGE_DIR;
     @Value("${image.image-url}")
     private String IMAGE_URL;
+
 
     @Autowired
     public AdminNoticeService(AdminNoticeRepository adminNoticeRepository, ModelMapper modelMapper) {
@@ -139,7 +141,6 @@ public class AdminNoticeService {
         log.info("[AdminNoticeService] updateNotice() end");
 
         return modelMapper.map(updateNotice, NoticeDTO.class);
-
     }
 
     /*공지 1개의 조회수를 올린다.*/
@@ -176,4 +177,5 @@ public class AdminNoticeService {
         return (result > 0) ? "삭제 성공" : "삭제 실패";
 
     }
+
 }

@@ -38,7 +38,10 @@ image:
   add-resource-locations: classpath:/static/productimgs/
   add-resource-handler: /productimgs/**
   # Local Dev
-  image-dir: src/main/resources/static/productimgs
+#  빌드쪽 연결
+  image-dir: build/resources/main/static/productimgs
+#  아래쪽 스태틱 연결
+#  image-dir: src/main/resources/static/productimgs
   image-url: http://localhost:8080/productimgs/
 #Docker(Local)
 # add-resource-locations: file:///springboot-app/productimgs/

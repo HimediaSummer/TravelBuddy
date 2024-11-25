@@ -68,20 +68,48 @@ export const callUseinfoDetailAPI = (useinfoCode) => {
         dispatch({type: GET_USEINFO, payload: result });
     }}
 
+    // 누군가가 Useinfo 1개를 클릭했을때 조회수를 올린다.
+    export const appendUseinfoCountAPI = (useinfoCode, updateData) => {
+        const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/useinfos/${useinfoCode}/appendcount`;
+        return async (dispatch, getState) => {
+            const result = await fetch(requestURL, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: '*/*'
+                },
+                body: JSON.stringify(updateData)
+            }).then((response) => response.json());
+            dispatch({type: POST_USEINFO, payload: result });
+        }}
+
+
            // 관리자가 USEINFO 1개를 작성한다.
-export const insertUseinfoAPI = (useinfoDTO) => {
+export const insertUseinfoAPI = ({useinfoDTO}) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/useinfos/insertuseinfo`;
+    for (const pair of useinfoDTO.entries()) {
+        console.log(`${pair[0]}: ${pair[1]}`);
+    }
     return async (dispatch, getState) => {
+        try {
+            if (!process.env.REACT_APP_RESTAPI_IP) {
+                throw new Error('API 서버 주소가 설정되지 않았습니다.');
+            }
+
         const result = await fetch(requestURL, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 Accept: '*/*'
             },
-            body: JSON.stringify(useinfoDTO)
+            body: useinfoDTO
         }).then((response) => response.json());
         dispatch({type: POST_USEINFO, payload: result });
-    }}
+        console.log('백엔드에서 가져온 값',result);
+        
+    } catch (error) {
+        console.error('useinfo 등록 중 오류 발생: ', error);
+        throw error;
+    }}}
 
                // 관리자가 USEINFO 1개를 수정한다.
 export const updateUseinfoAPI = (useinfoCode, updateData) => {

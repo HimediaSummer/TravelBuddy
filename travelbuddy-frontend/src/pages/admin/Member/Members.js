@@ -62,14 +62,13 @@ const onClickSearch = async () => {
 };
 
     const onClickTableTr = (memberCode) => {
-        navigate(`/memberDetail/${memberCode}`, { replace: false });
+        navigate(`/admin/members/${memberCode}`, { replace: false });
     };
 
     const onChangeHandler = (e) => {
         setSearch(e.target.value);
         if (!e.target.value.trim()) {
-          dispatch(callMemberListForAdminAPI({ currentPage: 1 }));
-          setCurrentPage(1);   
+          dispatch(callMemberListForAdminAPI({ currentPage: currentPage }));
       }
       if (e.key === 'Enter') {
         e.preventDefault();

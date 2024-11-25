@@ -4,18 +4,24 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import travelbuddy.common.Criteria;
 import travelbuddy.function.admin.repository.AdminUseInfoRepository;
+import travelbuddy.function.community.notice.dto.NoticeDTO;
+import travelbuddy.function.community.notice.entity.Notice;
 import travelbuddy.function.community.useinfo.dto.UseinfoDTO;
 import travelbuddy.function.community.useinfo.entity.Useinfo;
+import travelbuddy.util.FileUploadUtils;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +30,12 @@ public class AdminUseInfoService {
     private static final Logger log = LoggerFactory.getLogger(AdminUseInfoService.class);
     private final AdminUseInfoRepository adminUseInfoRepository;
     private final ModelMapper modelMapper;
+
+    /* 설명. 이미지 파일 저장 경로와 응답용 URL (WebConfig 설정파일 추가하기) */
+    @Value("${image.image-dir}")
+    private String IMAGE_DIR;
+    @Value("${image.image-url}")
+    private String IMAGE_URL;
 
     @Autowired
     public AdminUseInfoService(AdminUseInfoRepository adminUseInfoRepository, ModelMapper modelMapper) {
@@ -74,17 +86,42 @@ public class AdminUseInfoService {
     }
     /*설명서 1개를 등록한다.*/
     @Transactional
-    public Object insertUseInfo(UseinfoDTO useinfoDTO) {
+    public Object insertUseInfo(UseinfoDTO useinfoDTO, MultipartFile useinfoImage) {
 
         log.info("[AdminUseInfoService] insertUseInfo start");
 
-        Useinfo newUseinfo = modelMapper.map(useinfoDTO , Useinfo.class);
-        adminUseInfoRepository.save(newUseinfo);
+        String imageName = UUID.randomUUID().toString().replace("-", "");
+        String replaceFileName = null;
+        int result = 0;
 
-        log.info("[AdminUseInfoService] insertUseInfo end");
+        try {
 
-        return modelMapper.map(newUseinfo, UseinfoDTO.class);
+            if (useinfoImage == null) {
+                useinfoDTO.setUseinfoImg("");
+
+            } else {
+
+                replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, useinfoImage);
+                useinfoDTO.setUseinfoImg(replaceFileName);
+
+            }
+
+            Useinfo newUseinfo = modelMapper.map(useinfoDTO, Useinfo.class);
+
+            adminUseInfoRepository.save(newUseinfo);
+
+            result = 1;
+
+            log.info("[AdminUseInfoService] insertUseInfo end");
+
+        } catch (Exception e) {
+            FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
+            throw new RuntimeException(e);
+        }
+
+        return (result > 0) ? "공지 등록 성공" : "공지 등록 실패";
     }
+
 
     /*설명서 1개를 수정한다.*/
     @Transactional
@@ -117,5 +154,18 @@ public class AdminUseInfoService {
         log.info("[AdminUseInfoService] deleteUseInfo end");
 
         return (result > 0) ? "삭제 성공" : "삭제 실패";
+    }
+
+    public Object appendUseinfoCount(int useinfoCode, UseinfoDTO useinfoDTO) {
+
+        log.info("[AdminUseInfoService] appendUseinfoCount() start");
+
+        Useinfo updateUseinfo = adminUseInfoRepository.findById(useinfoCode).orElse(null);
+        updateUseinfo.setUseinfoCount(updateUseinfo.getUseinfoCount() + 1);
+        adminUseInfoRepository.save(updateUseinfo);
+
+        log.info("[AdminUseInfoService] appendUseinfoCount() end");
+
+        return modelMapper.map(updateUseinfo, UseinfoDTO.class);
     }
 }

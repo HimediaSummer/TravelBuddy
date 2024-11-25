@@ -23,7 +23,6 @@ function Notices() {
             pageNumber.push(i);
         }
     }
-
     useEffect(
         () => {
             dispatch(callNoticeListForAdminAPI(
@@ -32,19 +31,18 @@ function Notices() {
         }, [currentPage]
     );
 
+    // 상세페이지로 이동하면서, 조회수 카운트 올리기
     const onClickTableTr = (noticeCode) => {
         const selectNotice = noticeList.find(n => n.noticeCode === noticeCode); // 선택한 공지사항 찾기
-        console.log('누구세요?',selectNotice)
         const appendCount = {noticeCount:selectNotice.noticeCount};
-        console.log('선택한 녀석의',appendCount)
-        if (selectNotice) {
+       if (selectNotice) {
             dispatch(appendNoticeCountAPI(noticeCode, appendCount)); // API 호출로 업데이트
         }
-        navigate(`/noticeDetail/${noticeCode}`, { replace: false }); // 상세 페이지로 이동
+        navigate(`/admin/notices/${noticeCode}`, { replace: false }); // 상세 페이지로 이동
     };
 
     const onClickNavigation = () => {
-        navigate(`/Notice`);
+      navigate(`/admin/notice`);
     };
 
 

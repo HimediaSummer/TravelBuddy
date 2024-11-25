@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -14,6 +14,7 @@ function MyNoticeDetail () {
     const [noticeContents, setNoticeContents] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const editorRef = useRef(null);
     const params = useParams();
     const {noticeCode} = params;
     const noticeData = useSelector((state) => state.noticeReducer) || {};
@@ -26,7 +27,7 @@ function MyNoticeDetail () {
     );
 
     useEffect(() => {
-        if (notice) {
+        if (notice && notice.noticeImg) {
             const updatedContents = notice.noticeContents 
             ? 
             `${notice.noticeContents}
@@ -34,10 +35,25 @@ function MyNoticeDetail () {
             : 
             `<img src="${notice.noticeImg}" alt="공지 이미지" style="max-width:100%; height:auto;" />`;
 
-            setNoticeContents(updatedContents || "");
+            setNoticeContents(updatedContents);
+            
+        } else if (notice) {
+            setNoticeContents(notice.noticeContents || "");
 
         }
     }, [notice]);
+
+    useEffect(() => {
+        return () => {
+            if (editorRef.current && editorRef.current.getInstance()) {
+                try {
+                    editorRef.current.getInstance().destroy();
+                } catch (error) {
+                    console.log('에디터 정리 중 오류 발생:', error);
+                }
+            }
+        };
+    }, []);
 
     // 데이터가 없을 경우 로딩 메시지 렌더링
     if (!notice) {
@@ -58,10 +74,11 @@ function MyNoticeDetail () {
         <div>
             <Viewer 
             initialValue={noticeContents || notice.noticeContents}
-            key={noticeContents}
+            key={noticeCode}
             previewStyle="vertical"
             height="600px"
             initialEditType="wysiwyg"
+            ref={editorRef}
         />
         </div>
         </>

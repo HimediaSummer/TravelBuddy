@@ -22,6 +22,8 @@ import MyFaqs from './pages/member/faq/MyFaqs';
 import MyQnas from './pages/member/qna/MyQnas';
 import MyQna from './pages/member/qna/MyQna';
 import MyQnaDetail from './pages/member/qna/MyQnaDetail';
+import MyUseinfos from './pages/member/useinfo/MyUseinfos';
+import MyUseinfoDetail from './pages/member/useinfo/MyUseinfoDetail';
 import Mypage from './pages/member/mypage/Mypage';
 import MyProfile from './pages/member/mypage/MyProfile';
 import MyPutProfile from './pages/member/mypage/MyPutProfile';
@@ -31,12 +33,17 @@ import MyBuddyDetail from './pages/member/mypage/MyBuddyDetail';
 import MyPutBuddy from './pages/member/mypage/MyPutBuddy';
 import MySchedule from './pages/member/mypage/MySchedule';
 import MyScheduleDetail from './pages/member/mypage/MyScheduleDetail';
+import AdminLayout from './layouts/AdminLayout';
+import CmLayout from './layouts/CmLayout';
+import CsLayout from './layouts/CsLayout';
 
 function App() {
 
   return (
     <BrowserRouter>
+
       <Routes>
+
         {/* React에서 보여줄 화면 주소(URL) 정하는곳 */}
         {/* 자세한건 Schedule으로 이동바람 (컨트롤 좌클릭)  */}
         <Route path="/">
@@ -44,32 +51,44 @@ function App() {
           <Route path="Schedule" element={ <Schedule /> }/>   
 
           {/*ADMIN 페이지*/}
-          <Route path="Notices" element={<Notices />}/>
-          <Route path="NoticeDetail/:noticeCode" element={<NoticeDetail />}/>
-          <Route path="Notice" element={<Notice />}/>
-          <Route path="Members" element={ <Members/> }/>
-          <Route path="MemberDetail/:memberCode" element={ <MemberDetail/>} />
-          <Route path="Qnas" element={ <Qnas/> }/>
-          <Route path="QnaDetail/:qnaCode" element={ <QnaDetail/>} />
-          <Route path="Faq" element={ <Faq/> }/>
-          <Route path="FaqDetail/:faqCode" element={ <FaqDetail/> }/>
-          <Route path="Faqs" element={ <Faqs/> }/>
-          <Route path="Useinfo" element={<Useinfo />}/>
-          <Route path="Useinfos" element={<Useinfos />}/>
-          <Route path="UseinfoDetail/:useinfoCode" element={<UseinfoDetail />}/>
+          <Route path="admin" element={ <AdminLayout /> }>
+            <Route index element= {<Notices/>}/>
+            <Route path="notices" element={<Notices />}/>
+            <Route path="notices/:noticeCode" element={<NoticeDetail />}/>
+            <Route path="notice" element={<Notice />}/>
+            <Route path="members" element={ <Members/> }/>
+            <Route path="members/:memberCode" element={ <MemberDetail/>} />
+            <Route path="qnas" element={ <Qnas/> }/>
+            <Route path="qnas/:qnaCode" element={ <QnaDetail/>} />
+            <Route path="faqs" element={ <Faqs/> }/>
+            <Route path="faqs/:faqCode" element={ <FaqDetail/> }/>
+            <Route path="faq" element={ <Faq/> }/>
+            <Route path="useinfos" element={<Useinfos />}/>
+            <Route path="useinfos/:useinfoCode" element={<UseinfoDetail />}/>
+            <Route path="useinfo" element={<Useinfo />}/>
+          </Route>
+
+          {/* CM 커뮤니티 페이지 */}
+          <Route path="cm" element={<CmLayout/>}>
+            <Route index element={<MyNotices/>}/>
+            <Route path="mynotices" element={<MyNotices />}/>
+            <Route path="mynotices/:noticeCode" element={<MyNoticeDetail />}/>
+            <Route path="myuseinfos" element={<MyUseinfos />}/>
+            <Route path="myuseinfos/:useinfoCode" element={<MyUseinfoDetail />}/>
+          </Route>
 
           {/* CS 페이지 */}
-          <Route path="MyFaqs" element={ <MyFaqs/> }/>
-          <Route path="MyQnas" element={ <MyQnas/> }/>
-          <Route path="MyQna" element={ <MyQna/> }/>
-          <Route path="MyQnaDetail/:qnaCode" element={ <MyQnaDetail/>} />
-          <Route path="MyNotices" element={<MyNotices />}/>
-          <Route path="MyNoticeDetail/:noticeCode" element={<MyNoticeDetail />}/>
+          <Route path="cs" element={<CsLayout/>}>
+            <Route index element={ <MyFaqs/> }/>
+            <Route path="myFaqs" element={ <MyFaqs/> }/>
+            <Route path="myQnas" element={ <MyQnas/> }/>
+            <Route path="myQnas/:qnaCode" element={ <MyQnaDetail/>} />
+            <Route path="myQna" element={ <MyQna/> }/>
+          </Route>
 
           <Route path="MyPage" element={<MyPage />}>
             <Route path="MyBuddyList" element={<MypageBuddyList />} />
-          </Route> 
-          
+          </Route>          
           {/* Mypage */}
           <Route path="/mypage" element={<Mypage />}>
             <Route path="/mypage/myProfile" element={<MyProfile />} />

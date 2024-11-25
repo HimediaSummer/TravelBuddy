@@ -51,6 +51,7 @@ export const callNoticeDetailForAdminAPI = (noticeCode) => {
                 Accept: '*/*'
             }
         }).then((response) => response.json());
+        
         dispatch({type: GET_NOTICE, payload: result });
     }}
 
@@ -72,12 +73,15 @@ export const callNoticeDetailAPI = (noticeCode) => {
            // 관리자가 Notice 1개를 작성한다.
 export const insertNoticeAPI = ({noticeDTO}) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/notices/insertnotice`;
-    console.log('지금 나의 주소는 ? ',requestURL);
     for (const pair of noticeDTO.entries()) {
         console.log(`${pair[0]}: ${pair[1]}`);
     }
-    console.log('백엔드 대문 앞');
     return async (dispatch, getState) => {
+        try {
+            if (!process.env.REACT_APP_RESTAPI_IP) {
+                throw new Error('API 서버 주소가 설정되지 않았습니다.');
+            }
+        
         const result = await fetch(requestURL, {
             method: 'POST',
             headers: {
@@ -87,27 +91,11 @@ export const insertNoticeAPI = ({noticeDTO}) => {
         }).then((response) => response.json());
         dispatch({type: POST_NOTICE, payload: result });
         console.log('백엔드에서 가져온 값',result);
-    }}
 
-               // 관리자가 사진을 업로드한다.
-export const insertImageAPI = ({noticeDTO}) => {
-    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/notices/insertnotice`;
-    console.log('지금 나의 주소는 ? ',requestURL);
-    for (const pair of noticeDTO.entries()) {
-        console.log(`${pair[0]}: ${pair[1]}`);
-    }
-    console.log('백엔드 대문 앞');
-    return async (dispatch, getState) => {
-        const result = await fetch(requestURL, {
-            method: 'POST',
-            headers: {
-                Accept: '*/*'
-            },
-            body: noticeDTO
-        }).then((response) => response.json());
-        dispatch({type: POST_NOTICE, payload: result });
-        console.log('백엔드에서 가져온 값',result);
-    }}
+    } catch (error) {
+        console.error('Notice 등록 중 오류 발생: ', error);
+        throw error;
+    }}}
 
     // 관리자가 Notice 1개의 본문을 수정한다.
 export const updateNoticeAPI = (noticeCode, updateData) => {
@@ -128,7 +116,6 @@ export const updateNoticeAPI = (noticeCode, updateData) => {
     // 누군가가 Notice 1개를 클릭했을때 조회수를 올린다.
 export const appendNoticeCountAPI = (noticeCode, updateData) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/notices/${noticeCode}/appendcount`;
-    console.log('내가 받은 거',updateData);
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'PUT',

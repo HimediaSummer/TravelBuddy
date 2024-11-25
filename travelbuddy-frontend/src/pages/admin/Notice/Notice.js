@@ -11,8 +11,8 @@ function Notice() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const imageInput = useRef();
-    const editorRef = useRef();
+    const imageInput = useRef(null);
+    const editorRef = useRef(null);
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState();
 
@@ -24,37 +24,37 @@ function Notice() {
         noticeAt: ''
     });
 
-    // useEffect(() => {
-    //     /* 이미지 업로드시 미리보기 세팅 */
-    //     if (image) {
-    //         const fileReader = new FileReader();
-    //         fileReader.onload = (e) => {
-    //             const { result } = e.target;
-    //             if (result) {
-    //                 setImageUrl(result);
-    //             }
-    //         };
-    //         fileReader.readAsDataURL(image);
-    //     }
-    // }, [image]);
+    useEffect(() => {
+        /* 이미지 업로드시 미리보기 세팅 */
+        if (image) {
+            const fileReader = new FileReader();
+            fileReader.onload = (e) => {
+                const { result } = e.target;
+                if (result) {
+                    setImageUrl(result);
+                }
+            };
+            fileReader.readAsDataURL(image);
+        }
+    }, [image]);
 
-    // const onChangeImageUpload = (e) => {
-    //     const image = e.target.files[0];
-    //     if (image && image.size > 10048576) {
-    //         alert('이미지 크기는 10MB 이하여야 합니다.');
-    //         e.target.value = ''; // 입력 초기화
-    //         return;
-    //     }
-    //     setImage(image);
-    //     console.log('이 이미지는?', image);
-    // };
+    const onChangeImageUpload = (e) => {
+        const image = e.target.files[0];
+        if (image && image.size > 10048576) {
+            alert('이미지 크기는 10MB 이하여야 합니다.');
+            e.target.value = ''; // 입력 초기화
+            return;
+        }
+        setImage(image);
+        console.log('이 이미지는?', image);
+    };
 
     const onClickImageUpload = () => {
         imageInput.current.click();
     };
 
     const cancleNoticeInsert = () => {
-        navigate(`/Notices`);
+        navigate(`/admin/notices`);
     };
 
     const handleInputChange = (e) => {
@@ -66,23 +66,20 @@ function Notice() {
     const onChange = () => {
         const data = editorRef.current.getInstance().getHTML();
         setNoticeDTO( (state) => ({...state, noticeContents: data}));
-        console.log(data);
     };
 
-    useEffect (
-        () => {
-            if (editorRef.current) {
-                const editorInstance = editorRef.current.getInstance();
-                editorInstance.removeHook('addImageBlobHook');
-                editorInstance.addHook('addImageBlobHook', async (blob, callback) => {
-                    setImage(blob);
-        
-                      // 로컬 미리보기 URL 생성
-                    const previewUrl = URL.createObjectURL(blob);
-                    callback(previewUrl, 'image');
-                });
+    useEffect(() => {
+        return () => {
+            if (editorRef.current && editorRef.current.getInstance()) {
+                try {
+                    editorRef.current.getInstance().destroy();
+                } catch (error) {
+                    console.log('에디터 정리 중 오류 발생:', error);
+                }
             }
-        }, []);
+        };
+    }, []);
+
 
     const insertNotice = () => {
         const now = new Date();
@@ -98,7 +95,8 @@ function Notice() {
             })
             .replace(/\. /g, "-")
             .replace(",", "");
-        const viewAt = 'N';
+            
+            const viewAt = 'N';
 
             const formData = new FormData();
 
@@ -114,27 +112,40 @@ function Notice() {
             try {
                 dispatch(insertNoticeAPI({ noticeDTO: formData }));
                 alert("공지사항이 등록되었습니다.");
-                navigate(`/Notices`);
+                navigate(`/admin/notices`);
             } catch (error) {
                 console.error("공지사항 등록 실패", error);
             }
         };
-
 
     return (
         <>
             <button onClick={cancleNoticeInsert}>취소</button>
             <button onClick={insertNotice}>작성완료</button>
                         <input
-                                type="text"
-                                name="noticeTitle"
-                                value={noticeDTO.noticeTitle}
-                                placeholder="제목을 입력하세요"
-                                onChange={handleInputChange}
-                                required
-                                maxLength={100}
-                                style={{ width: "350px" }}
+                            type="text"
+                            name="noticeTitle"
+                            value={noticeDTO.noticeTitle}
+                            placeholder="제목을 입력하세요"
+                            onChange={handleInputChange}
+                            required
+                            maxLength={100}
+                            style={{ width: "400px" }}
                             />
+                            <button onClick={onClickImageUpload}>이미지첨부</button>
+                            <br/>
+                            <img
+                            src={imageUrl}
+                            alt="noticeImg"
+                            style={{ maxWidth: '400px' }} 
+							/>
+                            <input 
+                            style={{ display: 'none' }}
+							type="file"
+							name="noticeImg"
+							accept="image/jpg,image/png,image/jpeg,image/gif"
+							onChange={onChangeImageUpload}
+							ref={imageInput} />
         <Editor
         initialValue=" "
         placeholder="내용을 입력하세요."
@@ -145,7 +156,15 @@ function Notice() {
         hideModeSwitch={true}
         ref={editorRef}
         onChange={onChange}
-        autofocus={true}
+        toolbarItems={[
+            ['heading', 'bold', 'italic', 'strike'],
+            ['hr', 'quote'],
+            ['ul', 'ol', 'task', 'indent', 'outdent'],
+            ['table', 'link'],
+            ['code', 'codeblock'],
+            ['scrollSync'],
+        ]}
+
         />
         </>
     );

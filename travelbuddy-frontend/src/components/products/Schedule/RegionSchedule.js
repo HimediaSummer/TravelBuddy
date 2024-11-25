@@ -133,8 +133,8 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 					)}
 					{ regionTab === 'search' && (
 					<div className='region-search'>
-						<input type='text' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
-						<button className="region-button2" onClick={onNext}>다음</button>
+						<input type='search' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
+						<button className="region-button2" onClick={onNext} disabled={!searchQuery}>다음</button>
 					</div>
 					)}
 				</form>
@@ -156,11 +156,24 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 						</div>
 					) : ('')}
 				</div>
-							<div style={{marginTop: '100px'}}>
+							{/* <div style={{marginTop: '100px'}}>
 								{selectedRegion && isToggleOpen && regionTab === 'select' ? (
 							// <Map latitude={selectedRegion.lat} longitude={selectedRegion.lng}/>
 							<Map regionName={selectedRegion.regionName} style={{width: '500px', height: '800px'}}/>
 								) : (<Map regionName={selectedRegionDetails? (selectedRegion.regionName) : (null)} style={{width: '800px', height: '800px'}} />)}
+							</div> */}
+							<div style={{marginTop: '100px'}}>
+								{regionTab === 'search' ? (
+									// 검색 탭일 때
+									<Map regionName={searchQuery} style={{width: '800px', height: '800px'}}/>
+								) : (
+									// 선택 탭일 때
+									selectedRegion ? (
+										<Map regionName={selectedRegion.regionName} style={{width: isToggleOpen ? '500px' : '800px', height: '800px'}}/>
+									) : (
+										<Map regionName={null} style={{width: '800px', height: '800px'}}/>
+									)
+								)}
 							</div>
 			</div>
 		</div>

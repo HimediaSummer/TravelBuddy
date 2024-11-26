@@ -1,25 +1,27 @@
-import { useNavigate } from 'react-router-dom';import { useEffect, useState, useRef } from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState, useRef } from "react";
 import { useParams } from 'react-router-dom';
-import { putBuddy } from "../../../modules/mypage/MyBuddyModule.js"
+import '@toast-ui/editor/dist/toastui-editor.css'; 
+import { Editor } from '@toast-ui/react-editor';
+import './MyPutBuddy.css';
 
 function MyPutBuddy() {
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const { buddyCode } = useParams(); 
-    const [buddyDetail, setBuddyDetail] = useState({});
+    const editorRef = useRef();
     const [formData, setFormData] = useState({
         buddyTitle: "",
         buddyContents: "",
         regionCode: "",
         buddyTypeCode: "",
-        buddyImg: null,
+        postImg: [],
         buddyCreate: "",
     });
 
     const [regions, setRegions] = useState([]);
     const [buddyTypes, setBuddyTypes] = useState([]);
+    const [previewImage, setPreviewImage] = useState([]);
 
     // 데이터 로드 (게시글 상세 조회)
     useEffect(() => {
@@ -44,7 +46,7 @@ function MyPutBuddy() {
                     buddyContents: getBuddyDetail.buddyContents,
                     regionCode: getBuddyDetail.regionCode,
                     buddyTypeCode: getBuddyDetail.buddyTypeCode,
-                    buddyImg: null,
+                    postImg: [],
                 });
 
                 // 목록 데이터 설정
@@ -74,10 +76,37 @@ function MyPutBuddy() {
 
     // 파일 변경 핸들러
     const handleFileChange = (e) => {
+
+        const files = Array.from(e.target.files);
+        let totalSize = files.reduce((acc, file) => acc + file.size, 0);
+        
+        // 크기 검사 (1MB = 1048576 bytes)
+        if (totalSize > 1048576) {
+            alert("이미지의 총 용량은 최대 1MB까지 허용됩니다.");
+            e.target.value = null;
+            return;
+        }
+
+        // 확장자 검사
+        const allowedExtensions = ["png", "jpg", "jpeg"];
+        for (let file of files) {
+            const fileExtension = file.name.split(".").pop().toLowerCase();
+            if (!allowedExtensions.includes(fileExtension)) {
+                alert("이미지는 .png, .jpg, .jpeg만 가능합니다.");
+                e.target.value = null;
+                return;
+            }
+        }
+
         setFormData((prev) => ({
             ...prev,
-            buddyImg: e.target.files[0],
+            postImg: files,
         }));
+            
+        // 미리보기 이미지 생성
+        const previewUrls = files.map(file => URL.createObjectURL(file));
+        setPreviewImage(previewUrls);
+        
     };
 
     // 폼 제출 핸들러
@@ -85,11 +114,15 @@ function MyPutBuddy() {
         e.preventDefault();
 
         const updatedData = new FormData();
-        for (let key in formData) {
-            if (formData[key] !== null && formData[key] !== "") {
-                updatedData.append(key, formData[key]);
-            }
-        }
+        updatedData.append("buddyTitle", formData.buddyTitle);
+        updatedData.append("buddyContents", editorRef.current.getInstance().getMarkdown()); // Editor 내용 가져오기
+        updatedData.append("regionCode", formData.regionCode);
+        updatedData.append("buddyTypeCode", formData.buddyTypeCode);
+        
+        // 여러 파일 추가
+        formData.postImg.forEach((file) => {
+            updatedData.append("postImg", file);
+        });
 
         try {
             const response = await fetch(`/mypage/mybuddy/${buddyCode}/update`, {
@@ -100,12 +133,59 @@ function MyPutBuddy() {
             if (!response.ok) throw new Error("Failed to update buddy");
 
             alert("게시글이 수정되었습니다.");
-            navigate('/mypage/mybuddy');
+            navigate(`/mypage/mybuddy/${buddyCode}`);
         } catch (error) {
             console.error("Error updating buddy:", error);
             alert("수정 중 오류가 발생했습니다.");
         }
     };
+
+    const handleToolbarClick = () => {
+        const dropdowns = document.querySelectorAll('.toastui-editor-dropdown');
+        dropdowns.forEach((dropdown) => dropdown.classList.remove('open'));
+      };
+      
+      // 툴바 버튼 클릭 이벤트에 연결
+      useEffect(() => {
+        const toolbar = document.querySelector('.toastui-editor-toolbar');
+        if (toolbar) {
+          toolbar.addEventListener('click', handleToolbarClick);
+        }
+      
+        return () => {
+          if (toolbar) {
+            toolbar.removeEventListener('click', handleToolbarClick);
+          }
+        };
+      }, []);
+
+      useEffect(() => {
+        const dropdowns = document.querySelectorAll('.toastui-editor-dropdown');
+        dropdowns.forEach((dropdown) => dropdown.classList.remove('open'));
+      }, []);
+    
+      useEffect(() => {
+        // 드롭다운 강제 닫기 이벤트
+        const handleDropdownFix = () => {
+          const dropdowns = document.querySelectorAll('.toastui-editor-dropdown');
+          dropdowns.forEach((dropdown) => {
+            dropdown.classList.remove('open'); // 강제로 닫기
+          });
+        };
+    
+        // 에디터가 렌더링된 후에만 동작
+        if (editorRef.current) {
+            const editorInstance = editorRef.current.getInstance();
+            editorInstance.focus();
+        }
+
+        document.addEventListener('click', handleDropdownFix);
+
+        return () => {
+            document.removeEventListener('click', handleDropdownFix);
+        };
+        }, [editorRef]);
+
 
     return (
         <div>
@@ -117,15 +197,6 @@ function MyPutBuddy() {
                         type="text"
                         name="buddyTitle"
                         value={formData.buddyTitle || ""}
-                        onChange={handleInputChange}
-                    />
-                </label>
-                <br />
-                <label>
-                    내용:
-                    <textarea
-                        name="buddyContents"
-                        value={formData.buddyContents || ""}
                         onChange={handleInputChange}
                     />
                 </label>
@@ -162,18 +233,71 @@ function MyPutBuddy() {
                     </select>
                 </label>
                 <br />
+                {/* <label>
+                    <Editor
+                        // initialValue={formData.buddyContents || ""} // 초기값
+                        initialValue={formData.buddyContents || ""} // 초기값
+                        height="400px" // 에디터 높이
+                        initialEditType="markdown" // 시작 모드: wysiwyg
+                        useCommandShortcut={true} // 단축키 사용 여부
+                        hideModeSwitch={true} // "Write"와 "Preview" 간 전환 버튼 숨기기
+                        toolbarItems={[
+                            // 원하는 툴바 옵션 설정 (필요에 따라 추가/삭제 가능)
+                            ['bold', 'italic', 'strike'],
+                            ['ul', 'ol', 'task', 'indent', 'outdent'],
+                            ['table', 'image'],
+                            // 폰트 크기 버튼 추가
+                            {
+                                name: 'fontSize',
+                                tooltip: 'Font Size',
+                                className: 'custom-font-size-button',
+                                style: { backgroundImage: 'none', fontSize: '12px', cursor: 'pointer' },
+                                text: 'Font Size ▼', // 드롭다운 메뉴 버튼
+                                command: () => {
+                                    const editorInstance = editorRef.current?.getInstance();
+                                    if (!editorInstance) return;
+                                    const selectedText = editorInstance.getSelectedText();
+                                    if (selectedText) {
+                                      const fontSizeHtml = `<span style="font-size: 20px;">${selectedText}</span>`;
+                                      editorInstance.replaceSelection(fontSizeHtml);
+                                    } else {
+                                      alert('텍스트를 선택하세요!');
+                                    }
+                                },
+                            },
+                        ]}
+                        ref={editorRef}
+                    />
+                    </label> */}
+                <br />
                 <label>
                     이미지:
                     <input
                         type="file"
-                        name="buddyImg"
+                        name="postImg"
                         accept="image/*"
                         onChange={handleFileChange}
                     />
+                     <br />
+                     <small>이미지의 총 용량은 최대 1MB까지 첨부 가능합니다. (.png, .jpg, .jpeg만 허용)</small>
                 </label>
-                <br />
+                <br/>
+                {/* 이미지 미리보기 */}
+                {previewImage.length > 0 && (
+                    <div>
+                        {previewImage.map((image, index) => (
+                            <img 
+                            key={index}
+                            src={image}
+                            alt={`Preview ${index}`}
+                            style={{ width: "100px", height: "auto" }}
+                            />
+                        ))}
+                    </div>
+                )}
+                <br/>
                 <button type="submit">수정 완료</button>
-                <button type="button" onClick={() => navigate('/mypage/mybuddy')}>
+                <button type="button" onClick={() => navigate(`/mypage/mybuddy/${buddyCode}`)}>
                     취소
                 </button>
             </form>

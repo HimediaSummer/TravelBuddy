@@ -4,6 +4,9 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -56,10 +59,17 @@ public class MypageService {
     private final MemberAnswerRepository memberAnswerRepository;
     private final ModelMapper modelMapper;
 
-    @Value("${image.image-dir}")
+    /* 프로필사진 루트 */
+    @Value("${image.profile.image-dir}")
     private String IMAGE_DIR;
-    @Value("${image.image-url}")
+    @Value("${image.profile.image-url}")
     private String IMAGE_URL;
+
+    /* buddyImg 루트 */
+    @Value("${image.buddy.image-dir}")
+    private String buddyImageDir;
+    @Value("${image.buddy.image-url}")
+    private String buddyImageUrl;
 
     @Autowired
     public MypageService(MyBuddyRepository myBuddyRepository, MyBuddyMatchRepository myBuddyMatchRepository, MyProfileRepository myProfileRepository, BuddyTypeRepository buddyTypeRepository, RegionRepository regionRepository, MyScheduleRepository myScheduleRepository, AccountRepository accountRepository, AccommodationRepository accommodationRepository, MemberAnswerRepository memberAnswerRepository, ModelMapper modelMapper) {
@@ -184,7 +194,7 @@ public class MypageService {
     public int selectScheTotal() {
         log.info("[MyService] selectScheTotal() Start");
         int memberCode = 1002;
-        int total = myBuddyRepository.countByMemberCode(memberCode);
+        int total = myScheduleRepository.countByMemberCode(memberCode);
 
         return total;
     }
@@ -271,7 +281,6 @@ public class MypageService {
     }
 
 
-
     /* =========================================== My커뮤니티 =========================================== */
     /* 내가 쓴 버디게시글 목록조회 */
     public int selectBuddyTotal() {
@@ -337,9 +346,14 @@ public class MypageService {
         buddyDTO.setBuddyContents(getBuddyDetail.getBuddyContents());
         buddyDTO.setBuddyCreate(getBuddyDetail.getBuddyCreate().toString());
         buddyDTO.setBuddyStatus(getBuddyDetail.getBuddyStatus());
-        buddyDTO.setBuddyImg(getBuddyDetail.getBuddyImg());
         buddyDTO.setBuddyCount(getBuddyDetail.getBuddyCount());
         buddyDTO.setBuddyAt(getBuddyDetail.getBuddyAt());
+        // buddyImg에 URL 연결
+        if (getBuddyDetail.getBuddyImg() != null && !getBuddyDetail.getBuddyImg().isEmpty()) {
+            buddyDTO.setBuddyImg(buddyImageUrl + getBuddyDetail.getBuddyImg());
+        } else {
+            buddyDTO.setBuddyImg("");
+        }
 
         System.out.println("Manually Mapped BuddyDTO: " + buddyDTO);
 
@@ -389,14 +403,15 @@ public class MypageService {
                 .orElseThrow(() -> new EntityNotFoundException("BuddyMatchData not found with buddyMatchCode: " + buddyMatchCode));
 
         matchDataToUpdate.setApplyStatus(applyStatus);
-        myBuddyMatchRepository.save(matchDataToUpdate);;
+        myBuddyMatchRepository.save(matchDataToUpdate);
+        ;
         log.info("[MypageService] updateBuddyApplyStatus() End");
     }
 
     /* 내가쓴버디게시글수정 */
-    // 게시글 수정시 이전데이터 가져오기
+    // 게시글 수정
     @Transactional
-    public Map<String, Object> updateBuddy(int buddyCode, BuddyDTO buddyDTO, MultipartFile buddyImg) {
+    public Map<String, Object> updateBuddy(int buddyCode, BuddyDTO buddyDTO, MultipartFile[] postImg) {
         log.info("Service: Updating buddy with buddyCode {}", buddyCode);
 
         // 1. 게시글 조회
@@ -418,11 +433,52 @@ public class MypageService {
         buddy.setBuddyType(buddyType); // 버디 유형 수정
 
         // 4. 이미지 처리
-//        if (buddyImg != null && !buddyImg.isEmpty()) {
-//            // 이미지 파일 저장 로직 추가 (예: 파일 경로 저장)
-//            String imagePath = fileService.saveFile(buddyImg);
-//            buddy.setBuddyImg(imagePath);
-//        }
+        if (postImg != null && postImg.length > 0) {
+            long totalSize = 0;
+            List<String> savedFileNames = new ArrayList<>();
+            String basePath = "C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/";
+
+            // 총 용량 확인 및 파일 저장
+            for (MultipartFile file : postImg) {
+                totalSize += file.getSize();
+
+                // 유효성 검사: 파일 크기 제한
+                if (totalSize > 1048576) { // 1MB = 1,048,576 bytes
+                    throw new IllegalArgumentException("이미지의 총 용량은 최대 1MB까지 허용됩니다.");
+                }
+
+                // 파일 저장
+                String randomFileName = UUID.randomUUID().toString().replace("-", "") + "." +
+                        FilenameUtils.getExtension(file.getOriginalFilename());
+                Path destPath = Paths.get(basePath, randomFileName);
+
+                try {
+                    Files.copy(file.getInputStream(), destPath);
+                    savedFileNames.add(randomFileName);
+                    log.info("Saved file: {}", randomFileName);
+                } catch (IOException e) {
+                    log.error("Error while saving image file", e);
+                    throw new RuntimeException("파일 저장 중 오류 발생", e);
+                }
+            }
+
+            // 기존 파일 삭제 (기본 이미지 제외)
+            String existingImages = buddy.getBuddyImg();
+            if (existingImages != null && !existingImages.isEmpty()) {
+                for (String oldImage : existingImages.split(",")) {
+                    if (!oldImage.equals("default.png")) {
+                        File oldFile = new File(basePath + oldImage.trim());
+                        if (oldFile.exists() && oldFile.delete()) {
+                            log.info("Deleted old file: {}", oldImage);
+                        } else {
+                            log.warn("Failed to delete old file: {}", oldImage);
+                        }
+                    }
+                }
+            }
+            // 새로운 파일 이름 저장
+            buddy.setBuddyImg(String.join(",", savedFileNames));
+        }
 
         // 5. 변경된 게시글 저장
         myBuddyRepository.save(buddy);
@@ -452,7 +508,7 @@ public class MypageService {
         return response;
     }
 
-    // 게시글 수정폼
+    // 게시글 수정폼 이전데이터
     @Transactional
     public Map<String, Object> getBuddyDetailWithLists(int buddyCode) {
         log.info("Service: Fetching buddy detail and related lists for buddyCode {}", buddyCode);
@@ -511,6 +567,17 @@ public class MypageService {
         log.info("[MypageService] 삭제 시작: buddyCode = {}", buddyCodes);
 
         myBuddyRepository.deleteByBuddyCode(buddyCodes);
+
+//        // 최대 buddy_code 값을 조회
+//        Integer maxBuddyCode = buddyRepository.findMaxBuddyCode();
+//
+//        // AUTO_INCREMENT 값을 현재 최대값 + 1로 재설정
+//        if (maxBuddyCode != null) {
+//            buddyRepository.resetAutoIncrement(maxBuddyCode + 1);
+//        } else {
+//            // 테이블이 비어있는 경우 1로 설정
+//            buddyRepository.resetAutoIncrement(1);
+//        }
 
         log.info("[MypageService] 삭제 완료: buddyCode = {}", buddyCodes);
 

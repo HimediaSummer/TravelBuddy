@@ -1,0 +1,9 @@
+.toastui-editor-defaultUI-toolbar-modeSwitch {
+    display: none !important;
+}
+.toastui-editor-dropdown {
+    display: none !important;
+}
+.toastui-editor-dropdown.open {
+    display: block !important;
+}

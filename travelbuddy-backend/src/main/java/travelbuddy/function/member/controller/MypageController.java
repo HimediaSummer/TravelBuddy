@@ -205,13 +205,35 @@ public class MypageController {
     /* 내가 쓴글 수정 */
     @Operation(summary = "게시글수정", description = "내가쓴글수정", tags = {"MypageController"})
     @PutMapping(value = "/mybuddy/{buddyCode}/update")
-    public ResponseEntity<ResponseDTO> updateBuddy(@PathVariable int buddyCode, @ModelAttribute BuddyDTO buddyDTO, @RequestParam(required = false) MultipartFile buddyImg) {
+    public ResponseEntity<ResponseDTO> updateBuddy(
+            @PathVariable int buddyCode,
+            @ModelAttribute BuddyDTO buddyDTO,
+            @RequestParam(value = "postImg", required = false) MultipartFile[] postImg) {
         log.info("Controller: PUT request for buddyCode {}", buddyCode);
 
-        mypageService.updateBuddy(buddyCode, buddyDTO, buddyImg);
+//        // postImg 처리 로그
+//        if (postImg != null && postImg.length > 0) {
+//            long totalSize = 0;
+//            for (MultipartFile file : postImg) {
+//                totalSize += file.getSize();
+//            }
+//
+//            // 총 파일 크기가 1MB(1,048,576 bytes)를 초과하면 오류 처리
+//            if (totalSize > 1048576) {
+//                return ResponseEntity.badRequest().body(new ResponseDTO(
+//                        HttpStatus.BAD_REQUEST, "이미지의 총 용량은 최대 1MB까지 허용됩니다.", null));
+//            }
+//
+//            log.info("[MyBuddyController] Total Upload Size: {} bytes", totalSize);
+//            for (MultipartFile file : postImg) {
+//                log.info("[MyBuddyController] File Name: {}", file.getOriginalFilename());
+//            }
+//        }
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 수정 성공", null));
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "내가쓴글수정성공", mypageService.updateBuddy(buddyDTO, buddyImg)));
+        Map<String, Object> updatedData = mypageService.updateBuddy(buddyCode, buddyDTO, postImg);
+        BuddyDTO updatedBuddy = (BuddyDTO) updatedData.get("updatedBuddy");
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "버디 정보 수정 완료", updatedBuddy));
     }
 
     /* 내가 쓴글 이전 데이터불러오기 */

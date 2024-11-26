@@ -29,4 +29,7 @@ public interface MyScheduleRepository extends JpaRepository<Schedule, Integer> {
             "JOIN s.account a " +
             "WHERE a.memberCode = :memberCode")
     Page<Object[]> findAllScheListPaging(@Param("memberCode") int memberCode, Pageable pageable);
+
+    @Query("SELECT COUNT(s) FROM Schedule s WHERE s.account.memberCode = :memberCode")
+    int countByMemberCode(@Param("memberCode") int memberCode);
 }

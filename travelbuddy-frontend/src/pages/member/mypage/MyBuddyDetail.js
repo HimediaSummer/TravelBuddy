@@ -141,7 +141,14 @@ function MyBuddyDetail() {
                     <li key={buddyDetail.buddyCode}>
                         <p>제목 : {buddyDetail.buddyTitle}</p> 
                         <p>내용 : {buddyDetail.buddyContents}</p>
-                        <p>이미지 : {buddyDetail.buddyImg}</p>   
+                        {/* 이미지 */}
+                        {buddyDetail.buddyImg && (
+                            <img 
+                                src={buddyDetail.buddyImg} 
+                                alt="Buddy" 
+                                style={{ width: '200px', height: 'auto' }} 
+                            />
+                        )} 
                         <p>지역 : {regionName}</p> 
                         <p>작성일자 : {buddyDetail.buddyCreate}</p>  
                         <p>작성자 : {memberName}</p>  
@@ -195,10 +202,12 @@ function MyBuddyDetail() {
                             ))
                             ) : (
                                 <tr>
-                                    <td colSpan="4">신청 회원이 없습니다.</td>
+                                    <td colSpan="4" style={{ textAlign: 'center' }}>
+                                        신청 회원이 없습니다.
+                                    </td>
                                 </tr>
                             )}
-                    </tbody>
+                        </tbody>
                 </table>
                 <div>
                     <button onClick= {() => updateStatus(2)}>수락</button>

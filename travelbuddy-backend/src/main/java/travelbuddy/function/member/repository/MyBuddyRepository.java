@@ -46,4 +46,16 @@ public interface MyBuddyRepository extends JpaRepository<Buddy, Integer> {
 
     @Query("SELECT COUNT(b) FROM Buddy b WHERE b.account.memberCode = :memberCode")
     int countByMemberCode(@Param("memberCode") int memberCode);
+
+    // Auto Increment 게시글 삭제 후 buddyCode 나열하기
+//    @Query(value = "ALTER TABLE tbl_buddy AUTO_INCREMENT = ?1", nativeQuery = true)
+//    @Modifying
+//    void resetAutoIncrement(int value);
+//
+//    @Query(value = "SELECT MAX(buddy_code) FROM tbl_buddy", nativeQuery = true)
+//    Integer findMaxBuddyCode();
+//
+//    @Modifying
+//    @Query(value = "UPDATE tbl_buddy SET buddy_code = buddy_code - 1 WHERE buddy_code > :deletedBuddyCode", nativeQuery = true)
+//    void updateBuddyCodesAfterDelete(@Param("deletedBuddyCode") int deletedBuddyCode);
 }

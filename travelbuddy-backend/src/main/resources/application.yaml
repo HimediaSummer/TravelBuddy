@@ -42,19 +42,20 @@ image:
 #  profile:
 #    image-dir: src/main/resources/static/member-imgs/
 #    image-url: http://localhost:8080/member-imgs/
-#  profile:
-#    resource-locations: file:///springboot-app/memberimgs/
-#    resource-handler: /memberimgs/**
-#    dir: /springboot-app/memberimgs
-#    url: http://travel-buddy.me:8080/memberimgs/
+  profile:
+    resource-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/
+    resource-handler: /memberimgs/**
+    image-dir: C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/
+    image-url: http://localhost:8080/memberimgs/
 
     # 게시글 이미지 설정
-#    post:
-#      resource-locations: file:///springboot-app/buddyimgs/
-#      resource-handler: /buddyimgs/**
-#      dir: /springboot-app/buddyimgs
-#      url: http://travel-buddy.me:8080/buddyimgs/
-
+  buddy:
+    resource-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/
+    resource-handler: /buddyimgs/**
+    image-dir: C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/
+    image-url: http://localhost:8080/buddyimgs/
+  #      resource-locations: file:///springboot-app/buddyimgs/
+  #      resource-handler: /buddyimgs/**
 
 
 
@@ -71,14 +72,11 @@ image:
 # image-dir: /springboot-app/productimgs
 # image-url: http://localhost:8888/productimgs/
 # Docker(AWS)
-#  add-resource-locations: file:///springboot-app/member-imgs/
-  add-resource-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/
-  add-resource-handler: /memberimgs/**
+  add-resource-locations: file:///springboot-app/productimgs/
+  add-resource-handler: /productimgs/**
 # Docker(AWS)
-#  image-dir: /springboot-app/memberimgs
-  image-dir: C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/
-#  image-url: http://travel-buddy.me:8080/memberimgs/
-  image-url: http://localhost:8080/memberimgs/
+  image-dir: /springboot-app/productimgs
+  image-url: http://travel-buddy.me:8080/productimgs/
 
 
 # security(jwt) config

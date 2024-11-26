@@ -46,35 +46,35 @@ body {
     margin-bottom: 40px; /* 각 일정 블록 간 간격 */
   }
   
-  /* 개별 일정 아이템 스타일 */
-  .item {
-    display: flex; /* 가로 방향 정렬 */
-    align-items: center; /* 수직 가운데 정렬 */
-    margin-bottom: 30px; /* 아이템 간 간격 */
-    position: relative; /* 연결 선을 그리기 위해 상대 위치 설정 */
-  }
   .scheduleitem {
-    display: flex; /* 가로 방향 정렬 */
-    align-items: center; /* 수직 가운데 정렬 */
-    margin-bottom: 30px; /* 아이템 간 간격 */
-    position: relative; /* 연결 선을 그리기 위해 상대 위치 설정 */
-  }
-  
+      display: flex; /* 가로 방향 정렬 */
+      align-items: center; /* 수직 가운데 정렬 */
+      margin-bottom: 30px; /* 아이템 간 간격 */
+      position: relative; /* 연결 선을 그리기 위해 상대 위치 설정 */
+    }
+    
   /* 원형 아이콘 스타일 */
   .circle {
-    width: 30px;
-    height: 30px;
-    background-color: #87ceeb; /* 배경색 */
-    color: white; /* 텍스트 색상 */
-    border-radius: 50%; /* 원형 만들기 */
-    display: flex;
-    justify-content: center; /* 텍스트 가운데 정렬 (가로) */
-    align-items: center; /* 텍스트 가운데 정렬 (세로) */
-    margin-right: 10px; /* 텍스트와 원 사이 간격 */
-    position: relative;
-    z-index: 1; /* 원을 선 위로 배치 */
-  }
-  
+      width: 30px;
+      height: 30px;
+      background-color: #87ceeb; /* 배경색 */
+      color: white; /* 텍스트 색상 */
+      border-radius: 50%; /* 원형 만들기 */
+      display: flex;
+      justify-content: center; /* 텍스트 가운데 정렬 (가로) */
+      align-items: center; /* 텍스트 가운데 정렬 (세로) */
+      margin-right: 10px; /* 텍스트와 원 사이 간격 */
+      position: relative;
+      z-index: 1; /* 원을 선 위로 배치 */
+    }
+    
+    /* 개별 일정 아이템 스타일 */
+    .item {
+        display: flex; /* 가로 방향 정렬 */
+        align-items: center; /* 수직 가운데 정렬 */
+        margin-bottom: 30px; /* 아이템 간 간격 */
+        position: relative; /* 연결 선을 그리기 위해 상대 위치 설정 */
+    }
   /* 각 아이템 간 연결 선 스타일 */
   .item::before {
     content: ""; /* 가상 요소 추가 */

@@ -6,40 +6,49 @@ import { json, useNavigate } from 'react-router-dom';
 function SummarySchedule({ travelData }) {
 	const [schedule, setSchedule] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [scheduleCreateButton, setScheduleCreateButton] = useState(false); // 일정 생성 버튼 숨기기
 	// 지도 표시 테스트중
 	const [scheduleData, setScheduleData] = useState([]); // 일정 데이터를 위한 state 추가
 	const navigate = useNavigate();
 	const [testScheduleData, setTestScheduleData] = useState([]); // 테스트
 	const [jsonDatas, setJsonDatas] = useState([]);
 
-	const message = `: ${JSON.stringify(travelData)} 이 데이터를 바탕으로 여행일정을 만들어 출력해 줘. 형식은 json 배열 형태로 예시를 알려줄게, 날짜(date), 시간(time), 장소(list), 장소타입(type), 주소(adress), 경도/위도(latlng)는 꼭 있어야해, 스케줄은 지역내에서만 이뤄져야해 일정은 식사일정 포함해서 하루에 3개 이하, 1개이상으로 짜줘
 
-[{
-  sche_start_date: 날짜,
-  sche_end_date: 날짜,
-  sche_start_time: 10:00,
-  sche_end_time: 22:00,
-  region: 지역,
-  accom: 펜션
-}
-{
-  scheduledate: 날짜,
-  travel_time: 3hour,
-  sche_time: 13:00 ~ 14:00,
-  sche_list: N서울타워,
-  scheduletype: 명소,
-  addres: 용산동2가 산1-3,
-  latlng: 37.5665, 126.9780
-}
-{
-  scheduledate: 날짜,
-  travel_time: 1hour20min,
-  sche_time: 15:20 ~ 16:00,
-  sche_list: 싸다김밥 종로관철점,
-  scheduletype: 식당,
-  addres: 관철동 7-1,
-  latlng: 37.5665, 126.9780
-}]`;
+	const message = `: ${JSON.stringify(travelData)} 이 데이터를 바탕으로 여행일정을 만들어 출력해 줘. 형식은 json 배열 형태로 예시를 알려줄게, 날짜(date), 시간(time), 장소(list), 장소타입(type), 주소(adress), 경도/위도(latlng)는 꼭 있어야해, 스케줄은 지역내에서만 이뤄져야해 일정은 식사일정 포함해서 하루에 3개 이하, 1개이상으로 짜줘,
+	sche_start_date,
+	sche_end_date,
+	sche_start_time,
+	sche_end_time,
+	region,
+	accom
+	이 여섯가지 데이터는 0번인덱스에만 나오면 돼. 그 후로는 나올필요없어.
+
+	[{
+	sche_start_date: 날짜,
+	sche_end_date: 날짜,
+	sche_start_time: 10:00,
+	sche_end_time: 22:00,
+	region: 지역,
+	accom: 펜션
+	}
+	{
+	scheduledate: 날짜,
+	travel_time: 3hour,
+	sche_time: 13:00 ~ 14:00,
+	sche_list: N서울타워,
+	scheduletype: 명소,
+	addres: 용산동2가 산1-3,
+	latlng: 37.5665, 126.9780
+	}
+	{
+	scheduledate: 날짜,
+	travel_time: 1hour20min,
+	sche_time: 15:20 ~ 16:00,
+	sche_list: 싸다김밥 종로관철점,
+	scheduletype: 식당,
+	addres: 관철동 7-1,
+	latlng: 37.5665, 126.9780
+	}]`;
 
 
 	console.log('OpenAI API Key:', process.env.REACT_APP_OPENAI_API_KEY);
@@ -128,11 +137,24 @@ function SummarySchedule({ travelData }) {
 			setScheduleData(extractedData);
 			
 			setSchedule(content);
+			setScheduleCreateButton(true); // 일정이 생성되면 상태 업데이트
 		} catch (error) {
 			console.error('Error generating schedule:', error);
 		} finally {
 			setLoading(false);
 		}
+	};
+
+	// 날짜별로 데이터를 그룹화하는 함수
+	const groupByDate = (data) => {
+	return data.reduce((acc, item) => {
+		const date = item.scheduledate;
+		if (!acc[date]) {
+		acc[date] = []; // 해당 날짜가 처음 등장하면 빈 배열 생성
+		}
+		acc[date].push(item); // 해당 날짜에 데이터를 추가
+		return acc;
+	}, {});
 	};
 
 
@@ -223,63 +245,72 @@ function SummarySchedule({ travelData }) {
 
 	return (
 		<div className="tema-title">
-							<div className="day">
-								<h3>일정</h3>
-								{testScheduleData && testScheduleData.length > 0 ? (
-									testScheduleData.slice(1).map((item, index) => (
-									<div className="scheduleitem" key={index}>
-										<span className="circle">{index + 1}</span>
-										<p>
-										<strong>{item.sche_list}</strong>
-										<br />
-										{item.addres}
-										<br />
-										<span className="time">{item.sche_time}</span>
-										</p>
-									</div>
-									))
-								) : (
-									<p>일정 데이터가 없습니다.</p>
-								)}
-							</div>
 
 			<div className="chat-container">
 				<form className="chat-form2" action="post">
-					<div id="chat-box2">
-						<h2>전체 일정</h2>
+					<div className="schedule">
+						{testScheduleData && testScheduleData.length > 0 ? (
+							Object.entries(groupByDate(testScheduleData.slice(1))).map(([date, items], dayIndex) => (
+							<div className="day" key={dayIndex}>
+								<div className="day-header">
+								<h3>{dayIndex + 1}일차</h3> {/* 1일차, 2일차 등의 표시 */}
+								<span className="date">{date}</span>
+								{/* <h3>{date}</h3> 날짜 표시 */}
+								</div>
+								{items.map((item, index) => (
+								<div className="scheduleitem" key={index}>
+									<span className="schedulecircle">{index + 1}</span> {/* 일정 번호 */}
+									<p>
+									<strong>{item.sche_list}</strong> {/* 장소 이름 */}
+									<br />
+									{item.addres} {/* 주소 */}
+									<br />
+									<span className="time">{item.sche_time}</span> {/* 시간 */}
+									</p>
+								</div>
+								))}
+							</div>
+							))
+						) : (
+							<p>일정 생성 버튼을 눌러주세요.</p>
+						)}
 					</div>
 					<div className="button-edit">
 						<div className="create-schedule">
-							<button
+							{/* <button
 								className="submit-button"
 								type="button"
 								id="button"
 								onClick={handleGenerateSchedule}
 							>
 								일정 생성
-							</button>
+							</button> */}
+							{scheduleCreateButton ? (
+								<button
+								className="submit-button"
+								type="button"
+								id="button"
+								>
+								저장
+								</button>
+								) : (
+								<button
+								className="submit-button"
+								type="button"
+								id="button"
+								onClick={handleGenerateSchedule}
+								>
+								일정 생성
+								</button>
+							)}
 						</div>
 						<div id="loading-gif">
 							{loading && <img src="./Img/spin.gif" alt="로딩이미지" />}
 						</div>
-						{/* <div className="reset-travel">
+						<div className="reset-travel">
 							<button id="button" type="reset" onClick={() => window.location.reload()}>
-								초기화
+								다시하기
 							</button>
-						</div> */}
-						<div className='save-schedule'>
-							<button id='button' type='button' onClick={handleSaveSchedule}>일정 저장</button>
-						</div>
-					</div>
-					<div className="chat-answer">
-						<div id="answer">
-							<textarea
-								name="content"
-								id="chat-content"
-								placeholder="여행 일정이 완성되고 있습니다. 잠시만 기다려주세요 :)"
-								value={schedule}
-								readOnly
-							></textarea>
 						</div>
 					</div>
 				</form>

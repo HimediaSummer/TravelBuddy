@@ -158,8 +158,8 @@ function BuddyUpdate() {
 		);
 
 		alert('상품을 수정했습니다.');
-		// navigate('/buddies', { replace: true});
-        // window.location.reload();
+		navigate('/buddies', { replace: true});
+        window.location.reload();
 	};
 
 	console.log("Received buddyCode:", buddyCode);

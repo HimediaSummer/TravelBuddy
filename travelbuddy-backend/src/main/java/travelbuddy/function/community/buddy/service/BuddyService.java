@@ -18,7 +18,7 @@ import travelbuddy.function.community.buddy.entity.Buddy;
 import org.springframework.data.domain.Pageable;
 import travelbuddy.function.community.buddy.entity.BuddyMatchData;
 import travelbuddy.function.community.buddy.entity.BuddyType;
-import travelbuddy.function.community.buddy.repository.BuddyMatchRepository;
+import travelbuddy.function.community.buddy.repository.BuddyMatchDataRepository;;
 import travelbuddy.function.community.buddy.repository.BuddyRepository;
 import travelbuddy.function.community.buddy.repository.BuddyTypeRepository;
 import travelbuddy.function.member.entity.Account;
@@ -44,7 +44,7 @@ public class BuddyService {
     private final AccountRepository accountRepository;
     private final MemberRepository memberRepository;
     private final RegionRepository regionRepository;
-    private final BuddyMatchRepository buddyMatchRepository;
+    private final BuddyMatchDataRepository buddyMatchDataRepository;
 
     @Value("${image.image-dir}")
     private String IMAGE_DIR;
@@ -52,8 +52,8 @@ public class BuddyService {
     private String IMAGE_URL;
 
     @Autowired
-    public BuddyService(BuddyMatchRepository buddyMatchRepository, BuddyRepository buddyRepository, ModelMapper modelMapper, BuddyTypeRepository buddyTypeRepository, AccountRepository accountRepository, MemberRepository memberRepository, RegionRepository regionRepository) {
-        this.buddyMatchRepository = buddyMatchRepository;
+    public BuddyService(BuddyMatchDataRepository buddyMatchDataRepository, BuddyRepository buddyRepository, ModelMapper modelMapper, BuddyTypeRepository buddyTypeRepository, AccountRepository accountRepository, MemberRepository memberRepository, RegionRepository regionRepository) {
+        this.buddyMatchDataRepository = buddyMatchDataRepository;
         this.buddyRepository = buddyRepository;
         this.modelMapper = modelMapper;
         this.buddyTypeRepository = buddyTypeRepository;
@@ -97,6 +97,7 @@ public class BuddyService {
 //            buddyList.get(i).setBuddyTitle(buddyList.get(i).getBuddyTitle());
 //        }
 
+
         log.info("[BuddyService] selectBuddyListWithPaging() END");
 
 //        return buddyList.stream().map(buddy -> modelMapper.map(buddy, BuddyDTO.class)).collect(Collectors.toList());
@@ -104,7 +105,7 @@ public class BuddyService {
             BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
             if (buddy.getAccount() != null) {
                 buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
-//                buddyDTO.setMemberName(buddy.getAccount().getMemberName());
+                buddyDTO.setMemberName(buddy.getAccount().getMemberName());
             }
             return buddyDTO;
         }).collect(Collectors.toList());
@@ -142,7 +143,8 @@ public class BuddyService {
         BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
         if(buddy.getAccount() != null) {
             buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
-//            buddyDTO.setMemberName(buddy.getAccount().getMemberName());
+            buddyDTO.setMemberName(buddy.getAccount().getMemberName());
+            String memberName = buddy.getAccount().getMemberName();
         }
 
         Region region = regionRepository.findById(buddyDTO.getRegionCode()).get();
@@ -329,7 +331,7 @@ public class BuddyService {
         matchData.setApplyId(buddyMatchDataDTO.getApplyId());
         matchData.setApplyStatus(buddyMatchDataDTO.getApplyStatus());
 
-        buddyMatchRepository.save(matchData);
+        buddyMatchDataRepository.save(matchData);
 
     }
 

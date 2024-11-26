@@ -1,0 +1,146 @@
+/* 기본적인 스타일 설정 */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif; /* 폰트 설정 */
+  }
+  
+  /* 전체 컨테이너 설정 */
+  .container {
+    display: flex;
+    flex-direction: column; /* 세로 방향 정렬 */
+    height: 100vh; /* 화면 전체 높이 사용 */
+  }
+  
+  /* 헤더 스타일 */
+  header {
+    background-color: #e8f4ff; /* 헤더 배경색 */
+    padding: 10px 20px;
+    text-align: center; /* 텍스트를 가운데 정렬 */
+    font-size: 1.5rem; /* 폰트 크기 */
+    font-weight: bold; /* 폰트 두께 */
+  }
+  
+  /* 메인 컨텐츠 영역 */
+  main {
+    display: flex; /* 가로 방향 정렬 */
+    flex: 1; /* 남은 공간 채우기 */
+  }
+  
+  /* 사이드바 스타일 */
+  .sidebar {
+    width: 20%; /* 사이드바 너비 */
+    background-color: #f8f9fa; /* 배경색 */
+    padding: 20px;
+    border-right: 1px solid #ccc; /* 오른쪽 테두리 */
+  }
+  
+  /* 일정 섹션 스타일 */
+  .schedule {
+    width: 40%; /* 일정 영역 너비 */
+    padding: 20px;
+    position: relative; /* 연결 선을 그리기 위해 상대 위치 설정 */
+  }
+  
+  /* 하루 일정 블록 스타일 */
+  .day {
+    margin-bottom: 40px; /* 각 일정 블록 간 간격 */
+  }
+  
+  /* 개별 일정 아이템 스타일 */
+  .item {
+    display: flex; /* 가로 방향 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    margin-bottom: 30px; /* 아이템 간 간격 */
+    position: relative; /* 연결 선을 그리기 위해 상대 위치 설정 */
+  }
+  .scheduleitem {
+    display: flex; /* 가로 방향 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    margin-bottom: 30px; /* 아이템 간 간격 */
+    position: relative; /* 연결 선을 그리기 위해 상대 위치 설정 */
+  }
+  
+  /* 원형 아이콘 스타일 */
+  .circle {
+    width: 30px;
+    height: 30px;
+    background-color: #87ceeb; /* 배경색 */
+    color: white; /* 텍스트 색상 */
+    border-radius: 50%; /* 원형 만들기 */
+    display: flex;
+    justify-content: center; /* 텍스트 가운데 정렬 (가로) */
+    align-items: center; /* 텍스트 가운데 정렬 (세로) */
+    margin-right: 10px; /* 텍스트와 원 사이 간격 */
+    position: relative;
+    z-index: 1; /* 원을 선 위로 배치 */
+  }
+  
+  /* 각 아이템 간 연결 선 스타일 */
+  .item::before {
+    content: ""; /* 가상 요소 추가 */
+    position: absolute;
+    top: 50%; /* 선을 원의 중앙에 맞춤 */
+    left: 15px; /* 선을 원의 중앙과 맞춤 */
+    width: 2px; /* 선 두께 */
+    height: 120px; /* 선 길이 (아이템 간 간격에 맞춰 조정) */
+    background-color: #87ceeb; /* 선 색상 */
+    z-index: 0; /* 선을 원 뒤로 배치 */
+  }
+  
+  /* 마지막 아이템에서는 선을 제거 */
+  .item:last-child::before {
+    display: none; /* 마지막 아이템에서 선을 숨김 */
+  }
+  /* 각 아이템 간 연결 선 스타일 */
+  .scheduleitem::before {
+    content: ""; /* 가상 요소 추가 */
+    position: absolute;
+    top: 50%; /* 선을 원의 중앙에 맞춤 */
+    left: 15px; /* 선을 원의 중앙과 맞춤 */
+    width: 2px; /* 선 두께 */
+    height: 120px; /* 선 길이 (아이템 간 간격에 맞춰 조정) */
+    background-color: #87ceeb; /* 선 색상 */
+    z-index: 0; /* 선을 원 뒤로 배치 */
+  }
+  
+  /* 마지막 아이템에서는 선을 제거 */
+  .scheduleitem:last-child::before {
+    display: none; /* 마지막 아이템에서 선을 숨김 */
+  }
+  
+  /* 시간 텍스트 스타일 */
+  .time {
+    font-size: 0.8rem; /* 폰트 크기 */
+    color: gray; /* 글자 색상 */
+  }
+  
+  /* 지도 섹션 스타일 */
+  .map {
+    width: 40%; /* 지도 영역 너비 */
+    padding: 20px;
+    text-align: center; /* 텍스트 가운데 정렬 */
+  }
+  
+  /* 푸터 스타일 */
+  footer {
+    text-align: center; /* 텍스트 가운데 정렬 */
+    padding: 10px;
+    background-color: #f8f9fa; /* 배경색 */
+  }
+  
+  /* 저장 버튼 스타일 */
+  footer button {
+    padding: 10px 20px; /* 버튼 내부 여백 */
+    font-size: 1rem; /* 폰트 크기 */
+    color: white; /* 글자 색상 */
+    background-color: #007bff; /* 버튼 배경색 */
+    border: none; /* 테두리 제거 */
+    border-radius: 5px; /* 모서리를 둥글게 */
+    cursor: pointer; /* 클릭 가능한 포인터 표시 */
+  }
+  
+  /* 저장 버튼 마우스 오버 스타일 */
+  footer button:hover {
+    background-color: #0056b3; /* 마우스를 올렸을 때 배경색 변경 */
+  }
+  

@@ -12,17 +12,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import travelbuddy.common.Criteria;
-import travelbuddy.common.PageDTO;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
-import travelbuddy.function.community.buddy.dto.BuddyTypeDTO;
+import travelbuddy.function.community.buddy.dto.BuddyMatchDataDTO;
 import travelbuddy.function.community.buddy.entity.Buddy;
 import org.springframework.data.domain.Pageable;
+import travelbuddy.function.community.buddy.entity.BuddyMatchData;
 import travelbuddy.function.community.buddy.entity.BuddyType;
+import travelbuddy.function.community.buddy.repository.BuddyMatchRepository;
 import travelbuddy.function.community.buddy.repository.BuddyRepository;
 import travelbuddy.function.community.buddy.repository.BuddyTypeRepository;
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.repository.AccountRepository;
 import travelbuddy.function.member.repository.MemberRepository;
+import travelbuddy.function.schedule.dto.RegionDTO;
 import travelbuddy.function.schedule.entity.Region;
 import travelbuddy.function.schedule.repository.RegionRepository;
 import travelbuddy.util.FileUploadUtils;
@@ -42,6 +44,7 @@ public class BuddyService {
     private final AccountRepository accountRepository;
     private final MemberRepository memberRepository;
     private final RegionRepository regionRepository;
+    private final BuddyMatchRepository buddyMatchRepository;
 
     @Value("${image.image-dir}")
     private String IMAGE_DIR;
@@ -49,7 +52,8 @@ public class BuddyService {
     private String IMAGE_URL;
 
     @Autowired
-    public BuddyService(BuddyRepository buddyRepository, ModelMapper modelMapper, BuddyTypeRepository buddyTypeRepository, AccountRepository accountRepository, MemberRepository memberRepository, RegionRepository regionRepository) {
+    public BuddyService(BuddyMatchRepository buddyMatchRepository, BuddyRepository buddyRepository, ModelMapper modelMapper, BuddyTypeRepository buddyTypeRepository, AccountRepository accountRepository, MemberRepository memberRepository, RegionRepository regionRepository) {
+        this.buddyMatchRepository = buddyMatchRepository;
         this.buddyRepository = buddyRepository;
         this.modelMapper = modelMapper;
         this.buddyTypeRepository = buddyTypeRepository;
@@ -100,7 +104,7 @@ public class BuddyService {
             BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
             if (buddy.getAccount() != null) {
                 buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
-                buddyDTO.setMemberName(buddy.getAccount().getMemberName());
+//                buddyDTO.setMemberName(buddy.getAccount().getMemberName());
             }
             return buddyDTO;
         }).collect(Collectors.toList());
@@ -128,6 +132,8 @@ public class BuddyService {
 
 
         Buddy buddy = buddyRepository.findById(buddyCode).get();
+        ModelMapper modelMapper = new ModelMapper();
+
         Account account = accountRepository.findById(buddy.getAccount().getMemberCode()).get();
         buddy.setAccount(account);
         buddy.setBuddyImg(IMAGE_URL + buddy.getBuddyImg());
@@ -136,9 +142,20 @@ public class BuddyService {
         BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
         if(buddy.getAccount() != null) {
             buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
-            buddyDTO.setMemberName(buddy.getAccount().getMemberName());
+//            buddyDTO.setMemberName(buddy.getAccount().getMemberName());
         }
-//        buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
+
+        Region region = regionRepository.findById(buddyDTO.getRegionCode()).get();
+//        if(region != null) {
+//            buddyDTO.setRegionName(region.getRegionName());
+//        }
+
+        BuddyType buddyType = buddyTypeRepository.findById(buddyDTO.getBuddyTypeCode()).get();
+//        if(buddyType != null ) {
+//            buddyDTO.setBuddyTypeName(buddyType.getBuddyTypeName());
+//        }
+
+        //        buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
 
         log.info("[BuddyService} selectBuddyDetail() END");
 
@@ -153,6 +170,7 @@ public class BuddyService {
 
         String imageName = UUID.randomUUID().toString().replace("-", "");
         String replaceFileName = null;
+        ModelMapper modelMapper = new ModelMapper();
         int result = 0;
 
         try {
@@ -172,10 +190,16 @@ public class BuddyService {
             Buddy insertBuddy = modelMapper.map(buddyDTO, Buddy.class);
 
             BuddyType buddyType = buddyTypeRepository.findById(buddyDTO.getBuddyTypeCode()).get();
+//            if(buddyType != null ) {
+//                buddyDTO.setBuddyTypeName(buddyType.getBuddyTypeName());
+//            }
             insertBuddy.setBuddyType(buddyType);
             log.info("buddyType = " + buddyType);
 
             Region region = regionRepository.findById(buddyDTO.getRegionCode()).get();
+//            if(region != null) {
+//                buddyDTO.setRegionName(region.getRegionName());
+//            }
             insertBuddy.setRegion(region);
             log.info("region = " + region);
 
@@ -193,31 +217,6 @@ public class BuddyService {
             FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
             throw new RuntimeException(e);
         }
-
-//        Buddy buddy = modelMapper.map(buddyDTO, Buddy.class);
-//
-//        BuddyType buddyType = buddyTypeRepository.findById(buddyDTO.getBuddyTypeCode()).get();
-//        buddy.setBuddyType(buddyType);
-//        log.info("buddyType = " + buddyType);
-//
-//        Region region = regionRepository.findById(buddyDTO.getRegionCode()).get();
-//        buddy.setRegion(region);
-//        log.info("region = " + region);
-//
-//
-//        Account account = accountRepository.findById(buddyDTO.getMemberCode()).get();
-//        buddy.setAccount(account);
-//        log.info("account = " + account);
-
-
-//        buddy.setBuddyTitle(buddyDTO.getBuddyTitle());
-//        buddy.setBuddyContents(buddyDTO.getBuddyContents());
-//        buddy.setBuddyStatus(buddyDTO.getBuddyStatus());
-//        buddy.setBuddyAt(buddyDTO.getBuddyAt());
-//        buddy.setBuddyCreate(LocalDateTime.now().toString());
-
-
-//        buddyRepository.save(buddy);
 
         return (result > 0 ) ? "버디게시글 등록 성공" : "게시글 등록 실패";
 //        return modelMapper.map(buddy , BuddyDTO.class);
@@ -309,4 +308,44 @@ public class BuddyService {
         log.info("[BuddyService] deleteBuddy() End");
     }
 
+    public Object selectSearchBuddyList(String search) {
+
+        List<Buddy> buddyListWithSearchValue = buddyRepository.buddyTitleContaining(search);
+
+        return buddyListWithSearchValue.stream().map(Buddy -> modelMapper.map(Buddy, BuddyDTO.class)).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void applyBuddy(BuddyMatchDataDTO buddyMatchDataDTO) {
+
+        BuddyMatchData matchData = modelMapper.map(buddyMatchDataDTO, BuddyMatchData.class);
+
+        Buddy buddy = buddyRepository.findById(buddyMatchDataDTO.getBuddyCode()).get();
+        matchData.setBuddy(buddy);
+
+        Account account = accountRepository.findById(buddyMatchDataDTO.getMemberCode()).get();
+        matchData.setAccount(account);
+
+        matchData.setApplyId(buddyMatchDataDTO.getApplyId());
+        matchData.setApplyStatus(buddyMatchDataDTO.getApplyStatus());
+
+        buddyMatchRepository.save(matchData);
+
+    }
+
+    public Object selectRegion(String regionName) {
+
+        log.info("[BuddyService] getRegion Start =======================");
+
+//        Region region = regionRepository.findByRegionName(regionName);
+//
+//        RegionDTO regionDTO = modelMapper.map(region, RegionDTO.class);
+
+        List<Region> getRegionNameList = regionRepository.findAll();
+
+
+        log.info("[BuddyService] getRegion End =========================");
+
+        return getRegionNameList.stream().map((element) -> modelMapper.map(element, RegionDTO.class)).collect(Collectors.toList());
+    }
 }

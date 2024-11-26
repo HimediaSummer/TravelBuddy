@@ -127,8 +127,8 @@ function BuddyRegist() {
 
         console.log("전송 데이터", formData);
         alert("완료")
-        navigate('/buddies', { replace: true});
-        window.location.reload();
+        // navigate('/buddies', { replace: true});
+        // window.location.reload();
     }
 
     // const onClickBuddyRegistactionHandler = () => {

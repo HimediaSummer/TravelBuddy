@@ -21,6 +21,15 @@ const buddiesReducer = handleActions(
 	{
 		[GET_BUDDIES]: (state, { payload }) => {
 			// console.log("리듀서에서 받은 payload", payload);
+			if (Array.isArray(payload)) {
+				return {
+					data: payload,
+					pageInfo: {
+						...payload,
+						total: payload.length
+					}
+				}
+			}
 			return payload;
 		},
 		[GET_BUDDY]: (state, { payload }) => {

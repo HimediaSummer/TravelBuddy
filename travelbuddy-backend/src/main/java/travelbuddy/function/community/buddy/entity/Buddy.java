@@ -25,15 +25,15 @@ public class Buddy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int buddyCode;          // 버디코드 PK
 
-    @ManyToOne(cascade = CascadeType.PERSIST , fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST , fetch = FetchType.LAZY)
     @JoinColumn(name = "member_code")
     private Account account;
 
-    @ManyToOne(cascade = CascadeType.PERSIST , fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST , fetch = FetchType.LAZY)
     @JoinColumn(name = "region_code")
     private Region region;          // 지역코드 FK
 
-    @ManyToOne(cascade = CascadeType.PERSIST , fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST , fetch = FetchType.LAZY)
     @JoinColumn(name = "buddy_type_code")
     private BuddyType buddyType;    // 버디타입코드 FK
 

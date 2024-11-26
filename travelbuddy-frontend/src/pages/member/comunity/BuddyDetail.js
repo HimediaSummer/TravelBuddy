@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { callBuddyDetailAPI, callBuddyDeleteAPI } from '../../../apis/BuddyAPICalls';
+import { callBuddyDetailAPI, callBuddyDeleteAPI, callApplyBuddyAPI } from '../../../apis/BuddyAPICalls';
 import { callGetMemberAPI } from '../../../apis/MemberAPICalls';
 import { decodeJwt } from '../../../utils/tokenUtils';
 
@@ -85,6 +85,35 @@ function BuddyDetail () {
         }
     };
 
+    const [isApplied, setIsApplied] = useState(false);
+    console.log("isAPPlied = ", isApplied);
+
+
+    const onClickApplyButton = () => {
+        const applyData = {
+            "buddyCode": data.buddyCode,
+            "memberCode": member.data.memberCode,
+            "applyId": member.data.memberName, // 또는 다른 식별자
+            "applyStatus": 1 // 신청 상태 (1: 신청),
+        };
+
+        console.log("applyData = ", applyData)
+    
+        dispatch(callApplyBuddyAPI(applyData))
+            .then(() => {
+                alert("신청이 완료되었습니다.");
+                // 버튼 상태 업데이트
+                setIsApplied(true); // 상태를 업데이트하여 UI에서 신청 완료로 표시
+                navigate('/buddies', { replace: true});
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.error("신청 중 오류 발생:", error);
+                alert("신청 중 오류가 발생했습니다.");
+            });        
+    };
+
+
     return (
         
         <div>
@@ -125,7 +154,11 @@ function BuddyDetail () {
 
                             <tr>
                                 <td></td>
-                                <td></td>
+                                <td>
+                                    <button onClick={onClickApplyButton} disabled={isApplied}>
+                                        {isApplied ? "신청완료" : "신청하기"}
+                                    </button>
+                                </td>
                                     <>
                                         {isAuthor && (
                                             <td>

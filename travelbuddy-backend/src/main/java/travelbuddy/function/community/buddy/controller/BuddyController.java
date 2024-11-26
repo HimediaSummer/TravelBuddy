@@ -14,6 +14,7 @@ import travelbuddy.common.PageDTO;
 import travelbuddy.common.PagingResponseDTO;
 import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
+import travelbuddy.function.community.buddy.dto.BuddyMatchDataDTO;
 import travelbuddy.function.community.buddy.service.BuddyService;
 
 @RestController
@@ -87,6 +88,26 @@ public class BuddyController {
     public ResponseEntity<ResponseDTO> deleteBuddy(@PathVariable int buddyCode) {
         buddyService.deleteBuddy(buddyCode);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 삭제 성공", null));
+    }
+
+    @Operation(summary = "버디 게시글 검색 요청", description = "검색어에 맞는 버디 리스트 조회가 진행됩니다.", tags = { "BuddyController" })
+    @GetMapping("buddies/search")
+    public ResponseEntity<ResponseDTO> selectSearchMemberList(@RequestParam(name="s", defaultValue="all") String search){
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공",buddyService.selectSearchBuddyList(search)));
+    }
+
+    @Operation(summary = "버디 신청", description = "버디신청이 진행됩니다.", tags = { "BuddyController" })
+    @PostMapping("/buddyApply")
+    public ResponseEntity<ResponseDTO> applyBuddy(@RequestBody BuddyMatchDataDTO buddyMatchDataDTO) {
+        buddyService.applyBuddy(buddyMatchDataDTO);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "신청 성공", null));
+    }
+
+    @Operation(summary = "지역 조회 요청", description = "지역 조회됩니다.", tags = { "BuddyController" })
+    @GetMapping("/region/{regionName}")
+    public ResponseEntity<ResponseDTO> selectMyMemberInfo(@PathVariable String  regionName) {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", buddyService.selectRegion(regionName)));
     }
 
 

@@ -9,6 +9,7 @@ import useinfoReducer from './UseinfoModule.js';
 import myProfileReducer from './mypage/MyProfileModule.js';
 import myScheduleReducer from './mypage/MyScheduleModule.js';
 import buddiesReducer from './BuddyModule.js';
+import regionBuddyTypeReducer from './RegionBuddyTypeModule.js'
 
 const rootReducer = combineReducers({
 	myBuddyReducer,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
 	faqReducer,
 	noticeReducer,
 	useinfoReducer,
-	buddiesReducer
+	buddiesReducer,
+	regionBuddyTypeReducer
 });
 
 export default rootReducer;

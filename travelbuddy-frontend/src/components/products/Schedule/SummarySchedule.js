@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ScheduleMap from './ScheduleMap';
 import { decodeJwt } from '../../../utils/tokenUtils';
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 
 function SummarySchedule({ travelData }) {
 	const [schedule, setSchedule] = useState('');
@@ -10,6 +10,7 @@ function SummarySchedule({ travelData }) {
 	const [scheduleData, setScheduleData] = useState([]); // 일정 데이터를 위한 state 추가
 	const navigate = useNavigate();
 	const [testScheduleData, setTestScheduleData] = useState([]); // 테스트
+	const [jsonDatas, setJsonDatas] = useState([]);
 
 	const message = `: ${JSON.stringify(travelData)} 이 데이터를 바탕으로 여행일정을 만들어 출력해 줘. 형식은 json 배열 형태로 예시를 알려줄게, 날짜(date), 시간(time), 장소(list), 장소타입(type), 주소(adress), 경도/위도(latlng)는 꼭 있어야해, 스케줄은 지역내에서만 이뤄져야해 일정은 식사일정 포함해서 하루에 3개 이하, 1개이상으로 짜줘
 
@@ -85,6 +86,7 @@ function SummarySchedule({ travelData }) {
 			const jsonData = JSON.parse(jsonString);
 			console.log("jsonData summarySchedule에서 사용할 데이터 json.parse 한 형태 : ", jsonData);
 			setTestScheduleData(jsonData);
+			setJsonDatas(jsonData);
 
 			// 필요한 부분만 추출
 			// const scheduleArray = jsonData.schedule;
@@ -158,17 +160,24 @@ function SummarySchedule({ travelData }) {
 		}
 
 		try {
+
+			        // schedule의 내용을 확인
+					console.log('schedule 내용:', schedule);
+					console.log('schedule 타입:', typeof schedule);
+					console.log('아진짜짱나네', testScheduleData);
+					console.log('왜안되는거냐고~!~!~!', jsonDatas);
+
 			// // OpenAI가 생성한 일정 데이터를 JSON 형식으로 변환
-			const jsonData = JSON.parse(schedule);	// schedule이 JSON 문자열이라면 파싱s
+			// const jsonData = JSON.parse(testScheduleData);	// schedule이 JSON 문자열이라면 파싱s
 
 			// travelData에서 필요한 정보 추출
-			const regionCode = travelData.regions;
-            const accomCode = travelData.accomodations;
+			const regionCode = travelData.regions[0].regionCode;
+            const accomCode = travelData.accomodations[0].accomCode;
             const memberCode = token.memberCode;
-            const memberAnswerCode = travelData.questions;
+            const memberAnswerCode = travelData.questions[0].answerCode;
 
 			// jsonData 0 번째 인덱스에서 정보 추출
-			const firstSche = jsonData[0];
+			const firstSche = jsonDatas[0];
 			const scheList = firstSche.sche_list;
 			const scheStartDate = firstSche.sche_start_date;
 			const scheEndDate = firstSche.sche_end_date;

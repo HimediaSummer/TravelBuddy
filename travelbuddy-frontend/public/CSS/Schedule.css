@@ -1,0 +1,145 @@
+/* Schedule.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.schedule-container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #f8f9fa;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-btn {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.sidebar-btn:hover {
+    background-color: #0056b3;
+}
+
+.save-btn {
+    margin-top: auto;
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.save-btn:hover {
+    background-color: #218838;
+}
+
+.main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.header button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.header button:hover {
+    background-color: #0056b3;
+}
+
+.day-schedule {
+    margin-bottom: 30px;
+}
+
+.day-schedule h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.activity {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.activity-time {
+    flex: 1;
+    font-weight: bold;
+}
+
+.activity-type {
+    flex: 1;
+    text-align: center;
+    font-style: italic;
+}
+
+.activity-place {
+    flex: 3;
+    color: #007bff;
+}
+
+.activity-place a {
+    color: #007bff;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.activity-place a:hover {
+    text-decoration: underline;
+}
+
+.activity-duration {
+    flex: 1;
+    text-align: right;
+}
+
+.map {
+    width: 400px;
+    border-left: 1px solid #ddd;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.map-placeholder {
+    color: #aaa;
+    font-size: 20px;
+    text-align: center;
+}

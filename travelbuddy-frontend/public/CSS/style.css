@@ -402,7 +402,7 @@ select,
 	border-radius: 4px;
 	font-size: large;
 	flex-wrap: wrap;
-	margin-left: 80px;
+	/* margin-left: 80px; */
 	margin-bottom: 80px;
 	height: auto; /* 또는 적절한 높이 설정 */
     max-height: 100vh; /* 전체 높이 사용 */
@@ -558,7 +558,7 @@ select,
 }
 
 .tema-title {
-	padding-right: 20px;
+	/* padding-right: 20px; */
 }
 
 .rent-title {

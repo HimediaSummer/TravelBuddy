@@ -11,7 +11,6 @@ function Layout() {
 			<main className={LayoutCSS.main}>
 				<Outlet />
 			</main>
-			<Footer />
 		</>
 	);
 }

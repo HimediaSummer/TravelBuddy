@@ -23,7 +23,7 @@ import MyQna from './pages/member/qna/MyQna';
 import MyQnaDetail from './pages/member/qna/MyQnaDetail';
 import MyUseinfos from './pages/member/useinfo/MyUseinfos';
 import MyUseinfoDetail from './pages/member/useinfo/MyUseinfoDetail';
-import MyPage from './pages/member/mypage/Mypage';
+import Mypage from './pages/member/mypage/Mypage';
 import MyProfile from './pages/member/mypage/MyProfile';
 import MyPutProfile from './pages/member/mypage/MyPutProfile';
 import MyDeletion from './pages/member/mypage/MyDeletion';
@@ -52,10 +52,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* React에서 보여줄 화면 주소(URL) 정하는곳 */}
-        {/* 자세한건 Schedule으로 이동바람 (컨트롤 좌클릭)  */}
         <Route>
-
           <Route path="/" element= {<Layout />} >
             <Route index element={ <Main/> }/>
             <Route path="schedule" element={ <Schedule /> }/>
@@ -108,7 +105,7 @@ function App() {
 
           {/* Mypage */}
           <Route path="/mypage" element={<MyPageLayout />}>
-            <Route index element={<MyPage/>}/>
+            <Route index element={<Mypage/>}/>
             <Route path="myProfile" element={<MyProfile />} />
             <Route path="updateMyProfile" element={<MyPutProfile />} />
             <Route path="deletion" element={<MyDeletion />} />
@@ -118,54 +115,6 @@ function App() {
             <Route path="mySchedule" element={<MySchedule />} />
             <Route path="mySchedule/:scheCode" element={<MyScheduleDetail />} />
           </Route>
-        <Route path="/">
-          <Route index element={ <Main/> }/>
-          <Route path="Schedule" element={ <Schedule /> }/>
-          <Route path="Scheduletest" element={ <Scheduletest /> }/>
-          <Route path="Members" element={ <Members/> }/>
-          <Route path="MemberDetail/:memberCode" element={ <MemberDetail/>} />
-          <Route path="Qnas" element={ <Qnas/> }/>
-          <Route path="QnaDetail/:qnaCode" element={ <QnaDetail/>} />
-          <Route path="Faq" element={ <Faq/> }/>
-          <Route path="FaqDetail/:faqCode" element={ <FaqDetail/> }/>
-          <Route path="Faqs" element={ <Faqs/> }/>  //
-          <Route path="MyFaqs" element={ <MyFaqs/> }/>
-          <Route path="MyQnas" element={ <MyQnas/> }/>
-          <Route path="MyQna" element={ <MyQna/> }/>
-          <Route path="MyQnaDetail/:qnaCode" element={ <MyQnaDetail/>} />
-          <Route path="Useinfo" element={<Useinfo />}/>
-          <Route path="Useinfos" element={<Useinfos />}/>
-          <Route path="UseinfoDetail/:useinfoCode" element={<UseinfoDetail />}/>
-          <Route path="Notice" element={<Notice />}/>
-          <Route path="Notices" element={<Notices />}/>
-          <Route path="NoticeDetail/:noticeCode" element={<NoticeDetail />}/>
-          <Route path="MyNotices" element={<MyNotices />}/>
-          <Route path="MyNoticeDetail/:noticeCode" element={<MyNoticeDetail />}/>
-          <Route path="MyPage" element={<MyPage />}>
-            <Route path="MyBuddyList" element={<MypageBuddyList />} />
-          </Route>
-
-          {/* Mypage */}
-          <Route path="/mypage" element={<Mypage />}>
-            <Route path="/mypage/myProfile" element={<MyProfile />} />
-            <Route path="/mypage/updateMyProfile" element={<MyPutProfile />} />
-            <Route path="/mypage/deletion" element={<MyDeletion />} />
-            <Route path="/mypage/myBuddy" element={<MyBuddy />} />
-            <Route path="/mypage/myBuddy/:buddyCode" element={<MyBuddyDetail />} />
-            <Route path="/mypage/myBuddy/:buddyCode/update" element={<MyPutBuddy />} />
-            <Route path="/mypage/mySchedule" element={<MySchedule />} />
-            <Route path="/mypage/mySchedule/:scheCode" element={<MyScheduleDetail />} />
-          </Route>
-
-
-          <Route path="/login" element={ <Login/> } />
-          <Route path="/signup" element={ <Register/> } />
-          <Route path="*" element={ <Error/> }/>
-          <Route path="buddies" element={<Buddies />} />
-          <Route path="buddyDetail/:buddyCode" element={ <BuddyDetail/>} />
-          <Route path="buddyRegist" element={ <BuddyRegist/>} />
-          <Route path='/findid' element={ <FindId/> }/>
-          <Route path='/findpw' element={ <FindPw/> }/>
         </Route>
       </Routes>
     </BrowserRouter>

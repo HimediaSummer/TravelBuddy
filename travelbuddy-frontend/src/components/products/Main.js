@@ -16,7 +16,7 @@ function Main() {
 
   useEffect(() => {
     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
-    fetch('http://localhost:8080/main')
+    fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/main`)
       .then(response => response.text())
       .then(data => setMessage(data))
       .catch(error => console.error('Error fetching data:', error));

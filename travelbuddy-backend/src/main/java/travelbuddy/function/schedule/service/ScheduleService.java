@@ -262,4 +262,49 @@ public class ScheduleService {
         return answerDTOList;
     }
 
+//    @Transactional
+//    public Object saveSchedule(ScheduleDTO scheduleDTO) {
+//
+//        log.info("[ScheduleService] saveSchedule() start");
+//        System.out.println("[saveSchedule] 왓니?");
+//
+//        // DB 저정
+//        Schedule savedSchedule = modelMapper.map(scheduleDTO, Schedule.class);
+//
+//        scheduleRepository.save(savedSchedule);
+//
+//        log.info("[ScheduleService] saveSchedule() end");
+//
+//        return savedSchedule;
+//    }
+
+    @Transactional
+    public Schedule saveSchedule(ScheduleDTO scheduleDTO) {
+        // 각 엔티티 조회
+        Region region = regionRepository.findById(scheduleDTO.getRegionCode())
+                .orElseThrow(() -> new RuntimeException("Region not found"));
+        Accommodation accommodation = accommodationRepository.findById(scheduleDTO.getAccomCode())
+                .orElseThrow(() -> new RuntimeException("Accommodation not found"));
+        Account account = accountRepository.findById(scheduleDTO.getMemberCode())
+                .orElseThrow(() -> new RuntimeException("Account not found"));
+        MemberAnswer memberAnswer = memberAnswerRepository.findById(scheduleDTO.getMemberAnswerCode())
+                .orElseThrow(() -> new RuntimeException("MemberAnswer not found"));
+
+        // Schedule 엔티티 생성
+        Schedule schedule = new Schedule();
+        schedule.setRegion(region);
+        schedule.setAccommodation(accommodation);
+        schedule.setAccount(account);
+        schedule.setMemberAnswer(memberAnswer);
+        schedule.setScheList(scheduleDTO.getScheList());
+        schedule.setScheStartDate(scheduleDTO.getScheStartDate());
+        schedule.setScheEndDate(scheduleDTO.getScheEndDate());
+        schedule.setScheStartTime(scheduleDTO.getScheStartTime());
+        schedule.setScheEndTime(scheduleDTO.getScheEndTime());
+        schedule.setTravelTime(scheduleDTO.getTravelTime());
+        schedule.setScheTime(scheduleDTO.getScheTime());
+
+        // DB에 저장
+        return scheduleRepository.save(schedule);
+    }
 }

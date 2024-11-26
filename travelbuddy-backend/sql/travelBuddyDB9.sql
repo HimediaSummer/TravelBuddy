@@ -242,7 +242,7 @@ CREATE TABLE
                                    accom_code INT NOT NULL COMMENT '숙소코드',
                                    member_code INT NOT NULL COMMENT '회원코드',
                                    member_answer_code INT NOT NULL COMMENT '회원답변코드',
-                                   sche_list VARCHAR(255) NOT NULL COMMENT '생성된스케줄',
+                                   sche_list TEXT NOT NULL COMMENT '생성된스케줄',
                                    sche_start_date DATE NOT NULL COMMENT '여행시작날짜',
                                    sche_end_date DATE NOT NULL COMMENT '여행종료날짜',
                                    sche_start_time time NOT NULL COMMENT '여행시작날짜',

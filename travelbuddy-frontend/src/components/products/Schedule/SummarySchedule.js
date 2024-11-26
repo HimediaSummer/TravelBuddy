@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import ScheduleMap from './ScheduleMap';
+import { decodeJwt } from '../../../utils/tokenUtils';
+import { useNavigate } from 'react-router-dom';
 
 function SummarySchedule({ travelData }) {
 	const [schedule, setSchedule] = useState('');
 	const [loading, setLoading] = useState(false);
 	// 지도 표시 테스트중
 	const [scheduleData, setScheduleData] = useState([]); // 일정 데이터를 위한 state 추가
+	const navigate = useNavigate();
 
 	console.log('OpenAI API Key:', process.env.REACT_APP_OPENAI_API_KEY);
 	console.log('앞에서 가져온 데이터 : ', travelData);
@@ -100,6 +103,80 @@ setScheduleData(extractedData);
 		// 초기화 또는 다른 로직이 필요할 경우 여기에 추가
 	}, []);
 
+	// 일정 저장
+	const handleSaveSchedule = async () => {
+		// 로그인 확인
+		const token = decodeJwt(window.localStorage.getItem("accessToken"));
+		console.log('[handleSaveSchedule] 토근??',  token);
+
+		if(!token) {
+			alert('로그인이 필요한 서비스입니다.');
+			navigate('/login');
+			return;
+		}
+
+		// 토큰 만료 확인
+		if(token.exp * 1000 < Date.now()) {
+			alert('로그인 시간이 만료 되었습니다. 다시 로그인해주세요.');
+			navigate('/login');
+			return;
+		}
+
+		try {
+			// // OpenAI가 생성한 일정 데이터를 JSON 형식으로 변환
+			const jsonData = JSON.parse(schedule);	// schedule이 JSON 문자열이라면 파싱s
+
+			// travelData에서 필요한 정보 추출
+			const regionCode = travelData.regions;
+            const accomCode = travelData.accomodations;
+            const memberCode = token.memberCode;
+            const memberAnswerCode = travelData.questions;
+
+			// jsonData 0 번째 인덱스에서 정보 추출
+			const firstSche = jsonData[0];
+			const scheList = firstSche.sche_list;
+			const scheStartDate = firstSche.sche_start_date;
+			const scheEndDate = firstSche.sche_end_date;
+			const scheStartTime = firstSche.sche_start_time;
+			const scheEndTime = firstSche.sche_end_time;
+
+			// shceduleDTO 객체 생성
+			const scheduleDTO = {
+				regionCode: regionCode,
+				accomCode: accomCode,
+				memberCode: memberCode,
+				memberAnswerCode: memberAnswerCode,
+				scheList: scheList,
+				scheStartDate: scheStartDate,
+				scheEndDate: scheEndDate,
+				scheStartTime: scheStartTime,
+				scheEndTime: scheEndTime,
+				travelTime: '',
+				scheTime: ''
+			};
+			
+
+			const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/save`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${window.localStorage.getItem("accessToken")}`
+				},
+				body: JSON.stringify(scheduleDTO)
+			});
+
+			if(!response.ok) {
+				throw new Error('일정 저장에 실패했습니다.');
+			}
+
+			const result = await response.json();
+			alert('일정 저장에 성공했습니다.');
+		} catch(error) {
+			console.error('일정 저장 중 오류 발생쉬먀', error);
+			alert('일정 저장에 실패했습니다.');
+		}
+	};
+
 	return (
 		<div className="tema-title">
 			<div className="chat-container">
@@ -121,10 +198,13 @@ setScheduleData(extractedData);
 						<div id="loading-gif">
 							{loading && <img src="./Img/spin.gif" alt="로딩이미지" />}
 						</div>
-						<div className="reset-travel">
+						{/* <div className="reset-travel">
 							<button id="button" type="reset" onClick={() => window.location.reload()}>
 								초기화
 							</button>
+						</div> */}
+						<div className='save-schedule'>
+							<button id='button' type='button' onClick={handleSaveSchedule}>일정 저장</button>
 						</div>
 					</div>
 					<div className="chat-answer">

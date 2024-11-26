@@ -5,27 +5,30 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.Operation;
 import travelbuddy.common.ResponseDTO;
+import travelbuddy.function.member.entity.Account;
+import travelbuddy.function.member.repository.AccountRepository;
 import travelbuddy.function.schedule.dto.ScheduleDTO;
+import travelbuddy.function.schedule.entity.Schedule;
 import travelbuddy.function.schedule.service.ScheduleService;
+import travelbuddy.jwt.TokenProvider;
 
 @RestController
 @RequestMapping("/schedule")
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
+    private final TokenProvider tokenProvider;
+    private  final AccountRepository accountRepository;
 
     @Autowired
-    public ScheduleController(ScheduleService scheduleService) {
+    public ScheduleController(ScheduleService scheduleService, TokenProvider tokenProvider, AccountRepository accountRepository) {
         this.scheduleService = scheduleService;
+        this.tokenProvider = tokenProvider;
+        this.accountRepository = accountRepository;
     }
     
 //    @GetMapping
@@ -119,16 +122,49 @@ public class ScheduleController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "답변 상세 조회 성공", responseData));
     }
 
-    @Operation(summary = "일정 생성", description = "사용자 정보 입력 받아 일정 생성", tags = { "ScheduleController" })
-    @PostMapping("/scheduling")
-    public ResponseEntity<ResponseDTO> scheduling(@RequestBody ScheduleDTO scheduleDTO) {
+//    @Operation(summary = "일정 저장", description = "생성된 일정 저장", tags = { "ScheduleController" })
+//    @PostMapping("/save")
+//    public ResponseEntity<ResponseDTO> saveSchedule(@RequestBody ScheduleDTO scheduleDTO,
+//                                                    @RequestHeader("Authorization") String token) {
+//
+//        System.out.println("[ScheduleController] 왓니?");
+//        System.out.println("머 갖고잇어" + scheduleDTO);
+//
+//        // 토큰에서 사용자 ID (username 또는 userId) 추출
+//        String actualToken = token.substring(7);    // "Bearer" 제거
+//        String userIdString = tokenProvider.getUserId(actualToken); // 사용자 ID (예: username) 가져오기
+//
+//        // userIdString (username)을 사용하여 Account 테이블에서 사용자 정보를 조회
+//        Account userAccount = accountRepository.findByMemberName(userIdString); // username으로 사용자 조회 (username은 userIdString에 해당)
+//        if (userAccount == null) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다.", null));
+//        }
+//
+//        // 조회된 userAccount의 기본키인 user_id를 사용하여 scheduleDTO에 설정
+//        scheduleDTO.setMemberCode(userAccount.getMemberCode());  // user_id (기본키) 정보 설정
+//
+//        // 일정 저장
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정 저장 성공!", scheduleService.saveSchedule(scheduleDTO)));
+//    }
 
-        System.out.println("[ScheduleController] 왓니?");
+    @Operation(summary = "일정 저장", description = "생성된 일정 저장", tags = { "ScheduleController" })
+    @PostMapping("/save")
+    public ResponseEntity<ResponseDTO> saveSchedule(@RequestBody ScheduleDTO scheduleDTO,
+                                                    @RequestHeader("Authorization") String token) {
+        // 토큰에서 사용자 ID 추출 및 사용자 정보 조회
+//        String actualToken = token.substring(7); // "Bearer" 제거
+//        String userIdString = tokenProvider.getUserId(actualToken); // 사용자 ID 가져오기
 
-        System.out.println("머 갖고잇어" + scheduleDTO);
+//        // ScheduleDTO에 필요한 정보가 포함되어 있는지 확인
+//        if (scheduleDTO.getRegionCode() == null || scheduleDTO.getAccomCode() == null) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//                    .body(new ResponseDTO(HttpStatus.BAD_REQUEST, "필수 정보가 누락되었습니다.", null));
+//        }
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정 생성을 위한 데이터 수집 성공!", scheduleService.scheduling(scheduleDTO)));
+        // 일정 저장 서비스 호출
+        Schedule savedSchedule =  scheduleService.saveSchedule(scheduleDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정 저장 성공!", savedSchedule));
     }
 
-    
 }

@@ -28,14 +28,12 @@ function NoticeDetail() {
         if (notice && notice.noticeImg) {
             const updatedContents = notice.noticeContents
                 ? 
-                `${notice.noticeContents}
-                <img src="${notice.noticeImg}" alt="공지 이미지" style="max-width:100%; height:auto;" />`
+                `<img src="${notice.noticeImg}" alt="공지 이미지" style="max-width:100%; height:auto;" />${notice.noticeContents}`
                 : 
                 `<img src="${notice.noticeImg}" alt="공지 이미지" style="max-width:100%; height:auto;" />`;
-
-            setNoticeContents(updatedContents);
+                setNoticeContents(updatedContents);
         } else if (notice) {
-            setNoticeContents(notice.noticeContents || "");
+                setNoticeContents(notice.noticeContents || "");
         }
     }, [notice]);
 

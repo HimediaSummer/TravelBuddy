@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import travelbuddy.common.Criteria;
 import travelbuddy.common.PageDTO;
@@ -14,6 +16,7 @@ import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.community.qnafaq.dto.QnaDTO;
 import travelbuddy.function.community.qnafaq.dto.QnaDetailDTO;
 import travelbuddy.function.community.qnafaq.service.QnaService;
+import travelbuddy.function.member.dto.AccountDTO;
 
 
 @RestController
@@ -28,6 +31,20 @@ public class QnaController {
     public QnaController(QnaService qnaService) {
         this.qnaService = qnaService;
     }
+
+
+    public int getLoggedInUserCode() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof AccountDTO) {
+                return ((AccountDTO)principal).getMemberCode();
+            }
+        }
+        return 0;
+    }
+
 
     @Operation(summary = "QnA 리스트 조회 요청", description = "QnA 조회 및 페이징 처리가 진행됩니다.", tags={"QnaController"})
     @GetMapping("/qnas")

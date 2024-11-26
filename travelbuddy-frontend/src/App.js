@@ -3,8 +3,6 @@ import Schedule from './components/products/Schedule';
 import Main from './components/products/Main';
 import Members from './pages/admin/Member/Members';
 import MemberDetail from './pages/admin/Member/MemberDetail';
-import MyPage from './pages/member/mypage/Mypage';
-import MypageBuddyList from './components/products/MypageBuddyList';
 import Notice from './pages/admin/Notice/Notice';
 import Notices from './pages/admin/Notice/Notices';
 import NoticeDetail from './pages/admin/Notice/NoticeDetail';
@@ -79,11 +77,14 @@ function App() {
 
           {/* CM 커뮤니티 페이지 */}
           <Route path="cm" element={<CmLayout/>}>
-            <Route index element={<MyNotices/>}/>
+            <Route index element={<Buddies/>}/>
             <Route path="mynotices" element={<MyNotices />}/>
             <Route path="mynotices/:noticeCode" element={<MyNoticeDetail />}/>
             <Route path="myuseinfos" element={<MyUseinfos />}/>
             <Route path="myuseinfos/:useinfoCode" element={<MyUseinfoDetail />}/>
+            <Route path="buddies" element={<Buddies />} />
+            <Route path="buddyDetail/:buddyCode" element={ <BuddyDetail/>} />
+            <Route path="buddyRegist" element={ <BuddyRegist/>} />
           </Route>
 
           {/* CS 페이지 */}
@@ -94,10 +95,7 @@ function App() {
             <Route path="myQnas/:qnaCode" element={ <MyQnaDetail/>} />
             <Route path="myQna" element={ <MyQna/> }/>
           </Route>
-
-          <Route path="MyPage" element={<MyPage />}>
-            <Route path="MyBuddyList" element={<MypageBuddyList />} />
-          </Route>          
+    
           {/* Mypage */}
           <Route path="/mypage" element={<Mypage />}>
             <Route path="/mypage/myProfile" element={<MyProfile />} />
@@ -114,9 +112,7 @@ function App() {
           <Route path="/login" element={ <Login/> } />
           <Route path="/signup" element={ <Register/> } />
           <Route path="*" element={ <Error/> }/>
-          <Route path="buddies" element={<Buddies />} />
-          <Route path="buddyDetail/:buddyCode" element={ <BuddyDetail/>} />
-          <Route path="buddyRegist" element={ <BuddyRegist/>} />
+
           <Route path='/findid' element={ <FindId/> }/>
           <Route path='/findpw' element={ <FindPw/> }/>
         </Route>

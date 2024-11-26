@@ -15,7 +15,7 @@ function CmNavbar() {
 					<NavLink to="/cm/myuseinfos">이용방법</NavLink>
 				</li>
 				<li>
-					<NavLink to="/">버디매칭</NavLink>
+					<NavLink to="/cm/buddies">버디매칭</NavLink>
 				</li>
 				{/* {decoded === 'ROLE_ADMIN' && (
 					<li>

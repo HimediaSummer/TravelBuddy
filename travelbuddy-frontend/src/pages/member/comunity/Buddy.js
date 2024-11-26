@@ -38,11 +38,11 @@ function Buddies() {
 
 
     const onClickTableTr = (buddyCode) => {
-        navigate(`/buddyDetail/${buddyCode}`, { replace: false });
+        navigate(`/cm/buddyDetail/${buddyCode}`, { replace: false });
     };
 
     const onClickBuddyRegist = () => {
-        navigate("/buddyRegist", {replace: false})
+        navigate("/cm/buddyRegist", {replace: false})
     };
 
 

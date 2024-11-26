@@ -13,6 +13,7 @@ function AccomSchedule({ onNext, selectedRegion, setTravelData }) {
 	// 카카오지도 검색
 	const [searchQuery, setSearchQuery] = useState('');
 	const [searchResults, setSearchResults] =  useState([]);
+	const [searchAddress, setSearchAddress] = useState('');
 
 	console.log('지역 가져왓냐!!!!!!!', selectedRegion);
 	console.log('이름이머에여!!!!!!!!!!!!', selectedRegion.regionName);
@@ -74,12 +75,34 @@ function AccomSchedule({ onNext, selectedRegion, setTravelData }) {
 		setSearchQuery(e.target.value);
 	};
 
+	// // 검색 처리
+	// const handleSearchSubmit = () => {
+	// 	if(searchQuery.trim()) {
+	// 		setSearchAddress(searchQuery);
+	// 		setSelectedAccom({
+	// 			regionName: searchQuery
+	// 		});
+	// 	}
+	// };
+
 	// 검색 처리
-	const handleSearchSubmit = () => {
-		setSelectedAccom({
-			regionName: searchQuery
-		});
-	};
+const handleSearchSubmit = () => {
+    if(searchQuery.trim()) {
+        setSearchAddress(searchQuery);
+        const searchedAccom = {
+            // accomType: '검색',  // 또는 적절한 타입
+            accomName: '사용자 지정 숙소',
+            accomAddres: searchQuery  // 검색한 주소를 저장
+        };
+        
+        setSelectedAccom(searchedAccom);
+        // travelData에 검색한 숙소 정보 추가
+        setTravelData(prevData => ({
+            ...prevData,
+            accommodations: [...prevData.accommodations, searchedAccom]
+        }));
+    }
+};
 
 
 	return (
@@ -114,16 +137,20 @@ function AccomSchedule({ onNext, selectedRegion, setTravelData }) {
 					)}
 					{ accomTab === 'search' && (
 					<div className='region-search'>
-						<input type='text' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
-						<button className='accom-button2' onClick={onNext}>다음</button>
+						<div>
+						<input type='search' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
+						<img src='/Img/search-icon.png' width={'35px'} height={'35px'} style={{cursor: 'pointer'}} onClick={handleSearchSubmit}/>
+						</div>
+						<button className='accom-button2' onClick={onNext} disabled={!searchQuery}>다음</button>
 					</div>
 					)}
 				</form>
-				<div>
+				{/* <div>
 					<button onClick={toggle} style={{display: accomTab === 'search' ? 'none' : 'block'}}>
 						{isToggleOpen ? '<' : '>'}
 					</button>
-				</div>
+				</div> */}
+				<div style={{position: 'relative', display: 'flex'}}>
 				<div id='chat-box3' style={{display: selectedAccomDetails && isToggleOpen && accomTab === 'select' ? 'block' : 'none'}}>
 					{selectedAccomDetails ? (
 						<div>
@@ -141,18 +168,37 @@ function AccomSchedule({ onNext, selectedRegion, setTravelData }) {
 						''
 					)}
 				</div>
+				<div>
+					<button className='toggle-button2' onClick={toggle} style={{display: accomTab === 'search' ? 'none' : 'block'}}>
+						{isToggleOpen ? '<' : '>'}
+					</button>
+				</div>
+				</div>
 				{/* <div style={{marginTop: '100px'}}>
 					{selectedRegion ?
 							(<Map regionName={selectedRegion.regionName}/>) : (<Map />)
 					}
 							</div> */}
-				<div style={{ marginTop: '100px' }}>
+				{/* <div style={{ marginTop: '100px' }}>
 					{selectedAccomDetails && selectedRegion && isToggleOpen && accomTab === 'select' ? (
 						// <Map latitude={selectedRegion.lat} longitude={selectedRegion.lng}/>
 						<Map regionName={selectedRegion.regionName} style={{ width: '500px', height: '800px' }} />
 					) : (<Map regionName={selectedRegion.regionName} style={{ width: '800px', height: '800px' }} />)}
 					{accomTab === 'search' && (
 						<Map regionName={searchQuery} style={{ width: '800px', height: '800px' }} />
+					)}
+				</div> */}
+				<div style={{marginTop: '100px'}}>
+					{accomTab === 'search' ? (
+						// 검색 탭일 때
+						<Map regionName={searchAddress} style={{width: '800px', height: '800px'}}/>
+					) : (
+						// 선택 탭일 때
+						selectedAccomDetails && selectedRegion ? (
+							<Map regionName={selectedRegion.regionName} style={{width: isToggleOpen ? '500px' : '800px', height: '800px'}}/>
+						) : (
+							<Map regionName={null} style={{width: '800px', height: '800px'}}/>
+						)
 					)}
 				</div>
 				{/* 테스트 잔디확인용 */}

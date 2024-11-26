@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ScheduleMap from './ScheduleMap';
 import { decodeJwt } from '../../../utils/tokenUtils';
 import { json, useNavigate } from 'react-router-dom';
+import Schedule from '../Schedule';
 
 function SummarySchedule({ travelData }) {
 	const [schedule, setSchedule] = useState('');
@@ -11,8 +12,7 @@ function SummarySchedule({ travelData }) {
 	const [scheduleData, setScheduleData] = useState([]); // 일정 데이터를 위한 state 추가
 	const navigate = useNavigate();
 	const [testScheduleData, setTestScheduleData] = useState([]); // 테스트
-	const [jsonDatas, setJsonDatas] = useState([]);
-
+	const [scheduleDetails, setScheduleDetails] = useState({}); // 0번째 인덱스 저장
 
 	const message = `: ${JSON.stringify(travelData)} 이 데이터를 바탕으로 여행일정을 만들어 출력해 줘. 형식은 json 배열 형태로 예시를 알려줄게, 날짜(date), 시간(time), 장소(list), 장소타입(type), 주소(adress), 경도/위도(latlng)는 꼭 있어야해, 스케줄은 지역내에서만 이뤄져야해 일정은 식사일정 포함해서 하루에 3개 이하, 1개이상으로 짜줘,
 	sche_start_date,
@@ -95,7 +95,6 @@ function SummarySchedule({ travelData }) {
 			const jsonData = JSON.parse(jsonString);
 			console.log("jsonData summarySchedule에서 사용할 데이터 json.parse 한 형태 : ", jsonData);
 			setTestScheduleData(jsonData);
-			setJsonDatas(jsonData);
 
 			// 필요한 부분만 추출
 			// const scheduleArray = jsonData.schedule;
@@ -109,6 +108,19 @@ function SummarySchedule({ travelData }) {
 			console.log('data 타입 : ' , typeof data.choices[0].message.content);
 			// 지도 표시 테스트중
 			// setSchedule(content); // 상태에 저장하거나 다른 작업 수행
+
+			if (jsonData && jsonData[0]) {
+				const firstSchedule = jsonData[0];
+				const extractedDetails = {
+				  sche_start_date: firstSchedule.sche_start_date,
+				  sche_end_date: firstSchedule.sche_end_date,
+				  sche_start_time: firstSchedule.sche_start_time,
+				  sche_end_time: firstSchedule.sche_end_time,
+				  region: firstSchedule.region,
+				  accom: firstSchedule.accom,
+				};
+				setScheduleDetails(extractedDetails); // 새로 추출된 값 저장
+			  }
 
 			// 위도, 경도만 뽑아서 scheduleData에 저장
 			const extractedData = jsonData
@@ -166,7 +178,11 @@ function SummarySchedule({ travelData }) {
 	const handleSaveSchedule = async () => {
 		// 로그인 확인
 		const token = decodeJwt(window.localStorage.getItem("accessToken"));
-		console.log('[handleSaveSchedule] 토근??',  token);
+		console.log("scheduleDetails12 : " , scheduleDetails)
+
+		console.log('token:????', token);
+		const memberCode = token.memberCode;
+		console.log('memberCode:????', memberCode);
 
 		if(!token) {
 			alert('로그인이 필요한 서비스입니다.');
@@ -186,40 +202,46 @@ function SummarySchedule({ travelData }) {
 			        // schedule의 내용을 확인
 					console.log('schedule 내용:', schedule);
 					console.log('schedule 타입:', typeof schedule);
-					console.log('아진짜짱나네', testScheduleData);
-					console.log('왜안되는거냐고~!~!~!', jsonDatas);
+					// console.log('아진짜짱나네', testScheduleData);
 
 			// // OpenAI가 생성한 일정 데이터를 JSON 형식으로 변환
 			// const jsonData = JSON.parse(testScheduleData);	// schedule이 JSON 문자열이라면 파싱s
 
 			// travelData에서 필요한 정보 추출
-			const regionCode = travelData.regions[0].regionCode;
-            const accomCode = travelData.accomodations[0].accomCode;
-            const memberCode = token.memberCode;
-            const memberAnswerCode = travelData.questions[0].answerCode;
+			// const regionCode = travelData.regions[0].regionCode;
+            // const accomCode = travelData.accomodations[0].accomCode;
+            // const memberCode = token.memberCode;
+            // const memberAnswerCode = travelData.questions[0].answerCode;
 
 			// jsonData 0 번째 인덱스에서 정보 추출
-			const firstSche = jsonDatas[0];
-			const scheList = firstSche.sche_list;
-			const scheStartDate = firstSche.sche_start_date;
-			const scheEndDate = firstSche.sche_end_date;
-			const scheStartTime = firstSche.sche_start_time;
-			const scheEndTime = firstSche.sche_end_time;
+			// const firstSche = [0];
+			// const scheList = firstSche.sche_list;
+			// const scheStartDate = firstSche.sche_start_date;
+			// const scheEndDate = firstSche.sche_end_date;
+			// const scheStartTime = firstSche.sche_start_time;
+			// const scheEndTime = firstSche.sche_end_time;
 
 			// shceduleDTO 객체 생성
 			const scheduleDTO = {
-				regionCode: regionCode,
-				accomCode: accomCode,
-				memberCode: memberCode,
-				memberAnswerCode: memberAnswerCode,
-				scheList: scheList,
-				scheStartDate: scheStartDate,
-				scheEndDate: scheEndDate,
-				scheStartTime: scheStartTime,
-				scheEndTime: scheEndTime,
-				travelTime: '',
-				scheTime: ''
+				// regionCode: regionCode,
+				// accomCode: accomCode,
+				// memberCode: memberCode,
+				// memberAnswerCode: memberAnswerCode,
+				// scheList: schedule,
+				// // scheStartDate: scheStartDate,
+				// scheStartDate: scheduleDetails.sche_start_date,
+				// // scheEndDate: scheEndDate,
+				// scheEndDate: scheduleDetails.sche_end_date,
+				// // scheStartTime: scheStartTime,
+				// scheStartTime: scheduleDetails.sche_start_time,
+				// // scheEndTime: scheEndTime,
+				// scheEndTime: scheduleDetails.sche_end_time,
+				// // travelTime: '',
+				// // scheTime: ''
 			};
+
+			const memberCode = window.localStorage.getItem('memberCode');
+			console.log('회원번호 잘 왔냐?????????', memberCode);
 
 
 			const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/save`, {
@@ -228,7 +250,14 @@ function SummarySchedule({ travelData }) {
 					'Content-Type': 'application/json',
 					'Authorization': `Bearer ${window.localStorage.getItem("accessToken")}`
 				},
-				body: JSON.stringify(scheduleDTO)
+				body: JSON.stringify({
+					memberCode: memberCode,	
+					scheList: schedule,
+					scheStartDate: scheduleDetails.sche_start_date,
+					scheEndDate: scheduleDetails.sche_end_date,
+					scheStartTime: scheduleDetails.sche_start_time,
+					scheEndTime: scheduleDetails.sche_end_time
+				})
 			});
 
 			if(!response.ok) {
@@ -290,6 +319,7 @@ function SummarySchedule({ travelData }) {
 								className="submit-button"
 								type="button"
 								id="button"
+								onClick={handleSaveSchedule}
 								>
 								저장
 								</button>

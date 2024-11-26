@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import travelbuddy.function.member.dto.AccountDTO;
 import travelbuddy.function.member.entity.Account;
+import travelbuddy.function.member.repository.AccountRepository;
 import travelbuddy.function.member.repository.MemberRepository;
 
 @Service
@@ -15,11 +16,13 @@ public class MemberService {
 	private static final Logger log = LoggerFactory.getLogger(MemberService.class);
 	private final MemberRepository memberRepository;
 	private final ModelMapper modelMapper;
-	
+	private final AccountRepository accountRepository;
+
 	@Autowired
-	public MemberService(MemberRepository memberRepository, ModelMapper modelMapper) {
+	public MemberService(MemberRepository memberRepository, ModelMapper modelMapper, AccountRepository accountRepository) {
 		this.memberRepository = memberRepository;
 		this.modelMapper = modelMapper;
+		this.accountRepository = accountRepository;
 	}
 	
 	public Object selectMyInfo(String memberName) {
@@ -34,5 +37,12 @@ public class MemberService {
 
 
 		return accountDTO;
+	}
+
+	public int findMemberCodeByMemberName(String memberName) {
+
+		Account member = accountRepository.findByMemberName(memberName);
+
+		return member != null ? member.getMemberCode() : -1;
 	}
 }

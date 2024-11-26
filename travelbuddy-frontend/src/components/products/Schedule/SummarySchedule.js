@@ -6,6 +6,7 @@ function SummarySchedule({ travelData }) {
 	const [loading, setLoading] = useState(false);
 	// 지도 표시 테스트중
 	const [scheduleData, setScheduleData] = useState([]); // 일정 데이터를 위한 state 추가
+	const [testScheduleData, setTestScheduleData] = useState([]); // 테스트
 
 	const message = `: ${JSON.stringify(travelData)} 이 데이터를 바탕으로 여행일정을 만들어 출력해 줘. 형식은 json 배열 형태로 예시를 알려줄게, 날짜(date), 시간(time), 장소(list), 장소타입(type), 주소(adress), 경도/위도(latlng)는 꼭 있어야해, 스케줄은 지역내에서만 이뤄져야해 일정은 식사일정 포함해서 하루에 3개 이하, 1개이상으로 짜줘
 
@@ -80,6 +81,7 @@ function SummarySchedule({ travelData }) {
 			// JSON 형식으로 변환
 			const jsonData = JSON.parse(jsonString);
 			console.log("jsonData summarySchedule에서 사용할 데이터 json.parse 한 형태 : ", jsonData);
+			setTestScheduleData(jsonData);
 
 			// 필요한 부분만 추출
 			// const scheduleArray = jsonData.schedule;
@@ -128,12 +130,33 @@ function SummarySchedule({ travelData }) {
 		}
 	};
 
+
 	useEffect(() => {
 		// 초기화 또는 다른 로직이 필요할 경우 여기에 추가
 	}, []);
 
 	return (
 		<div className="tema-title">
+							<div className="day">
+								<h3>일정</h3>
+								{testScheduleData && testScheduleData.length > 0 ? (
+									testScheduleData.slice(1).map((item, index) => (
+									<div className="scheduleitem" key={index}>
+										<span className="circle">{index + 1}</span>
+										<p>
+										<strong>{item.sche_list}</strong>
+										<br />
+										{item.addres}
+										<br />
+										<span className="time">{item.sche_time}</span>
+										</p>
+									</div>
+									))
+								) : (
+									<p>일정 데이터가 없습니다.</p>
+								)}
+							</div>
+							
 			<div className="chat-container">
 				<form className="chat-form2" action="post">
 					<div id="chat-box2">

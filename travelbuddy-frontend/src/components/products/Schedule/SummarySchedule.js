@@ -4,11 +4,20 @@ import ScheduleMap from './ScheduleMap';
 function SummarySchedule({ travelData }) {
 	const [schedule, setSchedule] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [scheduleCreateButton, setScheduleCreateButton] = useState(false); // 일정 생성 버튼 숨기기
 	// 지도 표시 테스트중
 	const [scheduleData, setScheduleData] = useState([]); // 일정 데이터를 위한 state 추가
 	const [testScheduleData, setTestScheduleData] = useState([]); // 테스트
 
-	const message = `: ${JSON.stringify(travelData)} 이 데이터를 바탕으로 여행일정을 만들어 출력해 줘. 형식은 json 배열 형태로 예시를 알려줄게, 날짜(date), 시간(time), 장소(list), 장소타입(type), 주소(adress), 경도/위도(latlng)는 꼭 있어야해, 스케줄은 지역내에서만 이뤄져야해 일정은 식사일정 포함해서 하루에 3개 이하, 1개이상으로 짜줘
+
+	const message = `: ${JSON.stringify(travelData)} 이 데이터를 바탕으로 여행일정을 만들어 출력해 줘. 형식은 json 배열 형태로 예시를 알려줄게, 날짜(date), 시간(time), 장소(list), 장소타입(type), 주소(adress), 경도/위도(latlng)는 꼭 있어야해, 스케줄은 지역내에서만 이뤄져야해 일정은 식사일정 포함해서 하루에 3개 이하, 1개이상으로 짜줘,
+	sche_start_date,
+	sche_end_date,
+	sche_start_time,
+	sche_end_time,
+	region,
+	accom
+	이 여섯가지 데이터는 0번인덱스에만 나오면 돼. 그 후로는 나올필요없어.
 
 	[{
 	sche_start_date: 날짜,
@@ -123,6 +132,7 @@ function SummarySchedule({ travelData }) {
 			setScheduleData(extractedData);
 			
 			setSchedule(content);
+			setScheduleCreateButton(true); // 일정이 생성되면 상태 업데이트
 		} catch (error) {
 			console.error('Error generating schedule:', error);
 		} finally {
@@ -149,86 +159,72 @@ function SummarySchedule({ travelData }) {
 
 	return (
 		<div className="tema-title">
-							{/* <div className="day">
-								<h3>일정</h3>
-								{testScheduleData && testScheduleData.length > 0 ? (
-									testScheduleData.slice(1).map((item, index) => (
-									<div className="scheduleitem" key={index}>
-										<span className="circle">{index + 1}</span>
-										<p>
-										<strong>{item.sche_list}</strong>
-										<br />
-										{item.addres}
-										<br />
-										<span className="time">{item.sche_time}</span>
-										</p>
-									</div>
-									))
-								) : (
-									<p>일정 데이터가 없습니다.</p>
-								)}
-							</div> */}
-							<div className="schedule">
-							{testScheduleData && testScheduleData.length > 0 ? (
-								Object.entries(groupByDate(testScheduleData.slice(1))).map(([date, items], dayIndex) => (
-								<div className="day" key={dayIndex}>
-									<div className="day-header">
-									<h3>1일차</h3>
-									<span className="date">2024.11.05(화)</span>
-									</div>
-									{items.map((item, index) => (
-									<div className="scheduleitem" key={index}>
-										<span className="schedulecircle">{index + 1}</span> {/* 일정 번호 */}
-										<p>
-										<strong>{item.sche_list}</strong> {/* 장소 이름 */}
-										<br />
-										{item.addres} {/* 주소 */}
-										<br />
-										<span className="time">{item.sche_time}</span> {/* 시간 */}
-										</p>
-									</div>
-									))}
-								</div>
-								))
-							) : (
-								<p>일정 데이터가 없습니다.</p>
-							)}
-							</div>
 							
 			<div className="chat-container">
 				<form className="chat-form2" action="post">
-					<div id="chat-box2">
-						<h2>전체 일정</h2>
+					<div className="schedule">
+						{testScheduleData && testScheduleData.length > 0 ? (
+							Object.entries(groupByDate(testScheduleData.slice(1))).map(([date, items], dayIndex) => (
+							<div className="day" key={dayIndex}>
+								<div className="day-header">
+								<h3>{dayIndex + 1}일차</h3> {/* 1일차, 2일차 등의 표시 */}
+								<span className="date">{date}</span>
+								{/* <h3>{date}</h3> 날짜 표시 */}
+								</div>
+								{items.map((item, index) => (
+								<div className="scheduleitem" key={index}>
+									<span className="schedulecircle">{index + 1}</span> {/* 일정 번호 */}
+									<p>
+									<strong>{item.sche_list}</strong> {/* 장소 이름 */}
+									<br />
+									{item.addres} {/* 주소 */}
+									<br />
+									<span className="time">{item.sche_time}</span> {/* 시간 */}
+									</p>
+								</div>
+								))}
+							</div>
+							))
+						) : (
+							<p>일정 생성 버튼을 눌러주세요.</p>
+						)}
 					</div>
 					<div className="button-edit">
 						<div className="create-schedule">
-							<button
+							{/* <button
 								className="submit-button"
 								type="button"
 								id="button"
 								onClick={handleGenerateSchedule}
 							>
 								일정 생성
-							</button>
+							</button> */}
+							{scheduleCreateButton ? (
+								<button
+								className="submit-button"
+								type="button"
+								id="button"
+								>
+								저장
+								</button>
+								) : (
+								<button
+								className="submit-button"
+								type="button"
+								id="button"
+								onClick={handleGenerateSchedule}
+								>
+								일정 생성
+								</button>
+							)}
 						</div>
 						<div id="loading-gif">
 							{loading && <img src="./Img/spin.gif" alt="로딩이미지" />}
 						</div>
 						<div className="reset-travel">
 							<button id="button" type="reset" onClick={() => window.location.reload()}>
-								초기화
+								다시하기
 							</button>
-						</div>
-					</div>
-					<div className="chat-answer">
-						<div id="answer">
-							<textarea
-								name="content"
-								id="chat-content"
-								placeholder="여행 일정이 완성되고 있습니다. 잠시만 기다려주세요 :)"
-								value={schedule}
-								readOnly
-							></textarea>
 						</div>
 					</div>
 				</form>

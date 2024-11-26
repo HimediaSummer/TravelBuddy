@@ -115,8 +115,8 @@ function Schedule() {
 						<div id="chat-box" >
 							{/* <p>트래블 버디</p>
 							<p>어떤 여행을 하고싶나요?<i id="plane-icon" class="fa-solid fa-plane-departure"></i></p> */}
-							<p>{selectedRegion ? (selectedRegion.regionName) : ('어떤 여행을 하고 싶나요?')}</p>
-							<p>{startDate || ''} ~ {endDate || ''}</p>
+							{/* <p>{selectedRegion ? (selectedRegion.regionName) : ('어떤 여행을 하고 싶나요?')}</p>
+							<p>{startDate || ''} ~ {endDate || ''}</p> */}
 						</div>
 						{/* 날짜 선택 모달 */}
 						{/* 출발일, 도착일 */}

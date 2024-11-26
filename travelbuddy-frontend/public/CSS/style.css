@@ -78,7 +78,7 @@ ul {
 form>div {
 	margin-bottom: 10px;
 	display: flex;
-	align-items: center;
+	/* align-items: center; */
 }
 
 .save-id {
@@ -1248,6 +1248,7 @@ select,
 	gap: 20px; /* 각 날짜 블록 간 간격 */
 	overflow-x: auto; /* 일정이 많을 경우 스크롤 가능하도록 설정 */
 	padding: 20px;
+	margin-top: 80px;
   }
     
   .time {

@@ -10,32 +10,32 @@ function SummarySchedule({ travelData }) {
 
 	const message = `: ${JSON.stringify(travelData)} 이 데이터를 바탕으로 여행일정을 만들어 출력해 줘. 형식은 json 배열 형태로 예시를 알려줄게, 날짜(date), 시간(time), 장소(list), 장소타입(type), 주소(adress), 경도/위도(latlng)는 꼭 있어야해, 스케줄은 지역내에서만 이뤄져야해 일정은 식사일정 포함해서 하루에 3개 이하, 1개이상으로 짜줘
 
-[{
-  sche_start_date: 날짜,
-  sche_end_date: 날짜,
-  sche_start_time: 10:00,
-  sche_end_time: 22:00,
-  region: 지역,
-  accom: 펜션
-}
-{
-  scheduledate: 날짜,
-  travel_time: 3hour,
-  sche_time: 13:00 ~ 14:00,
-  sche_list: N서울타워,
-  scheduletype: 명소,
-  addres: 용산동2가 산1-3,
-  latlng: 37.5665, 126.9780
-}
-{
-  scheduledate: 날짜,
-  travel_time: 1hour20min,
-  sche_time: 15:20 ~ 16:00,
-  sche_list: 싸다김밥 종로관철점,
-  scheduletype: 식당,
-  addres: 관철동 7-1,
-  latlng: 37.5665, 126.9780
-}]`;
+	[{
+	sche_start_date: 날짜,
+	sche_end_date: 날짜,
+	sche_start_time: 10:00,
+	sche_end_time: 22:00,
+	region: 지역,
+	accom: 펜션
+	}
+	{
+	scheduledate: 날짜,
+	travel_time: 3hour,
+	sche_time: 13:00 ~ 14:00,
+	sche_list: N서울타워,
+	scheduletype: 명소,
+	addres: 용산동2가 산1-3,
+	latlng: 37.5665, 126.9780
+	}
+	{
+	scheduledate: 날짜,
+	travel_time: 1hour20min,
+	sche_time: 15:20 ~ 16:00,
+	sche_list: 싸다김밥 종로관철점,
+	scheduletype: 식당,
+	addres: 관철동 7-1,
+	latlng: 37.5665, 126.9780
+	}]`;
 
 
 	console.log('OpenAI API Key:', process.env.REACT_APP_OPENAI_API_KEY);
@@ -130,6 +130,18 @@ function SummarySchedule({ travelData }) {
 		}
 	};
 
+	// 날짜별로 데이터를 그룹화하는 함수
+	const groupByDate = (data) => {
+	return data.reduce((acc, item) => {
+		const date = item.scheduledate;
+		if (!acc[date]) {
+		acc[date] = []; // 해당 날짜가 처음 등장하면 빈 배열 생성
+		}
+		acc[date].push(item); // 해당 날짜에 데이터를 추가
+		return acc;
+	}, {});
+	};
+
 
 	useEffect(() => {
 		// 초기화 또는 다른 로직이 필요할 경우 여기에 추가
@@ -137,7 +149,7 @@ function SummarySchedule({ travelData }) {
 
 	return (
 		<div className="tema-title">
-							<div className="day">
+							{/* <div className="day">
 								<h3>일정</h3>
 								{testScheduleData && testScheduleData.length > 0 ? (
 									testScheduleData.slice(1).map((item, index) => (
@@ -155,6 +167,32 @@ function SummarySchedule({ travelData }) {
 								) : (
 									<p>일정 데이터가 없습니다.</p>
 								)}
+							</div> */}
+							<div className="schedule">
+							{testScheduleData && testScheduleData.length > 0 ? (
+								Object.entries(groupByDate(testScheduleData.slice(1))).map(([date, items], dayIndex) => (
+								<div className="day" key={dayIndex}>
+									<div className="day-header">
+									<h3>1일차</h3>
+									<span className="date">2024.11.05(화)</span>
+									</div>
+									{items.map((item, index) => (
+									<div className="scheduleitem" key={index}>
+										<span className="schedulecircle">{index + 1}</span> {/* 일정 번호 */}
+										<p>
+										<strong>{item.sche_list}</strong> {/* 장소 이름 */}
+										<br />
+										{item.addres} {/* 주소 */}
+										<br />
+										<span className="time">{item.sche_time}</span> {/* 시간 */}
+										</p>
+									</div>
+									))}
+								</div>
+								))
+							) : (
+								<p>일정 데이터가 없습니다.</p>
+							)}
 							</div>
 							
 			<div className="chat-container">

@@ -30,10 +30,9 @@ function MyNoticeDetail () {
         if (notice && notice.noticeImg) {
             const updatedContents = notice.noticeContents 
             ? 
-            `${notice.noticeContents}
-            <img src="${notice.noticeImg}" alt="공지 이미지" style="max-width:100%; height:auto;" />`
+            `<img src="${notice.noticeImg}" alt="공지 이미지" style="max-width:800px; height:auto;" />${notice.noticeContents}`
             : 
-            `<img src="${notice.noticeImg}" alt="공지 이미지" style="max-width:100%; height:auto;" />`;
+            `<img src="${notice.noticeImg}" alt="공지 이미지" style="max-width:800px; height:auto;" />`;
 
             setNoticeContents(updatedContents);
             
@@ -74,7 +73,7 @@ function MyNoticeDetail () {
         <div>
             <Viewer 
             initialValue={noticeContents || notice.noticeContents}
-            key={noticeCode}
+            key={noticeContents}
             previewStyle="vertical"
             height="600px"
             initialEditType="wysiwyg"

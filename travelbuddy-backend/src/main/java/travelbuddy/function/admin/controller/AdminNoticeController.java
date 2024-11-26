@@ -57,27 +57,33 @@ public class AdminNoticeController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 상세정보 조회 요청" , noticeDTO));
     }
 
+    @Operation(summary = " 공지 검색 요청", description = "검색어에 맞는 공지 리스트 조회가 진행됩니다.", tags = { "AdminNoticeController" })
+    @GetMapping("/notices/search")
+    public ResponseEntity<ResponseDTO> selectSearchNoticeList(@RequestParam(name="n", defaultValue="all") String search){
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공",adminNoticeService.selectSearchNoticeList(search)));
+    }
+
     @Operation(summary = "공지 등록 요청", description = "공지의 등록 처리가 진행됩니다.", tags = {"AdminNoticeController"})
     @PostMapping("/notices/insertnotice")
     public ResponseEntity<ResponseDTO> insertNotice(@ModelAttribute NoticeDTO noticeDTO, @RequestParam(value = "noticeImage", required = false) MultipartFile noticeImage) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 등록 성공",adminNoticeService.insertNotice(noticeDTO, noticeImage)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 등록 요청",adminNoticeService.insertNotice(noticeDTO, noticeImage)));
     }
 
     @Operation(summary = "공지 수정 요청", description = "공지의 수정 처리가 진행됩니다.", tags = {"AdminNoticeController"})
     @PutMapping("/notices/{noticeCode}/updatenotice")
     public ResponseEntity<ResponseDTO> insertNotice(@PathVariable int noticeCode, @ModelAttribute NoticeDTO noticeDTO) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 수정 성공",adminNoticeService.updateNotice(noticeCode,noticeDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 수정 요청",adminNoticeService.updateNotice(noticeCode,noticeDTO)));
     }
 
     @Operation(summary = "공지 조회수+ 요청", description = "공지의 조회수+ 처리가 진행됩니다.", tags = {"AdminNoticeController"})
     @PutMapping("/notices/{noticeCode}/appendcount")
     public ResponseEntity<ResponseDTO> appendNoticeCount(@PathVariable int noticeCode, @ModelAttribute NoticeDTO noticeDTO) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 조회수+ 성공",adminNoticeService.appendNoticeCount(noticeCode,noticeDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 조회수+ 요청",adminNoticeService.appendNoticeCount(noticeCode,noticeDTO)));
     }
 
     @Operation(summary = "공지 삭제 요청", description = "공지의 삭제 처리가 진행됩니다.", tags = {"AdminNoticeController"})
     @DeleteMapping("/notices/{noticeCode}/deletenotice")
     public ResponseEntity<ResponseDTO> insertNotice(@PathVariable int noticeCode) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 삭제 성공",adminNoticeService.deleteNotice(noticeCode)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 삭제 요청",adminNoticeService.deleteNotice(noticeCode)));
     }
 }

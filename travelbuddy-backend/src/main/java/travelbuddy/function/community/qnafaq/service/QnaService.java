@@ -126,7 +126,7 @@ public class QnaService {
 
         QnaAnswer qnaAnswer = new QnaAnswer();
         qnaAnswer.setQna(insertqna);
-        qnaAnswer.setAnsContents("");
+        qnaAnswer.setAnsContents(null);
         qnaAnswerRepository.save(qnaAnswer);
 
         return "QnA 입력 성공";

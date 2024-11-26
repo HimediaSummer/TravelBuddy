@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { callFaqListForAdminAPI } from "../../../apis/FaqAPICalls";
+import { callSearchFaqListAPI } from "../../../apis/FaqAPICalls";
+import { callFqTypeNameAPI } from "../../../apis/FaqAPICalls";
 
 function Faqs() {
     const navigate = useNavigate();
@@ -12,7 +14,11 @@ function Faqs() {
     const faqList = faq.data || {};
     const { data = {}, pageInfo = {} } = faqList;
 
+    // 상태관리
     const [currentPage, setCurrentPage] = useState(1);
+    const [search, setSearch] = useState("");
+    const [filteredFaqList, setFilteredFaqList] = useState([]);
+    const [faqTypeMap, setFaqTypeMap] = useState({});
 
 
     const pageNumber = [];
@@ -23,12 +29,71 @@ function Faqs() {
     }
 
     useEffect(() => {
-        dispatch(
-            callFaqListForAdminAPI({
-                currentPage: currentPage,
-            })
-        );
-    }, [currentPage]);
+        if (!search.trim()) {
+            dispatch(
+                callFaqListForAdminAPI({
+                    currentPage: currentPage,
+                }));
+        }
+    }, [currentPage,dispatch]);
+
+    useEffect(() => {
+        const fetchFaqTypes = async () => {
+            console.log('fqTypeMap 을 위한 여행')
+            try {
+                const response = await dispatch(callFqTypeNameAPI());
+                const mappedTypes = response.reduce((acc, item) => {
+                    acc[item.fqTypeCode] = item.fqTypeName;
+                    return acc;
+                }, {});
+                setFaqTypeMap(mappedTypes);
+                console.log('내가누굽니까',mappedTypes);
+            } catch (error) {
+                console.error("FAQ 유형 데이터 로드 오류:", error);
+            }
+        };
+        fetchFaqTypes();
+    }, []);
+
+    useEffect(() => {
+        console.log("faqList 업데이트 됨 :",faqList);
+        if (Array.isArray(faqList)) {
+            setFilteredFaqList(faqList);
+      } else if (Array.isArray(faqList.data)) {
+        setFilteredFaqList(faqList.data);
+      }
+      }, [faqList]);
+
+          // 디버깅을 위한 useEffect 추가
+    useEffect(() => {
+    console.log("filteredFaqList 업데이트됨:", filteredFaqList);
+  }, [filteredFaqList]);
+
+
+  const onClickSearch = async () => {
+    if (search.trim()) {
+        try {
+            // 검색 API 호출 결과를 기다림
+            const searchResult = await dispatch(callSearchFaqListAPI(search));
+            
+            // 검색 후 페이지 초기화
+            setCurrentPage(1);
+        } catch (error) {
+            console.error("검색 중 오류 발생:", error);
+        }
+    }
+  };
+
+  const onChangeHandler = (e) => {
+    setSearch(e.target.value);
+    if (!e.target.value.trim()) {
+      dispatch(callFaqListForAdminAPI({ currentPage: currentPage }));
+  }
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    onClickSearch();
+}
+};
 
     const onClickTableTr = (faqCode) => {
         navigate(`/admin/faqs/${faqCode}`, { replace: false });
@@ -43,6 +108,14 @@ function Faqs() {
         <>
             <div className={MyFaqsCSS.bodyDiv}>
                 <h2>FAQ</h2>
+                <input
+                    type="text"
+                    placeholder="검색어를 입력하세요"
+                    value={search}
+                    onChange={onChangeHandler}
+                    onKeyDown={onChangeHandler}
+                ></input>
+                <button onClick={onClickSearch}>검색</button>
                 <table className={MyFaqsCSS.productTable}>
                     <colgroup>
                         <col width="10%" />
@@ -59,15 +132,15 @@ function Faqs() {
                         </tr>
                     </thead>
                     <tbody>
-                        {Array.isArray(data) &&
-                            data.map((f) => {
+                        {Array.isArray(filteredFaqList) &&
+                            filteredFaqList.map((f) => {
                                 return (
                                     <tr key={f.faqCode}
                                     onClick={() =>
                                         onClickTableTr(f.faqCode)
                                     }>
                                         <td>{f.faqCode}</td>
-                                        <td>{f.fqTypeCode}</td>
+                                        <td>{faqTypeMap[f.fqTypeCode] || "알 수 없음"}</td>
                                         <td>{f.faqTitle}</td>
                                         <td>
                                             {f.faqAt === "N" ? (
@@ -89,7 +162,7 @@ function Faqs() {
                     justifyContent: "center",
                 }}
             >
-                {Array.isArray(data) && (
+                {Array.isArray(filteredFaqList) && (
                     <button
                         onClick={() => setCurrentPage(currentPage - 1)}
                         disabled={currentPage === 1}
@@ -112,7 +185,7 @@ function Faqs() {
                         </button>
                     </li>
                 ))}
-                {Array.isArray(data) && (
+                {Array.isArray(filteredFaqList) && (
                     <button
                         className={MyFaqsCSS.pagingBtn}
                         onClick={() => setCurrentPage(currentPage + 1)}

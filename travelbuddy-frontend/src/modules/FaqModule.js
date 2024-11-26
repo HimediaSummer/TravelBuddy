@@ -22,6 +22,15 @@ const actions = createActions({
 const faqReducer = handleActions(
 	{
 		[GET_FAQS]: (state, { payload }) => {
+			if (Array.isArray(payload)) {
+				return {
+					data: payload,
+					pageInfo: {
+						...payload,
+						total: payload.length
+					}
+				}
+			}
 			return payload;
 		},
 		[GET_FAQ]: (state, { payload }) => {

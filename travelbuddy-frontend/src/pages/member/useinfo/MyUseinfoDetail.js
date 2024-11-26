@@ -32,8 +32,7 @@ function MyUseinfoDetail () {
         if (useinfo && useinfo.useinfoImg) {
             const updatedContents = useinfo.useinfoContents
                 ? 
-                `${useinfo.useinfoContents}
-                <img src="${useinfo.useinfoImg}" alt="공지 이미지" style="max-width:800px; height:auto;" />`
+                `<img src="${useinfo.useinfoImg}" alt="공지 이미지" style="max-width:800px; height:auto;" />${useinfo.useinfoContents}`
                 : 
                 `<img src="${useinfo.useinfoImg}" alt="공지 이미지" style="max-width:800px%; height:auto;" />`;
             setUseinfoContents(updatedContents);
@@ -74,7 +73,7 @@ function MyUseinfoDetail () {
                 <div>
                 <Viewer
                     initialValue={useinfoContents || useinfo.useinfoContents}
-                    key={useinfoCode}
+                    key={useinfoContents}
                     previewStyle="vertical"
                     height="600px"
                     initialEditType="wysiwyg"

@@ -17,6 +17,8 @@ import travelbuddy.function.admin.repository.AdminNoticeRepository;
 import travelbuddy.function.community.notice.controller.NoticeController;
 import travelbuddy.function.community.notice.dto.NoticeDTO;
 import travelbuddy.function.community.notice.entity.Notice;
+import travelbuddy.function.community.qnafaq.dto.FaqDTO;
+import travelbuddy.function.community.qnafaq.entity.Faq;
 import travelbuddy.util.FileUploadUtils;
 
 import java.io.IOException;
@@ -178,4 +180,9 @@ public class AdminNoticeService {
 
     }
 
+    public Object selectSearchNoticeList(String search) {
+        List<Notice> noticeListWithSearchValue = adminNoticeRepository.findByNoticeTitleContaining(search);
+
+        return noticeListWithSearchValue.stream().map(Faq -> modelMapper.map(Faq, NoticeDTO.class)).collect(Collectors.toList());
+    }
 }

@@ -35,13 +35,9 @@ function MyFaqs() {
     useEffect(
         () => {
             dispatch(callFaqListAPI());
-            if (data == undefined) {
-                return <>
-                <h2>로딩중</h2>
-                </>
-            }
-        }, []
-    );
+            }, []
+        );
+
 
     const toggleAnswer = (index) => {
         setOpenIndex((prevIndex) => (prevIndex === index ? null : index));

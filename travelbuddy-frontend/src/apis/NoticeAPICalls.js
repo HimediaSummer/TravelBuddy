@@ -70,6 +70,27 @@ export const callNoticeDetailAPI = (noticeCode) => {
         dispatch({type: GET_NOTICE, payload: result });
     }}
 
+        // 관리자가 Notice 전체 리스트에서 검색한다.
+export const callSearchNoticeListAPI = ( search ) => {
+    let requestURL;
+    if (search !== undefined && search !== null) {
+        requestURL =`http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/notices/search?n=${encodeURIComponent(search)}`;
+    }
+    console.log('키워드가 뭡니까?',search);
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*'
+            }
+        }).then((response) => response.json());
+        if (result.status !== null) {
+			dispatch({type: GET_NOTICES, payload: result.data });
+		}
+    };
+};
+
            // 관리자가 Notice 1개를 작성한다.
 export const insertNoticeAPI = ({noticeDTO}) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/notices/insertnotice`;

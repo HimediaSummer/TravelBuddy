@@ -54,6 +54,12 @@ public class AdminFaqController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"FAQ 상세정보 조회 요청",adminFaqService.selectFaq(faqCode)));
     }
 
+    @Operation(summary = " FAQ 검색 요청", description = "검색어에 맞는 FAQ 리스트 조회가 진행됩니다.", tags = { "AdminFaqController" })
+    @GetMapping("/faqs/search")
+    public ResponseEntity<ResponseDTO> selectSearchFaqList(@RequestParam(name="f", defaultValue="all") String search){
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공",adminFaqService.selectSearchFaqList(search)));
+    }
+
     @Operation(summary = "FAQ 등록 요청", description = "FAQ 등록이 진행됩니다.", tags = {"AdminFaqController"})
     @PostMapping("/faqs/insertfaq")
     public ResponseEntity<ResponseDTO> insertFaq(@RequestBody FaqDTO faqDTO) {
@@ -73,5 +79,7 @@ public class AdminFaqController {
     public ResponseEntity<ResponseDTO> deleteFaq(@PathVariable int faqCode){
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"FAQ 삭제 요청",adminFaqService.deleteFaq(faqCode)));
     }
+
+
 
 }

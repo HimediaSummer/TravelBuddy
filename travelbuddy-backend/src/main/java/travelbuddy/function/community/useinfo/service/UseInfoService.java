@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,12 @@ public class UseInfoService {
     private static final Logger log = LoggerFactory.getLogger(UseInfoService.class);
     private final UseInfoRepository useInfoRepository;
     private final ModelMapper modelMapper;
+
+    /* 설명. 이미지 파일 저장 경로와 응답용 URL (WebConfig 설정파일 추가하기) */
+    @Value("${image.image-dir}")
+    private String IMAGE_DIR;
+    @Value("${image.image-url}")
+    private String IMAGE_URL;
 
     @Autowired
     public UseInfoService(ModelMapper modelMapper, UseInfoRepository useInfoRepository) {
@@ -65,7 +72,7 @@ public class UseInfoService {
         log.info("[UseInfoService] selectUseInfo start");
 
         Useinfo useinfo = useInfoRepository.findById(useinfoCode).orElse(null);
-
+        useinfo.setUseinfoImg(IMAGE_URL + useinfo.getUseinfoImg());
         log.info("[UseInfoService] selectUseInfo end");
 
         return modelMapper.map(useinfo, UseinfoDTO.class);

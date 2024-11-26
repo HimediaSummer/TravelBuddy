@@ -21,19 +21,21 @@ function NoticeDetail() {
 
     useEffect( () => {
          dispatch(callNoticeDetailForAdminAPI(noticeCode));
-    }, [noticeCode]
+    }, []
 );
 
     useEffect(() => {
         if (notice && notice.noticeImg) {
             const updatedContents = notice.noticeContents
                 ? 
-                `<img src="${notice.noticeImg}" alt="공지 이미지" style="max-width:100%; height:auto;" />${notice.noticeContents}`
+                `<img src="${notice.noticeImg}" alt="공지 이미지" style="max-width:800px; height:auto;" />${notice.noticeContents}`
                 : 
-                `<img src="${notice.noticeImg}" alt="공지 이미지" style="max-width:100%; height:auto;" />`;
+                `<img src="${notice.noticeImg}" alt="공지 이미지" style="max-width:800px; height:auto;" />`;
+
                 setNoticeContents(updatedContents);
+
         } else if (notice) {
-                setNoticeContents(notice.noticeContents || "");
+                setNoticeContents(notice.noticeContents);
         }
     }, [notice]);
 
@@ -65,18 +67,18 @@ function NoticeDetail() {
         <>
             <td style={{width:'50px'}}>제목</td>
             <td style={{width:'350px'}}>{notice.noticeTitle}</td>
-            <td style={{width:'80px'}}>글번호</td>
+            <td style={{width:'60px'}}>글번호</td>
             <td style={{width:'50px'}}>{notice.noticeCode}</td> 
             <td><button onClick={onClickChangeHandlerDelete}>삭제</button></td><br/>
-            <td style={{width:'80px'}}>작성일</td>
-            <td style={{width:'180px'}}>{notice.noticeCreate}</td>
-            <td style={{width:'80px'}}>조회수</td> 
+            <td style={{width:'60px'}}>작성일</td>
+            <td style={{width:'200px'}}>{notice.noticeCreate}</td>
+            <td style={{width:'60px'}}>조회수</td> 
             <td style={{width:'80px'}}>{notice.noticeCount}</td>
             <hr/>
             <div>
                 <Viewer
                     initialValue={noticeContents || notice.noticeContents}
-                    key={noticeCode}
+                    key={noticeContents}
                     previewStyle="vertical"
                     height="600px"
                     initialEditType="wysiwyg"

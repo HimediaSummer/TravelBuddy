@@ -263,7 +263,8 @@ VALUES
     (1, '일정'),
     (2, '숙소'),
     (3, '지역'),
-    (4, '보안');
+    (4, '보안'),
+    (5, '기타');
 
 -- tbl_faq
 INSERT INTO
@@ -453,8 +454,8 @@ VALUES
 INSERT INTO
     tbl_authority (authority_code, authority_name)
 VALUES
-    (1, '관리자'),
-    (2, '일반 사용자');
+    (1, 'ROLL_ADMIN'),
+    (2, 'ROLL_USER');
 
 -- tbl_Account
 INSERT INTO

@@ -25,6 +25,15 @@ const actions = createActions({
 const noticeReducer = handleActions(
 	{
 		[GET_NOTICES]: (state, { payload }) => {
+			if (Array.isArray(payload)) {
+				return {
+					data: payload,
+					pageInfo: {
+						...payload,
+						total: payload.length
+					}
+				}
+			}
 			return payload;
 		},
 		[GET_NOTICE]: (state, { payload }) => {

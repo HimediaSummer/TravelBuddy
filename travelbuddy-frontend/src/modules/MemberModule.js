@@ -23,7 +23,7 @@ const memberReducer = handleActions(
 				return {
 					data: payload,
 					pageInfo: {
-						pageEnd: 1,
+						...payload,
 						total: payload.length
 					}
 				}

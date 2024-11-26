@@ -79,7 +79,7 @@ public class AdminUseInfoService {
         log.info("[AdminUseInfoService] selectUseInfo start");
 
         Useinfo useinfo = adminUseInfoRepository.findById(useinfoCode).orElse(null);
-
+        useinfo.setUseinfoImg(IMAGE_URL + useinfo.getUseinfoImg());
         log.info("[AdminUseInfoService] selectUseInfo end");
 
         return modelMapper.map(useinfo, UseinfoDTO.class);
@@ -167,5 +167,11 @@ public class AdminUseInfoService {
         log.info("[AdminUseInfoService] appendUseinfoCount() end");
 
         return modelMapper.map(updateUseinfo, UseinfoDTO.class);
+    }
+
+    public Object selectSearchUseinfoList(String search) {
+        List<Useinfo> useinfoListWithSearchValue = adminUseInfoRepository.findByUseinfoTitleContaining(search);
+
+        return useinfoListWithSearchValue.stream().map(Useinfo -> modelMapper.map(Useinfo, UseinfoDTO.class)).collect(Collectors.toList());
     }
 }

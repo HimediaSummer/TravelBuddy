@@ -134,6 +134,7 @@ public class AdminAccountService {
         return modelMapper.map(member, AccountDTO.class);
     }
 
+//    관리자가 이름으로 회원을 검색한다.
     public Object selectSearchMemberList(String search) {
 
         List<Account> memberListWithSearchValue = accountRepository.findByMemberFullNameContaining(search);

@@ -2,7 +2,11 @@ import { createAction, handleActions } from 'redux-actions';
 
 const initialState = {
     profile: {},
-    updateResult: null
+    schedule: [],
+    buddy: [],
+    matchDetails: [],
+    updateResult: null,
+    deleteResult: null,
 };
 
 export const GET_PROFILE = 'GET_PROFILE';
@@ -16,6 +20,9 @@ export const GET_MYBUDDY = 'GET_MYBUDDY';
 export const PUT_MYBUDDY = 'PUT_MYBUDDY';
 export const DELETE_MYBUDDY = 'DELETE_MYBUDDY';
 
+export const GET_MY_MATCH = 'GET_MY_MATCH';
+export const DELETE_MY_MATCH = 'DELETE_MY_MATCH';
+
 export const getProfile = createAction(GET_PROFILE);
 export const putProfile = createAction(PUT_PROFILE);
 
@@ -27,6 +34,8 @@ export const getMyBuddy = createAction(GET_MYBUDDY);
 export const putMyBuddy = createAction(PUT_MYBUDDY);
 export const deleteMyBuddy = createAction(DELETE_MYBUDDY);
 
+export const getMyMatch = createAction(GET_MY_MATCH);
+export const deleteMyMatch = createAction(DELETE_MY_MATCH);
 
 /* 리듀서 */
 const myProfileReducer = handleActions(
@@ -76,4 +85,24 @@ const myBuddyReducer = handleActions(
     initialState
 );
 
-export { myProfileReducer, myScheduleReducer, myBuddyReducer };
+/* 리듀서 */
+const myMatchReducer = handleActions(
+    {
+        [GET_MY_MATCH]: (state, action) => ({
+            ...state,
+            matchDetails: action.payload,
+        }),
+        [DELETE_MY_MATCH]: (state, action) => ({
+            ...state,
+            matchDetails: {
+                ...state.matchDetails,
+                buddyMatchDataList: state.matchDetails.buddyMatchDataList.filter(
+                    (match) => match.buddyMatchCode !== action.payload
+                ),
+            },
+        }),
+    },
+    initialState
+);
+
+export { myProfileReducer, myScheduleReducer, myBuddyReducer, myMatchReducer };

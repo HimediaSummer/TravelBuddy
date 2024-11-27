@@ -369,42 +369,6 @@ public class MypageService {
     }
 
 
-
-//    public List<Map<String, Object>> selectBuddyListPaging(Criteria cri) {
-//        log.info("[MyService] selectBuddyListPaging() Start");
-//
-//        int memberCode = 1002;
-//        int index = cri.getPageNum() - 1;
-//        int count = cri.getAmount();
-//        Pageable paging = PageRequest.of(index, count, Sort.by("buddyCode").descending());
-//
-//        Page<Object[]> results = myBuddyRepository.findAllBuddyListPaging(memberCode, paging);
-//
-//        List<Map<String, Object>> buddyList = new ArrayList<>();
-//        for (Object[] result : results) {
-//            Map<String, Object> buddyMap = new HashMap<>();
-//            Buddy buddy = (Buddy) result[0];
-//            String regionName = (String) result[1];
-//            String buddyTypeName = (String) result[2];
-//            String memberName = (String) result[3];
-//            buddyMap.put("buddyTitle", buddy.getBuddyTitle());
-//            buddyMap.put("buddyCode", buddy.getBuddyCode());
-//            buddyMap.put("buddyCreate", buddy.getBuddyCreate());
-//            buddyMap.put("buddyStatus", buddy.getBuddyStatus());
-//            buddyMap.put("buddyCount", buddy.getBuddyCount());
-//            buddyMap.put("memberName", memberName);
-//            buddyMap.put("regionName", regionName);
-//            buddyMap.put("buddyTypeName", buddyTypeName);
-//
-//            buddyList.add(buddyMap);
-//        }
-//
-//
-//        log.info("[AdminAccountService] selectMemberListWithPaging() End");
-//        return buddyList;
-//    }
-
-
     /* 내가쓴버디게시글상세조회및신청회원목록조회 */
     public Map<String, Object> getBuddyDetail(int buddyCode) {
         log.info("[MypageService] getBuddyDetail() Start");

@@ -6,12 +6,13 @@ import noticeReducer from './NoticeModule.js';
 import useinfoReducer from './UseinfoModule.js';
 import fqTypeReducer from './FqTypeModule.js';
 import buddiesReducer from './BuddyModule.js';
-import {myBuddyReducer, myProfileReducer, myScheduleReducer} from './MypageModule.js';
+import {myBuddyReducer, myProfileReducer, myScheduleReducer, myMatchReducer} from './MypageModule.js';
 
 const rootReducer = combineReducers({
 	myBuddyReducer,
 	myProfileReducer,
 	myScheduleReducer,
+	myMatchReducer,
 	memberReducer,
 	qnaReducer,
 	faqReducer,

@@ -214,28 +214,6 @@ public class MypageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", response));
     }
 
-
-
-
-
-//    @Operation(summary = "게시글조회요청", description = "내가쓴글페이지목록조회", tags = {"MypageController"})
-//    @GetMapping("/mybuddy")
-//    public ResponseEntity<ResponseDTO> selectBuddyListPaging(
-//            @RequestParam(name = "offset", defaultValue = "1") int offset) {
-//        log.info("[MypageController] selectBuddyListPaging : " + offset);
-//
-//        int total = mypageService.selectBuddyTotal();
-//        Criteria cri = new Criteria(offset, 10);
-//        List<Map<String, Object>> buddyList = mypageService.selectBuddyListPaging(cri);
-//
-//        PagingResponseDTO response = new PagingResponseDTO();
-//        response.setData(buddyList);
-//        response.setPageInfo(new PageDTO(cri, total));
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", response));
-//
-//    }
-
     @Operation(summary = "게시글상세조회요청", description = "내가쓴글상세조회", tags = {"MypageController"})
     @GetMapping("/mybuddy/{buddyCode}")
     public ResponseEntity<ResponseDTO> getBuddyDetail(@PathVariable("buddyCode") int buddyCode) {
@@ -314,7 +292,12 @@ public class MypageController {
     public ResponseEntity<ResponseDTO> seleteMatch() {
         log.info("[MypageController] seleteMatch() Start");
 
-        int memberCode = 1002;
+        // 현재 로그인한 사용자의 memberCode 가져오기
+        Integer memberCode = getCurrentMemberCode();
+        if (memberCode == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ResponseDTO(HttpStatus.UNAUTHORIZED, "로그인 정보가 없습니다.", null));
+        }
 
         Object matchData = mypageService.selectMatch(memberCode);
 
@@ -328,7 +311,12 @@ public class MypageController {
     public ResponseEntity<ResponseDTO> deleteMatch() {
         log.info("[MypageController] deleteMatch() Start");
 
-        int memberCode = 1002;
+        // 현재 로그인한 사용자의 memberCode 가져오기
+        Integer memberCode = getCurrentMemberCode();
+        if (memberCode == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ResponseDTO(HttpStatus.UNAUTHORIZED, "로그인 정보가 없습니다.", null));
+        }
 
         mypageService.deleteMatch(memberCode);
 

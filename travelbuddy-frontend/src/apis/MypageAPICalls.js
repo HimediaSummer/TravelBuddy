@@ -1,6 +1,6 @@
 import { putProfile, getProfile } from '../modules/MypageModule';
 import { getMyBuddy, deleteMyBuddy } from '../modules/MypageModule';
-
+import { getMyMatch, deleteMyMatch } from '../modules/MypageModule';
 
 // 회원정보부분
 export const callMyProfileAPI = () => {
@@ -156,4 +156,55 @@ export const deleteBuddyAPI = (selectedRows, callback) => {
     };
 };
 
+// 내가 신청한 매칭 게시글 조회 API
+export const callMyMatchDetailsAPI = () => {
+    return async (dispatch) => {
+        try {
+            const response = await fetch('/mypage/mymatch', {
+                method: 'GET',
+                headers: {
+                    Accept: '*/*',
+                    Authorization: 'Bearer ' + window.localStorage.getItem('accessToken'),
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch match details');
+            }
+
+            const data = await response.json();
+            console.log('Fetched My Match Details:', data);
+
+            dispatch(getMyMatch(data.data));
+        } catch (error) {
+            console.error('Error fetching match details:', error);
+        }
+    };
+};
+
+// 매칭 신청 취소 API
+export const cancelMatchAPI = (buddyMatchCode) => {
+    return async (dispatch) => {
+        try {
+            const response = await fetch('/mypage/mymatch', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + window.localStorage.getItem('accessToken'),
+                },
+                body: JSON.stringify({ buddyMatchCode }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to cancel match');
+            }
+
+            alert('신청이 취소되었습니다.');
+            dispatch(deleteMyMatch(buddyMatchCode));
+        } catch (error) {
+            console.error('Error cancelling match:', error);
+            alert('신청 취소 중 오류가 발생했습니다.');
+        }
+    };
+};
 

@@ -55,6 +55,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public JwtFilter jwtFilter() {
+        return new JwtFilter(tokenProvider);
+    }
+
     /* 목차. 2. Spring Security 설정을 무시 할 정적 리소스 등록 */
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -92,7 +97,7 @@ public class SecurityConfig {
                     // root 경로는 인증 필요
                      auth.requestMatchers("/").authenticated();
                     // 특정 경로는 무조건 허용
-                    auth.requestMatchers("/auth/**", "/buddyBoard/buddies","/buddyBoard/buddies/{buddyCode}", "/images/**", "/member-imgs/**", "/buddyimgs/**").permitAll();
+                    auth.requestMatchers("/auth/**", "/buddyBoard/buddies","/buddyBoard/buddies/{buddyCode}", "/images/**", "/memberimgs/**", "/buddyimgs/**", "/api/**").permitAll();
                     // Swagger API 문서 허용
                     auth.requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll();
                     // API 경로는 USER 또는 ADMIN 역할을 가진 사용자만 접근 가능
@@ -108,7 +113,9 @@ public class SecurityConfig {
                 // 5. 기본 CORS 설정 사용
                 .cors(cors -> {})
                 // 6. 우리가 직접 작성한 커스텀 필터인 JwtFilter를 필터 체인에 추가
-                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+//                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

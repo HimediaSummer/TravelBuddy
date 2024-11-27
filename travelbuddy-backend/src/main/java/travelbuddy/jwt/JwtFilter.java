@@ -37,6 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
         this.tokenProvider = tokenProvider;
     }
 
+
     /* 설명. 각 요청에 대해 JWT 토큰을 검사하고 유효한 경우 SecurityContext에 인증 정보를 설정. */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -45,13 +46,28 @@ public class JwtFilter extends OncePerRequestFilter {
         /* 설명. 요청에서 토큰값 추출 */
         String jwt = resolveToken(request);
 
+        log.info("Extracted JWT!!!!!!!!!: {}", jwt);  // 추출된 JWT 확인
+
         /* 설명. 추출한 토큰의 유효성 검사 후 인증을 위해 Authentication 객체를 SecurityContextHolder에 담는다.
          *  아래 if()문 내 2줄의 코드가 인증 작업의 핵심이라고 이해하면 된다.
          * */
-        if(StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-            Authentication authentication = tokenProvider.getAuthentication(jwt);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+//        if(StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
+//            Authentication authentication = tokenProvider.getAuthentication(jwt);
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//        }
+
+        if (StringUtils.hasText(jwt)) {
+            if (tokenProvider.validateToken(jwt)) {
+                Authentication authentication = tokenProvider.getAuthentication(jwt);
+                log.info("Authentication created!!!!!!!!!!: {}", authentication);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                log.warn("Invalid JWT token");
+            }
+        } else {
+            log.warn("JWT token is missing or improperly formatted");
         }
+
 
         /* 설명. 다음 filter chain 진행 */
         filterChain.doFilter(request, response);
@@ -62,11 +78,18 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);	// = "Authorization"
 
+        log.info("Authorization Header: {}", bearerToken);
+
+
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
             /* 설명. 사용자가 보낸 토큰 값 추출 */
             return bearerToken.substring(7);
         }
 
+        log.warn("Authorization header is missing or does not start with 'Bearer '");
+
         return null;
+        
     }
+
 }

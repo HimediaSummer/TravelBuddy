@@ -1,12 +1,13 @@
 package travelbuddy.function.member.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import travelbuddy.common.Criteria;
@@ -14,11 +15,7 @@ import travelbuddy.common.PageDTO;
 import travelbuddy.common.PagingResponseDTO;
 import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
-import travelbuddy.function.community.buddy.entity.BuddyMatchData;
 import travelbuddy.function.member.dto.AccountDTO;
-import travelbuddy.function.member.entity.Account;
-import travelbuddy.function.member.repository.MyBuddyRepository;
-import travelbuddy.function.member.repository.MyScheduleRepository;
 import travelbuddy.function.member.service.MypageService;
 import travelbuddy.function.schedule.dto.ScheduleDTO;
 import travelbuddy.function.schedule.entity.Schedule;
@@ -32,12 +29,24 @@ public class MypageController {
 
     private static final Logger log = LoggerFactory.getLogger(MypageController.class);
     private final MypageService mypageService;
-    private final MyScheduleRepository myScheduleRepository;
 
     @Autowired
-    public MypageController(MypageService mypageService, MyBuddyRepository myBuddyRepository, MyScheduleRepository myScheduleRepository) {
+    public MypageController(MypageService mypageService) {
         this.mypageService = mypageService;
-        this.myScheduleRepository = myScheduleRepository;
+    }
+
+    // 로그인한 사용자 정보를 저장할 변수
+    private AccountDTO loggedInUser;
+
+    // 요청마다 초기화
+    @ModelAttribute
+    public void initLoggedInUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof AccountDTO) {
+            this.loggedInUser = (AccountDTO) authentication.getPrincipal();
+        } else {
+            this.loggedInUser = null; // 비로그인 상태
+        }
     }
 
     /* =========================================== My정보 =========================================== */
@@ -46,7 +55,14 @@ public class MypageController {
     public ResponseEntity<ResponseDTO> selectMyProfile() {
         log.info("[MypageService] seleceMyProfile Start");
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원정보조회", mypageService.selectMyProfile()));
+        if (loggedInUser == null) {
+            throw new RuntimeException("로그인 정보가 없습니다.");
+        }
+        log.info("로그인한 사용자 정보: {}", loggedInUser);
+
+        // 서비스 계층 호출
+        Object profileData = mypageService.selectMyProfile(loggedInUser.getMemberCode());
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원정보조회", profileData));
     }
 
     @Operation(summary = "회원정보수정", description = "내가입정보수정", tags = {"MypageController"})
@@ -210,25 +226,6 @@ public class MypageController {
             @ModelAttribute BuddyDTO buddyDTO,
             @RequestParam(value = "postImg", required = false) MultipartFile[] postImg) {
         log.info("Controller: PUT request for buddyCode {}", buddyCode);
-
-//        // postImg 처리 로그
-//        if (postImg != null && postImg.length > 0) {
-//            long totalSize = 0;
-//            for (MultipartFile file : postImg) {
-//                totalSize += file.getSize();
-//            }
-//
-//            // 총 파일 크기가 1MB(1,048,576 bytes)를 초과하면 오류 처리
-//            if (totalSize > 1048576) {
-//                return ResponseEntity.badRequest().body(new ResponseDTO(
-//                        HttpStatus.BAD_REQUEST, "이미지의 총 용량은 최대 1MB까지 허용됩니다.", null));
-//            }
-//
-//            log.info("[MyBuddyController] Total Upload Size: {} bytes", totalSize);
-//            for (MultipartFile file : postImg) {
-//                log.info("[MyBuddyController] File Name: {}", file.getOriginalFilename());
-//            }
-//        }
 
         Map<String, Object> updatedData = mypageService.updateBuddy(buddyCode, buddyDTO, postImg);
         BuddyDTO updatedBuddy = (BuddyDTO) updatedData.get("updatedBuddy");

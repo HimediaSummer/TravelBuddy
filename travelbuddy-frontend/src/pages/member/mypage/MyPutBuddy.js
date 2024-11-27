@@ -1,15 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from "react";
 import { useParams } from 'react-router-dom';
-import '@toast-ui/editor/dist/toastui-editor.css'; 
-import { Editor } from '@toast-ui/react-editor';
-import './MyPutBuddy.css';
+// import ReactQuill from 'react-quill';
+// import 'react-quill/dist/quill.snow.css';
+// import './MyPutBuddy.css';
 
 function MyPutBuddy() {
 
     const navigate = useNavigate();
     const { buddyCode } = useParams(); 
-    const editorRef = useRef();
+      // Quill 에디터 내용 상태 관리
+    // const editorRef = useRef();
+
     const [formData, setFormData] = useState({
         buddyTitle: "",
         buddyContents: "",
@@ -65,6 +67,42 @@ function MyPutBuddy() {
         fetchData();
     }, [buddyCode]);
 
+
+    // Quill 에디터 변경 핸들러
+    // const handleEditorChange = (content) => {
+    //     console.log("변경 핸들러 작동");
+    //     setFormData((prev) => ({
+    //         ...prev,
+    //         buddyContents: content,
+    //     }));
+    // };
+
+    // Quill 드롭다운 문제 해결
+    // useEffect(() => {
+    //     if (editorRef.current) {
+    //         const editor = editorRef.current.getEditor();
+    //         const toolbar = editor.root.parentNode.querySelector(".ql-toolbar");
+
+    //         if (toolbar) {
+    //             toolbar.addEventListener("mousedown", (e) => {
+    //                 const target = e.target;
+    //                 if (target && target.closest(".ql-picker-options")) {
+    //                     e.stopPropagation();
+    //                 }
+    //             });
+
+    //             return () => {
+    //                 toolbar.removeEventListener("mousedown", (e) => {
+    //                     const target = e.target;
+    //                     if (target && target.closest(".ql-picker-options")) {
+    //                         e.stopPropagation();
+    //                     }
+    //                 });
+    //             };
+    //         }
+    //     }
+    // }, []);
+
     // 입력 필드 변경 핸들러
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -74,6 +112,7 @@ function MyPutBuddy() {
         }));
     };
 
+    
     // 파일 변경 핸들러
     const handleFileChange = (e) => {
 
@@ -83,7 +122,12 @@ function MyPutBuddy() {
         // 크기 검사 (1MB = 1048576 bytes)
         if (totalSize > 1048576) {
             alert("이미지의 총 용량은 최대 1MB까지 허용됩니다.");
-            e.target.value = null;
+            e.target.value = null; // 파일 선택 초기화
+            setFormData((prev) => ({
+                ...prev,
+                postImg: [], // 선택된 파일 초기화
+            }));
+            setPreviewImage([]); // 미리보기 초기화
             return;
         }
 
@@ -93,19 +137,24 @@ function MyPutBuddy() {
             const fileExtension = file.name.split(".").pop().toLowerCase();
             if (!allowedExtensions.includes(fileExtension)) {
                 alert("이미지는 .png, .jpg, .jpeg만 가능합니다.");
-                e.target.value = null;
+                e.target.value = null; // 파일 선택 초기화
+                setFormData((prev) => ({
+                    ...prev,
+                    postImg: [], // 선택된 파일 초기화
+                }));
+                setPreviewImage([]); // 미리보기 초기화
                 return;
             }
         }
 
         setFormData((prev) => ({
             ...prev,
-            postImg: files,
+            postImg: [...prev.postImg, ...files], // 기존 이미지에 새로 선택한 이미지 추가
         }));
             
         // 미리보기 이미지 생성
-        const previewUrls = files.map(file => URL.createObjectURL(file));
-        setPreviewImage(previewUrls);
+        const previewUrls = files.map((file) => URL.createObjectURL(file));
+        setPreviewImage((prev) => [...prev, ...previewUrls]);
         
     };
 
@@ -115,7 +164,10 @@ function MyPutBuddy() {
 
         const updatedData = new FormData();
         updatedData.append("buddyTitle", formData.buddyTitle);
-        updatedData.append("buddyContents", editorRef.current.getInstance().getMarkdown()); // Editor 내용 가져오기
+
+        // const editorContent = editorRef.current.getEditor().root.innerHTML;
+        // updatedData.append('buddyContents', editorContent);
+        updatedData.append("buddyContents", formData.buddyContents);
         updatedData.append("regionCode", formData.regionCode);
         updatedData.append("buddyTypeCode", formData.buddyTypeCode);
         
@@ -139,52 +191,6 @@ function MyPutBuddy() {
             alert("수정 중 오류가 발생했습니다.");
         }
     };
-
-    const handleToolbarClick = () => {
-        const dropdowns = document.querySelectorAll('.toastui-editor-dropdown');
-        dropdowns.forEach((dropdown) => dropdown.classList.remove('open'));
-      };
-      
-      // 툴바 버튼 클릭 이벤트에 연결
-      useEffect(() => {
-        const toolbar = document.querySelector('.toastui-editor-toolbar');
-        if (toolbar) {
-          toolbar.addEventListener('click', handleToolbarClick);
-        }
-      
-        return () => {
-          if (toolbar) {
-            toolbar.removeEventListener('click', handleToolbarClick);
-          }
-        };
-      }, []);
-
-      useEffect(() => {
-        const dropdowns = document.querySelectorAll('.toastui-editor-dropdown');
-        dropdowns.forEach((dropdown) => dropdown.classList.remove('open'));
-      }, []);
-    
-      useEffect(() => {
-        // 드롭다운 강제 닫기 이벤트
-        const handleDropdownFix = () => {
-          const dropdowns = document.querySelectorAll('.toastui-editor-dropdown');
-          dropdowns.forEach((dropdown) => {
-            dropdown.classList.remove('open'); // 강제로 닫기
-          });
-        };
-    
-        // 에디터가 렌더링된 후에만 동작
-        if (editorRef.current) {
-            const editorInstance = editorRef.current.getInstance();
-            editorInstance.focus();
-        }
-
-        document.addEventListener('click', handleDropdownFix);
-
-        return () => {
-            document.removeEventListener('click', handleDropdownFix);
-        };
-        }, [editorRef]);
 
 
     return (
@@ -233,42 +239,36 @@ function MyPutBuddy() {
                     </select>
                 </label>
                 <br />
-                {/* <label>
-                    <Editor
-                        // initialValue={formData.buddyContents || ""} // 초기값
-                        initialValue={formData.buddyContents || ""} // 초기값
-                        height="400px" // 에디터 높이
-                        initialEditType="markdown" // 시작 모드: wysiwyg
-                        useCommandShortcut={true} // 단축키 사용 여부
-                        hideModeSwitch={true} // "Write"와 "Preview" 간 전환 버튼 숨기기
-                        toolbarItems={[
-                            // 원하는 툴바 옵션 설정 (필요에 따라 추가/삭제 가능)
-                            ['bold', 'italic', 'strike'],
-                            ['ul', 'ol', 'task', 'indent', 'outdent'],
-                            ['table', 'image'],
-                            // 폰트 크기 버튼 추가
-                            {
-                                name: 'fontSize',
-                                tooltip: 'Font Size',
-                                className: 'custom-font-size-button',
-                                style: { backgroundImage: 'none', fontSize: '12px', cursor: 'pointer' },
-                                text: 'Font Size ▼', // 드롭다운 메뉴 버튼
-                                command: () => {
-                                    const editorInstance = editorRef.current?.getInstance();
-                                    if (!editorInstance) return;
-                                    const selectedText = editorInstance.getSelectedText();
-                                    if (selectedText) {
-                                      const fontSizeHtml = `<span style="font-size: 20px;">${selectedText}</span>`;
-                                      editorInstance.replaceSelection(fontSizeHtml);
-                                    } else {
-                                      alert('텍스트를 선택하세요!');
-                                    }
-                                },
-                            },
-                        ]}
-                        ref={editorRef}
+                <label>
+                    내용:
+                    <input
+                        type="text"
+                        name="buddyContents"
+                        value={formData.buddyContents || ""}
+                        onChange={handleInputChange}
                     />
-                    </label> */}
+
+                {/* <ReactQuill
+                    ref={editorRef}
+                    value={formData.buddyContents } // 초기값
+                    onChange={handleEditorChange}
+                    theme="snow" // Quill 테마
+                    modules={{
+                        toolbar: [
+                            ["bold", "italic", "underline", "strike"],
+                            [{ header: [1, 2, 3, false] }],
+                            [{ list: "ordered" }, { list: "bullet" }],
+                            ["image"],
+                        ]
+                    }}
+                    formats={[
+                        "header",
+                        "bold", "italic", "underline", "strike",
+                        "list", "bullet",
+                        "image",
+                    ]}
+                /> */}
+                </label>
                 <br />
                 <label>
                     이미지:
@@ -276,6 +276,7 @@ function MyPutBuddy() {
                         type="file"
                         name="postImg"
                         accept="image/*"
+                        multiple
                         onChange={handleFileChange}
                     />
                      <br />

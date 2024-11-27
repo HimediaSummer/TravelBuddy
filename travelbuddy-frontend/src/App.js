@@ -100,15 +100,6 @@ function App() {
           {/* 오류 페이지 */}
           <Route path="*" element={<Error />} />
 
-          {/* <Route path="/login" element={ <Login/> } />
-          <Route path="/signup" element={ <Register/> } />
-          <Route path="*" element={ <Error/> }/>
-          <Route path="buddies" element={<Buddies />} />
-          <Route path="buddyDetail/:buddyCode" element={ <BuddyDetail/>} />
-          <Route path="buddyRegist" element={ <BuddyRegist/>} />
-          <Route path='/findid' element={ <FindId/> }/>
-          <Route path='/findpw' element={ <FindPw/> }/>
-        </Route> */}
       </Routes>
     </BrowserRouter>
   );

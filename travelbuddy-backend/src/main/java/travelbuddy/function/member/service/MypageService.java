@@ -87,17 +87,21 @@ public class MypageService {
 
     /* =========================================== My정보 =========================================== */
     /* 회원정보조회 */
-    public Object selectMyProfile() {
+    public Object selectMyProfile(int memberCode) {
         log.info("[MypageService] selectMyProfile() Start");
 
-        List<Account> accountMyProfile = myProfileRepository.findById();
+        List<Account> accountMyProfile = myProfileRepository.findById(memberCode);
+        if (accountMyProfile.isEmpty()) {
+            throw new RuntimeException("회원 정보를 찾을 수 없습니다.");
+        }
 
+        // 이미지 URL 추가 처리
         accountMyProfile.forEach(account ->
                 account.setMemberImg(account.getMemberImg() == null ? null : IMAGE_URL + account.getMemberImg())
         );
 
         log.info("[MypageService] selectMyProfile() END");
-        return accountMyProfile.stream().map(account -> modelMapper.map(account, AccountDTO.class)).collect(Collectors.toList());
+        return accountMyProfile;
     }
 
     /* 회원정보수정 */
@@ -350,9 +354,16 @@ public class MypageService {
         buddyDTO.setBuddyAt(getBuddyDetail.getBuddyAt());
         // buddyImg에 URL 연결
         if (getBuddyDetail.getBuddyImg() != null && !getBuddyDetail.getBuddyImg().isEmpty()) {
-            buddyDTO.setBuddyImg(buddyImageUrl + getBuddyDetail.getBuddyImg());
+            // `,`로 나눠 List<String>으로 변환
+            List<String> imageUrls = Arrays.stream(getBuddyDetail.getBuddyImg().split(","))
+                    .map(img -> buddyImageUrl + img.trim()) // 각 이미지 경로에 URL 추가
+                    .collect(Collectors.toList());
+
+            // List<String> -> String으로 변환하여 DTO에 설정
+            String joinedImages = String.join(",", imageUrls);
+            buddyDTO.setBuddyImg(joinedImages);
         } else {
-            buddyDTO.setBuddyImg("");
+            buddyDTO.setBuddyImg(""); // 이미지가 없을 경우 빈 문자열 설정
         }
 
         System.out.println("Manually Mapped BuddyDTO: " + buddyDTO);
@@ -560,6 +571,99 @@ public class MypageService {
 
         return result;
     }
+
+
+
+
+
+
+//    @Transactional
+//    public Map<String, Object> updateBuddy(int buddyCode, BuddyDTO buddyDTO) {
+//        log.info("Service: Updating buddy with buddyCode {}", buddyCode);
+//
+//        // 1. 게시글 조회
+//        Buddy buddy = myBuddyRepository.findByBuddyCode(buddyCode);
+//        if (buddy == null) {
+//            throw new RuntimeException("수정할 게시글을 찾을 수 없습니다.");
+//        }
+//
+//        // 2. 지역 및 버디 유형 조회
+//        Region region = regionRepository.findById(buddyDTO.getRegionCode())
+//                .orElseThrow(() -> new RuntimeException("유효하지 않은 지역 코드입니다."));
+//        BuddyType buddyType = buddyTypeRepository.findById(buddyDTO.getBuddyTypeCode())
+//                .orElseThrow(() -> new RuntimeException("유효하지 않은 버디 유형 코드입니다."));
+//
+//        // 3. Quill HTML 콘텐츠 처리
+//        String updatedContents = processQuillContents(buddyDTO.getBuddyContents());
+//        String imageList = extractImageUrlsFromContents(buddyDTO.getBuddyContents()); // 이미지 URL 추출
+//
+//        // 4. 게시글 수정
+//        buddy.setBuddyTitle(buddyDTO.getBuddyTitle());
+//        buddy.setBuddyContents(updatedContents); // Quill 콘텐츠 저장
+//        buddy.setBuddyImg(imageList); // 이미지 URL 저장
+//        buddy.setRegion(region);
+//        buddy.setBuddyType(buddyType);
+//
+//        // 5. 변경된 게시글 저장
+//        myBuddyRepository.save(buddy);
+//        log.info("Service: Buddy updated successfully");
+//
+//        // 6. 수정 후 필요한 데이터 반환
+//        BuddyDTO updatedBuddyDTO = new BuddyDTO();
+//        updatedBuddyDTO.setBuddyCode(buddy.getBuddyCode());
+//        updatedBuddyDTO.setBuddyTitle(buddy.getBuddyTitle());
+//        updatedBuddyDTO.setBuddyContents(buddy.getBuddyContents());
+//        updatedBuddyDTO.setBuddyImg(buddy.getBuddyImg());
+//        updatedBuddyDTO.setRegionCode(buddy.getRegion().getRegionCode());
+//        updatedBuddyDTO.setBuddyTypeCode(buddy.getBuddyType().getBuddyTypeCode());
+//
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("updatedBuddy", updatedBuddyDTO);
+//
+//        return response;
+//    }
+//    // Quill 콘텐츠 처리
+//    private String processQuillContents(String buddyContents) {
+//        // HTML에서 이미지 URL 추출 및 유효성 검사
+//        Document doc = Jsoup.parse(buddyContents);
+//        Elements images = doc.select("img");
+//
+//        for (Element img : images) {
+//            String src = img.attr("src");
+//
+//            // Base64 이미지 처리
+//            if (src.startsWith("data:image")) {
+//                // Base64 데이터를 파일로 저장
+//                String fileName = saveBase64Image(src);
+//                String fileUrl = "/uploads/" + fileName;
+//
+//                // Quill 콘텐츠의 이미지 src를 파일 URL로 교체
+//                img.attr("src", fileUrl);
+//            }
+//        }
+//
+//        return doc.body().html(); // 수정된 HTML 반환
+//    }
+
+    // Base64 이미지 저장 로직
+//    private String saveBase64Image(String base64Data) {
+//        try {
+//            // Base64 데이터 분리
+//            String[] parts = base64Data.split(",");
+//            byte[] imageBytes = Base64.getDecoder().decode(parts[1]);
+//
+//            // 파일 저장
+//            String fileName = UUID.randomUUID().toString() + ".png";
+//            Path filePath = Paths.get("C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/", fileName);
+//            Files.write(filePath, imageBytes);
+//
+//            return fileName;
+//
+//        } catch (IOException e) {
+//            log.error("Error while saving Base64 image", e);
+//            throw new RuntimeException("Base64 이미지 저장 중 오류 발생", e);
+//        }
+//    }
 
     /* 내가쓴버디게시글삭제 */
     @Transactional

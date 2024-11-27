@@ -10,7 +10,7 @@ function MyBuddyDetail() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { buddyCode } = useParams(); 
-    const [buddyDetail, setBuddyDetail] = useState({});
+    const [buddyDetail, setBuddyDetail] = useState({ buddyImg: []});
     const [regionName, setRegionName] = useState(""); // 지역명
     const [buddyTypeName, setBuddyTypeName] = useState(""); // 버디 유형
     const [memberName, setMemberName] = useState(""); // 작성자 이름
@@ -32,7 +32,18 @@ function MyBuddyDetail() {
             })   
             .then((data) => {
                 console.log('Fetched Data:', data);
-                setBuddyDetail(data.data.getBuddyDetail); 
+
+                 // buddyImg를 쉼표로 나눠 배열로 변환
+                const images = data.data.getBuddyDetail.buddyImg
+                    ? data.data.getBuddyDetail.buddyImg.split(",")
+                    : [];
+
+                setBuddyDetail({
+                    ...data.data.getBuddyDetail,
+                    buddyImg: images, // buddyImg를 배열로 저장
+                });
+
+                // setBuddyDetail(data.data.getBuddyDetail); 
                 setRegionName(data.data.regionName); 
                 setBuddyTypeName(data.data.buddyTypeName); 
                 setMemberName(data.data.memberName); 
@@ -43,6 +54,10 @@ function MyBuddyDetail() {
                 console.error('Error fetching buddy:', error);
             });
     }, [buddyCode]);
+
+
+
+    
 
     // 헤더 체크박스
     const handleSelectAll = () => {
@@ -139,16 +154,25 @@ function MyBuddyDetail() {
                 <h3>내가 쓴 버디 게시글 상세 조회</h3>
                 <ul>
                     <li key={buddyDetail.buddyCode}>
+                       
+                        
+                        {/* 이미지 */}
+                        {/* 이미지 슬라이드 */}
+                        <ImageSlider images={buddyDetail.buddyImg} />
+                        {/* {buddyDetail.buddyImg && buddyDetail.buddyImg.length > 0 ? (
+                            buddyDetail.buddyImg.map((img, index) => (
+                                <img 
+                                    key={index}
+                                    src={img}
+                                    alt={`Buddy Image ${index + 1}`}
+                                    style={{ width: '200px', height: 'auto', marginRight: '10px' }}
+                                />
+                            ))
+                        ) : (
+                            <p>이미지가 없습니다.</p>
+                        )} */}
                         <p>제목 : {buddyDetail.buddyTitle}</p> 
                         <p>내용 : {buddyDetail.buddyContents}</p>
-                        {/* 이미지 */}
-                        {buddyDetail.buddyImg && (
-                            <img 
-                                src={buddyDetail.buddyImg} 
-                                alt="Buddy" 
-                                style={{ width: '200px', height: 'auto' }} 
-                            />
-                        )} 
                         <p>지역 : {regionName}</p> 
                         <p>작성일자 : {buddyDetail.buddyCreate}</p>  
                         <p>작성자 : {memberName}</p>  
@@ -218,4 +242,84 @@ function MyBuddyDetail() {
     );
 }
 
+
+
+
+
+function ImageSlider({ images }) {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const handleNext = () => {
+        // 다음 이미지로 이동 (마지막 이미지라면 첫 번째로 돌아감)
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    };
+
+    const handlePrev = () => {
+        // 이전 이미지로 이동 (첫 번째 이미지라면 마지막으로 이동)
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+    };
+
+    if (!images || images.length === 0) {
+        return <p>이미지가 없습니다.</p>;
+    }
+
+    return (
+        <div style={{ position: "relative", width: "300px", height: "200px" }}>
+            {/* 이미지 */}
+            <img
+                src={images[currentIndex]}
+                alt={`Slide ${currentIndex + 1}`}
+                style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    borderRadius: "10px",
+                }}
+            />
+
+            {/* 왼쪽 버튼 */}
+            <button
+                onClick={handlePrev}
+                style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "10px",
+                    transform: "translateY(-50%)",
+                    background: "rgba(0, 0, 0, 0.5)",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "50%",
+                    width: "30px",
+                    height: "30px",
+                    cursor: "pointer",
+                }}
+            >
+                &lt;
+            </button>
+
+            {/* 오른쪽 버튼 */}
+            <button
+                onClick={handleNext}
+                style={{
+                    position: "absolute",
+                    top: "50%",
+                    right: "10px",
+                    transform: "translateY(-50%)",
+                    background: "rgba(0, 0, 0, 0.5)",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "50%",
+                    width: "30px",
+                    height: "30px",
+                    cursor: "pointer",
+                }}
+            >
+                &gt;
+            </button>
+        </div>
+    );
+}
+
+
 export default MyBuddyDetail;
+

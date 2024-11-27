@@ -21,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import travelbuddy.common.Criteria;
@@ -85,12 +86,34 @@ public class MypageService {
         this.modelMapper = modelMapper;
     }
 
+    // 현재 로그인한 사용자(AccountDTO) 가져오기
+    public static AccountDTO getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof AccountDTO) {
+            return (AccountDTO) principal;
+        }
+        return null; // 인증되지 않은 경우
+    }
+
+    // 현재 로그인한 사용자의 memberName 가져오기
+    public static String getCurrentUsername() {
+        AccountDTO currentUser = getCurrentUser();
+        return currentUser != null ? currentUser.getMemberName() : null;
+    }
+
+    // 현재 로그인한 사용자의 memberCode 가져오기
+    public static Integer getCurrentMemberCode() {
+        AccountDTO currentUser = getCurrentUser();
+        return currentUser != null ? currentUser.getMemberCode() : null;
+    }
+
     /* =========================================== My정보 =========================================== */
     /* 회원정보조회 */
-    public Object selectMyProfile(int memberCode) {
+    public Object selectMyProfile(Integer memberCode) {
         log.info("[MypageService] selectMyProfile() Start");
 
-        List<Account> accountMyProfile = myProfileRepository.findById(memberCode);
+        List<Account> accountMyProfile = myProfileRepository.findByLoginMemberCode(memberCode);
         if (accountMyProfile.isEmpty()) {
             throw new RuntimeException("회원 정보를 찾을 수 없습니다.");
         }

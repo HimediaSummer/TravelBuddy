@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface MyProfileRepository extends JpaRepository<Account, Integer> {
 
     @Query("SELECT a FROM Account a WHERE a.memberCode = :memberCode")
-    List<Account> findById(@Param("memberCode") int memberCode);
+    List<Account> findByLoginMemberCode(@Param("memberCode") Integer memberCode);
 
     @Query("SELECT a FROM Account a WHERE a.memberCode = 1002")
     Optional<Account> findByMemberCodeUpdate(int memberCode);

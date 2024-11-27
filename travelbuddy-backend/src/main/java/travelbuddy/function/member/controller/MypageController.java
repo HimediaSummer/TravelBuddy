@@ -49,19 +49,38 @@ public class MypageController {
         }
     }
 
+    // 현재 로그인한 사용자(AccountDTO) 가져오기
+    public static AccountDTO getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof AccountDTO) {
+            return (AccountDTO) principal;
+        }
+        return null; // 인증되지 않은 경우
+    }
+
+    // 현재 로그인한 사용자의 memberName 가져오기
+    public static String getCurrentUsername() {
+        AccountDTO currentUser = getCurrentUser();
+        return currentUser != null ? currentUser.getMemberName() : null;
+    }
+
+    // 현재 로그인한 사용자의 memberCode 가져오기
+    public static Integer getCurrentMemberCode() {
+        AccountDTO currentUser = getCurrentUser();
+        return currentUser != null ? currentUser.getMemberCode() : null;
+    }
+
     /* =========================================== My정보 =========================================== */
     @Operation(summary = "회원정보조회", description = "내가입정보조회", tags = {"MypageController"})
     @GetMapping("/myprofile")
     public ResponseEntity<ResponseDTO> selectMyProfile() {
         log.info("[MypageService] seleceMyProfile Start");
 
-        if (loggedInUser == null) {
-            throw new RuntimeException("로그인 정보가 없습니다.");
-        }
-        log.info("로그인한 사용자 정보: {}", loggedInUser);
+        Integer memberCode = getCurrentMemberCode();
 
         // 서비스 계층 호출
-        Object profileData = mypageService.selectMyProfile(loggedInUser.getMemberCode());
+        Object profileData = mypageService.selectMyProfile(memberCode);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원정보조회", profileData));
     }
 

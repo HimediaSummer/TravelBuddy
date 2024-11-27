@@ -1,6 +1,9 @@
 import { createAction, handleActions } from 'redux-actions';
 
-const initialState = [];
+const initialState = {
+    profile: [],
+    updateResult: null
+};
 
 export const GET_PROFILE = 'GET_PROFILE';
 export const PUT_PROFILE = 'PUT_PROFILE';

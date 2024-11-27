@@ -117,6 +117,9 @@ public class TokenProvider {
                 .setSubject(account.getMemberName())
                 // 회원의 권한들을 "auth"라는 클레임으로 토큰에 추가
                 .claim(AUTHORITIES_KEY, role)
+
+                .claim("memberCode", account.getMemberCode()) // memberCode 추가
+
                 // 만료 시간 설정
                 .setExpiration(accessTokenExpiresIn)
                 // 서명 및 알고리즘 설정
@@ -127,7 +130,7 @@ public class TokenProvider {
 
         log.info("[TokenProvider] generateTokenDTO() End");
 
-        return new TokenDTO(BEARER_TYPE, account.getMemberName(), accessToken, accessTokenExpiresIn.getTime());
+        return new TokenDTO(BEARER_TYPE, account.getMemberName(), accessToken, accessTokenExpiresIn.getTime(), account.getMemberCode());
     }
 
     /* 목차. 2. 토큰에 등록된 클레임의 sub에서 해당 회원의 아이디를 추출 */

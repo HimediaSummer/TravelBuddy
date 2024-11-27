@@ -2,8 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getBuddy } from "../../../modules/mypage/MyBuddyModule.js"
-import { putBuddy } from "../../../modules/mypage/MyBuddyModule.js"
 
 function MyBuddyDetail() {
 

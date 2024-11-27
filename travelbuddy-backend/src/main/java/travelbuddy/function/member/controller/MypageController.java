@@ -82,11 +82,6 @@ public class MypageController {
         log.info("[MypageController] Raw request parameters:");
         request.getParameterMap().forEach((key, value) -> log.info("{}: {}", key, Arrays.toString(value)));
 
-        log.info("Received AccountDTO: {}", accountDTO);
-        log.info("Received profileImg: {}", profileImg != null ? profileImg.getOriginalFilename() : "No File");
-
-
-
         // 현재 로그인한 사용자의 memberCode 가져오기
         Integer memberCode = getCurrentMemberCode();
         if (memberCode == null) {
@@ -113,10 +108,16 @@ public class MypageController {
 
     @Operation(summary = "회원탈퇴", description = "회원숨김수정", tags = {"MypageController"})
     @PutMapping("/deletion")
-    public ResponseEntity<ResponseDTO> putDeleteAccount(@RequestBody Map<String, Object> requestBody) {
+    public ResponseEntity<ResponseDTO> putDeleteAccount() {
         log.info("[MypageService] deletionMyProfile Start");
 
-        int memberCode = (int) requestBody.get("memberCode");
+        // 현재 로그인한 사용자의 memberCode 가져오기
+        Integer memberCode = getCurrentMemberCode();
+        if (memberCode == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ResponseDTO(HttpStatus.UNAUTHORIZED, "로그인 정보가 없습니다.", null));
+        }
+
         mypageService.putDeleteAccount(memberCode);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원숨김ㅃㅃ", null));
@@ -195,17 +196,45 @@ public class MypageController {
             @RequestParam(name = "offset", defaultValue = "1") int offset) {
         log.info("[MypageController] selectBuddyListPaging : " + offset);
 
-        int total = mypageService.selectBuddyTotal();
+        // 현재 로그인한 사용자의 memberCode 가져오기
+        Integer memberCode = getCurrentMemberCode();
+        if (memberCode == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ResponseDTO(HttpStatus.UNAUTHORIZED, "로그인 정보가 없습니다.", null));
+        }
+
+        int total = mypageService.selectBuddyTotal(memberCode); // memberCode 전달
         Criteria cri = new Criteria(offset, 10);
-        List<Map<String, Object>> buddyList = mypageService.selectBuddyListPaging(cri);
+        List<Map<String, Object>> buddyList = mypageService.selectBuddyListPaging(cri, memberCode); // memberCode 전달
 
         PagingResponseDTO response = new PagingResponseDTO();
         response.setData(buddyList);
         response.setPageInfo(new PageDTO(cri, total));
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", response));
-
     }
+
+
+
+
+
+//    @Operation(summary = "게시글조회요청", description = "내가쓴글페이지목록조회", tags = {"MypageController"})
+//    @GetMapping("/mybuddy")
+//    public ResponseEntity<ResponseDTO> selectBuddyListPaging(
+//            @RequestParam(name = "offset", defaultValue = "1") int offset) {
+//        log.info("[MypageController] selectBuddyListPaging : " + offset);
+//
+//        int total = mypageService.selectBuddyTotal();
+//        Criteria cri = new Criteria(offset, 10);
+//        List<Map<String, Object>> buddyList = mypageService.selectBuddyListPaging(cri);
+//
+//        PagingResponseDTO response = new PagingResponseDTO();
+//        response.setData(buddyList);
+//        response.setPageInfo(new PageDTO(cri, total));
+//
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", response));
+//
+//    }
 
     @Operation(summary = "게시글상세조회요청", description = "내가쓴글상세조회", tags = {"MypageController"})
     @GetMapping("/mybuddy/{buddyCode}")

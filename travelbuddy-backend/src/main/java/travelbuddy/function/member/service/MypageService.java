@@ -217,6 +217,7 @@ public class MypageService {
 
         account.setMemberDeletion("Y");
         account.setMemberLeave(String.valueOf(LocalDate.now()));
+
         myProfileRepository.save(account);
 
         log.info("[MypageService] 숨김 완료: memberCode = {}", memberCode);
@@ -318,19 +319,26 @@ public class MypageService {
 
     /* =========================================== My커뮤니티 =========================================== */
     /* 내가 쓴 버디게시글 목록조회 */
-    public int selectBuddyTotal() {
+    public int selectBuddyTotal(int memberCode) {
         log.info("[MyService] selectBuddyListTotal() Start");
-        int memberCode = 1002;
-        int total = myBuddyRepository.countByMemberCode(memberCode);
-
+        int total = myBuddyRepository.countByMemberCode(memberCode); // memberCode 사용
+        log.info("[MyService] selectBuddyListTotal() End, Total: {}", total);
         return total;
     }
 
+
+//    public int selectBuddyTotal() {
+//        log.info("[MyService] selectBuddyListTotal() Start");
+//        int memberCode = 1002;
+//        int total = myBuddyRepository.countByMemberCode(memberCode);
+//
+//        return total;
+//    }
+
     // Buddy 목록 페이징
-    public List<Map<String, Object>> selectBuddyListPaging(Criteria cri) {
+    public List<Map<String, Object>> selectBuddyListPaging(Criteria cri, int memberCode) {
         log.info("[MyService] selectBuddyListPaging() Start");
 
-        int memberCode = 1002;
         int index = cri.getPageNum() - 1;
         int count = cri.getAmount();
         Pageable paging = PageRequest.of(index, count, Sort.by("buddyCode").descending());
@@ -356,10 +364,45 @@ public class MypageService {
             buddyList.add(buddyMap);
         }
 
-
-        log.info("[AdminAccountService] selectMemberListWithPaging() End");
+        log.info("[MyService] selectBuddyListPaging() End");
         return buddyList;
     }
+
+
+
+//    public List<Map<String, Object>> selectBuddyListPaging(Criteria cri) {
+//        log.info("[MyService] selectBuddyListPaging() Start");
+//
+//        int memberCode = 1002;
+//        int index = cri.getPageNum() - 1;
+//        int count = cri.getAmount();
+//        Pageable paging = PageRequest.of(index, count, Sort.by("buddyCode").descending());
+//
+//        Page<Object[]> results = myBuddyRepository.findAllBuddyListPaging(memberCode, paging);
+//
+//        List<Map<String, Object>> buddyList = new ArrayList<>();
+//        for (Object[] result : results) {
+//            Map<String, Object> buddyMap = new HashMap<>();
+//            Buddy buddy = (Buddy) result[0];
+//            String regionName = (String) result[1];
+//            String buddyTypeName = (String) result[2];
+//            String memberName = (String) result[3];
+//            buddyMap.put("buddyTitle", buddy.getBuddyTitle());
+//            buddyMap.put("buddyCode", buddy.getBuddyCode());
+//            buddyMap.put("buddyCreate", buddy.getBuddyCreate());
+//            buddyMap.put("buddyStatus", buddy.getBuddyStatus());
+//            buddyMap.put("buddyCount", buddy.getBuddyCount());
+//            buddyMap.put("memberName", memberName);
+//            buddyMap.put("regionName", regionName);
+//            buddyMap.put("buddyTypeName", buddyTypeName);
+//
+//            buddyList.add(buddyMap);
+//        }
+//
+//
+//        log.info("[AdminAccountService] selectMemberListWithPaging() End");
+//        return buddyList;
+//    }
 
 
     /* 내가쓴버디게시글상세조회및신청회원목록조회 */

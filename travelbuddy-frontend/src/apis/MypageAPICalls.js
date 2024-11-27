@@ -1,5 +1,8 @@
-import { putProfile, getProfile } from '../modules/mypage/MyProfileModule';
+import { putProfile, getProfile } from '../modules/MypageModule';
+import { getMyBuddy, deleteMyBuddy } from '../modules/MypageModule';
 
+
+// 회원정보부분
 export const callMyProfileAPI = () => {
     return async (dispatch) => {
         try {
@@ -69,3 +72,88 @@ export const updateProfileAPI = (formData, navigate) => {
         }
     };
 };
+
+export const deletionProfileAPI = (navigate) => {
+
+    return async (dispatch) => {
+        try {
+            const response = await fetch('/mypage/deletion', {
+                method: "PUT",
+                headers: {
+                    Accept: '*/*',
+                    Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("회원탈퇴 요청 실패!");
+            }
+
+            const data = await response.json();
+            console.log("회원탈퇴 성공 응답:", data);
+
+            alert("회원탈퇴가 완료되었습니다.");
+            navigate('/'); // 메인 페이지로 이동
+        } catch (error) {
+            console.error("회원탈퇴 실패:", error);
+            alert("회원탈퇴 중 문제가 발생했습니다. 다시 시도해주세요.");
+        }
+    };
+
+};
+
+
+
+
+
+// 게시글 부분
+// 내가 쓴 게시글 목록 조회 API
+export const callMyBuddyListAPI = (page) => {
+    return async (dispatch) => {
+        try {
+            const response = await fetch(`/mypage/mybuddy?offset=${page}`, {
+                method: 'GET',
+                headers: {
+                    Accept: '*/*',
+                    Authorization: 'Bearer ' + window.localStorage.getItem('accessToken'),
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("게시글 목록 조회 실패");
+            }
+
+            const data = await response.json();
+            dispatch(getMyBuddy(data.data));
+        } catch (error) {
+            console.error("Error fetching buddy list:", error);
+        }
+    };
+};
+
+// 내가 쓴 게시글 삭제 API
+export const deleteBuddyAPI = (selectedRows, callback) => {
+    return async () => {
+        try {
+            const response = await fetch(`/mypage/mybuddy/delete`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: 'Bearer ' + window.localStorage.getItem('accessToken'),
+                },
+                body: JSON.stringify(selectedRows),
+            });
+
+            if (!response.ok) {
+                throw new Error("게시글 삭제 실패");
+            }
+
+            return await response.json();
+            callback(); // 성공 후 콜백 실행
+        } catch (error) {
+            console.error("Error deleting buddy:", error);
+        }
+    };
+};
+
+

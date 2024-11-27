@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Schedule from './components/products/Schedule';
-import Scheduletest from './components/products/Schedule/testSchedule';
 import Main from './components/products/Main';
 import Members from './pages/admin/Member/Members';
 import MemberDetail from './pages/admin/Member/MemberDetail';
@@ -52,7 +51,6 @@ function App() {
         <Route path="/">
           <Route index element={ <Main/> }/>          
           <Route path="Schedule" element={ <Schedule /> }/>   
-          <Route path="Scheduletest" element={ <Scheduletest /> }/>   
           <Route path="Members" element={ <Members/> }/>
           <Route path="MemberDetail/:memberCode" element={ <MemberDetail/>} />
           <Route path="Qnas" element={ <Qnas/> }/>

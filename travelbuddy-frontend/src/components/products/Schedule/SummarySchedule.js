@@ -12,7 +12,8 @@ function SummarySchedule({ travelData }) {
 	const [scheduleData, setScheduleData] = useState([]); // 일정 데이터를 위한 state 추가
 	const navigate = useNavigate();
 	const [testScheduleData, setTestScheduleData] = useState([]); // 테스트
-	const [scheduleDetails, setScheduleDetails] = useState({}); // 0번째 인덱스 저장
+	const [scheduleDetails, setScheduleDetails] = useState({}); // 새로 추가된 상태
+
 
 	const message = `: ${JSON.stringify(travelData)} 이 데이터를 바탕으로 여행일정을 만들어 출력해 줘. 형식은 json 배열 형태로 예시를 알려줄게, 날짜(date), 시간(time), 장소(list), 장소타입(type), 주소(adress), 경도/위도(latlng)는 꼭 있어야해, 스케줄은 지역내에서만 이뤄져야해 일정은 식사일정 포함해서 하루에 3개 이하, 1개이상으로 짜줘,
 	sche_start_date,
@@ -109,18 +110,19 @@ function SummarySchedule({ travelData }) {
 			// 지도 표시 테스트중
 			// setSchedule(content); // 상태에 저장하거나 다른 작업 수행
 
+			// 첫 번째 항목에서 원하는 속성들만 추출하여 저장
 			if (jsonData && jsonData[0]) {
 				const firstSchedule = jsonData[0];
 				const extractedDetails = {
-				  sche_start_date: firstSchedule.sche_start_date,
-				  sche_end_date: firstSchedule.sche_end_date,
-				  sche_start_time: firstSchedule.sche_start_time,
-				  sche_end_time: firstSchedule.sche_end_time,
-				  region: firstSchedule.region,
-				  accom: firstSchedule.accom,
+				sche_start_date: firstSchedule.sche_start_date,
+				sche_end_date: firstSchedule.sche_end_date,
+				sche_start_time: firstSchedule.sche_start_time,
+				sche_end_time: firstSchedule.sche_end_time,
+				region: firstSchedule.region,
+				accom: firstSchedule.accom,
 				};
 				setScheduleDetails(extractedDetails); // 새로 추출된 값 저장
-			  }
+			}
 
 			// 위도, 경도만 뽑아서 scheduleData에 저장
 			const extractedData = jsonData

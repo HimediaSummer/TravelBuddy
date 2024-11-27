@@ -75,9 +75,8 @@ function App() {
           <Route path="NoticeDetail/:noticeCode" element={<NoticeDetail />}/>
           <Route path="MyNotices" element={<MyNotices />}/>
           <Route path="MyNoticeDetail/:noticeCode" element={<MyNoticeDetail />}/>
-          <Route path="MyPage" element={<MyPage />}>
-            <Route path="MyBuddyList" element={<MypageBuddyList />} />
-          </Route> 
+          {/* <Route path="MyPage" element={<MyPage />}/>
+          <Route path="MyBuddyList" element={<MypageBuddyList />} /> */}
           
           {/* Mypage */}
           <Route path="/mypage" element={<Mypage />}>

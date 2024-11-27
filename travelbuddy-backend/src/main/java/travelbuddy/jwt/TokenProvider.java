@@ -130,7 +130,7 @@ public class TokenProvider {
 
         log.info("[TokenProvider] generateTokenDTO() End");
 
-        return new TokenDTO(BEARER_TYPE, account.getMemberName(), accessToken, accessTokenExpiresIn.getTime(), account.getMemberCode());
+        return new TokenDTO(BEARER_TYPE, account.getMemberName(), accessToken, accessTokenExpiresIn.getTime());
     }
 
     /* 목차. 2. 토큰에 등록된 클레임의 sub에서 해당 회원의 아이디를 추출 */

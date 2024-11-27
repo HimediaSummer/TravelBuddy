@@ -14,9 +14,9 @@ public interface MyProfileRepository extends JpaRepository<Account, Integer> {
     @Query("SELECT a FROM Account a WHERE a.memberCode = :memberCode")
     List<Account> findByLoginMemberCode(@Param("memberCode") Integer memberCode);
 
-    @Query("SELECT a FROM Account a WHERE a.memberCode = 1002")
-    Optional<Account> findByMemberCodeUpdate(int memberCode);
+    @Query("SELECT a FROM Account a WHERE a.memberCode = :memberCode")
+    Optional<Account> findByMemberCodeUpdate(@Param("memberCode") Integer memberCode);
 
-    @Query("SELECT a FROM Account a WHERE a.memberCode = 1001")
-    Optional<Object> findByMemberCode(int memberCode);
+    @Query("SELECT a FROM Account a WHERE a.memberCode = :memberCode")
+    Optional<Object> findByMemberCode(@Param("memberCode") Integer memberCode);
 }

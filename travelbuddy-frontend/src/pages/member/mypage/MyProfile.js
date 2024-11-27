@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import jwt_decode from 'jwt-decode'; // jwt-decode 사용
 import{callMyProfileAPI} from '../../../apis/MypageAPICalls.js';
 
 function MyProfile() {

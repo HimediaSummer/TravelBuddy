@@ -20,7 +20,6 @@ public class AccountDTO implements UserDetails {
     private String memberDeletion;      // 회원탈퇴상태여부
     private int memberLike;         // 좋아요
     private String memberImg;        // 이미지경로
-//    private MultipartFile memberImg;
     private AuthorityDTO authority;     // 권한
     private String memberCreate;        // 회원생성일
     private String memberLeave;         // 회원탈퇴일

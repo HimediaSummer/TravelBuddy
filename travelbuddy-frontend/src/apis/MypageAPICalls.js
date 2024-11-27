@@ -1,4 +1,4 @@
-import { GET_PROFILE, PUT_PROFILE, getProfile } from '../modules/mypage/MyProfileModule';
+import { putProfile, getProfile } from '../modules/mypage/MyProfileModule';
 
 export const callMyProfileAPI = () => {
     return async (dispatch) => {
@@ -17,7 +17,7 @@ export const callMyProfileAPI = () => {
             }
 
             const data = await response.json();
-            console.log('Fetched Data from API:', data);
+            console.log('Fetched Data from API!!!!!!!!!!!!!!!!!!!!!!!:', data);
 
             if (Array.isArray(data)) {
                 dispatch(getProfile(data)); // Redux 액션 디스패치
@@ -33,7 +33,29 @@ export const callMyProfileAPI = () => {
     };
 };
 
+// 회원정보 수정 API
+export const updateProfileAPI = (formData, navigate) => {
+    return async (dispatch) => {
+        try {
+            const response = await fetch('/mypage/updatemyprofile', {
+                method: "PUT",
+                body: formData,
+            });
+            if (!response.ok) {
+                throw new Error("Failed to update profile");
+            }
 
+            const data = await response.json();
+            console.log("Updated profile data:", data);
+
+            dispatch(putProfile(data));
+            alert("회원정보가 수정되었습니다.");
+            navigate('/mypage/myprofile');
+        } catch (error) {
+            console.error("Error updating profile:", error);
+        }
+    };
+};
 
 
 

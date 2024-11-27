@@ -35,20 +35,6 @@ public class MypageController {
         this.mypageService = mypageService;
     }
 
-    // 로그인한 사용자 정보를 저장할 변수
-    private AccountDTO loggedInUser;
-
-    // 요청마다 초기화
-    @ModelAttribute
-    public void initLoggedInUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof AccountDTO) {
-            this.loggedInUser = (AccountDTO) authentication.getPrincipal();
-        } else {
-            this.loggedInUser = null; // 비로그인 상태
-        }
-    }
-
     // 현재 로그인한 사용자(AccountDTO) 가져오기
     public static AccountDTO getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -92,6 +78,16 @@ public class MypageController {
     {
         log.info("[MypageService] updateMyProfile Start");
 
+        // 현재 로그인한 사용자의 memberCode 가져오기
+        Integer memberCode = getCurrentMemberCode();
+        if (memberCode == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ResponseDTO(HttpStatus.UNAUTHORIZED, "로그인 정보가 없습니다.", null));
+        }
+
+        // 현재 사용자의 memberCode를 AccountDTO에 설정
+        accountDTO.setMemberCode(memberCode);
+
         // profileImg 처리 로그
         if (profileImg != null && !profileImg.isEmpty()) {
             log.info("[MypageController] profileImg Original Name: {}", profileImg.getOriginalFilename());
@@ -111,9 +107,6 @@ public class MypageController {
     public ResponseEntity<ResponseDTO> putDeleteAccount(@RequestBody Map<String, Object> requestBody) {
         log.info("[MypageService] deletionMyProfile Start");
 
-//        HttpSession session = request.getSession();
-//        Integer memberCode = (Integer) session.getAttribute("memberCode");
-
         int memberCode = (int) requestBody.get("memberCode");
         mypageService.putDeleteAccount(memberCode);
 
@@ -127,6 +120,13 @@ public class MypageController {
     public ResponseEntity<ResponseDTO> selectMyScheListPaging(
             @RequestParam(name = "offset", defaultValue = "1") int offset) {
         log.info("[MypageController] selectMyScheListPaging : " + offset);
+
+        // 현재 로그인한 사용자의 memberCode 가져오기
+        Integer memberCode = getCurrentMemberCode();
+        if (memberCode == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ResponseDTO(HttpStatus.UNAUTHORIZED, "로그인 정보가 없습니다.", null));
+        }
 
         int total = mypageService.selectScheTotal();
         Criteria cri = new Criteria(offset, 10);

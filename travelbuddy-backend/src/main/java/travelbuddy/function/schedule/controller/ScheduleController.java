@@ -155,8 +155,11 @@ public class ScheduleController {
         String actualToken = token.substring(7); // "Bearer" 제거
         String userIdString = tokenProvider.getUserId(actualToken); // 사용자 ID 가져오기
 
+        // 토큰에서 추출한 사용자 ID로 회원 정보 조회 (memberCode 찾기)
+        Account account = accountRepository.findByMemberName(userIdString);
+
         // 일정 저장 서비스 호출
-        Schedule savedSchedule =  scheduleService.saveSchedule(scheduleDTO, userIdString);
+        Schedule savedSchedule =  scheduleService.saveSchedule(scheduleDTO, account.getMemberCode());
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정 저장 성공!", savedSchedule));
     }

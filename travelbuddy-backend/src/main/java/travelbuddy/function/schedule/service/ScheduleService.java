@@ -3,6 +3,7 @@ package travelbuddy.function.schedule.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -280,13 +281,13 @@ public class ScheduleService {
 //    }
 
     @Transactional
-    public Schedule saveSchedule(ScheduleDTO scheduleDTO, String userIdString) {
+    public Schedule saveSchedule(ScheduleDTO scheduleDTO, int memberCode) {
         // 각 엔티티 조회
         Region region = regionRepository.findById(scheduleDTO.getRegionCode())
                 .orElseThrow(() -> new RuntimeException("Region not found"));
         Accommodation accommodation = accommodationRepository.findById(scheduleDTO.getAccomCode())
                 .orElseThrow(() -> new RuntimeException("Accommodation not found"));
-        Account account = accountRepository.findById(scheduleDTO.getMemberCode())
+        Account account = accountRepository.findById(memberCode)
                 .orElseThrow(() -> new RuntimeException("Account not found"));
 //        MemberAnswer memberAnswer = memberAnswerRepository.findById(scheduleDTO.getMemberAnswerCode())
 //                .orElseThrow(() -> new RuntimeException("MemberAnswer not found"));
@@ -298,7 +299,7 @@ public class ScheduleService {
         Schedule schedule = new Schedule();
         schedule.setRegion(region);
         schedule.setAccommodation(accommodation);
-//        schedule.setAccount(account);
+        schedule.setAccount(account);
 //        schedule.setMemberAnswer(memberAnswer);
         schedule.setScheList(scheduleDTO.getScheList());
         schedule.setScheStartDate(scheduleDTO.getScheStartDate());

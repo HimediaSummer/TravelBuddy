@@ -106,6 +106,20 @@ function SummarySchedule({ travelData }) {
 			// 지도 표시 테스트중
 			// setSchedule(content); // 상태에 저장하거나 다른 작업 수행
 
+			// 첫 번째 항목에서 원하는 속성들만 추출하여 저장
+			if (jsonData && jsonData[0]) {
+				const firstSchedule = jsonData[0];
+				const extractedDetails = {
+				sche_start_date: firstSchedule.sche_start_date,
+				sche_end_date: firstSchedule.sche_end_date,
+				sche_start_time: firstSchedule.sche_start_time,
+				sche_end_time: firstSchedule.sche_end_time,
+				region: firstSchedule.region,
+				accom: firstSchedule.accom,
+				};
+				setScheduleDetails(extractedDetails); // 새로 추출된 값 저장
+			}
+
 			// 위도, 경도만 뽑아서 scheduleData에 저장
 			const extractedData = jsonData
 				.filter(item => item && item.scheduledate) // 유효한 데이터만 필터링

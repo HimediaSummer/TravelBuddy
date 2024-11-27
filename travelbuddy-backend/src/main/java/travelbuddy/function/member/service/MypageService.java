@@ -172,20 +172,23 @@ public class MypageService {
                 throw new RuntimeException("파일 저장 중 오류 발생", e);
             }
         }
-        // 기본값 설정: accountDTO의 값이 비어 있으면 기존 account의 값을 유지
-        if (accountDTO.getMemberEmail() == null || accountDTO.getMemberEmail().trim().isEmpty()) {
-            accountDTO.setMemberEmail(account.getMemberEmail());
+        // 2. 새로운 값이 있을 경우 기존 Account 엔티티 업데이트
+        if (accountDTO.getMemberFullName() != null && !accountDTO.getMemberFullName().trim().isEmpty()) {
+            account.setMemberFullName(accountDTO.getMemberFullName());
+            log.info("Updated FullName: {}", accountDTO.getMemberFullName());
         }
-        if (accountDTO.getMemberFullName() == null || accountDTO.getMemberFullName().trim().isEmpty()) {
-            accountDTO.setMemberFullName(account.getMemberFullName());
+
+        if (accountDTO.getMemberEmail() != null && !accountDTO.getMemberEmail().trim().isEmpty()) {
+            account.setMemberEmail(accountDTO.getMemberEmail());
+            log.info("Updated Email: {}", accountDTO.getMemberEmail());
         }
-        if (accountDTO.getMemberPhone() == null || accountDTO.getMemberPhone().trim().isEmpty()) {
-            accountDTO.setMemberPhone(account.getMemberPhone());
+
+        if (accountDTO.getMemberPhone() != null && !accountDTO.getMemberPhone().trim().isEmpty()) {
+            account.setMemberPhone(accountDTO.getMemberPhone());
+            log.info("Updated Phone: {}", accountDTO.getMemberPhone());
         }
-        if (accountDTO.getMemberPassword() == null || accountDTO.getMemberPassword().trim().isEmpty()) {
-            accountDTO.setMemberPassword(account.getMemberPassword());
-        }
-        if (accountDTO.getMemberName() == null || accountDTO.getMemberName().trim().isEmpty()) {
+
+        if (accountDTO.getMemberName() != null && !accountDTO.getMemberName().trim().isEmpty()) {
             accountDTO.setMemberName(account.getMemberName());
         }
 
@@ -194,7 +197,12 @@ public class MypageService {
             account.setMemberImg(randomFileName);
         }
 
+        // 저장 전후 비교 로그
+        log.info("After Update -> FullName: {}, Email: {}, Phone: {}, Profile Image: {}",
+                account.getMemberFullName(), account.getMemberEmail(), account.getMemberPhone(), account.getMemberImg());
+
         myProfileRepository.save(account);
+        log.info("[MypageService] Account saved successfully!저장해라");
 
         return randomFileName != null ? randomFileName : oldImage;
     }

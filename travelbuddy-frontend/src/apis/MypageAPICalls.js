@@ -38,11 +38,17 @@ export const callMyProfileAPI = () => {
 export const updateProfileAPI = (formData, navigate) => {
     return async (dispatch) => {
         try {
+            console.log("FormData to be sent:", formData);
+            console.log("FormData entries열받아서오락실에들어가!!!!!!!!!:");
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}:`, value); // 모든 키와 값을 출력
+            }
+
             const response = await fetch('/mypage/updatemyprofile', {
                 method: "PUT",
                 body: formData,
                 headers: {
-                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/json',
                     Accept: '*/*',
                     Authorization:
 					'Bearer ' + window.localStorage.getItem('accessToken')
@@ -53,7 +59,7 @@ export const updateProfileAPI = (formData, navigate) => {
             }
 
             const data = await response.json();
-            console.log("Updated profile data:", data);
+            console.log("Updated profile data열받아서오락실에들어갔어:", data);
 
             dispatch(putProfile(data));
             alert("회원정보가 수정되었습니다.");
@@ -63,93 +69,3 @@ export const updateProfileAPI = (formData, navigate) => {
         }
     };
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export const callMyProfileAPI = () => {
-//     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/myprofile`;
-// 	console.log('callBuddiesListAPI 갔다오는거 확인');
-//     return async (dispatch, getState) => {
-//         const result = await fetch(requestURL, {
-//             method: 'GET',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 Accept: '*/*',
-//                 Authorization:
-// 					'Bearer ' + window.localStorage.getItem('accessToken')
-                    
-//             }
-//         }).then((response) => response.json());
-// 		// console.log("API응답:",result);
-//         dispatch(getProfile(result));
-		
-//     }}
-//     console.log("JWT Token:", window.localStorage.getItem('accessToken'));
-    
-// export const callBuddyDetailAPI = ({buddyCode}) => {
-//         const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies/${buddyCode}`;
-//         console.log("buddyCdoe = ", buddyCode)
-//         return async (dispatch, getState) => {
-//             const result = await fetch(requestURL, {
-//                 method: 'GET',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     Accept: '*/*'
-//                 }
-//             }).then((response) => response.json());
-// 			console.log("API응답:",result);
-//             dispatch({type: GET_BUDDY, payload: result });
-//         }}
-
-//         // 게시글 작성한다.
-//     export const callBuddyRegistAPI = (updateForm) => {
-//         const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies/buddyRegist`;
-//         console.log("callBuddyRegistAPI 갔다옴");
-//         console.log("API form = ", updateForm);
-//         return async (dispatch, getState) => {
-//             const result = await fetch(requestURL, {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     Accept: '*/*',
-//                     Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
-//                 },
-//                 body: JSON.stringify(updateForm)
-//             }).then((response) => {
-//                 response.json()});
-
-//             console.log("accessToken = ", window.localStorage.getItem('accessToken'))
-//             console.log("[BuddyAPICalls] callBuddyRegistAPI result : ", result);
-//             console.log("API응답:",result);
-//             dispatch({type: POST_BUDDY, payload: result});
-//         }}
-
-    // export const callBuddyTypeAPI = () => {
-    //     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies/getBuddyType`;
-    //     console.log('callBuddyTypeAPI 갔다오는거 확인');
-    //     return async (dispatch, getState) => {
-    //         const result = await fetch(requestURL, {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 Accept: '*/*'
-    //             }
-    //         }).then((response) => response.json());
-    //         dispatch({type: GET_BUDDYTYPE, payload: result });
-    //         console.log('callBuddyTypeAPI에서 가져온 result 값',result);
-    //     }}

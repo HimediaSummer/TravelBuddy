@@ -1,6 +1,7 @@
 package travelbuddy.function.member.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import travelbuddy.function.member.service.MypageService;
 import travelbuddy.function.schedule.dto.ScheduleDTO;
 import travelbuddy.function.schedule.entity.Schedule;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -74,9 +76,16 @@ public class MypageController {
     @PutMapping("/updatemyprofile")
     public ResponseEntity<ResponseDTO> updateMyProfile(
             @ModelAttribute AccountDTO accountDTO,
-            @RequestParam(value = "profileImg", required = false) MultipartFile profileImg)
+            @RequestParam(value = "profileImg", required = false) MultipartFile profileImg, HttpServletRequest request)
     {
-        log.info("[MypageService] updateMyProfile Start");
+
+        log.info("[MypageController] Raw request parameters:");
+        request.getParameterMap().forEach((key, value) -> log.info("{}: {}", key, Arrays.toString(value)));
+
+        log.info("Received AccountDTO: {}", accountDTO);
+        log.info("Received profileImg: {}", profileImg != null ? profileImg.getOriginalFilename() : "No File");
+
+
 
         // 현재 로그인한 사용자의 memberCode 가져오기
         Integer memberCode = getCurrentMemberCode();
@@ -112,7 +121,7 @@ public class MypageController {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원숨김ㅃㅃ", null));
     }
-
+    
     /* =========================================== My일정 =========================================== */
     /* 내 일정 목록 조회 */
     @Operation(summary = "일정조회", description = "일정목록페이지조회", tags = {"MypageController"})

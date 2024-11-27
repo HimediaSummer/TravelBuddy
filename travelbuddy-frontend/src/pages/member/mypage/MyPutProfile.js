@@ -26,17 +26,21 @@ function MyPutProfile() {
     useEffect(() => {
         console.log("Redux에서 가져온 profile:", profile);
         if (profile) {
-            const updatedFormData = {
+            const FormData = {
                 memberName: profile[0].memberName || "",
                 memberFullName: profile[0].memberFullName || "",
                 memberEmail: profile[0].memberEmail || "",
                 memberPhone: profile[0].memberPhone || "",
                 profileImg: null,
             };
-            console.log("Updated formData:", updatedFormData); // formData 상태 확인
-            setFormData(updatedFormData);
+            console.log("기존 formData:", FormData); // formData 상태 확인
+            setFormData(FormData);
         }
     }, [profile]);
+
+
+
+
 
     useEffect(() => {
         if (formData.profileImg) {
@@ -51,11 +55,18 @@ function MyPutProfile() {
     const handleChange = (e) => {
         const { name, value, files } = e.target;
 
+
+    console.log("Input name시험을망쳤어 오 집에가기싫었어:", name); // 어떤 input 필드인지 확인
+    console.log("Input value시험을망쳤어 오 집에가기싫었어:", value); // 입력된 값 확인
+    console.log("Input files시험을망쳤어 오 집에가기싫었어:", files); // 파일 입력 여부 확인
+
         if (files) {
             const profileImg = files[0];
             const allowedExtensions = ["png", "jpg", "jpeg"];
             const fileExtension = profileImg.name.split(".").pop().toLowerCase();
     
+            console.log("Uploaded file시험을망쳤어 오 집에가기싫었어:", profileImg);
+
             if (!allowedExtensions.includes(fileExtension)) {
                 alert("이미지는 .png, .jpg, .jpeg만 가능합니다.");
                 e.target.value = null;
@@ -64,18 +75,29 @@ function MyPutProfile() {
             if (profileImg.size > 1048576) {
                 alert("이미지는 최대 1MB까지 첨부 가능합니다.");
                 e.target.value = null;
+
+                
                 return;
             }
     
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                profileImg,
-            }));
+            setFormData((prevFormData) => {
+                const updatedFormData = {
+                    ...prevFormData,
+                    profileImg,
+                };
+                console.log("Updated formData after file upload시험을망쳤어 오 집에가기싫었어:", updatedFormData); // 업데이트된 상태 확인
+                return updatedFormData;
+        });
         } else {
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                [name]: value,
-            }));
+           // 텍스트 입력일 경우
+            setFormData((prevFormData) => {
+                const updatedFormData = {
+                    ...prevFormData,
+                    [name]: value, // name 속성을 키로 사용
+                };
+                console.log("Updated formData after text input시험을망쳤어 오 집에가기싫었어:", updatedFormData); // 업데이트된 상태 확인
+                return updatedFormData;
+            });
         }
     };
 
@@ -89,11 +111,14 @@ function MyPutProfile() {
         });
         if (formData.profileImg) {
             data.append("profileImg", formData.profileImg);
+        } else if (profile.memberImg) {
+            data.append("profileImg", profile.memberImg);
         } else {
-            data.append("profileImg", profile.memberImg || "default.png");
+            data.append("profileImg", "default.png");
         }
 
         dispatch(updateProfileAPI(data, navigate));
+        
     };
 
     if (!profile) {

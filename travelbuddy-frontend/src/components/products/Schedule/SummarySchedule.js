@@ -316,7 +316,7 @@ function SummarySchedule({ travelData }) {
 							{loading && <img src="./Img/spin.gif" alt="로딩이미지" />}
 						</div>
 						<div className="reset-travel">
-							<button id="button" type="reset" onClick={() => window.location.reload()}>
+							<button id="button" type="reset" onClick={() => window.location.replace("http://localhost:3000/schedule")}>
 								다시하기
 							</button>
 						</div>

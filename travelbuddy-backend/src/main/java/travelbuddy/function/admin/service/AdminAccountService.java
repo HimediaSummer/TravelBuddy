@@ -135,10 +135,10 @@ public class AdminAccountService {
     }
 
 //    관리자가 이름으로 회원을 검색한다.
-    public Object selectSearchMemberList(String search) {
-
-        List<Account> memberListWithSearchValue = accountRepository.findByMemberFullNameContaining(search);
-
-        return memberListWithSearchValue.stream().map(Account -> modelMapper.map(Account, AccountDTO.class)).collect(Collectors.toList());
-    }
+//    public Object selectSearchMemberList(String search) {
+//
+//        List<Account> memberListWithSearchValue = accountRepository.findByMemberFullNameContaining(search);
+//
+//        return memberListWithSearchValue.stream().map(Account -> modelMapper.map(Account, AccountDTO.class)).collect(Collectors.toList());
+//    }
 }

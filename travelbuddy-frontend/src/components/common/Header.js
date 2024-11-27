@@ -60,6 +60,13 @@ function Header() {
                 <title>Travel Buddy</title>
             </head>
             {loginModal ? <LoginModal setLoginModal={setLoginModal} /> : null}
+			<header class="header">
+					<h1>
+						<div class="header-click">
+							<i class="fa-solid fa-globe"></i>
+							<a href="http://localhost:3000">Travel Buddy</a>
+						</div>
+					</h1>
             <ul class="menu">
                 <li>
                     <NavLink to="/mypage">MY정보</NavLink>
@@ -82,6 +89,7 @@ function Header() {
             <button class="header_toogleBtn">
                 <i class="fas fa-bars"></i>
             </button>
+			</header>
         </div>
     );
 }

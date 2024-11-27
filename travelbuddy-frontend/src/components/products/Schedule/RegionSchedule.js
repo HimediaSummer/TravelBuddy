@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Map from './Map';
 
-function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelData }) {
+function RegionSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, selectedRegion, setSelectedRegion, setTravelData }) {
 
 	const [region, setRegion] = useState([]);
 	const [selectedRegionDetails, setSelectedRegionDetails] = useState(null);
@@ -112,6 +112,8 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 		<div class="tema-title">
 			<div class="chat-container">
 				<form class="chat-form" action="post">
+				<h2 class="chat-head" style={{ margin: 'auto' }}>{selectedRegion ? (selectedRegion.regionName) : ('어떤 여행을 하고 싶나요?')}</h2>
+				<h4>{startDate || ''} ~ {endDate || ''}</h4>
 					<div class='chat-container-r'>
 					<div id="chat-box2-r">
 						<button type='button' onClick={() => tabChange('select')}>장소 선택</button>
@@ -119,7 +121,8 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 					</div>
 					</div>
 					<div class="tema-title">
-						<legend>가고싶은 도시를 선택해주세요.</legend>
+						{ regionTab === 'select' ? (<legend>가고 싶은 장소를 선택해주세요.</legend>) : (<legend>가고 싶은 장소의 주소를 입력해주세요.</legend>)}
+						{/* <legend>가고싶은 도시를 선택해주세요.</legend> */}
 					</div>
 					{ regionTab === 'select' &&  (
 					<div className="region-scroll">
@@ -142,8 +145,8 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 					</div>
 					)}
 					{ regionTab === 'search' && (
-					<div className='region-search'>
-						<div style={{display: 'flex', textAlign: 'left'}}>
+					<div className='region-search' style={{marginBottom: '500px'}}>
+						<div style={{display: 'flex', textAlign: 'left', marginLeft: '25px'}}>
 						<input type='search' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
 						<img src='/Img/search-icon.png' width={'35px'} height={'35px'} style={{cursor: 'pointer'}} onClick={handleSearchSubmit}/>
 						</div>
@@ -182,16 +185,16 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 							<Map regionName={selectedRegion.regionName} style={{width: '500px', height: '800px'}}/>
 								) : (<Map regionName={selectedRegionDetails? (selectedRegion.regionName) : (null)} style={{width: '800px', height: '800px'}} />)}
 							</div> */}
-							<div style={{marginTop: '100px'}}>
+							<div>
 								{regionTab === 'search' ? (
 									// 검색 탭일 때
-									<Map regionName={searchQuery} style={{width: '800px', height: '800px'}}/>
+									<Map regionName={searchQuery} style={{width: '1100px', height: '800px'}}/>
 								) : (
 									// 선택 탭일 때
 									selectedRegion ? (
-										<Map regionName={selectedRegion.regionName} style={{width: isToggleOpen ? '500px' : '800px', height: '800px'}}/>
+										<Map regionName={selectedRegion.regionName} style={{width: isToggleOpen ? '800px' : '800px', height: '800px'}}/>
 									) : (
-										<Map regionName={null} style={{width: '800px', height: '800px'}}/>
+										<Map regionName={null} style={{width: '1100px', height: '800px'}}/>
 									)
 								)}
 							</div>

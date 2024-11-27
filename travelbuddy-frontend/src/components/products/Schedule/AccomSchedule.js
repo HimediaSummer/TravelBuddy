@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Map from './Map';
 
-function AccomSchedule({ onNext, selectedRegion, setTravelData }) {
+function AccomSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, selectedRegion, setTravelData }) {
 // function AccomSchedule({ onNext, setTravelData }) {
 
 	const [accom, setAccom] = useState([]);
@@ -191,13 +191,13 @@ const handleSearchSubmit = () => {
 				<div style={{marginTop: '100px'}}>
 					{accomTab === 'search' ? (
 						// 검색 탭일 때
-						<Map regionName={searchAddress} style={{width: '800px', height: '800px'}}/>
+						<Map regionName={searchAddress} style={{width: '1100px', height: '800px'}}/>
 					) : (
 						// 선택 탭일 때
 						selectedAccomDetails && selectedRegion ? (
-							<Map regionName={selectedRegion.regionName} style={{width: isToggleOpen ? '500px' : '800px', height: '800px'}}/>
+							<Map regionName={selectedRegion.regionName} style={{width: isToggleOpen ? '800px' : '800px', height: '800px'}}/>
 						) : (
-							<Map regionName={null} style={{width: '800px', height: '800px'}}/>
+							<Map regionName={null} style={{width: '1100px', height: '800px'}}/>
 						)
 					)}
 				</div>

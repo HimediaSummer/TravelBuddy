@@ -252,3 +252,32 @@ export const toggleMemberDeletionAPI = ({memberCode}) => {
 					}
 				};
 			};
+
+			export const getMemberCode = async (memberName) => {
+				const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/api/v1/memberCode/${memberName}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${window.localStorage.getItem("accessToken")}`
+					}
+				});
+			
+				if (response.ok) {
+					const data = await response.json();
+					console.log('fetch memberCode:', data);
+					return data; // memberCode 반환
+				} else {
+					throw new Error('Failed to fetch member code');
+				}
+			};
+			
+			// 로그인 후 memberCode 가져오기
+			export const handleLogin = async (form) => {
+				// 로그인 API 호출
+				const result = await callLoginAPI({ form });
+				console.log('login result', result);
+			
+				// memberName을 사용하여 memberCode 가져오기
+				const memberCode = await getMemberCode(form.memberName);
+				window.localStorage.setItem('memberCode', memberCode); // memberCode 저장
+			};

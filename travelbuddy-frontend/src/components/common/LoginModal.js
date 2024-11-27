@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { callLoginAPI } from '../../apis/MemberAPICalls';
+import { callLoginAPI, handleLogin } from '../../apis/MemberAPICalls';
 import { POST_LOGIN } from '../../modules/MemberModule';
 
 function LoginModal({ setLoginModal }) {
@@ -28,9 +28,10 @@ function LoginModal({ setLoginModal }) {
 			callLoginAPI({
 				// 로그인
 				form: form
-			})
+			}),
 		);
-
+		
+		handleLogin(form)
 		setLoginModal(false);
 		console.log('[LoginModal] Login Process End!!');
 		alert('로그인이 완료되었습니다.');

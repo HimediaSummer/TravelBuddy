@@ -8,7 +8,8 @@ export const callMyProfileAPI = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     Accept: '*/*',
-                    Authorization: 'Bearer ' + window.localStorage.getItem('accessToken'),
+                    Authorization:
+					'Bearer ' + window.localStorage.getItem('accessToken')
                 },
             });
 
@@ -40,6 +41,12 @@ export const updateProfileAPI = (formData, navigate) => {
             const response = await fetch('/mypage/updatemyprofile', {
                 method: "PUT",
                 body: formData,
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: '*/*',
+                    Authorization:
+					'Bearer ' + window.localStorage.getItem('accessToken')
+                },
             });
             if (!response.ok) {
                 throw new Error("Failed to update profile");

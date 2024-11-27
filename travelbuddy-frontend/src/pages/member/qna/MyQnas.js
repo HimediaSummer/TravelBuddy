@@ -31,7 +31,6 @@ function MyQnas() {
         );
     }, [currentPage]);
 
-
     const onClickTableTr = (qnaCode) => {
         navigate(`/cs/myqnas/${qnaCode}`, { replace: false });
     };

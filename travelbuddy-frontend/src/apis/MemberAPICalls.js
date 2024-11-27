@@ -103,7 +103,9 @@ export const callMemberListForAdminAPI = ( {currentPage} ) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         if (result.status !== null) {
@@ -124,7 +126,9 @@ export const callSearchMemberListAPI = ( search ) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         if (result.status !== null) {
@@ -141,7 +145,9 @@ export const callMemberDetailForAdminAPI = ({memberCode}) => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    Accept: '*/*'
+                    Accept: '*/*',
+					Authorization:
+					'Bearer ' + window.localStorage.getItem('accessToken')
                 }
             }).then((response) => response.json());
             dispatch({type: GET_MEMBER, payload: result });
@@ -156,7 +162,9 @@ export const toggleMemberSuspensionAPI = ({memberCode}) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         dispatch({type: POST_MEMBER, payload: result });
@@ -170,7 +178,9 @@ export const toggleMemberDeletionAPI = ({memberCode}) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         dispatch({type: POST_MEMBER, payload: result });

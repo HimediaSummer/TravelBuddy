@@ -37,7 +37,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         // 사용자 ID로 데이터베이스에서 사용자 엔티티 조회
         Account account = memberRepository.findByMemberName(username);
 

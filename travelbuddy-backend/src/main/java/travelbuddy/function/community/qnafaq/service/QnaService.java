@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +28,6 @@ import travelbuddy.function.member.dto.AccountDTO;
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.repository.AccountRepository;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,17 +50,29 @@ public class QnaService {
         this.qnaRepository = qnaRepository;
     }
 
-    public int getLoggedInUserCode() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            Object principal = authentication.getPrincipal();
 
-            if (principal instanceof AccountDTO) {
-                return ((AccountDTO)principal).getMemberCode();
-            }
+    // 현재 로그인한 사용자(AccountDTO) 가져오기
+    public static AccountDTO getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof AccountDTO) {
+            return (AccountDTO) principal;
         }
-        return 0;
+        return null; // 인증되지 않은 경우
     }
+
+    // 현재 로그인한 사용자의 memberName 가져오기
+    public static String getCurrentUsername() {
+        AccountDTO currentUser = getCurrentUser();
+        return currentUser != null ? currentUser.getMemberName() : null;
+    }
+
+    // 현재 로그인한 사용자의 memberCode 가져오기
+    public static Integer getCurrentMemberCode() {
+        AccountDTO currentUser = getCurrentUser();
+        return currentUser != null ? currentUser.getMemberCode() : null;
+    }
+
 
 //    리스트의 총 합을 구한다.
     public int selectQnaTotal() {
@@ -79,16 +91,19 @@ public class QnaService {
     public Object selectQnaListWithPaging(Criteria cri) {
         log.info("[AdminQnaService] selectQnaListWithPaging() Start");
 
-        int LoggedInMemberCode = getLoggedInUserCode();
-        log.info("LoggedInMemberCode = " + LoggedInMemberCode);
-        System.out.println("LoggedInMemberCode = " + LoggedInMemberCode);
-        if (LoggedInMemberCode == 0) { return "로그인이 필요합니다.";}
+        System.out.println(SecurityContextHolder.getContext().getAuthentication());
+
+        Integer getLoggedInMemberCode = getCurrentMemberCode();
+        log.info("getLoggedInMemberCode = " + getLoggedInMemberCode);
+        System.out.println("getLoggedInMemberCode = " + getLoggedInMemberCode);
+        if (getLoggedInMemberCode == 0) { return ("로그인이 필요합니다.");}
+
         int index = cri.getPageNum() - 1;
         int count = cri.getAmount();
         Pageable paging = PageRequest.of(index, count, Sort.by("qnaCode").descending());
 
-        Page<Qna> result = qnaRepository.findAll(paging);
-//        Page<Qna> result = qnaRepository.findByAccount_MemberCode(LoggedInMemberCode,paging);
+//        Page<Qna> result = qnaRepository.findAll(paging);
+        Page<Qna> result = qnaRepository.findAllByAccountMemberCode(getLoggedInMemberCode,paging);
         List<Qna> qnaList = (List<Qna>)result.getContent();
 
         log.info("[QnaService] selectQnaListWithPaging() End");
@@ -136,8 +151,6 @@ public class QnaService {
     @Transactional
     public Object insertQna(QnaDTO qnaDTO) {
 
-//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        int memberCode = Integer.parseInt(userDetails.getUsername());
         FqType fqType = fqTypeRepository.findById(qnaDTO.getFqTypeCode()).orElseThrow();
         Account account = accountRepository.findById(qnaDTO.getMemberCode()).orElseThrow();
         Qna insertqna = modelMapper.map(qnaDTO, Qna.class);
@@ -170,6 +183,7 @@ public class QnaService {
     }
 
     /*본인이 작성한 qna 를 삭제한다. 다만 answer 에 null 이 아닐 경우에는 삭제 할수 없다.*/
+    @Transactional
     public Object deleteQna(int qnaCode) {
 
         Qna qna = qnaRepository.findById(qnaCode).get();

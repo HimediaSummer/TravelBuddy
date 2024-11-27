@@ -15,7 +15,9 @@ export const callQnaListForAdminAPI = ({currentPage}) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         if (result.status !== null) {
@@ -36,7 +38,9 @@ export const callQnaListAPI = ({currentPage}) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         dispatch({type: GET_QNAS, payload: result });
@@ -50,7 +54,9 @@ export const noPagingQnaListAPI = () => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         dispatch({type: GET_QNAS, payload: result });
@@ -64,7 +70,9 @@ export const insertQnaAPI = (qnaDTO) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             },
             body: JSON.stringify(qnaDTO)
         }).then((response) => response.json());
@@ -79,7 +87,9 @@ export const deleteQnaAPI = (qnaCode) => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         dispatch({type: DELETE_QNA, payload: result });
@@ -93,7 +103,9 @@ export const callQnaDetailForAdminAPI = (qnaCode) => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    Accept: '*/*'
+                    Accept: '*/*',
+                    Authorization:
+                    'Bearer ' + window.localStorage.getItem('accessToken')
                 }
             }).then((response) => response.json());
             dispatch({type: GET_QNA, payload: result });
@@ -107,7 +119,9 @@ export const callQnaDetailAPI = (qnaCode) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         dispatch({type: GET_QNA, payload: result });
@@ -121,7 +135,9 @@ export const callQnaAnswerAPI = ({qnaCode}) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         dispatch({type: GET_QNAANSWER, payload: result });
@@ -135,7 +151,9 @@ export const insertQnaAnswerAPI = (qnaCode,updatedAnswerState) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
                 },
                 body: JSON.stringify(updatedAnswerState)
         }).then((response) => response.json());
@@ -150,7 +168,9 @@ export const updateQnaAnswerAPI = ({qnaCode}) => {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         dispatch({type: PUT_QNAANSWER, payload: result });
@@ -164,7 +184,9 @@ export const deleteQnaAnswerAPI = (qnaCode) => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         dispatch({type: DELETE_QNAANSWER, payload: result });

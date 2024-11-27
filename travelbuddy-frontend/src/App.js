@@ -57,11 +57,6 @@ function App() {
             <Route index element={ <Main/> }/>
             <Route path="schedule" element={ <Schedule /> }/>
             <Route path="Scheduletest" element={ <Scheduletest /> }/>
-            <Route path="/login" element={ <Login/> } />
-            <Route path="/signup" element={ <Register/> } />
-            <Route path="*" element={ <Error/> }/>
-            <Route path='/findId' element={ <FindId/> }/>
-            <Route path='/findPw' element={ <FindPw/> }/>
           </Route>
 
           {/*ADMIN 페이지*/}
@@ -115,6 +110,13 @@ function App() {
             <Route path="mySchedule" element={<MySchedule />} />
             <Route path="mySchedule/:scheCode" element={<MyScheduleDetail />} />
           </Route>
+          
+          {/* 로그인관련 */}
+          <Route path="/login" element={ <Login/> } />
+          <Route path="/signup" element={ <Register/> } />
+          <Route path="*" element={ <Error/> }/>
+          <Route path='/findId' element={ <FindId/> }/>
+          <Route path='/findPw' element={ <FindPw/> }/>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -45,19 +45,19 @@ function QnaDetail () {
         const updatedAnswerState = { ...answerState, ansCreate: formattedDate};
         dispatch(insertQnaAnswerAPI(qnaCode,updatedAnswerState))
         alert('답변이 등록되었습니다.');
-        navigate(`/Qnas`);
+        navigate(`/admin/Qnas`);
     };
 
     const onClickChangeHandlerDelete = () => {
         dispatch(deleteQnaAnswerAPI(qnaCode))
         alert('답변이 삭제되었습니다.');
-        navigate(`/Qnas`);
+        navigate(`/admin/Qnas`);
     };
 
     const onClickQnaDelete = () => {
         dispatch(deleteQnaAPI(qnaCode))
         alert('문의가 삭제되었습니다.');
-        navigate(`/Qnas`);
+        navigate(`/admin/Qnas`);
     };
 
     return (

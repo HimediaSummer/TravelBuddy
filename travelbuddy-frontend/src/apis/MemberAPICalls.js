@@ -90,15 +90,13 @@ export const callRegisterAPI = ({ form }) => {
 	};
 };
 
+// 관리자가 회원 전체 리스트를 확인한다.
 export const callMemberListForAdminAPI = ( {currentPage} ) => {
-
     let requestURL;
     if (currentPage !== undefined || currentPage !== null) {
         requestURL =`http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members?offset=${currentPage}`;
-        console.log('지금 나의 주소는?',requestURL);
     } else {
         requestURL =`http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members`;
-        console.log('지금 나의 주소는?',requestURL);
     }
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
@@ -113,7 +111,29 @@ export const callMemberListForAdminAPI = ( {currentPage} ) => {
 		}
     };
 };
-    
+
+// 관리자가 회원 전체 리스트에서 검색한다.
+export const callSearchMemberListAPI = ( search ) => {
+    let requestURL;
+    if (search !== undefined && search !== null) {
+        requestURL =`http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members/search?s=${encodeURIComponent(search)}`;
+    }
+    console.log('키워드가 뭡니까?',search);
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*'
+            }
+        }).then((response) => response.json());
+        if (result.status !== null) {
+			dispatch({type: GET_MEMBERS, payload: result.data });
+		}
+    };
+};
+
+// 관리자가 회원 1명의 상세정보를 확인한다.
 export const callMemberDetailForAdminAPI = ({memberCode}) => {
         const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members/${memberCode}`;
         return async (dispatch, getState) => {
@@ -125,36 +145,36 @@ export const callMemberDetailForAdminAPI = ({memberCode}) => {
                 }
             }).then((response) => response.json());
             dispatch({type: GET_MEMBER, payload: result });
-            console.log('가져온 값',result);
         }}
 
-        export const toggleMemberSuspensionAPI = ({memberCode}) => {
-            const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members/${memberCode}/toggle-suspension`;
-            return async (dispatch, getState) => {
-                const result = await fetch(requestURL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Accept: '*/*'
-                    }
-                }).then((response) => response.json());
-                console.log('API 응답:', result);
-                dispatch({type: POST_MEMBER, payload: result });
-                console.log('액션 디스패치 완료');
-            }}
 
-            export const toggleMemberDeletionAPI = ({memberCode}) => {
-                const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members/${memberCode}/toggle-deletion`;
-                return async (dispatch, getState) => {
-                    const result = await fetch(requestURL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Accept: '*/*'
-                        }
-                    }).then((response) => response.json());
-                    dispatch({type: POST_MEMBER, payload: result });
-                }}
+        // 관리자가 회원 정지상태를 전환한다. (Y <=> N)
+export const toggleMemberSuspensionAPI = ({memberCode}) => {
+    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members/${memberCode}/toggle-suspension`;
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*'
+            }
+        }).then((response) => response.json());
+        dispatch({type: POST_MEMBER, payload: result });
+    }}
+
+    // 관리자가 회원 탈퇴상태를 전환한다. (Y <=> N)
+export const toggleMemberDeletionAPI = ({memberCode}) => {
+    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members/${memberCode}/toggle-deletion`;
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*'
+            }
+        }).then((response) => response.json());
+        dispatch({type: POST_MEMBER, payload: result });
+    }}
 
 			export const callFindIdAPI = ({ Email }) => {
 				const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/auth/findid`;
@@ -170,9 +190,9 @@ export const callMemberDetailForAdminAPI = ({memberCode}) => {
 							memberEmail: Email
 						})
 					}).then((response) => response.json());
-			
+
 					console.log('[MemberAPICalls] callFindIdAPI RESULT : ', result);
-			
+
 					if (result.status === 200) {
 						return result.data;
 					} else {
@@ -183,7 +203,7 @@ export const callMemberDetailForAdminAPI = ({memberCode}) => {
 
 			export const callFindPwAPI = ({ Email }) => {
 				const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/auth/findpw`;
-			
+
 				return async (dispatch, getState) => {
 					const result = await fetch(requestURL, {
 						method: 'POST',
@@ -195,9 +215,9 @@ export const callMemberDetailForAdminAPI = ({memberCode}) => {
 							memberEmail: Email
 						})
 					}).then((response) => response.json());
-			
+
 					console.log('[MemberAPICalls] callFindPwAPI RESULT : ', result);
-			
+
 					if (result && result.status === 200) {
 						return result.data; // 인증 코드를 반환
 					} else {
@@ -205,10 +225,10 @@ export const callMemberDetailForAdminAPI = ({memberCode}) => {
 					}
 				};
 			};
-			
+
 			export const callResetPwAPI = ({ Email, verificationCode, newPassword }) => {
 				const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/auth/resetpw`;
-			
+
 				return async (dispatch, getState) => {
 					const result = await fetch(requestURL, {
 						method: 'POST',
@@ -222,9 +242,9 @@ export const callMemberDetailForAdminAPI = ({memberCode}) => {
 							memberPassword: newPassword
 						})
 					}).then((response) => response.json());
-			
+
 					console.log('[MemberAPICalls] callResetPwAPI RESULT : ', result);
-			
+
 					if (result && result.status === 200) {
 						return true; // 비밀번호 변경 성공
 					} else {

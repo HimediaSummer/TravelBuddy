@@ -56,3 +56,26 @@
     color: #333;
     border-radius: 0 5px 5px 5px;
   }
+
+  .categoryButtons {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+}
+
+.categoryButtons button {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.activeCategory {
+    background-color: skyBlue !important;
+    color: white;
+}
+
+.categoryButtons button:hover {
+    background-color: #f0f0f0;
+}

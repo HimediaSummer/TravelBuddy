@@ -30,6 +30,7 @@ public class NoticeController {
     @Operation(summary = "회원의 공지 리스트 조회 요청", description = "회원의 공지 조회 및 페이징 처리가 진행됩니다.", tags={"NoticeController"})
     @GetMapping("/notices")
     public ResponseEntity<ResponseDTO> selectNoticeListWithPaging(
+
             @RequestParam(name="offset", defaultValue = "1") String offset) {
 
         log.info("[NoticeController] selectNoticeListWithPaging() start" + offset);
@@ -37,6 +38,7 @@ public class NoticeController {
         int total = noticeService.selectNoticeTotal();
 
         Criteria cri = new Criteria(Integer.valueOf(offset), 10);
+
         PagingResponseDTO pagingResponseDTO = new PagingResponseDTO();
 
         pagingResponseDTO.setData(noticeService.selectNoticeListWithPaging(cri));

@@ -1,19 +1,23 @@
 import MemberCSS from "./Members.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
+import queryString from "query-string";
 
 import { callMemberListForAdminAPI } from "../../../apis/MemberAPICalls";
+import { callSearchMemberListAPI } from "../../../apis/MemberAPICalls";
 
 function Members() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const member = useSelector((state) => state.memberReducer) || {};
     const memberList = member.data || {};
     const pageInfo = member.pageInfo || {};
 
     const [currentPage, setCurrentPage] = useState(1);
-
+    const [search, setSearch] = useState("");
+    const [filteredMemberList, setFilteredMemberList] = useState([]);
 
     const pageNumber = [];
     if (pageInfo) {
@@ -23,19 +27,67 @@ function Members() {
     }
 
     useEffect(() => {
-        dispatch(callMemberListForAdminAPI(
-                {currentPage: currentPage}
-            ));
-    }, [currentPage]);
+        if (!search.trim()) {
+            dispatch(callMemberListForAdminAPI({ currentPage: currentPage }));
+        }
+    }, [currentPage, dispatch]);
+
+    useEffect(() => {
+      console.log("memberList 업데이트 됨 :",memberList);
+      if (Array.isArray(memberList)) {
+        setFilteredMemberList(memberList);
+    } else if (Array.isArray(memberList.data)) {
+        setFilteredMemberList(memberList.data);
+    }
+    }, [memberList]);
+
+    // 디버깅을 위한 useEffect 추가
+useEffect(() => {
+  console.log("filteredMemberList 업데이트됨:", filteredMemberList);
+}, [filteredMemberList]);
+
+
+const onClickSearch = async () => {
+  if (search.trim()) {
+      try {
+          // 검색 API 호출 결과를 기다림
+          const searchResult = await dispatch(callSearchMemberListAPI(search));
+          
+          // 검색 후 페이지 초기화
+          setCurrentPage(1);
+      } catch (error) {
+          console.error("검색 중 오류 발생:", error);
+      }
+  }
+};
 
     const onClickTableTr = (memberCode) => {
-        navigate(`/memberDetail/${memberCode}`, { replace: false });
+        navigate(`/admin/members/${memberCode}`, { replace: false });
+    };
+
+    const onChangeHandler = (e) => {
+        setSearch(e.target.value);
+        if (!e.target.value.trim()) {
+          dispatch(callMemberListForAdminAPI({ currentPage: currentPage }));
+      }
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        onClickSearch();
+    }
     };
 
     return (
         <>
             <div className={MemberCSS.bodyDiv}>
-                    <h2>회원</h2>
+                <h2>회원</h2>
+                <input
+                    type="text"
+                    placeholder="검색어를 입력하세요"
+                    value={search}
+                    onChange={onChangeHandler}
+                    onKeyDown={onChangeHandler}
+                ></input>
+                <button onClick={onClickSearch}>검색</button>
                 <table className={MemberCSS.productTable}>
                     <colgroup>
                         <col width="10%" />
@@ -62,8 +114,8 @@ function Members() {
                         </tr>
                     </thead>
                     <tbody>
-                        {Array.isArray(memberList) &&
-                            memberList.map((m) => (
+                        {Array.isArray(filteredMemberList) &&
+                            filteredMemberList.map((m) => (
                                 <tr
                                     key={m.memberCode}
                                     onClick={() => onClickTableTr(m.memberCode)}
@@ -80,15 +132,18 @@ function Members() {
                                         <button>일정</button>
                                     </td>
                                     <td>
-                                        {
-                                        (m.memberSuspension === 'N' && m.memberDeletion === 'N')
-                                        ? <button>정상</button> : 
-                                        (m.memberSuspension === 'Y' && m.memberDeletion === 'N') 
-                                        ? <button>정지</button> :
-                                        (m.memberSuspension === 'N' && m.memberDeletion === 'Y')
-                                        ? <button>탈퇴</button> :
-                                        <p></p>
-                                        }
+                                        {m.memberSuspension === "N" &&
+                                        m.memberDeletion === "N" ? (
+                                            <button>정상</button>
+                                        ) : m.memberSuspension === "Y" &&
+                                          m.memberDeletion === "N" ? (
+                                            <button>정지</button>
+                                        ) : m.memberSuspension === "N" &&
+                                          m.memberDeletion === "Y" ? (
+                                            <button>탈퇴</button>
+                                        ) : (
+                                            <p></p>
+                                        )}
                                     </td>
                                     <td>{m.memberCreate}</td>
                                 </tr>
@@ -97,34 +152,41 @@ function Members() {
                 </table>
             </div>
             <div style={{ listStyleType: "none", display: "flex" }}>
-                { Array.isArray(memberList) &&
-                <button 
-                    onClick={() => setCurrentPage(currentPage - 1)} 
-                    disabled={currentPage === 1}
-                    className={ MemberCSS.pagingBtn }
-                >
-                    &lt;
-                </button>
-                }
-                {pageNumber.map((num) => (
-                <li key={num} onClick={() => setCurrentPage(num)}>
+                {Array.isArray(filteredMemberList) && (
                     <button
-                        style={ currentPage === num ? {backgroundColor : 'skyblue' } : null}
-                        className={ MemberCSS.pagingBtn }
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className={MemberCSS.pagingBtn}
                     >
-                        {num}
+                        &lt;
                     </button>
-                </li>
+                )}
+                {pageNumber.map((num) => (
+                    <li key={num} onClick={() => setCurrentPage(num)}>
+                        <button
+                            style={
+                                currentPage === num
+                                    ? { backgroundColor: "skyblue" }
+                                    : null
+                            }
+                            className={MemberCSS.pagingBtn}
+                        >
+                            {num}
+                        </button>
+                    </li>
                 ))}
-                { Array.isArray(memberList) &&
-                <button 
-                    className={ MemberCSS.pagingBtn }
-                    onClick={() => setCurrentPage(currentPage + 1)} 
-                    disabled={currentPage === pageInfo.pageEnd  || pageInfo.total == 0}
-                >
-                    &gt;
-                </button>
-                }
+                {Array.isArray(filteredMemberList) && (
+                    <button
+                        className={MemberCSS.pagingBtn}
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        disabled={
+                            currentPage === pageInfo.pageEnd ||
+                            pageInfo.total == 0
+                        }
+                    >
+                        &gt;
+                    </button>
+                )}
             </div>
         </>
     );

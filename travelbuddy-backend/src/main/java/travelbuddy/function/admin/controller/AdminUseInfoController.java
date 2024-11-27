@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import travelbuddy.common.Criteria;
 import travelbuddy.common.PageDTO;
 import travelbuddy.common.PagingResponseDTO;
 import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.admin.service.AdminUseInfoService;
+import travelbuddy.function.community.notice.dto.NoticeDTO;
 import travelbuddy.function.community.useinfo.dto.UseinfoDTO;
 
 @RestController
@@ -55,21 +57,33 @@ public class AdminUseInfoController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "설명서 상세정보 조회 요청" , useinfoDTO));
     }
 
+    @Operation(summary = " 설명서 검색 요청", description = "검색어에 맞는 설명서 리스트 조회가 진행됩니다.", tags = { "AdminUseInfoController" })
+    @GetMapping("/useinfos/search")
+    public ResponseEntity<ResponseDTO> selectSearchUseinfoList(@RequestParam(name="u", defaultValue="all") String search){
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공",adminUseInfoService.selectSearchUseinfoList(search)));
+    }
+
     @Operation(summary = "설명서 등록 요청", description = "설명서 등록 처리가 진행됩니다.", tags = {"AdminUseInfoController"})
     @PostMapping("/useinfos/insertuseinfo")
-    public ResponseEntity<ResponseDTO> insertUseInfo(@RequestBody UseinfoDTO useinfoDTO) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "설명서 등록 완료",adminUseInfoService.insertUseInfo(useinfoDTO)));
+    public ResponseEntity<ResponseDTO> insertUseInfo(@ModelAttribute UseinfoDTO useinfoDTO, @RequestParam(value = "useinfoImage", required = false) MultipartFile useinfoImage ) {
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "설명서 등록 요청",adminUseInfoService.insertUseInfo(useinfoDTO, useinfoImage)));
     }
 
     @Operation(summary = "설명서 수정 요청", description = "설명서 수정 처리가 진행됩니다.", tags = {"AdminUseInfoController"})
     @PutMapping("/useinfos/{useinfoCode}/updateuseinfo")
     public ResponseEntity<ResponseDTO> updateUseInfo(@PathVariable int useinfoCode, @RequestBody UseinfoDTO useinfoDTO) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "설명서 수정 완료",adminUseInfoService.updateUseInfo(useinfoCode,useinfoDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "설명서 수정 요청",adminUseInfoService.updateUseInfo(useinfoCode,useinfoDTO)));
+    }
+
+    @Operation(summary = "설명서 조회수+ 요청", description = "설명서 조회수+ 처리가 진행됩니다.", tags = {"AdminUseInfoController"})
+    @PutMapping("/useinfos/{useinfoCode}/appendcount")
+    public ResponseEntity<ResponseDTO> appendUseinfoCount(@PathVariable int useinfoCode, @ModelAttribute UseinfoDTO useinfoDTO) {
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지 조회수+ 요청",adminUseInfoService.appendUseinfoCount(useinfoCode,useinfoDTO)));
     }
 
     @Operation(summary = "설명서 삭제 요청", description = "설명서 삭제 처리가 진행됩니다.", tags = {"AdminUseInfoController"})
     @DeleteMapping("/useinfos/{useinfoCode}/deleteuseinfo")
     public ResponseEntity<ResponseDTO> deleteUseInfo(@PathVariable int useinfoCode) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "설명서 삭제 완료",adminUseInfoService.deleteUseInfo(useinfoCode)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "설명서 삭제 요청",adminUseInfoService.deleteUseInfo(useinfoCode)));
     }
 }

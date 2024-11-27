@@ -69,7 +69,7 @@ function NoticeDetail() {
             <td style={{width:'350px'}}>{notice.noticeTitle}</td>
             <td style={{width:'60px'}}>글번호</td>
             <td style={{width:'50px'}}>{notice.noticeCode}</td> 
-            <td><button onClick={onClickChangeHandlerDelete}>삭제</button></td><br/>
+            <td style={{width:'50px'}}><button onClick={onClickChangeHandlerDelete}>삭제</button></td><br/>
             <td style={{width:'60px'}}>작성일</td>
             <td style={{width:'200px'}}>{notice.noticeCreate}</td>
             <td style={{width:'60px'}}>조회수</td> 

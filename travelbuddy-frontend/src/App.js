@@ -5,6 +5,7 @@ import Main from './components/products/Main';
 import Members from './pages/admin/Member/Members';
 import MemberDetail from './pages/admin/Member/MemberDetail';
 import Notice from './pages/admin/Notice/Notice';
+import NoticeModify from './pages/admin/Notice/NoticeModify';
 import Notices from './pages/admin/Notice/Notices';
 import NoticeDetail from './pages/admin/Notice/NoticeDetail';
 import MyNotices from './pages/member/notice/MyNotices';
@@ -65,6 +66,7 @@ function App() {
             <Route path="notices" element={<Notices />}/>
             <Route path="notices/:noticeCode" element={<NoticeDetail />}/>
             <Route path="notice" element={<Notice />}/>
+            <Route path="notice/:noticeCode" element={<NoticeModify />}/>
             <Route path="members" element={ <Members/> }/>
             <Route path="members/:memberCode" element={ <MemberDetail/>} />
             <Route path="qnas" element={ <Qnas/> }/>

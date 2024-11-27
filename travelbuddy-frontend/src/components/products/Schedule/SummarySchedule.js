@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ScheduleMap from './ScheduleMap';
+import { decodeJwt } from '../../../utils/tokenUtils';
+import { json, useNavigate } from 'react-router-dom';
+import Schedule from '../Schedule';
 
 function SummarySchedule({ travelData }) {
 	const [schedule, setSchedule] = useState('');
@@ -7,6 +10,7 @@ function SummarySchedule({ travelData }) {
 	const [scheduleCreateButton, setScheduleCreateButton] = useState(false); // 일정 생성 버튼 숨기기
 	// 지도 표시 테스트중
 	const [scheduleData, setScheduleData] = useState([]); // 일정 데이터를 위한 state 추가
+	const navigate = useNavigate();
 	const [testScheduleData, setTestScheduleData] = useState([]); // 테스트
 	const [scheduleDetails, setScheduleDetails] = useState({}); // 새로 추가된 상태
 
@@ -21,15 +25,15 @@ function SummarySchedule({ travelData }) {
 	이 여섯가지 데이터는 0번인덱스에만 나오면 돼. 그 후로는 나올필요없어.
 
 	[{
-	sche_start_date: 날짜,
-	sche_end_date: 날짜,
+	sche_start_date: YYYY-MM-DD,
+	sche_end_date: YYYY-MM-DD,
 	sche_start_time: 10:00,
 	sche_end_time: 22:00,
 	region: 지역,
 	accom: 펜션
 	}
 	{
-	scheduledate: 날짜,
+	scheduledate: YYYY-MM-DD,
 	travel_time: 3hour,
 	sche_time: 13:00 ~ 14:00,
 	sche_list: N서울타워,
@@ -38,7 +42,7 @@ function SummarySchedule({ travelData }) {
 	latlng: 37.5665, 126.9780
 	}
 	{
-	scheduledate: 날짜,
+	scheduledate: YYYY-MM-DD,
 	travel_time: 1hour20min,
 	sche_time: 15:20 ~ 16:00,
 	sche_list: 싸다김밥 종로관철점,
@@ -125,7 +129,7 @@ function SummarySchedule({ travelData }) {
 				.filter(item => item && item.scheduledate) // 유효한 데이터만 필터링
 				.map(item => {
 					console.log('Processing item:', item); // 각 항목 로깅
-					
+
 					// latlng 문자열에서 위도, 경도 추출 (예: "37.5665, 126.9780")
 					let latitude, longitude;
 					if (item.latlng) {
@@ -172,9 +176,83 @@ function SummarySchedule({ travelData }) {
 		// 초기화 또는 다른 로직이 필요할 경우 여기에 추가
 	}, []);
 
+	// 일정 저장
+	const handleSaveSchedule = async () => {
+		// 로그인 확인
+		const token = decodeJwt(window.localStorage.getItem("accessToken"));
+		console.log("scheduleDetails12 : " , scheduleDetails)
+
+		console.log('token:????', token);
+		const memberCode = token.memberCode;
+		console.log('memberCode:????', memberCode);
+
+		if(!token) {
+			alert('로그인이 필요한 서비스입니다.');
+			navigate('/login');
+			return;
+		}
+
+		// 토큰 만료 확인
+		if(token.exp * 1000 < Date.now()) {
+			alert('로그인 시간이 만료 되었습니다. 다시 로그인해주세요.');
+			navigate('/login');
+			return;
+		}
+
+		try {
+
+			        // schedule의 내용을 확인
+					console.log('schedule 내용:', schedule);
+					console.log('schedule 타입:', typeof schedule);
+					// console.log('아진짜짱나네', testScheduleData);
+
+			// // OpenAI가 생성한 일정 데이터를 JSON 형식으로 변환
+			// const jsonData = JSON.parse(testScheduleData);	// schedule이 JSON 문자열이라면 파싱s
+
+			// travelData에서 필요한 정보 추출
+			const regionCode = travelData.regions[0].regionCode;
+			console.log('regionCode:', regionCode);
+			const accomCode = travelData.accommodations[0].accomCode;
+			console.log('accomCode:', accomCode);
+
+
+
+			const memberCode = window.localStorage.getItem('memberCode');
+			console.log('회원번호 잘 왔냐?????????', memberCode);
+
+
+			const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/save`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${window.localStorage.getItem("accessToken")}`
+				},
+				body: JSON.stringify({
+					regionCode: regionCode,
+					accomCode: accomCode,
+					scheList: schedule,
+					scheStartDate: scheduleDetails.sche_start_date,
+					scheEndDate: scheduleDetails.sche_end_date,
+					scheStartTime: scheduleDetails.sche_start_time,
+					scheEndTime: scheduleDetails.sche_end_time
+				})
+			});
+
+			if(!response.ok) {
+				throw new Error('일정 저장에 실패했습니다.');
+			}
+
+			const result = await response.json();
+			alert('일정 저장에 성공했습니다.');
+		} catch(error) {
+			console.error('일정 저장 중 오류 발생쉬먀', error);
+			alert('일정 저장에 실패했습니다.');
+		}
+	};
+
 	return (
 		<div className="tema-title">
-							
+
 			<div className="chat-container">
 				<form className="chat-form2" action="post">
 					<div className="schedule">
@@ -219,6 +297,7 @@ function SummarySchedule({ travelData }) {
 								className="submit-button"
 								type="button"
 								id="button"
+								onClick={handleSaveSchedule}
 								>
 								저장
 								</button>

@@ -19,7 +19,7 @@ function AccomSchedule({ onNext, selectedRegion, setTravelData }) {
 	console.log('이름이머에여!!!!!!!!!!!!', selectedRegion.regionName);
 	// 숙소
 	useEffect(() => {
-		fetch('http://localhost:8080/schedule/accom')
+		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/accom`)
 			.then(response => response.json())
 			.then(data => {
 				const accommodations = data.data.Accommodations.map(accom => ({
@@ -44,7 +44,7 @@ function AccomSchedule({ onNext, selectedRegion, setTravelData }) {
 			accommodations: [...prevData.accommodations, accom]
 		}));
 
-		fetch(`http://localhost:8080/schedule/accom/${accom.accomCode}`)
+		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/accom/${accom.accomCode}`)
 			.then(response => response.json())
 			.then(data => {
 				setSelectedAccomDetails(data.data);

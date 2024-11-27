@@ -89,7 +89,7 @@ public class SecurityConfig {
                     // CORS Preflight 요청 허용
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     // root 경로는 인증 필요
-                     auth.requestMatchers("/", "/api/v1/memberCode/**").authenticated();
+                     auth.requestMatchers("/").authenticated();
                     // 특정 경로는 무조건 허용
                     auth.requestMatchers("/auth/**", "/buddyBoard/buddies","/buddyBoard/buddies/{buddyCode}").permitAll();
                     // Swagger API 문서 허용

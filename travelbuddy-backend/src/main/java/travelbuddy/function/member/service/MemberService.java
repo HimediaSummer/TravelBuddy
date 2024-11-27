@@ -38,11 +38,4 @@ public class MemberService {
 
 		return accountDTO;
 	}
-
-	public int findMemberCodeByMemberName(String memberName) {
-
-		Account member = accountRepository.findByMemberName(memberName);
-
-		return member != null ? member.getMemberCode() : -1;
-	}
 }

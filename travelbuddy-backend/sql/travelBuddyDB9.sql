@@ -238,9 +238,9 @@ CREATE TABLE
 CREATE TABLE
     IF NOT EXISTS tbl_schedule (
                                    sche_code INT NOT NULL AUTO_INCREMENT COMMENT '스케줄넘버',
-                                   region_code INT NULL COMMENT '지역코드',
-                                   accom_code INT NULL COMMENT '숙소코드',
-                                   member_code INT NOT NULL COMMENT '회원코드',
+                                   region_code INT NOT NULL COMMENT '지역코드',
+                                   accom_code INT NOT NULL COMMENT '숙소코드',
+                                   member_code INT NULL COMMENT '회원코드',
                                    member_answer_code INT NULL COMMENT '회원답변코드',
                                    sche_list TEXT NOT NULL COMMENT '생성된스케줄',
                                    sche_start_date DATE NOT NULL COMMENT '여행시작날짜',

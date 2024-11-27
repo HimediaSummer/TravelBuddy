@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -279,22 +280,25 @@ public class ScheduleService {
 //    }
 
     @Transactional
-    public Schedule saveSchedule(ScheduleDTO scheduleDTO) {
+    public Schedule saveSchedule(ScheduleDTO scheduleDTO, String userIdString) {
         // 각 엔티티 조회
-//        Region region = regionRepository.findById(scheduleDTO.getRegionCode())
-//                .orElseThrow(() -> new RuntimeException("Region not found"));
-//        Accommodation accommodation = accommodationRepository.findById(scheduleDTO.getAccomCode())
-//                .orElseThrow(() -> new RuntimeException("Accommodation not found"));
+        Region region = regionRepository.findById(scheduleDTO.getRegionCode())
+                .orElseThrow(() -> new RuntimeException("Region not found"));
+        Accommodation accommodation = accommodationRepository.findById(scheduleDTO.getAccomCode())
+                .orElseThrow(() -> new RuntimeException("Accommodation not found"));
         Account account = accountRepository.findById(scheduleDTO.getMemberCode())
                 .orElseThrow(() -> new RuntimeException("Account not found"));
 //        MemberAnswer memberAnswer = memberAnswerRepository.findById(scheduleDTO.getMemberAnswerCode())
 //                .orElseThrow(() -> new RuntimeException("MemberAnswer not found"));
 
+        System.out.println("region = " + region);
+        System.out.println("accommodation = " + accommodation);
+
         // Schedule 엔티티 생성
         Schedule schedule = new Schedule();
-//        schedule.setRegion(region);
-//        schedule.setAccommodation(accommodation);
-        schedule.setAccount(account);
+        schedule.setRegion(region);
+        schedule.setAccommodation(accommodation);
+//        schedule.setAccount(account);
 //        schedule.setMemberAnswer(memberAnswer);
         schedule.setScheList(scheduleDTO.getScheList());
         schedule.setScheStartDate(scheduleDTO.getScheStartDate());

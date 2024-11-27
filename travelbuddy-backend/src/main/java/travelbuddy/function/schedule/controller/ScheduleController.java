@@ -152,17 +152,11 @@ public class ScheduleController {
     public ResponseEntity<ResponseDTO> saveSchedule(@RequestBody ScheduleDTO scheduleDTO,
                                                     @RequestHeader("Authorization") String token) {
         // 토큰에서 사용자 ID 추출 및 사용자 정보 조회
-//        String actualToken = token.substring(7); // "Bearer" 제거
-//        String userIdString = tokenProvider.getUserId(actualToken); // 사용자 ID 가져오기
-
-//        // ScheduleDTO에 필요한 정보가 포함되어 있는지 확인
-//        if (scheduleDTO.getRegionCode() == null || scheduleDTO.getAccomCode() == null) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                    .body(new ResponseDTO(HttpStatus.BAD_REQUEST, "필수 정보가 누락되었습니다.", null));
-//        }
+        String actualToken = token.substring(7); // "Bearer" 제거
+        String userIdString = tokenProvider.getUserId(actualToken); // 사용자 ID 가져오기
 
         // 일정 저장 서비스 호출
-        Schedule savedSchedule =  scheduleService.saveSchedule(scheduleDTO);
+        Schedule savedSchedule =  scheduleService.saveSchedule(scheduleDTO, userIdString);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정 저장 성공!", savedSchedule));
     }

@@ -24,15 +24,15 @@ function SummarySchedule({ travelData }) {
 	이 여섯가지 데이터는 0번인덱스에만 나오면 돼. 그 후로는 나올필요없어.
 
 	[{
-	sche_start_date: 날짜,
-	sche_end_date: 날짜,
+	sche_start_date: YYYY-MM-DD,
+	sche_end_date: YYYY-MM-DD,
 	sche_start_time: 10:00,
 	sche_end_time: 22:00,
 	region: 지역,
 	accom: 펜션
 	}
 	{
-	scheduledate: 날짜,
+	scheduledate: YYYY-MM-DD,
 	travel_time: 3hour,
 	sche_time: 13:00 ~ 14:00,
 	sche_list: N서울타워,
@@ -41,7 +41,7 @@ function SummarySchedule({ travelData }) {
 	latlng: 37.5665, 126.9780
 	}
 	{
-	scheduledate: 날짜,
+	scheduledate: YYYY-MM-DD,
 	travel_time: 1hour20min,
 	sche_time: 15:20 ~ 16:00,
 	sche_list: 싸다김밥 종로관철점,
@@ -208,37 +208,12 @@ function SummarySchedule({ travelData }) {
 			// const jsonData = JSON.parse(testScheduleData);	// schedule이 JSON 문자열이라면 파싱s
 
 			// travelData에서 필요한 정보 추출
-			// const regionCode = travelData.regions[0].regionCode;
-            // const accomCode = travelData.accomodations[0].accomCode;
-            // const memberCode = token.memberCode;
-            // const memberAnswerCode = travelData.questions[0].answerCode;
+			const regionCode = travelData.regions[0].regionCode;
+			console.log('regionCode:', regionCode);
+			const accomCode = travelData.accommodations[0].accomCode;
+			console.log('accomCode:', accomCode);
 
-			// jsonData 0 번째 인덱스에서 정보 추출
-			// const firstSche = [0];
-			// const scheList = firstSche.sche_list;
-			// const scheStartDate = firstSche.sche_start_date;
-			// const scheEndDate = firstSche.sche_end_date;
-			// const scheStartTime = firstSche.sche_start_time;
-			// const scheEndTime = firstSche.sche_end_time;
 
-			// shceduleDTO 객체 생성
-			const scheduleDTO = {
-				// regionCode: regionCode,
-				// accomCode: accomCode,
-				// memberCode: memberCode,
-				// memberAnswerCode: memberAnswerCode,
-				// scheList: schedule,
-				// // scheStartDate: scheStartDate,
-				// scheStartDate: scheduleDetails.sche_start_date,
-				// // scheEndDate: scheEndDate,
-				// scheEndDate: scheduleDetails.sche_end_date,
-				// // scheStartTime: scheStartTime,
-				// scheStartTime: scheduleDetails.sche_start_time,
-				// // scheEndTime: scheEndTime,
-				// scheEndTime: scheduleDetails.sche_end_time,
-				// // travelTime: '',
-				// // scheTime: ''
-			};
 
 			const memberCode = window.localStorage.getItem('memberCode');
 			console.log('회원번호 잘 왔냐?????????', memberCode);
@@ -251,7 +226,8 @@ function SummarySchedule({ travelData }) {
 					'Authorization': `Bearer ${window.localStorage.getItem("accessToken")}`
 				},
 				body: JSON.stringify({
-					memberCode: memberCode,	
+					regionCode: regionCode,
+					accomCode: accomCode,
 					scheList: schedule,
 					scheStartDate: scheduleDetails.sche_start_date,
 					scheEndDate: scheduleDetails.sche_end_date,

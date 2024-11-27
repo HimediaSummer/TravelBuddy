@@ -7,5 +7,4 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     Account findByMemberCode(int memberCode);
 
-    Account findByMemberName(String memberName);
 }

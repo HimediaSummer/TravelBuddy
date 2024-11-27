@@ -30,13 +30,4 @@ public class MemberController {
 
 		return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", memberService.selectMyInfo(memberName)));
 	}
-
-	@Operation(summary = "회원 번호 찾기", description = "회원 아이디로 회원 번호 조회",  tags = { "MemberController" })
-	@GetMapping("/memberCode/{memberName}")
-	public ResponseEntity<ResponseDTO> getMemberCode(@PathVariable String memberName) {
-
-		int memberCode = memberService.findMemberCodeByMemberName(memberName);
-
-		return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원번호 찾기 성공", memberCode));
-	}
 }

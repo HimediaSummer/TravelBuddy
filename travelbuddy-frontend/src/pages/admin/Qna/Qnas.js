@@ -4,18 +4,31 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
 import { callQnaListForAdminAPI } from "../../../apis/QnaAPICalls";
+import { callFqTypeNameAPI } from "../../../apis/FqTypeAPICalls";
+import { callMemberAllNameAPI } from "../../../apis/MemberAPICalls";
 
 function Qnas() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const qna = useSelector((state) => state.qnaReducer) || {};
+    const fqType = useSelector((state) => state.fqTypeReducer) || {};
+    const member = useSelector((state) => state.memberReducer) || {};
     const qnaList = qna.data || {};
+    const fqTypeList = fqType.data || {};
+    const memberList = member.data || {};
+    const memberPageInfo = member.pageInfo || {};
     const { data = {}, pageInfo = {} } = qnaList;
-    console.log('나 qnaList',qnaList);
 
-    const [start, setStart] = useState(0);
+    console.log('나 qnaList',qnaList);
+    console.log('나 fqTypeList',fqTypeList);
+    console.log('나 memberList',memberList);
+    console.log('나는 멤버페이지',memberPageInfo);
+
+
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageEnd, setPageEnd] = useState(1);
+    const [fqTypesName, setFqTypesName] = useState([]);
+    const [membersName, setMembersName] = useState([]);
+
 
     const pageNumber = [];
     if (pageInfo) {
@@ -25,15 +38,28 @@ function Qnas() {
     }
 
     useEffect(() => {
-        console.log(currentPage
-            
-        )
-        dispatch(
-            callQnaListForAdminAPI({
-                currentPage: currentPage
-            })
-        );
+        console.log(currentPage)
+        dispatch(callQnaListForAdminAPI({currentPage: currentPage}));
+       
     }, [currentPage]);
+
+    useEffect(()=>{
+        dispatch(callMemberAllNameAPI());
+        if (Array.isArray(memberList)){
+            setMembersName(memberList);
+            console.log('저장되냐고',memberList);
+            console.log('여기다말이지!!',membersName);
+        }
+    },[membersName]);
+
+    useEffect (() => {
+        dispatch(callFqTypeNameAPI());
+        if (Array.isArray(fqTypeList)){
+            setFqTypesName(fqTypeList);
+        }
+    }, [fqTypesName]);
+
+    
 
 
     const onClickTableTr = (qnaCode) => {
@@ -78,9 +104,13 @@ function Qnas() {
                                     }
                                 >
                                     <td>{q.qnaDTO.qnaCode}</td>
-                                    <td>{q.qnaDTO.fqTypeCode}</td>
+                                    <td>{
+                                    fqTypeList.find(type => type.fqTypeCode === q.qnaDTO.fqTypeCode)?.fqTypeName || "알수없음"
+                                    }</td>
                                     <td colSpan={5}>{q.qnaDTO.qnaTitle}</td>
-                                    <td>{q.qnaDTO.memberCode}</td>
+                                    <td>{
+                                    membersName.find((m) => m.memberCode === q.qnaDTO.memberCode)?.memberName || "알수없음"
+                                    }</td>
                                     <td>{q.qnaAnswerDTO.ansContents ? "답변완료" : ""}</td>
                                     <td>{q.qnaDTO.qnaCreate}</td>
                                 </tr>

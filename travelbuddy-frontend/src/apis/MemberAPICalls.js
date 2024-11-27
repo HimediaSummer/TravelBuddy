@@ -1,5 +1,6 @@
 import { GET_MEMBERS, GET_MEMBER, POST_MEMBER, POST_LOGIN, POST_SIGNUP, POST_EMAIL } from '../modules/MemberModule';
 
+// 멤버 정보를 불러온다
 export const callGetMemberAPI = ({ memberName }) => {
 	const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/api/v1/members/${memberName}`;
 	console.log("memberName = ", memberName)
@@ -23,6 +24,7 @@ export const callGetMemberAPI = ({ memberName }) => {
 	};
 };
 
+// 로그인을 신청한다
 export const callLoginAPI = ({ form }) => {
 	const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/auth/login`;
 
@@ -53,6 +55,7 @@ export const callLoginAPI = ({ form }) => {
 	};
 };
 
+// 로그아웃을 원한다!
 export const callLogoutAPI = () => {
 	return async (dispatch, getState) => {
 		dispatch({ type: POST_LOGIN, payload: '' });
@@ -60,6 +63,7 @@ export const callLogoutAPI = () => {
 	};
 };
 
+// 회원가입 등록을 한다.
 export const callRegisterAPI = ({ form }) => {
 	const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/auth/signup`;
 
@@ -98,6 +102,26 @@ export const callMemberListForAdminAPI = ( {currentPage} ) => {
     } else {
         requestURL =`http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members`;
     }
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
+            }
+        }).then((response) => response.json());
+        if (result.status !== null) {
+			dispatch({type: GET_MEMBERS, payload: result.data });
+		}
+    };
+};
+
+// 관리자가 회원 전체 이름을 들고 가져간다.
+export const callMemberAllNameAPI = () => {
+    let requestURL;
+    requestURL =`http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members/name`;
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'GET',

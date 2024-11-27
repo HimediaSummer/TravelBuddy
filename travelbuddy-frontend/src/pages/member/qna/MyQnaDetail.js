@@ -11,8 +11,10 @@ function MyQnaDetail() {
     const params = useParams();
     const { qnaCode } = params;
     const qnaData = useSelector((state) => state.qnaReducer);
+    const fqType = useSelector((state) => state.fqTypeReducer) || {};
     const { data } = qnaData;
     const { qnaDTO, qnaAnswerDTO } = data || {};
+    const fqTypeList = fqType.data || {};
     console.log("data 가 가지고있는것", data);
 
     useEffect(() => {
@@ -44,7 +46,7 @@ function MyQnaDetail() {
                                 <td>제목</td>
                                 <td>{qnaDTO.qnaTitle}</td>
                                 <td>문의유형</td>
-                                <td>{qnaDTO.fqTypeCode}</td>
+                                <td>{fqTypeList.find(f => f.fqTypeCode === qnaDTO.fqTypeCode)?.fqTypeName || "알수없음"}</td>
                                 <td>
                                     <button onClick={onClickQnaDelete}>
                                         삭제

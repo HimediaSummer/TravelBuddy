@@ -32,6 +32,15 @@ const actions = createActions({
 const qnaReducer = handleActions(
 	{
 		[GET_QNAS]: (state, { payload }) => {
+			if (Array.isArray(payload)) {
+				return {
+					data: payload,
+					pageInfo: {
+						...payload,
+						total: payload.length
+					}
+				}
+			}
 			return payload;
 		},
 		[GET_QNA]: (state, { payload }) => {
@@ -41,7 +50,6 @@ const qnaReducer = handleActions(
 			return payload;
 		},
 		[DELETE_QNA]: (state, { payload }) => {
-			console.log('뭐라고 답하나',payload);
 			return payload;
 		},
 		[GET_QNAANSWER]: (state, { payload }) => {

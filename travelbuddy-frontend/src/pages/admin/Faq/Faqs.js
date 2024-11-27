@@ -1,5 +1,5 @@
 import MyFaqsCSS from "../../member/faq/MyFaqsCSS.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -82,7 +82,7 @@ function Faqs() {
         setFaqTypeMap(fqTypeList.data);
       }
       console.log('faqTypeMap에 담겼나!@',faqTypeMap);
-      }, [fqTypeList]);
+      }, [setFaqTypeMap]);
 
           // 디버깅을 위한 useEffect 추가
     useEffect(() => {

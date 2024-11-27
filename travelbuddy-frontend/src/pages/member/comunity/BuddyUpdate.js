@@ -16,7 +16,7 @@ function BuddyUpdate() {
     const buddyCode = params.buddyCode;    
     console.log("params에 담긴 buddyCode = ",buddyCode);
 
-	const buddyDetail = useSelector((state) => state.buddiesReducer);
+	const buddyDetail = useSelector((state) => state.buddiesReducer || {});
 	console.log("buddyDetail = ",buddyDetail);
 
 	const member = useSelector(state => state.memberReducer);
@@ -41,7 +41,7 @@ function BuddyUpdate() {
 	const imageInput = useRef();
 	const navigate = useNavigate();
 
-	const [form, setForm] = useState({});
+	const [form, setForm] = useState(null);
 	console.log("Form = ", form);
 
     // const buddyCode = props.buddyCode || state.buddyCode;
@@ -58,33 +58,25 @@ function BuddyUpdate() {
 		);
 	}, []);
 
-	const testDataList = buddyDetail;
-	console.log("testdetalist",testDataList);
+	// const testDataList = buddyDetail;
+	// console.log("testdetalist",testDataList);
 	
 	useEffect(() => {
-		if (buddyDetail && buddyDetail.region && buddyDetail.buddyType) {
-			// console.log("가져온데이터 :- -----------------------");
-			// console.log("가져온데이터 1:- -----------------------" , buddyDetail.data.region.regionCode);
-			// console.log("가져온데이터 2:- -----------------------" , buddyDetail.data.buddyType.buddyTypeCode);
-			console.log("Form123 = ", form);
-			console.log("가져온데이터 3:- -----------------------" , testDataList);
-			console.log("가져온데이터 3:- -----------------------" , typeof testDataList);
-			// console.log("가져온데이터 4:- -----------------------" , form.buddyTypeCode);
-			// console.log("가져온데이터 5:- -----------------------" , testDataList.data);
-			// console.log("가져온데이터 :- -----------------------" , buddyDetail.data.region.regionCode);
+		if (buddyDetail ) {
+			console.log("가져온데이터 :- -----------------------", buddyDetail.region, buddyDetail.buddyType);
 			setForm({
-				memberCode: member.data.memberCode || '',
-				buddyCode: buddyDetail.buddyCode  || '',
-				buddyTitle: buddyDetail.buddyTitle || '',
-				buddyContents: buddyDetail.buddyContents || '',
-				buddyStatus: buddyDetail.buddyStatus || '',
-				regionCode: testDataList.region.regionCode || '',
-				buddyTypeCode: testDataList.buddyType.buddyTypeCode || '',
-				buddyCreate: buddyDetail.buddyCreate || '',
-				buddyAt: buddyDetail.buddyAt || '' 
+				memberCode: member?.data?.memberCode || '',		
+				buddyCode: buddyDetail?.buddyCode  || '',
+				buddyTitle: buddyDetail?.buddyTitle || '',
+				buddyContents: buddyDetail?.buddyContents || '',
+				buddyStatus: buddyDetail?.buddyStatus || '',
+				regionCode: buddyDetail?.region?.regionCode || '',
+				buddyTypeCode: buddyDetail?.buddyType?.buddyTypeCode || '',
+				buddyCreate: buddyDetail?.buddyCreate || '',
+				buddyAt: buddyDetail?.buddyAt || '' 
 			});
 
-			console.log("form123456789 : ", form);
+			console.log("초기폼데이터 :- -----------------------", form.regionCode, form.buddyTypeCode);
 		}
 	}, [buddyDetail]);
 
@@ -119,17 +111,19 @@ function BuddyUpdate() {
 	const onClickModifyModeHandler = () => {
 		// 수정모드
 		setModifyMode(true);
+		console.log("수정모드이전 :- -----------------------", buddyDetail.region, buddyDetail.buddyType);
 		setForm({
-				memberCode: member.data.memberCode,
-				buddyCode: buddyDetail.buddyCode ,
-				buddyTitle: buddyDetail.buddyTitle ,
-				buddyContents: buddyDetail.buddyContents ,
-				buddyStatus: buddyDetail.buddyStatus ,
-				regionCode: buddyDetail.region.regionCode ,
-				buddyTypeCode: buddyDetail.buddyType.buddyTypeCode ,
-				buddyCreate: buddyDetail.buddyCreate,
-				buddyAt: buddyDetail.buddyAt 
+				memberCode: member?.data?.memberCode,
+				buddyCode: buddyDetail?.buddyCode ,
+				buddyTitle: buddyDetail?.buddyTitle ,
+				buddyContents: buddyDetail?.buddyContents ,
+				buddyStatus: buddyDetail?.buddyStatus ,
+				regionCode: buddyDetail?.region?.regionCode ,
+				buddyTypeCode: buddyDetail?.buddyType?.buddyTypeCode ,
+				buddyCreate: buddyDetail?.buddyCreate,
+				buddyAt: buddyDetail?.buddyAt 
 		});
+		console.log("수정모드이후 :- -----------------------", form.regionCode, form.buddyTypeCode);
 	};
 
 	/* form 데이터 세팅 */
@@ -346,7 +340,7 @@ function BuddyUpdate() {
 												}
 												checked={
 													(!modifyMode
-														? buddyDetail.region.regionCode
+														? buddyDetail.regionCode
 														: form.regionCode) ==
 													'101'
 														? true
@@ -367,7 +361,7 @@ function BuddyUpdate() {
 												}
 												checked={
 													(!modifyMode
-														? buddyDetail.region.regionCode
+														? buddyDetail.regionCode
 														: form.regionCode) ==
 													'102'
 														? true
@@ -388,7 +382,7 @@ function BuddyUpdate() {
 												}
 												checked={
 													(!modifyMode
-														? buddyDetail.region.regionCode
+														? buddyDetail.regionCode
 														: form.regionCode) ==
 													'103'
 														? true

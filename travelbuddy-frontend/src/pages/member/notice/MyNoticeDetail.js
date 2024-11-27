@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+
+import { Viewer } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 
 import {
     callNoticeDetailAPI
@@ -8,8 +11,10 @@ import {
 
 function MyNoticeDetail () {
 
+    const [noticeContents, setNoticeContents] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const editorRef = useRef(null);
     const params = useParams();
     const {noticeCode} = params;
     const noticeData = useSelector((state) => state.noticeReducer) || {};
@@ -18,45 +23,64 @@ function MyNoticeDetail () {
     useEffect (
         () => {
             dispatch(callNoticeDetailAPI(noticeCode))
-        } , []
+        } , [noticeCode]
     );
 
-    return (
-        <div>
-        <table>
-            <thead>
-                <tr>
-                <th>공지사항</th>
-                </tr>
-            </thead>
-            <tbody>
-                {notice ? (
-                    <>
-                <tr>
-                <td>제목</td>
-                <td>{notice.noticeTitle}</td>
-                <td>게시글번호</td>
-                <td>{notice.noticeCode}</td>
-                </tr>
+    useEffect(() => {
+        if (notice && notice.noticeImg) {
+            const updatedContents = notice.noticeContents 
+            ? 
+            `<img src="${notice.noticeImg}" alt="공지 이미지" style="max-width:800px; height:auto;" />${notice.noticeContents}`
+            : 
+            `<img src="${notice.noticeImg}" alt="공지 이미지" style="max-width:800px; height:auto;" />`;
 
-                <tr>
-                    <td>공지 내용</td>
-                <td colSpan={5}>
-                {notice.noticeContents}</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                </tr>
-                </>
-                ) : (
-                    <tr>
-                            <td colSpan="2">로딩 중...</td> {/* 데이터가 없을 때 로딩 메시지 */}
-                        </tr>
-                )}
-            </tbody>
-        </table>
+            setNoticeContents(updatedContents);
+            
+        } else if (notice) {
+            setNoticeContents(notice.noticeContents || "");
+
+        }
+    }, [notice]);
+
+    useEffect(() => {
+        return () => {
+            if (editorRef.current && editorRef.current.getInstance()) {
+                try {
+                    editorRef.current.getInstance().destroy();
+                } catch (error) {
+                    console.log('에디터 정리 중 오류 발생:', error);
+                }
+            }
+        };
+    }, []);
+
+    // 데이터가 없을 경우 로딩 메시지 렌더링
+    if (!notice) {
+        return <div>로딩 중입니다...</div>;
+    }
+
+    return ( 
+        <>
+            제목 :
+            {notice.noticeTitle} |
+            게시글번호 :
+            {notice.noticeCode} 
+            <br/>
+            <br/>
+            작성일 : {notice.noticeCreate} | 조회수 {notice.noticeCount}
+            <br/>
+            <hr/>
+        <div>
+            <Viewer 
+            initialValue={noticeContents || notice.noticeContents}
+            key={noticeContents}
+            previewStyle="vertical"
+            height="600px"
+            initialEditType="wysiwyg"
+            ref={editorRef}
+        />
         </div>
+        </>
     );
 }
 

@@ -95,7 +95,7 @@ public class SecurityConfig {
                     // Swagger API 문서 허용
                     auth.requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll();
                     // API 경로는 USER 또는 ADMIN 역할을 가진 사용자만 접근 가능
-                    auth.requestMatchers("/api/**","buddyBoard/buddies/buddyRegist").hasAnyRole("USER", "ADMIN");
+                    auth.requestMatchers("api/v1/members/").hasAnyRole("USER", "ADMIN");
                     /* 설명. 아래는 프로젝트 초기 구현시, Security 기능을 약화시켜 개발을 진행하게 끔 해주는 내용들이다. */
                     // 어떤 요청이든 허용 -> Security를 활용한 로그인이 모두 완성되지 않았을 때 사용할 것
                     auth.anyRequest().permitAll();
@@ -122,6 +122,7 @@ public class SecurityConfig {
         // 허용할 도메인
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",
+                "http://localhost:8080",
                 "http://travel-buddy.me"
         ));
         // 허용할 메서드

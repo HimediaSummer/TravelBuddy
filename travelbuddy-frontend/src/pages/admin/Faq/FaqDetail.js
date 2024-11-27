@@ -38,13 +38,13 @@ function FaqDetail() {
         const updateData = { faqContents };
         dispatch(updateFaqAPI(faqCode, updateData));
         alert('FAQ 수정되었습니다.');
-        navigate(`/faqs`);
+        navigate(`/admin/faqs`);
     };
 
     const onClickChangeHandlerDelete = () => {
         dispatch(deleteFaqAPI(faqCode));
         alert('FAQ 삭제되었습니다.');
-        navigate(`/faqs`);
+        navigate(`/admin/faqs`);
     };
 
     return (

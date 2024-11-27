@@ -2,13 +2,17 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+import { Editor } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
+
 import { insertNoticeAPI } from "../../../apis/NoticeAPICalls";
 
 function Notice() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const imageInput = useRef();
+    const imageInput = useRef(null);
+    const editorRef = useRef(null);
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState();
 
@@ -17,7 +21,6 @@ function Notice() {
         noticeContents: '',
         noticeCreate: '',
         noticeCount: 0,
-        noticeImg: '',
         noticeAt: ''
     });
 
@@ -38,7 +41,7 @@ function Notice() {
     const onChangeImageUpload = (e) => {
         const image = e.target.files[0];
         if (image && image.size > 10048576) {
-            alert('이미지 크기는 1MB 이하여야 합니다.');
+            alert('이미지 크기는 10MB 이하여야 합니다.');
             e.target.value = ''; // 입력 초기화
             return;
         }
@@ -51,7 +54,7 @@ function Notice() {
     };
 
     const cancleNoticeInsert = () => {
-        navigate(`/Notices`);
+        navigate(`/admin/notices`);
     };
 
     const handleInputChange = (e) => {
@@ -59,6 +62,24 @@ function Notice() {
         console.log(`${name}:${value}`);
         setNoticeDTO({ ...noticeDTO, [name]: value });
     };
+
+    const onChange = () => {
+        const data = editorRef.current.getInstance().getHTML();
+        setNoticeDTO( (state) => ({...state, noticeContents: data}));
+    };
+
+    useEffect(() => {
+        return () => {
+            if (editorRef.current && editorRef.current.getInstance()) {
+                try {
+                    editorRef.current.getInstance().destroy();
+                } catch (error) {
+                    console.log('에디터 정리 중 오류 발생:', error);
+                }
+            }
+        };
+    }, []);
+
 
     const insertNotice = () => {
         const now = new Date();
@@ -74,86 +95,50 @@ function Notice() {
             })
             .replace(/\. /g, "-")
             .replace(",", "");
+            
+            const viewAt = 'N';
 
             const formData = new FormData();
 
             formData.append('noticeTitle', noticeDTO.noticeTitle);
-            formData.append('noticeContents', noticeDTO.noticeContents);
+            formData.append('noticeContents', editorRef.current.getInstance().getHTML());
             formData.append('noticeCreate', formattedDate);
             formData.append('noticeCount', noticeDTO.noticeCount);
-            formData.append('noticeAt', noticeDTO.noticeAt);
+            formData.append('noticeAt', viewAt);
             
-            if (image) {formData.append('noticeImg', image);}
+            if (image) {formData.append('noticeImage', image)}
             console.log('이미지가 있으면 이거 있어야 돼',image)
 
-            dispatch(insertNoticeAPI({noticeDTO: formData}));    
-
-            alert("공지사항이 등록되었습니다.");
-            navigate(`/Notices`);
+            try {
+                dispatch(insertNoticeAPI({ noticeDTO: formData }));
+                alert("공지사항이 등록되었습니다.");
+                navigate(`/admin/notices`);
+            } catch (error) {
+                console.error("공지사항 등록 실패", error);
+            }
         };
 
     return (
-        <div>
-            <h2>공지사항</h2>
+        <>
             <button onClick={cancleNoticeInsert}>취소</button>
             <button onClick={insertNotice}>작성완료</button>
-            <table>
-                <thead>
-                    <tr></tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>제목</td>
-                        <td>
-                            <input
-                                type="text"
-                                name="noticeTitle"
-                                value={noticeDTO.noticeTitle}
-                                placeholder="제목을 입력하세요"
-                                onChange={handleInputChange}
-                                required
-                                maxLength={100}
-                                style={{ width: "350px" }}
+                        <input
+                            type="text"
+                            name="noticeTitle"
+                            value={noticeDTO.noticeTitle}
+                            placeholder="제목을 입력하세요"
+                            onChange={handleInputChange}
+                            required
+                            maxLength={100}
+                            style={{ width: "400px" }}
                             />
-                        </td>
-                        <td>은폐여부</td>
-                        <td>
-                            <select
-                                name="noticeAt"
-                                value={noticeDTO.noticeAt}
-                                onChange={handleInputChange}
-                                required
-                            >
-                                <option value="">선택</option>
-                                <option value={"N"}>공개</option>
-                                <option value={"Y"}>비공개</option>
-                            </select>
-                        </td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td colSpan={3}>
-                            <input
-                                type="text"
-                                name="noticeContents"
-                                value={noticeDTO.noticeContents}
-                                placeholder="내용을 입력하세요."
-                                onChange={handleInputChange}
-                                required
-                                maxLength={500}
-                                style={{ width: "600px" }}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>이미지</td>
+                            <button onClick={onClickImageUpload}>이미지첨부</button>
+                            <br/>
                             <img
                             src={imageUrl}
-                            alt="preview"
-                            style={{ maxWidth: '200px' }} 
+                            alt="noticeImg"
+                            style={{ maxWidth: '400px' }} 
 							/>
-                        <td>
                             <input 
                             style={{ display: 'none' }}
 							type="file"
@@ -161,26 +146,27 @@ function Notice() {
 							accept="image/jpg,image/png,image/jpeg,image/gif"
 							onChange={onChangeImageUpload}
 							ref={imageInput} />
-                        </td>
-                        <td>
-                            <button 
-                            onClick={onClickImageUpload}>
-                                첨부
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            ☑️ 이미지첨부는 최대 1MB입니다.
-                            <br />
-                            PNG,JPG,JPEG만 가능합니다.
-                        </td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <Editor
+        initialValue=" "
+        placeholder="내용을 입력하세요."
+        previewStyle="vertical"
+        height="600px"
+        initialEditType="wysiwyg"
+        useCommandShortcut={false}
+        hideModeSwitch={true}
+        ref={editorRef}
+        onChange={onChange}
+        toolbarItems={[
+            ['heading', 'bold', 'italic', 'strike'],
+            ['hr', 'quote'],
+            ['ul', 'ol', 'task', 'indent', 'outdent'],
+            ['table', 'link'],
+            ['code', 'codeblock'],
+            ['scrollSync'],
+        ]}
+
+        />
+        </>
     );
 }
 

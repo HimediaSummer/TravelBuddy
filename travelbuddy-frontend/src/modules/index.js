@@ -5,6 +5,7 @@ import qnaReducer from './QnaModule.js';
 import faqReducer from './FaqModule.js';
 import noticeReducer from './NoticeModule.js';
 import useinfoReducer from './UseinfoModule.js';
+import fqTypeReducer from './FqTypeModule.js';
 
 import myProfileReducer from './mypage/MyProfileModule.js';
 import myScheduleReducer from './mypage/MyScheduleModule.js';
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
 	faqReducer,
 	noticeReducer,
 	useinfoReducer,
-	buddiesReducer
+	buddiesReducer,
+	fqTypeReducer
 });
 
 export default rootReducer;

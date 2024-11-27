@@ -17,6 +17,8 @@ import travelbuddy.function.community.qnafaq.dto.FaqDTO;
 import travelbuddy.function.community.qnafaq.entity.Faq;
 import travelbuddy.function.community.qnafaq.entity.FqType;
 import travelbuddy.function.community.qnafaq.repository.FqTypeRepository;
+import travelbuddy.function.member.dto.AccountDTO;
+import travelbuddy.function.member.entity.Account;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -111,5 +113,12 @@ public class AdminFaqService {
             result = 1;
         }
         return (result > 0) ? "삭제 성공" : "삭제 실패";
+    }
+
+    /*관리자가 Faq 제목으로 검색한다.*/
+    public Object selectSearchFaqList(String search) {
+        List<Faq> faqListWithSearchValue = adminFaqRepository.findByFaqTitleContaining(search);
+
+        return faqListWithSearchValue.stream().map(Faq -> modelMapper.map(Faq, FaqDTO.class)).collect(Collectors.toList());
     }
 }

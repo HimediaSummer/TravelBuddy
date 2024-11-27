@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import travelbuddy.function.community.qnafaq.entity.QnaAnswer;
 import travelbuddy.function.community.qnafaq.repository.FqTypeRepository;
 import travelbuddy.function.community.qnafaq.repository.QnaAnswerRepository;
 import travelbuddy.function.community.qnafaq.repository.QnaRepository;
+import travelbuddy.function.member.dto.AccountDTO;
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.repository.AccountRepository;
 
@@ -47,6 +49,19 @@ public class QnaService {
         this.qnaAnswerRepository = qnaAnswerRepository;
         this.qnaRepository = qnaRepository;
     }
+
+    public int getLoggedInUserCode() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof AccountDTO) {
+                return ((AccountDTO)principal).getMemberCode();
+            }
+        }
+        return 0;
+    }
+
 //    리스트의 총 합을 구한다.
     public int selectQnaTotal() {
         log.info("[QnaService] selectQnaTotal() Start");
@@ -60,22 +75,28 @@ public class QnaService {
     }
 
     /*qna 리스트와 paging 처리를 함께 한다.*/
+    @Transactional
     public Object selectQnaListWithPaging(Criteria cri) {
         log.info("[AdminQnaService] selectQnaListWithPaging() Start");
 
+        int LoggedInMemberCode = getLoggedInUserCode();
+        log.info("LoggedInMemberCode = " + LoggedInMemberCode);
+        System.out.println("LoggedInMemberCode = " + LoggedInMemberCode);
+        if (LoggedInMemberCode == 0) { return "로그인이 필요합니다.";}
         int index = cri.getPageNum() - 1;
         int count = cri.getAmount();
         Pageable paging = PageRequest.of(index, count, Sort.by("qnaCode").descending());
 
         Page<Qna> result = qnaRepository.findAll(paging);
+//        Page<Qna> result = qnaRepository.findByAccount_MemberCode(LoggedInMemberCode,paging);
         List<Qna> qnaList = (List<Qna>)result.getContent();
 
         log.info("[QnaService] selectQnaListWithPaging() End");
 
         return qnaList.stream().map(qna -> {
             QnaDTO qnaDTO = modelMapper.map(qna, QnaDTO.class);
-            qnaDTO.setMemberCode(qna.getAccount().getMemberCode());
 
+            qnaDTO.setMemberCode(qna.getAccount().getMemberCode());
 
             QnaAnswer qnaAnswer = qnaAnswerRepository.findByQna(qna);
             QnaAnswerDTO qnaAnswerDTO = modelMapper.map(qnaAnswer, QnaAnswerDTO.class);
@@ -126,7 +147,7 @@ public class QnaService {
 
         QnaAnswer qnaAnswer = new QnaAnswer();
         qnaAnswer.setQna(insertqna);
-        qnaAnswer.setAnsContents("");
+        qnaAnswer.setAnsContents(null);
         qnaAnswerRepository.save(qnaAnswer);
 
         return "QnA 입력 성공";

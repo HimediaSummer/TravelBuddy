@@ -33,6 +33,27 @@ export const callFaqListForAdminAPI = ({currentPage}) => {
         dispatch({type: GET_FAQS, payload: result });
     }}
 
+    // 관리자가 Faq 전체 리스트에서 검색한다.
+export const callSearchFaqListAPI = ( search ) => {
+    let requestURL;
+    if (search !== undefined && search !== null) {
+        requestURL =`http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/faqs/search?f=${encodeURIComponent(search)}`;
+    }
+    console.log('키워드가 뭡니까?',search);
+    return async (dispatch, getState) => {
+        const result = await fetch(requestURL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*'
+            }
+        }).then((response) => response.json());
+        if (result.status !== null) {
+			dispatch({type: GET_FAQS, payload: result.data });
+		}
+    };
+};
+
         // 관리자가 FAQ 1개를 상세 조회한다.
 export const callFaqDetailForAdminAPI = (faqCode) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/faqs/${faqCode}`;

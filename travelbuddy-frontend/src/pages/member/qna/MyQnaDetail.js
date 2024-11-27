@@ -20,9 +20,13 @@ function MyQnaDetail() {
     }, []);
 
     const onClickQnaDelete = () => {
+        if(qnaAnswerDTO.ansContents !== null && qnaAnswerDTO.ansContents !== "") {
+            alert('답변이 존재하여 삭제가 불가능합니다.');
+            return null;
+        }
         dispatch(deleteQnaAPI(qnaCode));
         alert("문의가 삭제되었습니다.");
-        navigate(`/MyQnas`);
+        navigate(`/cs/MyQnas`);
     };
 
     return (

@@ -37,7 +37,7 @@ function MyQna() {
         const updatedQnaDTO = {...qnaDTO, qnaCreate: formattedDate};
         dispatch(insertQnaAPI(updatedQnaDTO));
         alert('문의가 등록되었습니다.');
-        navigate(`/MyQnas`);
+        navigate(`/cs/MyQnas`);
     };
 
     return (

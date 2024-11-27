@@ -13,11 +13,11 @@ function Buddies() {
     const buddyList = buddy.data || {};
 	console.log("buddyList에 뭐가 담김?", buddyList)
 
-    const region = useSelector(state => state.regionBuddyTypeReducer) || {};
-    console.log("region에 뭐가 담김? ", region);
+    // const region = useSelector(state => state.regionBuddyTypeReducer) || {};
+    // console.log("region에 뭐가 담김? ", region);
 
-    const regionList = region.data || {};
-    console.log("regionList에 뭐가 담김?", regionList);
+    // const regionList = region.data || {};
+    // console.log("regionList에 뭐가 담김?", regionList);
 
 
     const { data = {}, pageInfo = {} } = buddyList;
@@ -47,36 +47,36 @@ function Buddies() {
 		);
     }, [currentPage]);
 
-    useEffect(() => {
-        const fetchRegion = async () => {
-            try {
-                const response = await dispatch(callBuddyRegionAPI());
-                const mappedRegion = response.reduce((acc, item) => {
-                    acc[item.regionCode] = item.regionName;
-                    return acc;
-                }, {});
-                setRegionMap(mappedRegion);
-                console.log("mappedRegion", mappedRegion);
-            } catch(error) {
-                console.error("Region 유형 데이터 로드 오류", error);
-            }
-        };
-        fetchRegion();
-    },[]);
+    // useEffect(() => {
+    //     const fetchRegion = async () => {
+    //         try {
+    //             const response = await dispatch(callBuddyRegionAPI());
+    //             const mappedRegion = response.reduce((acc, item) => {
+    //                 acc[item.regionCode] = item.regionName;
+    //                 return acc;
+    //             }, {});
+    //             setRegionMap(mappedRegion);
+    //             console.log("mappedRegion", mappedRegion);
+    //         } catch(error) {
+    //             console.error("Region 유형 데이터 로드 오류", error);
+    //         }
+    //     };
+    //     fetchRegion();
+    // },[]);
 
-    useEffect(() => {
-        console.log("regionList 업데이트 됨 : ", regionList);
-        if (Array.isArray(regionList)) {
-            setFiterRegionList(regionList);
-        }else if (Array.isArray(regionList.data)) {
-            setFiterRegionList(regionList.data);
-        }
-    }, [regionList]);
+    // useEffect(() => {
+    //     console.log("regionList 업데이트 됨 : ", regionList);
+    //     if (Array.isArray(regionList)) {
+    //         setFiterRegionList(regionList);
+    //     }else if (Array.isArray(regionList.data)) {
+    //         setFiterRegionList(regionList.data);
+    //     }
+    // }, [regionList]);
 
     // 디버깅을 위한 useEffect
-    useEffect(() => {
-        console.log("filteredRegionList 업데이트됨 : ", filteredRegionList);
-    }, [filteredRegionList]);
+    // useEffect(() => {
+    //     console.log("filteredRegionList 업데이트됨 : ", filteredRegionList);
+    // }, [filteredRegionList]);
 
 
     const onClickTableTr = (buddyCode) => {
@@ -167,10 +167,10 @@ function Buddies() {
                             <th>번호</th>
                             <th>유형</th>
                             <th>지역</th>
-                            <th colSpan={5}>제목</th>
+                            <th >제목</th>
                             <th>작성자</th>
-                            <th>좋아요</th>
-                            <th>신청여부</th>
+                            {/* <th>좋아요</th> */}
+                            <th >신청여부</th>
                             <th>작성일</th>
                         </tr>
                     </thead>
@@ -185,11 +185,11 @@ function Buddies() {
                                     }
                                 >
                                     <td>{b.buddyCode}</td>
-                                    <td>{b.buddyTypeName}</td>
-                                    <td>{b.regionName}</td>
-                                    <td colSpan={5}>{b.buddyTitle}</td>
-                                    <td>{b.memberName}</td>
-                                    <td>{b.buddyCount}</td>
+                                    <td>{b.buddyType ?b.buddyType.buddyTypeName :'유형없음'}</td>
+                                    <td>{b.region ? b.region.regionName : "지역없음"}</td>
+                                    <td >{b.buddyTitle}</td>
+                                    <td>{b.account? b.account.memberName : "작성자없음"}</td>
+                                    {/* <td>{b.buddyCount}</td> */}
                                     <td>{b.buddyStatus}</td>
                                     <td>{b.buddyCreate}</td>
                                 </tr>

@@ -10,6 +10,8 @@ function BuddyDetail () {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const params = useParams();
+    const [isApplied, setIsApplied] = useState(false);
+    console.log("isAPPlied = ", isApplied);
 
     const buddyData = useSelector((state) => state.buddiesReducer);
     const member = useSelector(state => state.memberReducer); 
@@ -34,13 +36,26 @@ function BuddyDetail () {
     console.log('data 가 가지고있는것',data);
     console.log("data type",typeof data);
 
-    useEffect(() => {
-        dispatch(callBuddyDetailAPI(params));
-    }, []);
+    const [isLoading, setIsLoading] = useState(true); // 데이터 로딩 상태 관리
+
+    // useEffect(() => {
+    //     dispatch(callBuddyDetailAPI(params));
+    // }, []);
 
     useEffect(() => {
-        dispatch(callBuddyDetailAPI(params));
+        dispatch(callBuddyDetailAPI(params))
+        .then(() => {
+            setIsLoading(false);
+        })
+        .catch((error) => {
+            console.error("Error fetching buddy details:", error);
+            setIsLoading(false);
+        });
     }, [dispatch, params]);
+
+    if (isLoading) {
+        return <div>로딩 중...</div>;
+    }
 
 
     // useEffect(() => {
@@ -59,7 +74,8 @@ function BuddyDetail () {
 
     // const isAuthor = memberCode === parseInt(token?.sub);
 
-    const isAuthor = member?.data?.memberCode === data?.memberCode;
+    // const isAuthor = member?.data?.memberName === data?.account.memberName;
+    const isAuthor = member?.data?.memberCode && data?.account.memberCode && member.data.memberCode === data.account.memberCode;
 
     const onClickBuddyUpdate = () => {
         navigate(`/buddyUpdate/${data.buddyCode}`, {replace: false})
@@ -84,9 +100,6 @@ function BuddyDetail () {
             alert("삭제 권한이 없습니다.");
         }
     };
-
-    const [isApplied, setIsApplied] = useState(false);
-    console.log("isAPPlied = ", isApplied);
 
 
     const onClickApplyButton = () => {
@@ -130,11 +143,11 @@ function BuddyDetail () {
                                 <td>제목</td>
                                 <td>{data.buddyTitle}</td>
                                 <td>유형</td>
-                                <td>{data.buddyTypeName}</td>
+                                <td>{data.buddyType ? data.buddyType.buddyTypeName : "없음"}</td>
                                 <td>지역</td>
-                                <td>{data.regionName}</td>
+                                <td>{data.region ? data.region.regionName : "없음"}</td>
                                 <td>작성자</td>
-                                <td>{data.memberName}</td>
+                                <td>{data.account ? data.account.memberName : "없음"}</td>
                             </tr>
 
                             <tr>

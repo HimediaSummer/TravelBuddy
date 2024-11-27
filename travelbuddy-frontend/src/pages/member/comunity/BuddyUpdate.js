@@ -15,8 +15,10 @@ function BuddyUpdate() {
 	const params = useParams();
     const buddyCode = params.buddyCode;    
     console.log("params에 담긴 buddyCode = ",buddyCode);
+
 	const buddyDetail = useSelector((state) => state.buddiesReducer);
 	console.log("buddyDetail = ",buddyDetail);
+
 	const member = useSelector(state => state.memberReducer);
     const token = decodeJwt(window.localStorage.getItem("accessToken"));
 	console.log("member =" , member);
@@ -45,9 +47,10 @@ function BuddyUpdate() {
     // const buddyCode = props.buddyCode || state.buddyCode;
     // console.log("버디코드 옴? ",buddyCode);
 
+	
 	useEffect(() => {
 		console.log('[BuddyUpdate] buddyCode : ', params.buddyCode);
-
+		
 		dispatch(
 			callbuddyDetailForAccountAPI({
 				buddyCode: params.buddyCode
@@ -55,19 +58,33 @@ function BuddyUpdate() {
 		);
 	}, []);
 
+	const testDataList = buddyDetail;
+	console.log("testdetalist",testDataList);
+	
 	useEffect(() => {
-		if (buddyDetail) {
+		if (buddyDetail && buddyDetail.region && buddyDetail.buddyType) {
+			// console.log("가져온데이터 :- -----------------------");
+			// console.log("가져온데이터 1:- -----------------------" , buddyDetail.data.region.regionCode);
+			// console.log("가져온데이터 2:- -----------------------" , buddyDetail.data.buddyType.buddyTypeCode);
+			console.log("Form123 = ", form);
+			console.log("가져온데이터 3:- -----------------------" , testDataList);
+			console.log("가져온데이터 3:- -----------------------" , typeof testDataList);
+			// console.log("가져온데이터 4:- -----------------------" , form.buddyTypeCode);
+			// console.log("가져온데이터 5:- -----------------------" , testDataList.data);
+			// console.log("가져온데이터 :- -----------------------" , buddyDetail.data.region.regionCode);
 			setForm({
-				memberCode: member.data.memberCode,
-				buddyCode: buddyDetail.buddyCode ,
-				buddyTitle: buddyDetail.buddyTitle ,
-				buddyContents: buddyDetail.buddyContents ,
-				buddyStatus: buddyDetail.buddyStatus ,
-				regionCode: buddyDetail.regionCode ,
-				buddyTypeCode: buddyDetail.buddyTypeCode ,
-				buddyCreate: buddyDetail.buddyCreate,
-				buddyAt: buddyDetail.buddyAt 
+				memberCode: member.data.memberCode || '',
+				buddyCode: buddyDetail.buddyCode  || '',
+				buddyTitle: buddyDetail.buddyTitle || '',
+				buddyContents: buddyDetail.buddyContents || '',
+				buddyStatus: buddyDetail.buddyStatus || '',
+				regionCode: testDataList.region.regionCode || '',
+				buddyTypeCode: testDataList.buddyType.buddyTypeCode || '',
+				buddyCreate: buddyDetail.buddyCreate || '',
+				buddyAt: buddyDetail.buddyAt || '' 
 			});
+
+			console.log("form123456789 : ", form);
 		}
 	}, [buddyDetail]);
 
@@ -108,8 +125,8 @@ function BuddyUpdate() {
 				buddyTitle: buddyDetail.buddyTitle ,
 				buddyContents: buddyDetail.buddyContents ,
 				buddyStatus: buddyDetail.buddyStatus ,
-				regionCode: buddyDetail.regionCode ,
-				buddyTypeCode: buddyDetail.buddyTypeCode ,
+				regionCode: buddyDetail.region.regionCode ,
+				buddyTypeCode: buddyDetail.buddyType.buddyTypeCode ,
 				buddyCreate: buddyDetail.buddyCreate,
 				buddyAt: buddyDetail.buddyAt 
 		});
@@ -329,7 +346,7 @@ function BuddyUpdate() {
 												}
 												checked={
 													(!modifyMode
-														? buddyDetail.regionCode
+														? buddyDetail.region.regionCode
 														: form.regionCode) ==
 													'101'
 														? true
@@ -350,7 +367,7 @@ function BuddyUpdate() {
 												}
 												checked={
 													(!modifyMode
-														? buddyDetail.regionCode
+														? buddyDetail.region.regionCode
 														: form.regionCode) ==
 													'102'
 														? true
@@ -371,7 +388,7 @@ function BuddyUpdate() {
 												}
 												checked={
 													(!modifyMode
-														? buddyDetail.regionCode
+														? buddyDetail.region.regionCode
 														: form.regionCode) ==
 													'103'
 														? true

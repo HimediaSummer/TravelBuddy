@@ -15,7 +15,14 @@ import travelbuddy.common.PagingResponseDTO;
 import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
 import travelbuddy.function.community.buddy.dto.BuddyMatchDataDTO;
+import travelbuddy.function.community.buddy.entity.BuddyType;
 import travelbuddy.function.community.buddy.service.BuddyService;
+import travelbuddy.function.schedule.entity.Region;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/buddyBoard")
@@ -103,12 +110,20 @@ public class BuddyController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "신청 성공", null));
     }
 
-    @Operation(summary = "지역 조회 요청", description = "지역 조회됩니다.", tags = { "BuddyController" })
-    @GetMapping("/region/{regionName}")
-    public ResponseEntity<ResponseDTO> selectMyMemberInfo(@PathVariable String  regionName) {
-
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", buddyService.selectRegion(regionName)));
+    @Operation(summary = "버디 유형 리스트 요청", description = "버디 유형 코드와 이름 리스트를 반환합니다.", tags = {"BuddyController"})
+    @GetMapping("/buddyTypes")
+    public ResponseEntity<List<Map<String, String>>> getBuddyTypes() {
+        List<Map<String, String>> buddyTypes = buddyService.getBuddyTypes();
+        return ResponseEntity.ok(buddyTypes);
     }
+
+    @Operation(summary = "지역 리스트 요청", description = "지역 코드와 이름 리스트를 반환합니다.", tags = {"BuddyController"})
+    @GetMapping("/regions")
+    public ResponseEntity<List<Map<String, String>>> getRegions() {
+        List<Map<String, String>> regions = buddyService.getRegions();
+        return ResponseEntity.ok(regions);
+    }
+
 
 
 }

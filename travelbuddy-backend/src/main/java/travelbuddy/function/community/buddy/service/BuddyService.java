@@ -24,7 +24,6 @@ import travelbuddy.function.community.buddy.repository.BuddyTypeRepository;
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.repository.AccountRepository;
 import travelbuddy.function.member.repository.MemberRepository;
-import travelbuddy.function.schedule.dto.RegionDTO;
 import travelbuddy.function.schedule.entity.Region;
 import travelbuddy.function.schedule.repository.RegionRepository;
 import travelbuddy.util.FileUploadUtils;
@@ -75,7 +74,7 @@ public class BuddyService {
     }
 
 
-    public List<BuddyDTO> selectBuddyListWithPaging(Criteria criteria) {
+    public List<Buddy> selectBuddyListWithPaging(Criteria criteria) {
 
         log.info("[BuddyService] selectBuddyListWithPaging() Start");
 
@@ -101,14 +100,14 @@ public class BuddyService {
         log.info("[BuddyService] selectBuddyListWithPaging() END");
 
 //        return buddyList.stream().map(buddy -> modelMapper.map(buddy, BuddyDTO.class)).collect(Collectors.toList());
-        return  buddyList.stream().map(buddy -> {
-            BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
-            if (buddy.getAccount() != null) {
-                buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
-                buddyDTO.setMemberName(buddy.getAccount().getMemberName());
-            }
-            return buddyDTO;
-        }).collect(Collectors.toList());
+        return buddyList;
+//        return  buddyList.stream().map(buddy -> {
+//            BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
+//            if (buddy.getAccount() != null) {
+//                buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
+//            }
+//            return buddyDTO;
+//        }).collect(Collectors.toList());
     }
 
 //    public Object selectSearchBuddyList(String search) {
@@ -133,36 +132,27 @@ public class BuddyService {
 
 
         Buddy buddy = buddyRepository.findById(buddyCode).get();
-        ModelMapper modelMapper = new ModelMapper();
 
-        Account account = accountRepository.findById(buddy.getAccount().getMemberCode()).get();
-        buddy.setAccount(account);
+//        Account account = accountRepository.findById(buddy.getAccount().getMemberCode()).get();
+//        buddy.setAccount(account);
         buddy.setBuddyImg(IMAGE_URL + buddy.getBuddyImg());
 //        buddy.setAccount(account);
 //        buddyRepository.save(buddy);
-        BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
-        if(buddy.getAccount() != null) {
-            buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
-            buddyDTO.setMemberName(buddy.getAccount().getMemberName());
-            String memberName = buddy.getAccount().getMemberName();
-        }
-
-        Region region = regionRepository.findById(buddyDTO.getRegionCode()).get();
-//        if(region != null) {
-//            buddyDTO.setRegionName(region.getRegionName());
+//        BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);
+//        if(buddy.getAccount() != null) {
+//            buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
 //        }
 
-        BuddyType buddyType = buddyTypeRepository.findById(buddyDTO.getBuddyTypeCode()).get();
-//        if(buddyType != null ) {
-//            buddyDTO.setBuddyTypeName(buddyType.getBuddyTypeName());
-//        }
+//        Region region = regionRepository.findById(buddyDTO.getRegionCode()).get();
+//
+//        BuddyType buddyType = buddyTypeRepository.findById(buddyDTO.getBuddyTypeCode()).get();
 
-        //        buddyDTO.setMemberCode(buddy.getAccount().getMemberCode());
 
         log.info("[BuddyService} selectBuddyDetail() END");
 
-//        return modelMapper.map(buddy, BuddyDTO.class);
-        return buddyDTO;
+//        return modelMapper.map(buddy, Buddy.class);
+//        return buddyDTO;
+        return  buddy;
     }
 
     @Transactional
@@ -274,15 +264,18 @@ public class BuddyService {
                 //이미지 변동 없을 경우
                 buddy.setBuddyImg(oriImage);
             }
+            log.info("[BuddyService] updateBuddy END");
 
             result = 1;
+            return buddy;
         } catch (IOException e) {
             log.info("[updateBuddy] Exception!!");
             FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
             throw new RuntimeException(e);
         }
-        log.info("[BuddyService] updateBuddy END");
-        return (result > 1 ) ? "상품 업데이트 성공" : "상품 업데이트 실패";
+
+//        return (result > 1 ) ? "상품 업데이트 성공" : "상품 업데이트 실패";
+
     }
 
     @Transactional
@@ -335,19 +328,32 @@ public class BuddyService {
 
     }
 
-    public Object selectRegion(String regionName) {
 
-        log.info("[BuddyService] getRegion Start =======================");
+    public List<Map<String, String>> getBuddyTypes() {
+        List<BuddyType> buddyTypes = buddyTypeRepository.findAll();
 
-//        Region region = regionRepository.findByRegionName(regionName);
-//
-//        RegionDTO regionDTO = modelMapper.map(region, RegionDTO.class);
+        // 필요한 데이터만 매핑
+        return buddyTypes.stream()
+                .map(type -> {
+                    Map<String, String> typeData = new HashMap<>();
+                    typeData.put("buddyTypeCode", String.valueOf(type.getBuddyTypeCode()));
+                    typeData.put("buddyTypeName", type.getBuddyTypeName());
+                    return typeData;
+                })
+                .collect(Collectors.toList());
+    }
 
-        List<Region> getRegionNameList = regionRepository.findAll();
+    public List<Map<String, String>> getRegions() {
+        List<Region> regions = regionRepository.findAll();
 
-
-        log.info("[BuddyService] getRegion End =========================");
-
-        return getRegionNameList.stream().map((element) -> modelMapper.map(element, RegionDTO.class)).collect(Collectors.toList());
+        // 필요한 데이터만 매핑
+        return regions.stream()
+                .map(region -> {
+                    Map<String, String> regionData = new HashMap<>();
+                    regionData.put("regionCode", String.valueOf(region.getRegionCode()));
+                    regionData.put("regionName", region.getRegionName());
+                    return regionData;
+                })
+                .collect(Collectors.toList());
     }
 }

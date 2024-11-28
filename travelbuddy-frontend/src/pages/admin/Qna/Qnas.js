@@ -4,18 +4,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
 import { callQnaListForAdminAPI } from "../../../apis/QnaAPICalls";
+import { callFqTypeNameAPI } from "../../../apis/FqTypeAPICalls";
+import { callMemberAllNameAPI } from "../../../apis/MemberAPICalls";
 
 function Qnas() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const qna = useSelector((state) => state.qnaReducer) || {};
+    const fqType = useSelector((state) => state.fqTypeReducer) || {};
+    const member = useSelector((state) => state.memberReducer) || {};
     const qnaList = qna.data || {};
+    const fqTypeList = fqType.data || {};
+    const memberList = member.data || {};
+    const memberPageInfo = member.pageInfo || {};
     const { data = {}, pageInfo = {} } = qnaList;
-    console.log('나 qnaList',qnaList);
 
-    const [start, setStart] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageEnd, setPageEnd] = useState(1);
 
     const pageNumber = [];
     if (pageInfo) {
@@ -25,15 +29,18 @@ function Qnas() {
     }
 
     useEffect(() => {
-        console.log(currentPage
-            
-        )
-        dispatch(
-            callQnaListForAdminAPI({
-                currentPage: currentPage
-            })
-        );
-    }, [currentPage]);
+        dispatch(callQnaListForAdminAPI({currentPage}));
+    }, [currentPage, dispatch]);
+
+    useEffect(()=>{
+        dispatch(callMemberAllNameAPI());
+    },[dispatch]);
+
+    useEffect (() => {
+        dispatch(callFqTypeNameAPI());
+    }, [dispatch]);
+
+    
 
 
     const onClickTableTr = (qnaCode) => {
@@ -78,9 +85,15 @@ function Qnas() {
                                     }
                                 >
                                     <td>{q.qnaDTO.qnaCode}</td>
-                                    <td>{q.qnaDTO.fqTypeCode}</td>
+                                    <td>{Array.isArray(fqTypeList) 
+                                    ? fqTypeList.find(f => f.fqTypeCode === q.qnaDTO.fqTypeCode)
+                                    ?.fqTypeName || "로딩중" : "로딩중"
+                                    }</td>
                                     <td colSpan={5}>{q.qnaDTO.qnaTitle}</td>
-                                    <td>{q.qnaDTO.memberCode}</td>
+                                    <td>{Array.isArray(memberList)
+                                    ? memberList.find((m) => m.memberCode === q.qnaDTO.memberCode)
+                                    ?.memberName || "로딩중" : "로딩중"
+                                    }</td>
                                     <td>{q.qnaAnswerDTO.ansContents ? "답변완료" : ""}</td>
                                     <td>{q.qnaDTO.qnaCreate}</td>
                                 </tr>

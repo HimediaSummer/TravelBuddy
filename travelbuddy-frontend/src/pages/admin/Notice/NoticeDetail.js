@@ -39,6 +39,10 @@ function NoticeDetail() {
         }
     }, [notice]);
 
+    const onClickChangeHandlerUpdate = () => {
+        alert("수정기능 개발중입니다.");
+        // navigate(`/admin/notices`);
+    };
     const onClickChangeHandlerDelete = () => {
         dispatch(deleteNoticeAPI(noticeCode));
         alert("공지사항을 삭제하였습니다.");
@@ -69,7 +73,8 @@ function NoticeDetail() {
             <td style={{width:'350px'}}>{notice.noticeTitle}</td>
             <td style={{width:'60px'}}>글번호</td>
             <td style={{width:'50px'}}>{notice.noticeCode}</td> 
-            <td><button onClick={onClickChangeHandlerDelete}>삭제</button></td><br/>
+            <td style={{width:'50px'}}><button onClick={onClickChangeHandlerUpdate}>수정</button></td>
+            <td style={{width:'50px'}}><button onClick={onClickChangeHandlerDelete}>삭제</button></td><br/>
             <td style={{width:'60px'}}>작성일</td>
             <td style={{width:'200px'}}>{notice.noticeCreate}</td>
             <td style={{width:'60px'}}>조회수</td> 

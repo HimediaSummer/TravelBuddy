@@ -7,6 +7,7 @@ import travelbuddy.function.community.qnafaq.entity.Qna;
 
 public interface QnaRepository extends JpaRepository<Qna, Integer> {
 
-    Page<Qna> findByAccount_MemberCode(int memberCode, Pageable pageable);
+
+    Page<Qna> findAllByAccountMemberCode(Integer memberName, Pageable pageable);
 
 }

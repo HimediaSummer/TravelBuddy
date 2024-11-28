@@ -133,7 +133,6 @@ const onClickTableTr = (useinfoCode) => {
                                     <td colSpan={3}>{u.useinfoTitle}</td>
                                     <td>{u.useinfoCount}</td>
                                     <td>{u.useinfoCreate}</td>
-                                    <td>{u.useinfoAt}</td>
                                 </tr>
                             ))}
                     </tbody>

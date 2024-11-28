@@ -1,0 +1,18 @@
+.adminNavBarContainer ul{
+    font-family: 'Cafe24 Ssurround';
+    font-style: none;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 42px;
+    display: flex;
+    list-style: none;
+    align-items: center;
+    text-align: right;
+    color: #BFDCEC;
+    cursor: pointer;
+    margin-top : 45px;
+    margin-left : 270px;
+}
+.adminNavBarContainer ul li {
+    margin-right: 36px;
+}

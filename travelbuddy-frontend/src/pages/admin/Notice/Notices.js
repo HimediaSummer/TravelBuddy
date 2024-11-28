@@ -1,4 +1,4 @@
-import NoticeCSS from './NoticeCSS.css';
+import AdminAllCSS from '../../../components/common/AdminAllCSS.css';
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -94,7 +94,7 @@ useEffect(() => {
 
     return (
         <>
-         <div className='noticeContainer'>
+         <div className='AdminAllContainer'>
                     <p>공지사항</p>
                     <input
                     type="text"
@@ -104,7 +104,7 @@ useEffect(() => {
                     onKeyDown={onChangeHandler}
                 ></input>
                 <button onClick={onClickSearch}>검색</button>
-                <table className='noticeContainer'>
+                <table>
                     <colgroup>
                         <col width="10%" />
                         <col width="35%" />
@@ -151,7 +151,7 @@ useEffect(() => {
                 <button 
                     onClick={() => setCurrentPage(currentPage - 1)} 
                     disabled={currentPage === 1}
-                    className='noticeContainer'
+                    className='AdminAllContainer'
                 >
                     &lt;
                 </button>
@@ -160,7 +160,7 @@ useEffect(() => {
                 <li key={num} onClick={() => setCurrentPage(num)}>
                     <button
                         style={ currentPage === num ? {backgroundColor : 'skyblue' } : null}
-                        className='noticeContainer'
+                        className='AdminAllContainer'
                     >
                         {num}
                     </button>
@@ -168,7 +168,7 @@ useEffect(() => {
                 ))}
                 { Array.isArray(filteredNoticeList) &&
                 <button 
-                    className='noticeContainer'
+                    className='AdminAllContainer'
                     onClick={() => setCurrentPage(currentPage + 1)} 
                     disabled={currentPage === pageInfo.pageEnd  || pageInfo.total == 0}
                 >

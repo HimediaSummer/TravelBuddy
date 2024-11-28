@@ -1,0 +1,127 @@
+
+/* 전체 컨테이너 중앙 배치 */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0; /* 내부 여백 제거 */
+    box-sizing: border-box;
+    width: 100%; /* 화면 전체 너비 사용 */
+}
+
+/* 제목 스타일 */
+h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #2c3e50; /* 짙은 색상으로 가독성 향상 */
+}
+
+/* 게시글 작성 버튼 스타일 */
+.write-button {
+	/* 오른쪽 정렬 */
+    align-self: flex-end; 
+    margin: 10px 0;
+    background-color: rgba(140, 200, 234, 0.6); /* 8CC8EA 컬러 60% */
+    border: none;
+    border-radius: 15px;
+    padding: 0px 0px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+	width: 124px;
+	height: 50px;
+	/* position: fixed; */
+	/* left: 1537px;
+	top: 866px; */
+    box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    transition: background-color 0.3s ease;
+}
+
+
+.write-button:hover {
+    background-color: #1F709E; /* 마우스 오버 색상 */
+}
+
+/* 표 스타일 */
+table {
+    /* border-collapse: collapse; */
+	/* 부모 컨테이너의 너비 채우기 */
+    width: 100%; 
+	/* 최대 너비 제한 */
+    /* max-width: 3000px;  */
+    /* background-color: white; */
+	/* 제목과 간격 추가 */
+    margin-top: 20px; 
+    overflow: hidden;
+	/* position: fixed; */
+	width: 1404px;
+	height: 51px;
+	left: 255px;
+	top: 324px;
+	border-radius: 10px;
+
+}
+
+/* 헤더 스타일 */
+thead tr {
+    background-color: rgba(140, 200, 234, 0.6);
+    color: black;
+    /* font-weight: bold; */
+    text-align: center;
+}
+
+thead th {
+    padding: 2px;
+    font-size: 20px;
+    /* text-transform: uppercase; */
+}
+
+/* 본문 스타일 */
+tbody td {
+    padding: 10px;
+    /* border: 1px solid #ddd; */
+    text-align: center;
+    font-size: 15px;
+}
+
+tbody tr:nth-child(odd) {
+    /* background-color: #f9f9f9; */
+}
+
+tbody tr:nth-child(even) {
+    /* background-color: #fff; */
+}
+
+/* 페이지네이션 스타일 */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background-color: white;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.pagination button:hover {
+    background-color: #8CC8EA;
+    color: white;
+}
+
+.pagination button:disabled {
+    background-color: #ddd;
+    color: #aaa;
+    cursor: not-allowed;
+}

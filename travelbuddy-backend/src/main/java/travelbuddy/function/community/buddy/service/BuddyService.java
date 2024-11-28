@@ -74,7 +74,7 @@ public class BuddyService {
     }
 
 
-    public List<Buddy> selectBuddyListWithPaging(Criteria criteria) {
+    public Object selectBuddyListWithPaging(Criteria criteria) {
 
         log.info("[BuddyService] selectBuddyListWithPaging() Start");
 
@@ -99,7 +99,7 @@ public class BuddyService {
 
         log.info("[BuddyService] selectBuddyListWithPaging() END");
 
-//        return buddyList.stream().map(buddy -> modelMapper.map(buddy, BuddyDTO.class)).collect(Collectors.toList());
+//        return buddyList.stream().map(element -> modelMapper.map(element, BuddyDTO.class)).collect(Collectors.toList());
         return buddyList;
 //        return  buddyList.stream().map(buddy -> {
 //            BuddyDTO buddyDTO = modelMapper.map(buddy, BuddyDTO.class);

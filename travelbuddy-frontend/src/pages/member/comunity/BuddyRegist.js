@@ -96,6 +96,12 @@ function BuddyRegist() {
 
 
     const onClickBuddyRegistactionHandler = () => {
+
+        if (!form.buddyTitle.trim() || !form.buddyContents.trim() || 
+        !form.buddyTypeCode || !form.regionCode || !form.buddyStatus) {
+        alert("이미지를 제외한 모든 칸을 입력해주세요.");
+        return; // 조건을 만족하지 않으면 함수 종료
+    }
         
         // const now = new Date();
         // const formattedDate = now.toLocaleString('ko-KR', {

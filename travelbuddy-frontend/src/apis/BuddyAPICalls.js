@@ -3,8 +3,9 @@ import { GET_REGIONS } from '../modules/RegionBuddyTypeModule';
 
 //게시글 전체조회
 export const callBuddiesListAPI = ({currentPage}) => {
-    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies?offset`;
+    const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies?offset=${currentPage}`;
 	console.log('callBuddiesListAPI 갔다오는거 확인');
+    console.log("currentPage = ", currentPage);
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'GET',
@@ -13,7 +14,7 @@ export const callBuddiesListAPI = ({currentPage}) => {
                 Accept: '*/*'
             }
         }).then((response) => response.json());
-		// console.log("API응답:",result);
+		console.log("API응답:",result);
         dispatch({type: GET_BUDDIES, payload: result });
 		
     }}

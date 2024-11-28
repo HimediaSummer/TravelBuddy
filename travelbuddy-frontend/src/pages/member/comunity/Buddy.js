@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
+import BuddiesCSS from "./Buddies.css";
 
 import { callBuddiesListAPI, callSearchBuddyListAPI, callBuddyRegionAPI } from "../../../apis/BuddyAPICalls";
 
@@ -12,6 +13,7 @@ function Buddies() {
 
     const buddyList = buddy.data || {};
 	console.log("buddyList에 뭐가 담김?", buddyList)
+    const pageInfo = buddy.pageInfo || {};
 
     // const region = useSelector(state => state.regionBuddyTypeReducer) || {};
     // console.log("region에 뭐가 담김? ", region);
@@ -20,14 +22,14 @@ function Buddies() {
     // console.log("regionList에 뭐가 담김?", regionList);
 
 
-    const { data = {}, pageInfo = {} } = buddyList;
+    // const { data = {}, pageInfo = {} } = buddyList;
     // console.log("한번에 하나만 담기나?", data);
 
     // const [start, setStart] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     // const [pageEnd, setPageEnd] = useState(1);
-    const [filteredRegionList, setFiterRegionList] = useState([]);
-    const [regionMap, setRegionMap] = useState({});
+    const [filteredBuddyList, setFiterBuddyList] = useState([]);
+    // const [regionMap, setRegionMap] = useState({});
 
     
 
@@ -42,10 +44,10 @@ function Buddies() {
         // setStart((currentPage - 1) * 5);
         dispatch(
 			callBuddiesListAPI({ 
-				currentPage:{ currentPage },
+				currentPage
 			})
 		);
-    }, [currentPage]);
+    }, [currentPage, dispatch]);
 
     // useEffect(() => {
     //     const fetchRegion = async () => {
@@ -123,7 +125,7 @@ function Buddies() {
 
     return (
         <>
-            <div >
+            <div className="container">
                 <h2>버디매칭</h2>
                 {/* <input
                     type="text"
@@ -133,7 +135,6 @@ function Buddies() {
                     // onKeyDown={onChangeHandler}
                 ></input>
                 <button onClick={onClickSearch}>검색</button> */}
-                <button onClick={onClickBuddyRegist}>게시글 작성</button>
                 {/* <div>
                     <label>지역 선택:</label>
                     <select onChange={(e) => setSelectedRegion(e.target.value)}>
@@ -175,8 +176,8 @@ function Buddies() {
                         </tr>
                     </thead>
                     <tbody>
-                        {Array.isArray(data) && 
-                            data.map((b) => {
+                        {Array.isArray(buddyList.data) && 
+                            buddyList.data.map((b) => {
                                 return(
                                 <tr
                                     key={b.buddyCode}
@@ -195,16 +196,18 @@ function Buddies() {
                                 </tr>
                             )})}
                     </tbody>
+                    
                 </table>
+                <button className="write-button" onClick={onClickBuddyRegist}>게시글 작성</button>
             </div>
-            <div
-                style={{
-                    listStyleType: "none",
-                    display: "flex",
-                    justifyContent: "center",
-                }}
+            <div 
+                // style={{
+                //     listStyleType: "none",
+                //     display: "flex",
+                //     justifyContent: "center",
+                // }}
             >
-                {Array.isArray(buddyList) && (
+                {Array.isArray(buddyList.data) && (
                     <button
                         onClick={() => setCurrentPage(currentPage - 1)}
                         disabled={currentPage === 1}
@@ -227,7 +230,7 @@ function Buddies() {
                         </button>
                     </li>
                 ))}
-                {Array.isArray(buddyList) && (
+                {Array.isArray(buddyList.data) && (
                     <button
                         
                         onClick={() => setCurrentPage(currentPage + 1)}
@@ -239,7 +242,9 @@ function Buddies() {
                         &gt;
                     </button>
                 )}
+                
             </div>
+            
         </>
     );
 }

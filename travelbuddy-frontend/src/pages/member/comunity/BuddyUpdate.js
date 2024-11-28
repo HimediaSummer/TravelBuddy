@@ -41,7 +41,8 @@ function BuddyUpdate() {
 	const imageInput = useRef();
 	const navigate = useNavigate();
 
-	const [form, setForm] = useState(null);
+
+	const [form, setForm] = useState({});
 	console.log("Form = ", form);
 
     // const buddyCode = props.buddyCode || state.buddyCode;
@@ -60,25 +61,29 @@ function BuddyUpdate() {
 
 	// const testDataList = buddyDetail;
 	// console.log("testdetalist",testDataList);
-	
-	useEffect(() => {
-		if (buddyDetail ) {
-			console.log("가져온데이터 :- -----------------------", buddyDetail.region, buddyDetail.buddyType);
-			setForm({
-				memberCode: member?.data?.memberCode || '',		
-				buddyCode: buddyDetail?.buddyCode  || '',
-				buddyTitle: buddyDetail?.buddyTitle || '',
-				buddyContents: buddyDetail?.buddyContents || '',
-				buddyStatus: buddyDetail?.buddyStatus || '',
-				regionCode: buddyDetail?.region?.regionCode || '',
-				buddyTypeCode: buddyDetail?.buddyType?.buddyTypeCode || '',
-				buddyCreate: buddyDetail?.buddyCreate || '',
-				buddyAt: buddyDetail?.buddyAt || '' 
-			});
 
-			console.log("초기폼데이터 :- -----------------------", form.regionCode, form.buddyTypeCode);
-		}
-	}, [buddyDetail]);
+
+	
+	// useEffect(() => {
+	// 	console.log(" if 문 들어가기전 :- -----------------------", buddyDetail.region, buddyDetail.buddyType);
+	// 	if (buddyDetail ) {
+	// 		console.log("if문 들어간 후 가져온데이터 :- -----------------------", buddyDetail.region, buddyDetail.buddyType);
+	// 		setForm({
+	// 			memberCode: member?.data?.memberCode || '',		
+	// 			buddyCode: buddyDetail?.buddyCode  || '',
+	// 			buddyTitle: buddyDetail?.buddyTitle || '',
+	// 			buddyContents: buddyDetail?.buddyContents || '',
+	// 			buddyStatus: buddyDetail?.buddyStatus || '',
+	// 			regionCode: buddyDetail?.region?.regionCode || '',
+	// 			buddyTypeCode: buddyDetail?.buddyType?.buddyTypeCode || '',
+	// 			buddyCreate: buddyDetail?.buddyCreate || '',
+	// 			buddyAt: buddyDetail?.buddyAt || '' 
+	// 		});
+
+	// 		console.log("초기폼데이터 :- -----------------------", form.regionCode, form.buddyTypeCode);
+	// 	}
+	// }, [buddyDetail]);
+	// console.log("set from = ", form);
 
 
 	useEffect(() => {
@@ -110,6 +115,7 @@ function BuddyUpdate() {
 
 	const onClickModifyModeHandler = () => {
 		// 수정모드
+		if(buddyDetail) {
 		setModifyMode(true);
 		console.log("수정모드이전 :- -----------------------", buddyDetail.region, buddyDetail.buddyType);
 		setForm({
@@ -122,7 +128,7 @@ function BuddyUpdate() {
 				buddyTypeCode: buddyDetail?.buddyType?.buddyTypeCode ,
 				buddyCreate: buddyDetail?.buddyCreate,
 				buddyAt: buddyDetail?.buddyAt 
-		});
+		})};
 		console.log("수정모드이후 :- -----------------------", form.regionCode, form.buddyTypeCode);
 	};
 
@@ -340,7 +346,7 @@ function BuddyUpdate() {
 												}
 												checked={
 													(!modifyMode
-														? buddyDetail.regionCode
+														? buddyDetail.region.regionCode
 														: form.regionCode) ==
 													'101'
 														? true
@@ -361,7 +367,7 @@ function BuddyUpdate() {
 												}
 												checked={
 													(!modifyMode
-														? buddyDetail.regionCode
+														? buddyDetail.region.regionCode
 														: form.regionCode) ==
 													'102'
 														? true
@@ -382,7 +388,7 @@ function BuddyUpdate() {
 												}
 												checked={
 													(!modifyMode
-														? buddyDetail.regionCode
+														? buddyDetail.region.regionCode
 														: form.regionCode) ==
 													'103'
 														? true
@@ -410,7 +416,7 @@ function BuddyUpdate() {
 												}
 												checked={
 													(!modifyMode
-														? buddyDetail.buddyTypeCode
+														? buddyDetail.buddyType.buddyTypeCode
 														: form.buddyTypeCode) ==
 													'1'
 														? true
@@ -431,7 +437,7 @@ function BuddyUpdate() {
 												}
 												checked={
 													(!modifyMode
-														? buddyDetail.buddyTypeCode
+														? buddyDetail.buddyType.buddyTypeCode
 														: form.buddyTypeCode) ==
 													'2'
 														? true

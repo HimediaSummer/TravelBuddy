@@ -78,7 +78,8 @@ function BuddyDetail () {
     const isAuthor = member?.data?.memberCode && data?.account.memberCode && member.data.memberCode === data.account.memberCode;
 
     const onClickBuddyUpdate = () => {
-        navigate(`/buddyUpdate/${data.buddyCode}`, {replace: false})
+        alert("개발중 입니다.");
+        // navigate(`/buddyUpdate/${data.buddyCode}`, {replace: false})
     };
 
     const onClickBuddyDelete = () => {
@@ -103,27 +104,28 @@ function BuddyDetail () {
 
 
     const onClickApplyButton = () => {
-        const applyData = {
-            "buddyCode": data.buddyCode,
-            "memberCode": member.data.memberCode,
-            "applyId": member.data.memberName, // 또는 다른 식별자
-            "applyStatus": 1 // 신청 상태 (1: 신청),
-        };
+        alert("개발 중입니다.");
+        // const applyData = {
+        //     "buddyCode": data.buddyCode,
+        //     "memberCode": member.data.memberCode,
+        //     "applyId": member.data.memberName, // 또는 다른 식별자
+        //     "applyStatus": 1 // 신청 상태 (1: 신청),
+        // };
 
-        console.log("applyData = ", applyData)
+        // console.log("applyData = ", applyData)
     
-        dispatch(callApplyBuddyAPI(applyData))
-            .then(() => {
-                alert("신청이 완료되었습니다.");
-                // 버튼 상태 업데이트
-                setIsApplied(true); // 상태를 업데이트하여 UI에서 신청 완료로 표시
-                navigate('/buddies', { replace: true});
-                window.location.reload();
-            })
-            .catch((error) => {
-                console.error("신청 중 오류 발생:", error);
-                alert("신청 중 오류가 발생했습니다.");
-            });        
+        // dispatch(callApplyBuddyAPI(applyData))
+        //     .then(() => {
+        //         alert("신청이 완료되었습니다.");
+        //         // 버튼 상태 업데이트
+        //         setIsApplied(true); // 상태를 업데이트하여 UI에서 신청 완료로 표시
+        //         navigate('/buddies', { replace: true});
+        //         window.location.reload();
+        //     })
+        //     .catch((error) => {
+        //         console.error("신청 중 오류 발생:", error);
+        //         alert("신청 중 오류가 발생했습니다.");
+        //     });        
     };
 
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Map from './Map';
+import moment from 'moment';
 
 function RegionSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, selectedRegion, setSelectedRegion, setTravelData }) {
 
@@ -112,8 +113,8 @@ function RegionSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, 
 		<div class="tema-title">
 			<div class="chat-container">
 				<form class="chat-form" action="post">
-				<h2 class="chat-head" style={{ margin: 'auto' }}>{selectedRegion ? (selectedRegion.regionName) : ('어떤 여행을 하고 싶나요?')}</h2>
-				<h4>{startDate || ''} ~ {endDate || ''}</h4>
+				<p class="chat-head" style={{ margin: 'auto',fontSize: '18px' }}>{selectedRegion ? (selectedRegion.regionName) : ('어떤 여행을 하고 싶나요?')}</p>
+				<p style={{marginTop: '5px', marginBottom: '25px', fontSize: '15px' }}>{startDate ? moment(startDate, 'MM-DD(ddd)').format('YYYY-MM-DD(ddd)') : ''} ~ {endDate ? moment(endDate, 'MM-DD(ddd)').format('YYYY-MM-DD(ddd)') : ''}</p>
 					<div class='chat-container-r'>
 					<div id="chat-box2-r">
 						<button type='button' onClick={() => tabChange('select')}>장소 선택</button>
@@ -121,7 +122,7 @@ function RegionSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, 
 					</div>
 					</div>
 					<div class="tema-title">
-						{ regionTab === 'select' ? (<legend>가고 싶은 장소를 선택해주세요.</legend>) : (<legend>가고 싶은 장소의 주소를 입력해주세요.</legend>)}
+						{ regionTab === 'select' ? (<legend>가고 싶은 장소를 선택해주세요.</legend>) : (<legend>가고 싶은 장소를 입력해주세요.</legend>)}
 						{/* <legend>가고싶은 도시를 선택해주세요.</legend> */}
 					</div>
 					{ regionTab === 'select' &&  (
@@ -147,7 +148,7 @@ function RegionSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, 
 					{ regionTab === 'search' && (
 					<div className='region-search' style={{marginBottom: '500px'}}>
 						<div style={{display: 'flex', textAlign: 'left', marginLeft: '25px'}}>
-						<input type='search' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
+						<input type='search' placeholder='지역의 이름을 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
 						<img src='/Img/search-icon.png' width={'35px'} height={'35px'} style={{cursor: 'pointer'}} onClick={handleSearchSubmit}/>
 						</div>
 						<button className="region-button2" onClick={onNext} disabled={!searchQuery} style={{marginTop: '0'}}>다음</button>
@@ -192,7 +193,7 @@ function RegionSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, 
 								) : (
 									// 선택 탭일 때
 									selectedRegion ? (
-										<Map regionName={selectedRegion.regionName} style={{width: isToggleOpen ? '800px' : '800px', height: '800px'}}/>
+										<Map regionName={selectedRegion.regionName} style={{width: isToggleOpen ? '800px' : '1100px', height: '800px'}}/>
 									) : (
 										<Map regionName={null} style={{width: '1100px', height: '800px'}}/>
 									)

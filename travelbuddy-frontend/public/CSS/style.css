@@ -142,7 +142,8 @@ fieldset ul {
 }
 
 legend {
-	margin-left: 40px;
+	/* margin-left: 40px; */
+	font-size: 15px;
 }
 
 .user-favoritetema>li {
@@ -300,7 +301,7 @@ legend {
 }
 
 #chat-box2-r>button {
-	padding: 20px;
+	padding: 0 30px;
 	border: none;
 	background-color: var(--background-color);
 	cursor: pointer;
@@ -328,7 +329,7 @@ legend {
 	/* font-size: xx-large; */
 	font-weight: bold;
 	color: #1F709E;
-	margin-top: 100px; /* 내용물 위쪽 여백 추가 */
+	/* margin-top: 250px; 내용물 위쪽 여백 추가 */
 }
 
 #chat-box>p {
@@ -618,6 +619,10 @@ select,
 	font-weight: bold;
 }
 
+#button:hover {
+	background-color: var(--accent-color);
+}
+
 
 .submit-button:active,
 #button:active {
@@ -891,7 +896,7 @@ select,
 	min-height: 600px;
     border-radius: 5px; /* 모서리 둥글게 */
 	padding: 10px; /* 내부 여백 추가 */
-	margin-top: 20px; /* 위쪽 여백 추가 */
+	/* margin-top: 20px; 위쪽 여백 추가 */
 }
 
 .region-search {
@@ -903,7 +908,7 @@ select,
 	/* min-height: 600px; */
     border-radius: 5px; /* 모서리 둥글게 */
 	padding: 10px; /* 내부 여백 추가 */
-	margin-top: 20px; /* 위쪽 여백 추가 */
+	/* margin-top: 20px; 위쪽 여백 추가 */
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -933,6 +938,7 @@ select,
 	border: 1px solid lightgray !important;
 	border-radius: 15px !important;
 	padding: 5px 5px !important;
+	margin-bottom: 10px;
 }
 
 .region-search img {

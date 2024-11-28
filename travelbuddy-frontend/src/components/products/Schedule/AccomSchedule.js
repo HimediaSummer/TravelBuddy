@@ -133,7 +133,7 @@ const handleSearchSubmit = () => {
 										<img key={accom.accomCode} src={`/Img/${accom.accomThumbnailImg}`} alt={accom.accomName} width={'150px'} height={'150px'} style={{ borderRadius: '15px' }} />
 									</div>
 									<div className='accom-wordMargin'>
-										{accom.accomName} ({accom.accomType})
+										{accom.accomType}
 									</div>
 									<button type='button' className={`accom-button ${selectedAccom && selectedAccom.accomCode === accom.accomCode ? 'selected' : ''}`} onClick={() => handleAccomSelect(accom)}></button>
 								</div>

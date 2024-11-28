@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,7 +16,7 @@ function Main() {
 
   useEffect(() => {
     // 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
-    fetch('http://localhost:8080/main')
+    fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/main`)
       .then(response => response.text())
       .then(data => setMessage(data))
       .catch(error => console.error('Error fetching data:', error));
@@ -34,6 +34,7 @@ function Main() {
                     <li class="slide-container">
                     <div class="slide">
                         <img src="/Img/schedulemain.PNG" alt="Busan"/>
+						<button type='button' id='button' onClick={() => window.location.href='http://localhost:3000/schedule'} style={{position: 'absolute', top: '80%', left: '20%', transform: 'translate(-50%, -50%)', padding: '10px 20px'}}>시작하기</button>
                     </div>
                     <div class="nav">
                     <label for="img-6" class="prev">&#x2039;</label>

@@ -31,7 +31,7 @@ public class MemberAnswer {
   public MemberAnswer() {
   }
 
-  public MemberAnswer(Answer answer, int memberAnswerCode, Questionnaire questionnaire) {
+  public MemberAnswer(Account account, Answer answer, int memberAnswerCode, Questionnaire questionnaire) {
     this.answer = answer;
     this.memberAnswerCode = memberAnswerCode;
     this.questionnaire = questionnaire;

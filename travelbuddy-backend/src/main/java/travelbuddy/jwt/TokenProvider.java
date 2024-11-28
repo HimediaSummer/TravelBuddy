@@ -62,7 +62,7 @@ public class TokenProvider {
     private static final Logger log = LoggerFactory.getLogger(TokenProvider.class);
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
-    private static final int ACCESS_TOKEN_EXPIRE_TIME = 3000 * 60 * 30;
+    private static final int ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30 * 5;
 
     // Spring Security가 제공하는 UserDetailsService를 그대로 활용
     private final UserDetailsService userDetailsService;
@@ -115,6 +115,7 @@ public class TokenProvider {
         String accessToken = Jwts.builder()
                 // 회원 아이디를 "sub"이라는 클레임으로 토큰에 추가
                 .setSubject(account.getMemberName())
+//                .setSubject(String.valueOf(account.getMemberCode()))
                 // 회원의 권한들을 "auth"라는 클레임으로 토큰에 추가
                 .claim(AUTHORITIES_KEY, role)
 

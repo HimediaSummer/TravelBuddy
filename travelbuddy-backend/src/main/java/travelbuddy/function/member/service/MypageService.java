@@ -27,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 import travelbuddy.common.Criteria;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
 import travelbuddy.function.community.buddy.dto.BuddyMatchDataDTO;
-import travelbuddy.function.community.buddy.dto.BuddyTypeDTO;
 import travelbuddy.function.community.buddy.entity.Buddy;
 import travelbuddy.function.community.buddy.entity.BuddyMatchData;
 import travelbuddy.function.community.buddy.entity.BuddyType;
@@ -35,13 +34,10 @@ import travelbuddy.function.community.buddy.repository.BuddyTypeRepository;
 import travelbuddy.function.member.dto.AccountDTO;
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.repository.*;
-import travelbuddy.function.schedule.dto.RegionDTO;
-import travelbuddy.function.schedule.dto.ScheduleDTO;
 import travelbuddy.function.schedule.entity.Region;
 import travelbuddy.function.schedule.entity.Schedule;
 import travelbuddy.function.schedule.repository.AccommodationRepository;
 import travelbuddy.function.schedule.repository.RegionRepository;
-import travelbuddy.util.FileUploadUtils;
 
 import java.io.IOException;
 
@@ -282,38 +278,6 @@ public class MypageService {
         myScheduleRepository.deleteByScheCode(scheCodes);
         return "........거북이되는중";
     }
-
-    /* 일정 재생성 */
-//    @Transactional
-//    public Schedule recreateSchedule(int memberCode, int scheCode, ScheduleDTO newScheduleData) {
-//        log.info("[mypageService] recreateSchedule() Start");
-//        Schedule existingSchedule = myScheduleRepository.findById(scheCode)
-//                .orElseThrow(() -> new RuntimeException("삭제할 스케줄을 찾을 수 없습니다."));
-//
-//        myScheduleRepository.delete(existingSchedule);
-//        log.info("기존 스케줄 삭제 완료: {}", scheCode);
-//
-//        Schedule newSchedule = new Schedule();
-//        newSchedule.setScheCode(newScheduleData.getScheCode());
-//        newSchedule.setRegion(regionRepository.findById(newScheduleData.getRegionCode()).orElseThrow(() -> new NoSuchElementException("Region with ID " + newScheduleData.getRegionCode() + " not found in the database")));
-//        newSchedule.setAccommodation(accommodationRepository.findById(newScheduleData.getAccomCode()).orElseThrow(() -> new NoSuchElementException("Accom not found")));
-//        newSchedule.setAccount(accountRepository.findById(newScheduleData.getMemberCode()).orElseThrow(() -> new NoSuchElementException("Member not found")));
-//        newSchedule.setMemberAnswer(memberAnswerRepository.findById(newScheduleData.getMemberAnswerCode()).orElseThrow(() -> new NoSuchElementException("Answer not found")));
-//        newSchedule.setScheList(newScheduleData.getScheList());
-//        newSchedule.setScheStartDate(newScheduleData.getScheStartDate());
-//        newSchedule.setScheEndDate(newScheduleData.getScheEndDate());
-//        newSchedule.setScheStartTime(newScheduleData.getScheStartTime());
-//        newSchedule.setScheEndTime(newScheduleData.getScheEndTime());
-//        newSchedule.setTravelTime(newScheduleData.getTravelTime());
-//        newSchedule.setScheTime(newScheduleData.getScheTime());
-//
-//        myScheduleRepository.save(newSchedule);
-//        log.info("새 일정 만들어지나?: {}", scheCode);
-//
-//        log.info("[mypageService] recreateSchedule() End");
-//        return newSchedule;
-//    }
-
 
     /* =========================================== My커뮤니티 =========================================== */
     /* 내가 쓴 버디게시글 목록조회 */
@@ -598,99 +562,6 @@ public class MypageService {
 
         return result;
     }
-
-
-
-
-
-
-//    @Transactional
-//    public Map<String, Object> updateBuddy(int buddyCode, BuddyDTO buddyDTO) {
-//        log.info("Service: Updating buddy with buddyCode {}", buddyCode);
-//
-//        // 1. 게시글 조회
-//        Buddy buddy = myBuddyRepository.findByBuddyCode(buddyCode);
-//        if (buddy == null) {
-//            throw new RuntimeException("수정할 게시글을 찾을 수 없습니다.");
-//        }
-//
-//        // 2. 지역 및 버디 유형 조회
-//        Region region = regionRepository.findById(buddyDTO.getRegionCode())
-//                .orElseThrow(() -> new RuntimeException("유효하지 않은 지역 코드입니다."));
-//        BuddyType buddyType = buddyTypeRepository.findById(buddyDTO.getBuddyTypeCode())
-//                .orElseThrow(() -> new RuntimeException("유효하지 않은 버디 유형 코드입니다."));
-//
-//        // 3. Quill HTML 콘텐츠 처리
-//        String updatedContents = processQuillContents(buddyDTO.getBuddyContents());
-//        String imageList = extractImageUrlsFromContents(buddyDTO.getBuddyContents()); // 이미지 URL 추출
-//
-//        // 4. 게시글 수정
-//        buddy.setBuddyTitle(buddyDTO.getBuddyTitle());
-//        buddy.setBuddyContents(updatedContents); // Quill 콘텐츠 저장
-//        buddy.setBuddyImg(imageList); // 이미지 URL 저장
-//        buddy.setRegion(region);
-//        buddy.setBuddyType(buddyType);
-//
-//        // 5. 변경된 게시글 저장
-//        myBuddyRepository.save(buddy);
-//        log.info("Service: Buddy updated successfully");
-//
-//        // 6. 수정 후 필요한 데이터 반환
-//        BuddyDTO updatedBuddyDTO = new BuddyDTO();
-//        updatedBuddyDTO.setBuddyCode(buddy.getBuddyCode());
-//        updatedBuddyDTO.setBuddyTitle(buddy.getBuddyTitle());
-//        updatedBuddyDTO.setBuddyContents(buddy.getBuddyContents());
-//        updatedBuddyDTO.setBuddyImg(buddy.getBuddyImg());
-//        updatedBuddyDTO.setRegionCode(buddy.getRegion().getRegionCode());
-//        updatedBuddyDTO.setBuddyTypeCode(buddy.getBuddyType().getBuddyTypeCode());
-//
-//        Map<String, Object> response = new HashMap<>();
-//        response.put("updatedBuddy", updatedBuddyDTO);
-//
-//        return response;
-//    }
-//    // Quill 콘텐츠 처리
-//    private String processQuillContents(String buddyContents) {
-//        // HTML에서 이미지 URL 추출 및 유효성 검사
-//        Document doc = Jsoup.parse(buddyContents);
-//        Elements images = doc.select("img");
-//
-//        for (Element img : images) {
-//            String src = img.attr("src");
-//
-//            // Base64 이미지 처리
-//            if (src.startsWith("data:image")) {
-//                // Base64 데이터를 파일로 저장
-//                String fileName = saveBase64Image(src);
-//                String fileUrl = "/uploads/" + fileName;
-//
-//                // Quill 콘텐츠의 이미지 src를 파일 URL로 교체
-//                img.attr("src", fileUrl);
-//            }
-//        }
-//
-//        return doc.body().html(); // 수정된 HTML 반환
-//    }
-
-    // Base64 이미지 저장 로직
-//    private String saveBase64Image(String base64Data) {
-//        try {
-//            // Base64 데이터 분리
-//            String[] parts = base64Data.split(",");
-//            byte[] imageBytes = Base64.getDecoder().decode(parts[1]);
-//
-//            // 파일 저장
-//            String fileName = UUID.randomUUID().toString() + ".png";
-//            Path filePath = Paths.get("C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/", fileName);
-//            Files.write(filePath, imageBytes);
-//
-//            return fileName;
-//
-//        } catch (IOException e) {
-//            log.error("Error while saving Base64 image", e);
-//            throw new RuntimeException("Base64 이미지 저장 중 오류 발생", e);
-//        }
-//    }
 
     /* 내가쓴버디게시글삭제 */
     @Transactional

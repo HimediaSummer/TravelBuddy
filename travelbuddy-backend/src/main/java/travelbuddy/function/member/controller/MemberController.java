@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.member.dto.AccountDTO;
+import travelbuddy.function.member.repository.AccountRepository;
 import travelbuddy.function.member.service.MemberService;
 
 @RestController
@@ -16,9 +17,11 @@ import travelbuddy.function.member.service.MemberService;
 public class MemberController {
 
 	private final MemberService memberService;
+	private final AccountRepository accountRepository;
 	
-	public MemberController(MemberService memberService) {
+	public MemberController(MemberService memberService, AccountRepository accountRepository) {
 		this.memberService = memberService;
+		this.accountRepository = accountRepository;
 	}
 	
 	@Operation(summary = "회원 조회 요청", description = "회원 한명이 조회됩니다.", tags = { "MemberController" })

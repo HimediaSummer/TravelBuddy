@@ -7,6 +7,7 @@ import useinfoReducer from './UseinfoModule.js';
 import fqTypeReducer from './FqTypeModule.js';
 import buddiesReducer from './BuddyModule.js';
 import {myBuddyReducer, myProfileReducer, myScheduleReducer, myMatchReducer} from './MypageModule.js';
+import regionBuddyTypeReducer from './RegionBuddyTypeModule.js'
 
 const rootReducer = combineReducers({
 	myBuddyReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
 	noticeReducer,
 	useinfoReducer,
 	buddiesReducer,
+	regionBuddyTypeReducer,
 	fqTypeReducer
 });
 

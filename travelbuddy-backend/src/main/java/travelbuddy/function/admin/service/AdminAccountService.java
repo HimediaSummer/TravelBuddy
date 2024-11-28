@@ -141,4 +141,11 @@ public class AdminAccountService {
 
         return memberListWithSearchValue.stream().map(Account -> modelMapper.map(Account, AccountDTO.class)).collect(Collectors.toList());
     }
+
+//    관리자가 회원 이름 정보를 얻기위해 다 가져간다.
+    public Object selectMemberAll() {
+        List<Account> memberAllName = accountRepository.findAll();
+
+        return memberAllName.stream().map(Account -> modelMapper.map(Account, AccountDTO.class)).collect(Collectors.toList());
+    }
 }

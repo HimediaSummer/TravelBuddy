@@ -55,11 +55,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public JwtFilter jwtFilter() {
-        return new JwtFilter(tokenProvider);
-    }
-
     /* 목차. 2. Spring Security 설정을 무시 할 정적 리소스 등록 */
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -91,20 +86,21 @@ public class SecurityConfig {
                      *  요청 할 url이 외부 도메인일 경우 웹 브라우저에서 자체 실행되며 options 메소드로 사전 요청을 보내게 된다.
                      *  사전에 요청이 안전한지 확인하기 위함(유효한지 서버에 미리 파악할 수 있도록 보내는 수단이다.)
                      * */
-
                     // CORS Preflight 요청 허용
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     // root 경로는 인증 필요
                      auth.requestMatchers("/").authenticated();
                     // 특정 경로는 무조건 허용
-                    auth.requestMatchers("/auth/**", "/buddyBoard/buddies","/buddyBoard/buddies/{buddyCode}", "/images/**", "/memberimgs/**", "/buddyimgs/**", "/api/**").permitAll();
+                    auth.requestMatchers("/auth/**", "/buddyBoard/buddies","/buddyBoard/buddies/{buddyCode}", "/images/**", "/memberimgs/**", "/buddyimgs/**").permitAll();
+                    auth.requestMatchers("/auth/**","/buddyBoard/buddies","buddyBoard/buddies/{buddyCode}", "buddyBoard/region/{regionName}").permitAll();
                     // Swagger API 문서 허용
                     auth.requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll();
                     // API 경로는 USER 또는 ADMIN 역할을 가진 사용자만 접근 가능
-                    auth.requestMatchers("api/v1/members/").hasAnyRole("USER", "ADMIN");
+                    auth.requestMatchers("api/v1/members/","/admin/*/*/*/","/cs/*/*/*/","/cm/*/*/*/"
+                    ,"/api/*/*","api/v1/members/", "buddyBoard/buddyRegist", "buddyBoard/buddyUpdate/{buddyCode}","buddyBoard/buddies/{buddyCode}").hasAnyRole("USER", "ADMIN");
                     /* 설명. 아래는 프로젝트 초기 구현시, Security 기능을 약화시켜 개발을 진행하게 끔 해주는 내용들이다. */
                     // 어떤 요청이든 허용 -> Security를 활용한 로그인이 모두 완성되지 않았을 때 사용할 것
-                    auth.anyRequest().permitAll();
+//                    auth.anyRequest().permitAll();
                     // 이거 주석 묶으면 권한별로 페이지 볼수있음 주석을 풀어서 모두 접근가능하게 된것
                 })
                 // 4. 세션 방식을 사용하지 않음
@@ -113,9 +109,7 @@ public class SecurityConfig {
                 // 5. 기본 CORS 설정 사용
                 .cors(cors -> {})
                 // 6. 우리가 직접 작성한 커스텀 필터인 JwtFilter를 필터 체인에 추가
-//                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
-
-                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

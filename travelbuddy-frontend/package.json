@@ -25,6 +25,7 @@
     "redux-actions": "^2.6.5",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
+    "tui-editor": "^1.4.10",
     "web-vitals": "^2.1.4"
   },
   "proxy": "http://localhost:8080",

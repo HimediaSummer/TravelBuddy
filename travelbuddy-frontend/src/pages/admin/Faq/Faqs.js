@@ -1,5 +1,5 @@
 import MyFaqsCSS from "../../member/faq/MyFaqsCSS.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -40,9 +40,7 @@ function Faqs() {
     useEffect(() => {
         if (!search.trim()) {
             dispatch(
-                callFaqListForAdminAPI({
-                    currentPage: currentPage,
-                }));
+                callFaqListForAdminAPI({currentPage}));
         }
     }, [currentPage,dispatch]);
 
@@ -82,7 +80,7 @@ function Faqs() {
         setFaqTypeMap(fqTypeList.data);
       }
       console.log('faqTypeMap에 담겼나!@',faqTypeMap);
-      }, [fqTypeList]);
+      }, [setFaqTypeMap]);
 
           // 디버깅을 위한 useEffect 추가
     useEffect(() => {
@@ -167,7 +165,7 @@ function Faqs() {
                                         <td>{f.faqCode}</td>
                                         <td> {
                             // fqTypeMap에서 fqTypeCode에 해당하는 fqTypeName 찾기
-                            faqTypeMap.find(type => type.fqTypeCode === f.fqTypeCode)?.fqTypeName || "알 수 없음"
+                            fqTypeList.find(type => type.fqTypeCode === f.fqTypeCode)?.fqTypeName || "로딩중"
                         }</td>
                                         <td>{f.faqTitle}</td>
                                         <td>

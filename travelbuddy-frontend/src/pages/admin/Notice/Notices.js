@@ -1,4 +1,4 @@
-import NoticeCSS from './NoticeCSS.css';
+import AdminAllCSS from '../../../components/common/AdminAllCSS.css';
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,6 +14,9 @@ function Notices() {
     const notice = useSelector((state) => state.noticeReducer) || {};
     const noticeList = notice.data || {};
     const pageInfo = notice.pageInfo || {};
+
+    console.log('noticeList는 ?',noticeList);
+    console.log('pageInfo ?',pageInfo);
 
     
     const [currentPage, setCurrentPage] = useState(1);
@@ -91,8 +94,8 @@ useEffect(() => {
 
     return (
         <>
-         <div className={NoticeCSS.bodyDiv}>
-                    <h2>공지사항</h2>
+         <div className='AdminAllContainer'>
+                    <p>공지사항</p>
                     <input
                     type="text"
                     placeholder="검색어를 입력하세요"
@@ -101,7 +104,7 @@ useEffect(() => {
                     onKeyDown={onChangeHandler}
                 ></input>
                 <button onClick={onClickSearch}>검색</button>
-                <table className={NoticeCSS.productTable}>
+                <table>
                     <colgroup>
                         <col width="10%" />
                         <col width="35%" />
@@ -148,7 +151,7 @@ useEffect(() => {
                 <button 
                     onClick={() => setCurrentPage(currentPage - 1)} 
                     disabled={currentPage === 1}
-                    className={ NoticeCSS.pagingBtn }
+                    className='AdminAllContainer'
                 >
                     &lt;
                 </button>
@@ -157,7 +160,7 @@ useEffect(() => {
                 <li key={num} onClick={() => setCurrentPage(num)}>
                     <button
                         style={ currentPage === num ? {backgroundColor : 'skyblue' } : null}
-                        className={ NoticeCSS.pagingBtn }
+                        className='AdminAllContainer'
                     >
                         {num}
                     </button>
@@ -165,7 +168,7 @@ useEffect(() => {
                 ))}
                 { Array.isArray(filteredNoticeList) &&
                 <button 
-                    className={ NoticeCSS.pagingBtn }
+                    className='AdminAllContainer'
                     onClick={() => setCurrentPage(currentPage + 1)} 
                     disabled={currentPage === pageInfo.pageEnd  || pageInfo.total == 0}
                 >

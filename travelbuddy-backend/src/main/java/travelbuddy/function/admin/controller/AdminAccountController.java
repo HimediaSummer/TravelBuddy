@@ -53,12 +53,18 @@ public class AdminAccountController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 요청", pagingResponseDTO));
     }
 
-    @Operation(summary = "관리자페이지 회원 검색 요청", description = "검색어에 맞는 회원 리스트 조회가 진행됩니다.", tags = { "AdminAccountController" })
-    @GetMapping("members/search")
-    public ResponseEntity<ResponseDTO> selectSearchMemberList(@RequestParam(name="s", defaultValue="all") String search){
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공",adminAccountService.selectSearchMemberList(search)));
-    }
+//    @Operation(summary = "관리자페이지 회원 검색 요청", description = "검색어에 맞는 회원 리스트 조회가 진행됩니다.", tags = { "AdminAccountController" })
+//    @GetMapping("members/search")
+//    public ResponseEntity<ResponseDTO> selectSearchMemberList(@RequestParam(name="s", defaultValue="all") String search){
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공",adminAccountService.selectSearchMemberList(search)));
+//    }
 
+    @Operation(summary = "관리자페이지 회원 전체 조회 요청", description = "회원의 전체 조회 처리가 진행됩니다.", tags = {"AdminAccountController"})
+    @GetMapping("/members/name")
+    public ResponseEntity<ResponseDTO> selectMemberAll(){
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"회원 이름 조회 요청",adminAccountService.selectMemberAll()));
+    }
 
     @Operation(summary = "관리자페이지 회원 상세 조회 요청", description = "회원의 상세 페이지 처리가 진행됩니다.", tags = {"AdminAccountController"})
     @GetMapping("/members/{memberCode}")

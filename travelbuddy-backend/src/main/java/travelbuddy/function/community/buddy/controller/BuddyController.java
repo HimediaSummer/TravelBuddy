@@ -14,7 +14,15 @@ import travelbuddy.common.PageDTO;
 import travelbuddy.common.PagingResponseDTO;
 import travelbuddy.common.ResponseDTO;
 import travelbuddy.function.community.buddy.dto.BuddyDTO;
+import travelbuddy.function.community.buddy.dto.BuddyMatchDataDTO;
+import travelbuddy.function.community.buddy.entity.BuddyType;
 import travelbuddy.function.community.buddy.service.BuddyService;
+import travelbuddy.function.schedule.entity.Region;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/buddyBoard")
@@ -55,26 +63,67 @@ public class BuddyController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "버디게시글 상세정보 조회 성공", buddyService.selectBuddyDetail(buddyCode)));
     }
 
-    @Operation(summary = "버디 게시글 등록 요청", description = "해당 버디 게시글 등록이 진행됩니다.", tags = { "BuddyController" })
-    @PostMapping(value = "/buddies/buddyRegist")
-    public ResponseEntity<ResponseDTO> insertBuddy(@ModelAttribute BuddyDTO buddyDTO, MultipartFile buddyImg) {
+//    @Operation(summary = "검색 버디 리스트 조회 요청", description = "검색어에 해당되는 버디 리스트 조회가 진행됩니다.", tags = { "BuddyController" })
+//    @GetMapping("/buddies/search")
+//    public ResponseEntity<ResponseDTO> selectSearchProductList(@RequestParam(name="s", defaultValue="all") String search) {
+//
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공",  buddyService.selectSearchBuddyList(search)));
+//    }
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 등록 성공", buddyService.insertBuddy(buddyDTO, buddyImg)));
+    @Operation(summary = "버디 게시글 등록 요청", description = "해당 버디 게시글 등록이 진행됩니다.", tags = { "BuddyController" })
+    @PostMapping(value = "/buddyRegist")
+    public ResponseEntity<ResponseDTO> insertBuddy(@ModelAttribute BuddyDTO buddyDTO, @RequestParam(value = "buddyImage", required = false)MultipartFile buddyImage) {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 등록 성공", buddyService.insertBuddy(buddyDTO, buddyImage)));
 
     }
 
-//    @Operation(summary = "버디 게시글 요청", description = "해당 버디 게시글 수정이 진행됩니다.", tags = { "BuddyController" })
-//    @PutMapping(value = "/products")
-//    public ResponseEntity<ResponseDTO> updateProduct(@ModelAttribute BuddyDTO buddyDTO, MultipartFile productImage) {
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상품 수정 성공",  buddyService.updateBuddy(buddyDTO, productImage)));
-//    }
+    @Operation(summary = "버디 게시글 요청", description = "해당 버디 게시글 수정이 진행됩니다.", tags = { "BuddyController" })
+    @PutMapping(value = "/buddyUpdate/{buddyCode}")
+    public ResponseEntity<ResponseDTO> updateProduct(@ModelAttribute BuddyDTO buddyDTO,@RequestParam(value = "buddyImage", required = false) MultipartFile buddyImage) {
 
-//    @Operation(summary = "버디 유형 이름 요청", description = "버디 유형 이름 정보가 출력됩니다.", tags = {"BuddyController"})
-//    @GetMapping("/buddies/getBuddyType")
-//    public ResponseEntity<ResponseDTO> selectFqType() {
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"버디Type 조회 성공",buddyService.selectBuddyType()));
-//    }
+        log.info("[BuddyController] insertBuddy 시작 ===================================");
+        log.info("[BuddyController] buddyDTO : {}", buddyDTO);
+        log.info("[BuddyController] memberCode : {}", buddyDTO.getMemberCode());
+        log.info("[BuddyController] buddyImage : {}", buddyImage != null ? buddyImage.getOriginalFilename() : "없음");
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상품 수정 성공",  buddyService.updateBuddy(buddyDTO, buddyImage)));
+    }
+
+    @Operation(summary = "버디 게시글 삭제 요청", description = "해당 버디 게시글 삭제가 진행됩니다.", tags = { "BuddyController" })
+    @DeleteMapping(value = "/buddies/{buddyCode}")
+    public ResponseEntity<ResponseDTO> deleteBuddy(@PathVariable int buddyCode) {
+        buddyService.deleteBuddy(buddyCode);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "게시글 삭제 성공", null));
+    }
+
+    @Operation(summary = "버디 게시글 검색 요청", description = "검색어에 맞는 버디 리스트 조회가 진행됩니다.", tags = { "BuddyController" })
+    @GetMapping("buddies/search")
+    public ResponseEntity<ResponseDTO> selectSearchMemberList(@RequestParam(name="s", defaultValue="all") String search){
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공",buddyService.selectSearchBuddyList(search)));
+    }
+
+    @Operation(summary = "버디 신청", description = "버디신청이 진행됩니다.", tags = { "BuddyController" })
+    @PostMapping("/buddyApply")
+    public ResponseEntity<ResponseDTO> applyBuddy(@RequestBody BuddyMatchDataDTO buddyMatchDataDTO) {
+        buddyService.applyBuddy(buddyMatchDataDTO);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "신청 성공", null));
+    }
+
+    @Operation(summary = "버디 유형 리스트 요청", description = "버디 유형 코드와 이름 리스트를 반환합니다.", tags = {"BuddyController"})
+    @GetMapping("/buddyTypes")
+    public ResponseEntity<List<Map<String, String>>> getBuddyTypes() {
+        List<Map<String, String>> buddyTypes = buddyService.getBuddyTypes();
+        return ResponseEntity.ok(buddyTypes);
+    }
+
+    @Operation(summary = "지역 리스트 요청", description = "지역 코드와 이름 리스트를 반환합니다.", tags = {"BuddyController"})
+    @GetMapping("/regions")
+    public ResponseEntity<List<Map<String, String>>> getRegions() {
+        List<Map<String, String>> regions = buddyService.getRegions();
+        return ResponseEntity.ok(regions);
+    }
+
 
 
 }

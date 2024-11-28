@@ -41,6 +41,10 @@ function UseinfoDetail () {
         }
     }, [useinfo]);
 
+    const onClickChangeHandlerUpdate = () => {
+        alert('수정기능 개발중입니다.');
+        // navigate(`/admin/useinfos`);
+    };
     const onClickChangeHandlerDelete = () => {
         dispatch(deleteUseinfoAPI(useinfoCode));
         alert('사용설명서를 삭제하였습니다.');
@@ -70,7 +74,8 @@ function UseinfoDetail () {
             <td style={{width:'350px'}}>{useinfo.useinfoTitle}</td>
             <td style={{width:'80px'}}>글번호</td>
             <td style={{width:'50px'}}>{useinfo.useinfoCode}</td>
-            <td><button onClick={onClickChangeHandlerDelete}>삭제</button></td><br/>
+            <td style={{width:'50px'}}><button onClick={onClickChangeHandlerUpdate}>수정</button></td>
+            <td style={{width:'50px'}}><button onClick={onClickChangeHandlerDelete}>삭제</button></td><br/>
             <td style={{width:'80px'}}>작성일</td>
             <td style={{width:'180px'}}>{useinfo.useinfoCreate}</td>
             <td style={{width:'80px'}}>조회수</td> 

@@ -84,7 +84,7 @@ function Schedule() {
 					<h1>
 						<div class="header-click">
 							<i class="fa-solid fa-globe"></i>
-							<a href="http://travel-buddy.me/">Travel Buddy</a>
+							<a href="/">Travel Buddy</a>
 						</div>
 					</h1>
 					<ul class="menu">

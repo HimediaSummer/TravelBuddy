@@ -1,6 +1,7 @@
 import { putProfile, getProfile } from '../modules/MypageModule';
-import { getMyBuddy, deleteMyBuddy } from '../modules/MypageModule';
+import { getMyBuddy} from '../modules/MypageModule';
 import { getMyMatch, deleteMyMatch } from '../modules/MypageModule';
+import { getSchedule, deleteSchedule } from '../modules/MypageModule';
 
 // 회원정보부분
 export const callMyProfileAPI = () => {
@@ -73,6 +74,7 @@ export const updateProfileAPI = (formData, navigate) => {
     };
 };
 
+// 회원탈퇴(숨김)
 export const deletionProfileAPI = (navigate) => {
 
     return async (dispatch) => {
@@ -102,8 +104,53 @@ export const deletionProfileAPI = (navigate) => {
 
 };
 
+// 일정조회
+export const callMyScheduleAPI = (currentPage = 1) => async (dispatch) => {
+    try {
+        const response = await fetch(`/mypage/myschedule?offset=${currentPage}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            },
+        });
+        const result = await response.json();
 
+        console.log("API Response for currentPage:", currentPage, result); // API 응답 확인
 
+        dispatch(getSchedule(result.data)); // Redux 상태에 데이터 저장
+    } catch (error) {
+        console.error("Error fetching schedule data:", error);
+    }
+};
+// 일정삭제
+export const deleteMyScheduleAPI = (selectedRows) => {
+    return async (dispatch) => {
+        try {
+            const response = await fetch(`/mypage/myschedule/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + window.localStorage.getItem('accessToken'),
+                },
+                body: JSON.stringify(selectedRows),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to delete schedules');
+            }
+
+            const data = await response.json();
+            console.log('Deleted Schedules Data:', data);
+
+            dispatch(deleteSchedule(selectedRows));
+            alert('일정이 삭제되었습니다.');
+        } catch (error) {
+            console.error('Error deleting schedules:', error);
+            alert('일정 삭제 중 오류가 발생했습니다.');
+        }
+    };
+};
 
 
 // 게시글 부분

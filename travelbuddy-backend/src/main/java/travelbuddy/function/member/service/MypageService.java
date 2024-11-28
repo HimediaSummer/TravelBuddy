@@ -227,20 +227,18 @@ public class MypageService {
 
     /* =========================================== My일정 =========================================== */
     /* 내 일정 목록 조회 */
-    public int selectScheTotal() {
+    public int selectScheTotal(int memberCode) {
         log.info("[MyService] selectScheTotal() Start");
-        int memberCode = 1002;
         int total = myScheduleRepository.countByMemberCode(memberCode);
 
         return total;
     }
 
     // Schedule 목록 페이징
-    public List<Map<String, Object>> selectMyScheListPaging(Criteria cri) {
+    public List<Map<String, Object>> selectMyScheListPaging(Criteria cri, int memberCode) {
         log.info("[MyService] selectMyScheListPaging() Start");
 
-        int memberCode = 1002;
-        int index = cri.getPageNum() - 1;
+        int index = Math.max(cri.getPageNum() - 1, 0);
         int count = cri.getAmount();
         Pageable paging = PageRequest.of(index, count, Sort.by("scheCode").descending());
 
@@ -286,35 +284,35 @@ public class MypageService {
     }
 
     /* 일정 재생성 */
-    @Transactional
-    public Schedule recreateSchedule(int memberCode, int scheCode, ScheduleDTO newScheduleData) {
-        log.info("[mypageService] recreateSchedule() Start");
-        Schedule existingSchedule = myScheduleRepository.findById(scheCode)
-                .orElseThrow(() -> new RuntimeException("삭제할 스케줄을 찾을 수 없습니다."));
-
-        myScheduleRepository.delete(existingSchedule);
-        log.info("기존 스케줄 삭제 완료: {}", scheCode);
-
-        Schedule newSchedule = new Schedule();
-        newSchedule.setScheCode(newScheduleData.getScheCode());
-        newSchedule.setRegion(regionRepository.findById(newScheduleData.getRegionCode()).orElseThrow(() -> new NoSuchElementException("Region with ID " + newScheduleData.getRegionCode() + " not found in the database")));
-        newSchedule.setAccommodation(accommodationRepository.findById(newScheduleData.getAccomCode()).orElseThrow(() -> new NoSuchElementException("Accom not found")));
-        newSchedule.setAccount(accountRepository.findById(newScheduleData.getMemberCode()).orElseThrow(() -> new NoSuchElementException("Member not found")));
-        newSchedule.setMemberAnswer(memberAnswerRepository.findById(newScheduleData.getMemberAnswerCode()).orElseThrow(() -> new NoSuchElementException("Answer not found")));
-        newSchedule.setScheList(newScheduleData.getScheList());
-        newSchedule.setScheStartDate(newScheduleData.getScheStartDate());
-        newSchedule.setScheEndDate(newScheduleData.getScheEndDate());
-        newSchedule.setScheStartTime(newScheduleData.getScheStartTime());
-        newSchedule.setScheEndTime(newScheduleData.getScheEndTime());
-        newSchedule.setTravelTime(newScheduleData.getTravelTime());
-        newSchedule.setScheTime(newScheduleData.getScheTime());
-
-        myScheduleRepository.save(newSchedule);
-        log.info("새 일정 만들어지나?: {}", scheCode);
-
-        log.info("[mypageService] recreateSchedule() End");
-        return newSchedule;
-    }
+//    @Transactional
+//    public Schedule recreateSchedule(int memberCode, int scheCode, ScheduleDTO newScheduleData) {
+//        log.info("[mypageService] recreateSchedule() Start");
+//        Schedule existingSchedule = myScheduleRepository.findById(scheCode)
+//                .orElseThrow(() -> new RuntimeException("삭제할 스케줄을 찾을 수 없습니다."));
+//
+//        myScheduleRepository.delete(existingSchedule);
+//        log.info("기존 스케줄 삭제 완료: {}", scheCode);
+//
+//        Schedule newSchedule = new Schedule();
+//        newSchedule.setScheCode(newScheduleData.getScheCode());
+//        newSchedule.setRegion(regionRepository.findById(newScheduleData.getRegionCode()).orElseThrow(() -> new NoSuchElementException("Region with ID " + newScheduleData.getRegionCode() + " not found in the database")));
+//        newSchedule.setAccommodation(accommodationRepository.findById(newScheduleData.getAccomCode()).orElseThrow(() -> new NoSuchElementException("Accom not found")));
+//        newSchedule.setAccount(accountRepository.findById(newScheduleData.getMemberCode()).orElseThrow(() -> new NoSuchElementException("Member not found")));
+//        newSchedule.setMemberAnswer(memberAnswerRepository.findById(newScheduleData.getMemberAnswerCode()).orElseThrow(() -> new NoSuchElementException("Answer not found")));
+//        newSchedule.setScheList(newScheduleData.getScheList());
+//        newSchedule.setScheStartDate(newScheduleData.getScheStartDate());
+//        newSchedule.setScheEndDate(newScheduleData.getScheEndDate());
+//        newSchedule.setScheStartTime(newScheduleData.getScheStartTime());
+//        newSchedule.setScheEndTime(newScheduleData.getScheEndTime());
+//        newSchedule.setTravelTime(newScheduleData.getTravelTime());
+//        newSchedule.setScheTime(newScheduleData.getScheTime());
+//
+//        myScheduleRepository.save(newSchedule);
+//        log.info("새 일정 만들어지나?: {}", scheCode);
+//
+//        log.info("[mypageService] recreateSchedule() End");
+//        return newSchedule;
+//    }
 
 
     /* =========================================== My커뮤니티 =========================================== */
@@ -325,15 +323,6 @@ public class MypageService {
         log.info("[MyService] selectBuddyListTotal() End, Total: {}", total);
         return total;
     }
-
-
-//    public int selectBuddyTotal() {
-//        log.info("[MyService] selectBuddyListTotal() Start");
-//        int memberCode = 1002;
-//        int total = myBuddyRepository.countByMemberCode(memberCode);
-//
-//        return total;
-//    }
 
     // Buddy 목록 페이징
     public List<Map<String, Object>> selectBuddyListPaging(Criteria cri, int memberCode) {
@@ -709,17 +698,6 @@ public class MypageService {
         log.info("[MypageService] 삭제 시작: buddyCode = {}", buddyCodes);
 
         myBuddyRepository.deleteByBuddyCode(buddyCodes);
-
-//        // 최대 buddy_code 값을 조회
-//        Integer maxBuddyCode = buddyRepository.findMaxBuddyCode();
-//
-//        // AUTO_INCREMENT 값을 현재 최대값 + 1로 재설정
-//        if (maxBuddyCode != null) {
-//            buddyRepository.resetAutoIncrement(maxBuddyCode + 1);
-//        } else {
-//            // 테이블이 비어있는 경우 1로 설정
-//            buddyRepository.resetAutoIncrement(1);
-//        }
 
         log.info("[MypageService] 삭제 완료: buddyCode = {}", buddyCodes);
 

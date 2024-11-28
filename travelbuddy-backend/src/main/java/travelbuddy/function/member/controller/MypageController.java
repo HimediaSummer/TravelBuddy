@@ -138,9 +138,13 @@ public class MypageController {
                     .body(new ResponseDTO(HttpStatus.UNAUTHORIZED, "로그인 정보가 없습니다.", null));
         }
 
-        int total = mypageService.selectScheTotal();
+        // offset 값 검증 및 최소값 보장
+        if (offset < 1) {
+            offset = 1;
+        }
+        int total = mypageService.selectScheTotal(memberCode);
         Criteria cri = new Criteria(offset, 10);
-        List<Map<String, Object>> scheList = mypageService.selectMyScheListPaging(cri);
+        List<Map<String, Object>> scheList = mypageService.selectMyScheListPaging(cri, memberCode);
 
         PagingResponseDTO response = new PagingResponseDTO();
         response.setData(scheList);
@@ -171,23 +175,23 @@ public class MypageController {
     }
 
     /* 내 일정 재생성 */
-    @Operation(summary = "일정재생성", description = "내 일정 재생성", tags = {"MypageController"})
-    @PostMapping(value = "/myschedule/{scheCode}/recreate")
-    public ResponseEntity<ResponseDTO> recreateSchedule(
-            @PathVariable int memberCode,
-            @PathVariable int scheCode,
-            @RequestBody(required = false) ScheduleDTO newScheduleData
-    ) {
-        log.info("[ScheduleController] recreateSchedule() Start - 삭제할 scheCode: {}", scheCode);
-
-        if (newScheduleData == null) {
-            throw new IllegalArgumentException("Request body is missing. 스케쥴만든거 못찾겠다 꾀꼬리.");
-        }
-
-        Schedule recreateSchedule = mypageService.recreateSchedule(memberCode, scheCode, newScheduleData);
-
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정재생성성공", recreateSchedule));
-    }
+//    @Operation(summary = "일정재생성", description = "내 일정 재생성", tags = {"MypageController"})
+//    @PostMapping(value = "/myschedule/{scheCode}/recreate")
+//    public ResponseEntity<ResponseDTO> recreateSchedule(
+//            @PathVariable int memberCode,
+//            @PathVariable int scheCode,
+//            @RequestBody(required = false) ScheduleDTO newScheduleData
+//    ) {
+//        log.info("[ScheduleController] recreateSchedule() Start - 삭제할 scheCode: {}", scheCode);
+//
+//        if (newScheduleData == null) {
+//            throw new IllegalArgumentException("Request body is missing. 스케쥴만든거 못찾겠다 꾀꼬리.");
+//        }
+//
+//        Schedule recreateSchedule = mypageService.recreateSchedule(memberCode, scheCode, newScheduleData);
+//
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "일정재생성성공", recreateSchedule));
+//    }
 
     /* =========================================== My커뮤니티 =========================================== */
     @Operation(summary = "게시글조회요청", description = "내가쓴글페이지목록조회", tags = {"MypageController"})

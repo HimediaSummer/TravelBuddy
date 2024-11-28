@@ -2,11 +2,14 @@ import { createAction, handleActions } from 'redux-actions';
 
 const initialState = {
     profile: {},
-    schedule: [],
     buddy: [],
     matchDetails: [],
     updateResult: null,
     deleteResult: null,
+    schedule: {
+        data: [], 
+        pageInfo: { total: 0 }, 
+    },
 };
 
 export const GET_PROFILE = 'GET_PROFILE';

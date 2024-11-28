@@ -11,7 +11,9 @@ function Main() {
 
   const dispatch = useDispatch(); // Redux dispatch
   const loginMember = useSelector((state) => state.memberReducer); // 저장소에서 가져온 loginMember 정보
+  console.log("메인 페이지loginMember = ", loginMember);
   const isLogin = window.localStorage.getItem('accessToken');
+  console.log("메인페이지 isLogin", isLogin);
   const [loginModal, setLoginModal] = useState(false);
 
   useEffect(() => {

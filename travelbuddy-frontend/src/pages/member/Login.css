@@ -1,0 +1,82 @@
+.backgroundDiv{
+    height: 100vh;
+    display: flex;
+    flex-direction: column; /*수평 정렬*/
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    background-color: #E8E8E8;
+}
+
+.loginDiv{    
+    height: 640px;
+    width: 460px;
+    display: flex;
+    flex-wrap: wrap;
+	/*수평 정렬*/
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    border: solid 3px #8CC8EA;
+    border-radius: 25px;    
+}
+
+.loginDiv input {
+    margin-top: 5px;
+    margin-bottom: 20px;
+	margin-left: 0px;
+    height: 70px;
+    width: 380px;
+    border-radius: 15px;
+    text-indent: 30px;
+	font-size: 24px;
+	line-height: 70px;
+	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
+	transition: background-color 0.3s ease;
+}
+
+.loginDiv button {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 70px;
+    width: 380px;
+    border-radius: 25px;
+    background-color: #8CC8EA;
+	color: white;
+	font-size: 32px;
+    font-weight: bold;
+	border: none;
+	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
+	transition: background-color 0.5s ease;
+}
+
+.loginDiv button:hover {
+    background-color: #31A3BE;
+	color: white;
+}
+
+.loginDiv .footer {
+    margin-top: 10px;
+    font-size: 20px;
+    color: #8CC8EA;
+    display: flex;
+    justify-content: space-around;
+}
+
+.loginDiv .footer a {
+	margin-left: 20px;
+	margin-right: 20px;
+	font-size: 20px;
+    text-decoration: none;
+    color: #8CC8EA;
+}
+
+.loginDiv .footer a:hover {
+    text-decoration: underline;
+	color: #31A3BE;
+}
+

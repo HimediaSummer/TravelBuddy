@@ -1,4 +1,6 @@
-import { useNavigate } from 'react-router-dom';
+import  LoginCSS  from "./Login.css";
+// import backgroundImage from ("../../../public/Img/schedulemain.PNG");
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate } from "react-router-dom";
@@ -75,7 +77,7 @@ function Login() {
 
     return (
         <div >
-            <div >
+            <div className= "loginDiv">
                 <h1>로그인</h1>
                 <input 
                     type="text" 
@@ -91,26 +93,46 @@ function Login() {
                     autoComplete='off'
                     onChange={ onChangeHandler }
                 />
-                <button
-                    onClick={ onClickLoginHandler }
-                >
-                    로그인
-                </button>
-                <button
-                    onClick={ onClickRegisterHandler }
-                >
-                    회원가입
-                </button>
-                <button
-                    onClick={ onClickFindIdHandler }
-                >
-                    아이디 찾기
-                </button>
-                <button
-                    onClick={ onClickFindPwHandler }
-                >
-                    비밀번호 찾기
-                </button>
+                 <button
+                        onClick={ onClickLoginHandler }
+                    >
+                        로그인
+                    </button>
+                <div className="footer">
+                   
+                    {/* <button
+                        onClick={ onClickRegisterHandler }
+                    >
+                        회원가입
+                    </button> */}
+                    <a
+                        onClick={ onClickRegisterHandler }
+                    >
+                        회원가입
+                    </a>
+                    |
+                    {/* <button
+                        onClick={ onClickFindIdHandler }
+                    >
+                        아이디 찾기
+                    </button> */}
+                    <a
+                        onClick={ onClickFindIdHandler }
+                    >
+                        아이디 찾기
+                    </a>
+                    |
+                    {/* <button
+                        onClick={ onClickFindPwHandler }
+                    >
+                        비밀번호 찾기
+                    </button> */}
+                    <a
+                        onClick={ onClickFindPwHandler }
+                    >
+                        비밀번호 찾기
+                    </a>
+                </div>
                 {/* <button
                     onClick={ googleLogin }
                 >

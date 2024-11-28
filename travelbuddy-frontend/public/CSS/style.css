@@ -86,11 +86,11 @@ form>div {
 }
 
 [type="text"] {
-	width: 290px;
-	height: 32px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	margin-left: 10px;
+	/* width: 290px;
+	height: 32px; */
+	/* border: 1px solid #ccc; */
+	/* border-radius: 4px; */
+	/* margin-left: 10px; */
 }
 
 [type="text"]:read-only {

@@ -91,14 +91,15 @@ public class SecurityConfig {
                     // root 경로는 인증 필요
                      auth.requestMatchers("/").authenticated();
                     // 특정 경로는 무조건 허용
-                    auth.requestMatchers("/auth/**","/").permitAll();
+                    auth.requestMatchers("/auth/**","/buddyBoard/buddies","buddyBoard/buddies/{buddyCode}", "buddyBoard/region/{regionName}").permitAll();
                     // Swagger API 문서 허용
                     auth.requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll();
                     // API 경로는 USER 또는 ADMIN 역할을 가진 사용자만 접근 가능
-                    auth.requestMatchers("api/v1/members/","/admin/*/*/*/","/cs/*/*/*/","/cm/*/*/*/").hasAnyRole("USER", "ADMIN");
+                    auth.requestMatchers("api/v1/members/","/admin/*/*/*/","/cs/*/*/*/","/cm/*/*/*/"
+                    ,"/api/*/*","api/v1/members/", "buddyBoard/buddyRegist", "buddyBoard/buddyUpdate/{buddyCode}","buddyBoard/buddies/{buddyCode}").hasAnyRole("USER", "ADMIN");
                     /* 설명. 아래는 프로젝트 초기 구현시, Security 기능을 약화시켜 개발을 진행하게 끔 해주는 내용들이다. */
                     // 어떤 요청이든 허용 -> Security를 활용한 로그인이 모두 완성되지 않았을 때 사용할 것
-                    auth.anyRequest().permitAll();
+//                    auth.anyRequest().permitAll();
                     // 이거 주석 묶으면 권한별로 페이지 볼수있음 주석을 풀어서 모두 접근가능하게 된것
                 })
                 // 4. 세션 방식을 사용하지 않음

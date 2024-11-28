@@ -36,7 +36,7 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 	// 장소 전체
 	useEffect(() => {
 		// 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
-		fetch('http://localhost:8080/schedule/region')
+		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/region`)
 			.then(response => response.json())
 			.then(data => {
 				const regions = data.data.regions.map(region => ({
@@ -55,12 +55,13 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 	// 장소 버튼 누르면 밑에 상세 조회 뾰롱
 	const handleRegionSelect = (region) => {
 		setSelectedRegion(region);
-		setTravelData(prevData => ({
-			...prevData,
-			regions: [...prevData.regions, region]
-		}));
+		// setTravelData(prevData => ({
+		// 	...prevData,
+		// 	regions: [...prevData.regions, region]
+		// }));
+		// console.log("이건 뭐임 정보가", setTravelData);
 
-		fetch(`http://localhost:8080/schedule/region/${region.regionCode}`)
+		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/region/${region.regionCode}`)
 			.then(response => response.json())
 			.then(data => {
 				setSelectedRegionDetails(data.data);

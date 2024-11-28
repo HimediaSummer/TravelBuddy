@@ -45,6 +45,7 @@ import Error from './pages/Error';
 import Buddies from './pages/member/comunity/Buddy';
 import BuddyDetail from './pages/member/comunity/BuddyDetail';
 import BuddyRegist from './pages/member/comunity/BuddyRegist';
+import BuddyUpdate from './pages/member/comunity/BuddyUpdate';
 import FindId from './pages/member/FindId';
 import FindPw from './pages/member/FindPw';
 
@@ -88,6 +89,7 @@ function App() {
             <Route path="buddies" element={<Buddies />} />
             <Route path="buddyDetail/:buddyCode" element={ <BuddyDetail/>} />
             <Route path="buddyRegist" element={ <BuddyRegist/>} />
+              <Route path="buddyUpdate/:buddyCode" element={ <BuddyUpdate/>} />
           </Route>
 
           {/* CS 페이지 */}
@@ -111,7 +113,7 @@ function App() {
             <Route path="mySchedule" element={<MySchedule />} />
             <Route path="mySchedule/:scheCode" element={<MyScheduleDetail />} />
           </Route>
-          
+
           {/* 로그인관련 */}
           <Route path="/login" element={ <Login/> } />
           <Route path="/signup" element={ <Register/> } />

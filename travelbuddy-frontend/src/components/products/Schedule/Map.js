@@ -338,6 +338,17 @@ function Map({ regionName, style }) {
 		}
 	}, [regionName, mapInstance]); // regionName이 변경될 때마다 실행
 
+	 useEffect(() => {
+        if (mapInstance) {
+            setTimeout(() => {
+                mapInstance.relayout();
+                if (currentMarker) {
+                    mapInstance.setCenter(currentMarker.getPosition());
+                }
+            }, 100);
+        }
+    }, [style, mapInstance]);
+
 	console.log(
 		mapInstance,
 		regionName,

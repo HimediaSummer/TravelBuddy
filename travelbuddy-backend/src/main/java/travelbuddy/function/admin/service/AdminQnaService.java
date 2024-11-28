@@ -156,9 +156,4 @@ public class AdminQnaService {
 
         return (qnaAnswer == null) ? "삭제 성공" : "삭제 실패";
     }
-
-    public Object selectFqType() {
-        List<FqType> fqTypeList = adminFqTypeRepository.findAll();
-        return fqTypeList.stream().map(FqType ->modelMapper.map(FqType, FqTypeDTO.class)).collect(Collectors.toList());
-    }
 }

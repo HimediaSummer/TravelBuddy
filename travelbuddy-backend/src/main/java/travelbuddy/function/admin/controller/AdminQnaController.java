@@ -52,7 +52,7 @@ public class AdminQnaController {
         pagingResponseDTO.setPageInfo(new PageDTO(cri, total));
         /*===================================================*/
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", pagingResponseDTO));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 요청", pagingResponseDTO));
     }
 
     /*값만 잘 추출되는지 확인하기 위해 만든 메소드 (추후 없애도 됨)*/
@@ -65,13 +65,13 @@ public class AdminQnaController {
     @GetMapping("/qnas/{qnaCode}")
     public ResponseEntity<ResponseDTO> selectQnaDetail(@PathVariable int qnaCode){
         QnaDetailDTO qnaDetailDTO = (QnaDetailDTO) adminQnaService.selectQna(qnaCode);
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnA 상세정보 조회 성공",qnaDetailDTO));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnA 상세정보 조회 요청",qnaDetailDTO));
     }
 
     @Operation(summary = "관리자페이지 QnA 상세조회 중 답변 등록/수정", description = "QnA의 답변 등록처리가 진행됩니다.", tags = {"AdminQnaController"})
     @PostMapping("/qnas/{qnaCode}/insertanswer")
     public ResponseEntity<ResponseDTO> insertQnaAnswer(@PathVariable int qnaCode , @RequestBody QnaAnswerDTO qnaAnswerDTO) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnaAnswer 추가 성공",adminQnaService.insertQnaAnswer(qnaCode,qnaAnswerDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnaAnswer 추가 요청",adminQnaService.insertQnaAnswer(qnaCode,qnaAnswerDTO)));
     }
 
 //    @Operation(summary = "관리자페이지 QnA 상세조회 중 답변 수정 요청", description = "QnA의 답변에 추가/수정처리가 진행됩니다.", tags = {"AdminQnaController"})
@@ -84,13 +84,6 @@ public class AdminQnaController {
     @Operation(summary = "관리자페이지 QnA 상세조회 중 답변 삭제 요청", description = "QnA의 답변 삭제처리가 진행됩니다.", tags = {"AdminQnaController"})
     @DeleteMapping("/qnas/{qnaCode}/deleteanswer")
     public ResponseEntity<ResponseDTO> deleteQnaAnswer(@PathVariable int qnaCode) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnaAnswer 삭제 성공",adminQnaService.deleteQnaAnswer(qnaCode)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"QnaAnswer 삭제 요청",adminQnaService.deleteQnaAnswer(qnaCode)));
     }
-
-    @Operation(summary = "관리자페이지 QnA 유형 이름 요청", description = "QnA 유형 이름 정보가 출력됩니다.", tags = {"AdminQnaController"})
-    @GetMapping("/qnas/getfqtype")
-    public ResponseEntity<ResponseDTO> selectFqType() {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"fqType 조회 성공",adminQnaService.selectFqType()));
-    }
-
 }

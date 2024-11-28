@@ -36,7 +36,7 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 	// 장소 전체
 	useEffect(() => {
 		// 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
-		fetch('http://localhost:8080/schedule/region')
+		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/region`)
 			.then(response => response.json())
 			.then(data => {
 				const regions = data.data.regions.map(region => ({
@@ -55,12 +55,13 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 	// 장소 버튼 누르면 밑에 상세 조회 뾰롱
 	const handleRegionSelect = (region) => {
 		setSelectedRegion(region);
-		setTravelData(prevData => ({
-			...prevData,
-			regions: [...prevData.regions, region]
-		}));
+		// setTravelData(prevData => ({
+		// 	...prevData,
+		// 	regions: [...prevData.regions, region]
+		// }));
+		// console.log("이건 뭐임 정보가", setTravelData);
 
-		fetch(`http://localhost:8080/schedule/region/${region.regionCode}`)
+		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/region/${region.regionCode}`)
 			.then(response => response.json())
 			.then(data => {
 				setSelectedRegionDetails(data.data);
@@ -93,9 +94,19 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 
 	// 검색 처리
 	const handleSearchSubmit = () => {
-		setSelectedRegion({
-			regionName: searchQuery
-		});
+		if (searchQuery.trim()) {
+			const searchedRegion = {
+				regionName: searchQuery,
+				// 필요한 다른 필드들도 추가
+			};
+			
+			setSelectedRegion(searchedRegion);
+			// travelData에도 검색한 지역 정보 추가
+			setTravelData(prevData => ({
+				...prevData,
+				regions: [...prevData.regions, searchedRegion]
+			}));
+		}
 	};
 
 	return (
@@ -133,17 +144,21 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 					)}
 					{ regionTab === 'search' && (
 					<div className='region-search'>
-						<input type='text' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
-						<button className="region-button2" onClick={onNext}>다음</button>
+						<div style={{display: 'flex', textAlign: 'left'}}>
+						<input type='search' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
+						<img src='/Img/search-icon.png' width={'35px'} height={'35px'} style={{cursor: 'pointer'}} onClick={handleSearchSubmit}/>
+						</div>
+						<button className="region-button2" onClick={onNext} disabled={!searchQuery} style={{marginTop: '0'}}>다음</button>
 					</div>
 					)}
 				</form>
-				<div>
+				{/* <div>
 					<button onClick={toggle} style={{display: regionTab === 'search' ? 'none' : 'block'}}>
 						{isToggleOpen ? '<' : '>'}
 					</button>
-				</div>
+				</div> */}
 				{/* 선택된 지역 상세 정보 출력 */}
+				<div style={{position: 'relative', display: 'flex'}}>
 				<div id="chat-box3" style={{display: selectedRegionDetails && isToggleOpen && regionTab === 'select' ? 'block':'none'}}>
 					{selectedRegionDetails ? (
 						<div>
@@ -156,11 +171,30 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 						</div>
 					) : ('')}
 				</div>
-							<div style={{marginTop: '100px'}}>
+				<div>
+					<button className='toggle-button' onClick={toggle} style={{display: regionTab === 'search' ? 'none' : 'block'}}>
+						{isToggleOpen ? '<' : '>'}
+					</button>
+				</div>
+				</div>
+							{/* <div style={{marginTop: '100px'}}>
 								{selectedRegion && isToggleOpen && regionTab === 'select' ? (
 							// <Map latitude={selectedRegion.lat} longitude={selectedRegion.lng}/>
 							<Map regionName={selectedRegion.regionName} style={{width: '500px', height: '800px'}}/>
 								) : (<Map regionName={selectedRegionDetails? (selectedRegion.regionName) : (null)} style={{width: '800px', height: '800px'}} />)}
+							</div> */}
+							<div style={{marginTop: '100px'}}>
+								{regionTab === 'search' ? (
+									// 검색 탭일 때
+									<Map regionName={searchQuery} style={{width: '800px', height: '800px'}}/>
+								) : (
+									// 선택 탭일 때
+									selectedRegion ? (
+										<Map regionName={selectedRegion.regionName} style={{width: isToggleOpen ? '500px' : '800px', height: '800px'}}/>
+									) : (
+										<Map regionName={null} style={{width: '800px', height: '800px'}}/>
+									)
+								)}
 							</div>
 			</div>
 		</div>

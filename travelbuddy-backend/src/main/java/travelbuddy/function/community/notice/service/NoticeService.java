@@ -3,6 +3,7 @@ package travelbuddy.function.community.notice.service;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,12 @@ public class NoticeService {
     private static final Logger log = LoggerFactory.getLogger(NoticeService.class);
     private final NoticeRepository noticeRepository;
     private final ModelMapper modelMapper;
+
+    /* 설명. 이미지 파일 저장 경로와 응답용 URL (WebConfig 설정파일 추가하기) */
+    @Value("${image.image-dir}")
+    private String IMAGE_DIR;
+    @Value("${image.image-url}")
+    private String IMAGE_URL;
 
     public NoticeService(ModelMapper modelMapper, NoticeRepository noticeRepository) {
         this.modelMapper = modelMapper;
@@ -65,6 +72,7 @@ public class NoticeService {
         log.info("[NoticeService] selectNotice() start");
 
         Notice notice = noticeRepository.findById(noticeCode).orElse(null);
+        notice.setNoticeImg(IMAGE_URL + notice.getNoticeImg());
 
         log.info("[NoticeService] selectNotice() end");
 

@@ -12,7 +12,7 @@ function QuestionSchedule({ onNext, setTravelData }) {
 
 	// 질문지 테마
 	useEffect(() => {
-		fetch('http://localhost:8080/schedule/question')
+		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/question`)
 			.then(response => response.json())
 			.then(data => {
 				console.log('가져온거', data);
@@ -34,7 +34,7 @@ function QuestionSchedule({ onNext, setTravelData }) {
 		setCurrentQuestionIndex(0); // 질문 인덱스 초기화
 
 		// 테마에 맞는 질문 가져오기
-		fetch(`http://localhost:8080/schedule/question/${qTheme.themeCode}`)
+		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/question/${qTheme.themeCode}`)
 			.then(response => response.json())
 			.then(data => {
 				const questionDetails = data.data.map(questions => ({
@@ -46,7 +46,7 @@ function QuestionSchedule({ onNext, setTravelData }) {
 
 				// 각 질문에 대한 답변을 가져오기
 				const allAnswersPromises = questionDetails.map(question =>
-					fetch(`http://localhost:8080/schedule/answer/${question.questCode}`)
+					fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/answer/${question.questCode}`)
 						.then(response => response.json())
 						.then(data => {
 							return data.data.map(answers => ({

@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
 import { callNoticeListAPI } from "../../../apis/NoticeAPICalls";
+import { appendNoticeCountAPI} from "../../../apis/NoticeAPICalls";
+import { callSearchNoticeListAPI} from "../../../apis/NoticeAPICalls";
 
 function MyNotices() {
     const navigate = useNavigate();
@@ -13,10 +15,11 @@ function MyNotices() {
     const noticeList = notice.data || {};
     const pageInfo = notice.pageInfo || {};
 
-    console.log('나 noticeList',noticeList);
 
 
     const [currentPage, setCurrentPage] = useState(1);
+    const [search, setSearch] = useState("");
+    const [filteredNoticeList, setFilteredNoticeList] = useState([]);
 
     const pageNumber = [];
     if (pageInfo) {
@@ -30,18 +33,74 @@ function MyNotices() {
             dispatch(callNoticeListAPI(
                 {currentPage: currentPage}
             ));
-        }, [currentPage]
+        }, [currentPage,dispatch]
     );
 
+    useEffect(() => {
+        console.log("faqList 업데이트 됨 :",noticeList);
+        if (Array.isArray(noticeList)) {
+            setFilteredNoticeList(noticeList);
+      } else if (Array.isArray(noticeList.data)) {
+        setFilteredNoticeList(noticeList.data);
+      }
+      }, [noticeList]);
+
+      
+          // 디버깅을 위한 useEffect 추가
+useEffect(() => {
+    console.log("filteredFaqList 업데이트됨:", filteredNoticeList);
+  }, [filteredNoticeList]);
+
+  const onClickSearch = async () => {
+    if (search.trim()) {
+        try {
+            // 검색 API 호출 결과를 기다림
+            const searchResult = await dispatch(callSearchNoticeListAPI(search));
+            
+            // 검색 후 페이지 초기화
+            setCurrentPage(1);
+        } catch (error) {
+            console.error("검색 중 오류 발생:", error);
+        }
+    }
+  };
+
+  const onChangeHandler = (e) => {
+    setSearch(e.target.value);
+    if (!e.target.value.trim()) {
+      dispatch(callNoticeListAPI({ currentPage: currentPage }));
+  }
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    onClickSearch();
+}
+};
+
+
+// 상세페이지로 이동하면서, 조회수 카운트 올리기
     const onClickTableTr = (noticeCode) => {
-        navigate(`/mynoticeDetail/${noticeCode}`, { replace: false });
+        const selectNotice = noticeList.find(n => n.noticeCode === noticeCode); // 선택한 공지사항 찾기
+        const appendCount = {noticeCount:selectNotice.noticeCount};
+        if (selectNotice) {
+            dispatch(appendNoticeCountAPI(noticeCode, appendCount)); // API 호출로 업데이트
+        }
+        navigate(`/cm/mynotices/${noticeCode}`, { replace: false }); // 상세 페이지로 이동
     };
+
 
 
     return (
         <>
          <div className={NoticeCSS.bodyDiv}>
                     <h2>공지사항</h2>
+                    <input
+                    type="text"
+                    placeholder="검색어를 입력하세요"
+                    value={search}
+                    onChange={onChangeHandler}
+                    onKeyDown={onChangeHandler}
+                ></input>
+                <button onClick={onClickSearch}>검색</button>
                 <table className={NoticeCSS.productTable}>
                     <colgroup>
                         <col width="10%" />

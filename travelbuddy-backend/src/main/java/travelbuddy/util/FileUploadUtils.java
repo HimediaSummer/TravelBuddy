@@ -40,42 +40,54 @@ public class FileUploadUtils {
 
     public static boolean deleteFile(String uploadDir, String fileName) {
 
-        // fileName이 null이거나 비어있으면 바로 true 반환
-        if(fileName == null || fileName.isEmpty()) {
-            return true;
+        // 기본적으로 파일 삭제 실패로 설정
+        boolean result = false;
+
+        // uploadDir이나 fileName이 null인 경우 예외 처리
+        if (uploadDir == null || fileName == null) {
+            log.error("Directory or file name cannot be null. uploadDir: {}, fileName: {}", uploadDir, fileName);
+            return result; // 실패 반환
         }
 
-        boolean result = false;
-//        Path uploadPath = Paths.get(uploadDir);
+        Path uploadPath = Paths.get(uploadDir);
 
-//        if(!Files.exists(uploadPath)) {
-//            result = true;
-//        }
+        // 디렉토리가 존재하지 않을 경우 로그 출력
+        if (!Files.exists(uploadPath)) {
+            log.warn("Directory does not exist: {}", uploadDir);
+            return true; // 디렉토리가 없으므로 삭제 완료로 간주
+        }
+
         try {
-            Path uploadPath = Paths.get(uploadDir);
-
-            if(!Files.exists(uploadPath)) {
-                result = true;
-            }
-
+            // 파일 경로 생성 및 삭제
             Path filePath = uploadPath.resolve(fileName);
-
-            // 파일이 존재할 경우에만 삭제 시도
-            if(Files.exists(filePath)) {
-                Files.delete(filePath);
-                result = true;
-            } else {
-                result = true; // 파일이 이미 없는 경우도 성공으로 처리
-            }
-
-//            Files.delete(filePath);
-//            result = true;
-        }catch (IOException ex){
-
+            Files.deleteIfExists(filePath); // 파일이 존재하면 삭제, 없으면 무시
+            result = true; // 삭제 성공
+            log.info("File deleted successfully: {}", filePath);
+        } catch (IOException ex) {
             log.error("Could not delete file: {}", fileName, ex);
         }
 
         return result;
-    }
 
+
+
+
+
+
+//        boolean result = false;
+//        Path uploadPath = Paths.get(uploadDir);
+//        if(!Files.exists(uploadPath)) {
+//            result = true;
+//        }
+//        try {
+//            Path filePath = uploadPath.resolve(fileName);
+//            Files.delete(filePath);
+//            result = true;
+//        }catch (IOException ex){
+//            log.error("Could not delete file: {}", fileName, ex);
+//        }
+//        return result;
+
+
+    }
 }

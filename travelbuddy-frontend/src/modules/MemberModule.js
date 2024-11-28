@@ -25,6 +25,15 @@ const memberReducer = handleActions(
 	{
 		[GET_MEMBERS]: (state, { payload }) => {
 			console.log('백엔드에서의 응답',payload);
+			if (Array.isArray(payload)) {
+				return {
+					data: payload,
+					pageInfo: {
+						...payload,
+						total: payload.length
+					}
+				}
+			}
 			return payload;
 		},
 		[GET_MEMBER]: (state, { payload }) => {

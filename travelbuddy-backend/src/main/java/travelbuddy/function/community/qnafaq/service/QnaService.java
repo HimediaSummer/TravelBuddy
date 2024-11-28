@@ -151,6 +151,8 @@ public class QnaService {
     @Transactional
     public Object insertQna(QnaDTO qnaDTO) {
 
+        Integer memberCode = getCurrentMemberCode();
+        qnaDTO.setMemberCode(memberCode);
         FqType fqType = fqTypeRepository.findById(qnaDTO.getFqTypeCode()).orElseThrow();
         Account account = accountRepository.findById(qnaDTO.getMemberCode()).orElseThrow();
         Qna insertqna = modelMapper.map(qnaDTO, Qna.class);

@@ -19,16 +19,7 @@ function Qnas() {
     const memberPageInfo = member.pageInfo || {};
     const { data = {}, pageInfo = {} } = qnaList;
 
-    console.log('나 qnaList',qnaList);
-    console.log('나 fqTypeList',fqTypeList);
-    console.log('나 memberList',memberList);
-    console.log('나는 멤버페이지',memberPageInfo);
-
-
     const [currentPage, setCurrentPage] = useState(1);
-    const [fqTypesName, setFqTypesName] = useState([]);
-    const [membersName, setMembersName] = useState([]);
-
 
     const pageNumber = [];
     if (pageInfo) {
@@ -38,26 +29,16 @@ function Qnas() {
     }
 
     useEffect(() => {
-        console.log(currentPage)
-        dispatch(callQnaListForAdminAPI({currentPage: currentPage}));
-       
-    }, [currentPage]);
+        dispatch(callQnaListForAdminAPI({currentPage}));
+    }, [currentPage, dispatch]);
 
     useEffect(()=>{
         dispatch(callMemberAllNameAPI());
-        if (Array.isArray(memberList)){
-            setMembersName(memberList);
-            console.log('저장되냐고',memberList);
-            console.log('여기다말이지!!',membersName);
-        }
-    },[membersName]);
+    },[dispatch]);
 
     useEffect (() => {
         dispatch(callFqTypeNameAPI());
-        if (Array.isArray(fqTypeList)){
-            setFqTypesName(fqTypeList);
-        }
-    }, [fqTypesName]);
+    }, [dispatch]);
 
     
 
@@ -104,12 +85,14 @@ function Qnas() {
                                     }
                                 >
                                     <td>{q.qnaDTO.qnaCode}</td>
-                                    <td>{
-                                    fqTypeList.find(type => type.fqTypeCode === q.qnaDTO.fqTypeCode)?.fqTypeName || "알수없음"
+                                    <td>{Array.isArray(fqTypeList) 
+                                    ? fqTypeList.find(f => f.fqTypeCode === q.qnaDTO.fqTypeCode)
+                                    ?.fqTypeName || "로딩중" : "로딩중"
                                     }</td>
                                     <td colSpan={5}>{q.qnaDTO.qnaTitle}</td>
-                                    <td>{
-                                    membersName.find((m) => m.memberCode === q.qnaDTO.memberCode)?.memberName || "알수없음"
+                                    <td>{Array.isArray(memberList)
+                                    ? memberList.find((m) => m.memberCode === q.qnaDTO.memberCode)
+                                    ?.memberName || "로딩중" : "로딩중"
                                     }</td>
                                     <td>{q.qnaAnswerDTO.ansContents ? "답변완료" : ""}</td>
                                     <td>{q.qnaDTO.qnaCreate}</td>

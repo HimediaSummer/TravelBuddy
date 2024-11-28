@@ -18,17 +18,7 @@ function MyQnas() {
     const memberList = member.data || {};
     const { data = {}, pageInfo = {} } = qnaList;
 
-    console.log('나 QnaRedcer',qna);
-    console.log('그럼 난 fqTypeReducer',fqTypeList);
-    console.log('후후 나는 memberReducer',memberList);
-
-
     const [currentPage, setCurrentPage] = useState(1);
-
-    const [fqTypesName, setFqTypesName] = useState([]);
-    const [membersName, setMembersName] = useState({});
-
-    
 
     const pageNumber = [];
     if (pageInfo) {
@@ -39,26 +29,17 @@ function MyQnas() {
 
     useEffect(() => {
         dispatch(
-            callQnaListAPI({
-                currentPage: currentPage 
-            })
+            callQnaListAPI({currentPage})
         );
-    }, [currentPage]);
+    }, [currentPage,dispatch]);
 
     useMemo (() => {
         dispatch(callFqTypeNameAPI());
-        if (Array.isArray(fqTypeList)){
-            setFqTypesName(fqTypeList);
-        }
-    }, [setFqTypesName]);
+    }, [dispatch]);
 
     useMemo(()=>{
         dispatch(callMemberDetailForAdminAPI);
-        if ((memberList)){
-            setMembersName(memberList);
-            return console.log('membersName 은 뭐야',membersName);
-        }
-    },[setMembersName]);
+    },[dispatch]);
     
 
 
@@ -109,12 +90,13 @@ function MyQnas() {
                                     }
                                 >
                                     <td>{q.qnaDTO.qnaCode}</td>
-                                    <td>{
-                                    fqTypesName.find(type => type.fqTypeCode === q.qnaDTO.fqTypeCode)?.fqTypeName || "알수없음"
+                                    <td>{Array.isArray(fqTypeList)
+                                    ?fqTypeList.find(type => type.fqTypeCode === q.qnaDTO.fqTypeCode)
+                                    ?.fqTypeName || "로딩중" : "로딩중"
                                     }</td>
                                     <td colSpan={5}>{q.qnaDTO.qnaTitle}</td>
                                     <td>{
-                                    membersName.memberCode === q.qnaDTO.memberCode ? membersName.memberName : "알수없음"
+                                    memberList.memberCode === q.qnaDTO.memberCode ? memberList.memberName : "로딩중"
                                     }</td>
                                     <td>{q.qnaAnswerDTO.ansContents ? "답변완료" : ""}</td>
                                     <td>{q.qnaDTO.qnaCreate}</td>

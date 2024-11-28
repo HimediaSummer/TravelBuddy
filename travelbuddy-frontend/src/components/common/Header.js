@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-
+import HeaderCSS from './HeaderCSS.css';
 import { useSelector, useDispatch } from "react-redux";
 
 import { callLogoutAPI } from "../../apis/MemberAPICalls";
@@ -74,21 +74,11 @@ function Header() {
     }
 
     return (
-        <div className="Main">
-            <head>
-                <meta charset="UTF-8" />
-                <script
-                    src="https://kit.fontawesome.com/9e9931aed0.js"
-                    crossorigin="anonymous"
-                ></script>
-                <link rel="stylesheet" href="/CSS/media.css" />
-                <link rel="stylesheet" href="/CSS/menu.css" />
-                <link rel="stylesheet" href="/CSS/slide.css" />
-                <link rel="stylesheet" href="/CSS/style.css" />
-                <title>Travel Buddy</title>
-            </head>
+        <div className="HeaderContainer">
+            <title>Travel Buddy</title>
+            <p>Travel Buddy</p>
             {loginModal ? <LoginModal setLoginModal={setLoginModal} /> : null}
-            <ul class="menu">
+            <ul>
                 <li>
                     <NavLink to="/mypage">MY정보</NavLink>
                 </li>

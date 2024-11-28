@@ -16,9 +16,9 @@ function QnaDetail () {
     const {qnaCode} = params;
     const qnaData = useSelector((state) => state.qnaReducer);
     const fqType = useSelector((state) => state.fqTypeReducer) || {};
+    const fqTypeList = fqType.data || {};
     const {data} = qnaData;
     const {qnaDTO, qnaAnswerDTO} = data || {};
-    const fqTypeList = fqType.data || {};
     
     console.log('제가 누굽니까',fqTypeList)
 
@@ -26,7 +26,7 @@ function QnaDetail () {
     useEffect (
         () => {
             dispatch(callQnaDetailForAdminAPI(qnaCode))
-        } , []
+        } , [fqTypeList,dispatch]
     );
 
     const handleInputChange = (e) => {
@@ -79,7 +79,8 @@ function QnaDetail () {
                 <td>제목</td>
                 <td>{qnaDTO.qnaTitle}</td>
                 <td>문의유형</td>
-                <td>{fqTypeList.find(f => f.fqTypeCode === qnaDTO.fqTypeCode)?.fqTypeName || "알수없음"}</td>
+                <td>{Array.isArray(fqTypeList) 
+    ? fqTypeList.find(f => f.fqTypeCode === qnaDTO.fqTypeCode)?.fqTypeName || "로딩중" : "로딩중"}</td>
                 <td><button onClick={onClickQnaDelete}>삭제</button></td>
                 </tr>
 

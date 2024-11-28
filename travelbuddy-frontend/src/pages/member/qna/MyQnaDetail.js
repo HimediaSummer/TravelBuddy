@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { callQnaDetailAPI } from "../../../apis/QnaAPICalls";
 import { deleteQnaAPI } from "../../../apis/QnaAPICalls";
+import { callFqTypeNameAPI } from "../../../apis/FqTypeAPICalls";
 
 function MyQnaDetail() {
     const dispatch = useDispatch();
@@ -19,7 +20,11 @@ function MyQnaDetail() {
 
     useEffect(() => {
         dispatch(callQnaDetailAPI(qnaCode));
-    }, []);
+    }, [dispatch]);
+
+    useMemo (() => {
+        dispatch(callFqTypeNameAPI());
+    }, [dispatch]);
 
     const onClickQnaDelete = () => {
         if(qnaAnswerDTO.ansContents !== null && qnaAnswerDTO.ansContents !== "") {
@@ -46,7 +51,8 @@ function MyQnaDetail() {
                                 <td>제목</td>
                                 <td>{qnaDTO.qnaTitle}</td>
                                 <td>문의유형</td>
-                                <td>{fqTypeList.find(f => f.fqTypeCode === qnaDTO.fqTypeCode)?.fqTypeName || "알수없음"}</td>
+                                <td>{Array.isArray(fqTypeList) 
+    ? fqTypeList.find(f => f.fqTypeCode === qnaDTO.fqTypeCode)?.fqTypeName || "로딩중" : "로딩중"}</td>
                                 <td>
                                     <button onClick={onClickQnaDelete}>
                                         삭제
@@ -70,7 +76,7 @@ function MyQnaDetail() {
                             </tr>
 
                             <tr>
-                                <td>답변</td>
+                                <td>답변 내용</td>
                                 <td><input
                     type="text"
                     name='ansContents'
@@ -78,6 +84,10 @@ function MyQnaDetail() {
                     readOnly
                     value={qnaAnswerDTO.ansContents}/></td>
                             </tr>
+                        <tr>
+                            <td>답변시간</td>
+                            <td>{qnaAnswerDTO.ansCreate || ''}</td>
+                        </tr>
                         </>
                     ) : (
                         <tr>

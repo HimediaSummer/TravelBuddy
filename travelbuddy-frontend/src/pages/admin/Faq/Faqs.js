@@ -40,9 +40,7 @@ function Faqs() {
     useEffect(() => {
         if (!search.trim()) {
             dispatch(
-                callFaqListForAdminAPI({
-                    currentPage: currentPage,
-                }));
+                callFaqListForAdminAPI({currentPage}));
         }
     }, [currentPage,dispatch]);
 
@@ -167,7 +165,7 @@ function Faqs() {
                                         <td>{f.faqCode}</td>
                                         <td> {
                             // fqTypeMap에서 fqTypeCode에 해당하는 fqTypeName 찾기
-                            faqTypeMap.find(type => type.fqTypeCode === f.fqTypeCode)?.fqTypeName || "알 수 없음"
+                            fqTypeList.find(type => type.fqTypeCode === f.fqTypeCode)?.fqTypeName || "로딩중"
                         }</td>
                                         <td>{f.faqTitle}</td>
                                         <td>

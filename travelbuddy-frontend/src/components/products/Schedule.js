@@ -33,11 +33,11 @@ function Schedule() {
 
 	// 각 단계 컴포넌트들
 	const steps = [
-		<DateSchedule onNext={() => setCurrentStep(1)} startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} setTravelData={setTravelData}/>,
-		<RegionSchedule onNext={() => setCurrentStep(2)} selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion} setTravelData={setTravelData}/>,
-		<AccomSchedule onNext={() => setCurrentStep(3)}  selectedRegion={selectedRegion} setTravelData={setTravelData}/>,
+		<DateSchedule onNext={() => setCurrentStep(1)} startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} selectedRegion={selectedRegion} setTravelData={setTravelData}/>,
+		<RegionSchedule onNext={() => setCurrentStep(2)} startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion} setTravelData={setTravelData}/>,
+		<AccomSchedule onNext={() => setCurrentStep(3)} startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} selectedRegion={selectedRegion} setTravelData={setTravelData}/>,
 		<QuestionSchedule onNext={() => setCurrentStep(4)} setTravelData={setTravelData}/>,
-		<Summary travelData={travelData}/>
+		<Summary startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} selectedRegion={selectedRegion} travelData={travelData}/>
 		// <DateSchedule
 		// 	onNext={() => setCurrentStep(1)}
 		// 	setTravelData={setTravelData}
@@ -80,11 +80,11 @@ function Schedule() {
 			</head>
 
 			<body>
-				<header class="header">
+				{/* <header class="header">
 					<h1>
 						<div class="header-click">
 							<i class="fa-solid fa-globe"></i>
-							<a href="http://travel-buddy.me/">Travel Buddy</a>
+							<a href="/">Travel Buddy</a>
 						</div>
 					</h1>
 					<ul class="menu">
@@ -96,7 +96,7 @@ function Schedule() {
 					<button class="header_toogleBtn">
 						<i class="fas fa-bars"></i>
 					</button>
-				</header>
+				</header> */}
 
 				{/* main */}
 				<main class="wrap2">
@@ -115,8 +115,8 @@ function Schedule() {
 						<div id="chat-box" >
 							{/* <p>트래블 버디</p>
 							<p>어떤 여행을 하고싶나요?<i id="plane-icon" class="fa-solid fa-plane-departure"></i></p> */}
-							<p>{selectedRegion ? (selectedRegion.regionName) : ('어떤 여행을 하고 싶나요?')}</p>
-							<p>{startDate || ''} ~ {endDate || ''}</p>
+							{/* <p>{selectedRegion ? (selectedRegion.regionName) : ('어떤 여행을 하고 싶나요?')}</p>
+							<p>{startDate || ''} ~ {endDate || ''}</p> */}
 						</div>
 						{/* 날짜 선택 모달 */}
 						{/* 출발일, 도착일 */}

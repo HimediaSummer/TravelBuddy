@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Map from './Map';
+import moment from 'moment';
 
-function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelData }) {
+function RegionSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, selectedRegion, setSelectedRegion, setTravelData }) {
 
 	const [region, setRegion] = useState([]);
 	const [selectedRegionDetails, setSelectedRegionDetails] = useState(null);
@@ -11,6 +12,7 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 	// 카카오지도 검색
 	const [searchQuery, setSearchQuery] = useState('');
 	const [searchResults, setSearchResults] =  useState([]);
+	const [searchAddress, setSearchAddress] = useState('');
 
 	// 지역 위도/경도 하드코딩 
 	// const regionCoordinates = {
@@ -44,7 +46,8 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 					regionName: region.regionName,
 					regionDescription: region.regionDescription,
 					regionImg: region.regionImg,
-					regionThumbnailImg: region.regionThumbnailImg
+					regionThumbnailImg: region.regionThumbnailImg,
+					regionUserDetail: region.regionUserDetail
 				}));
 				console.log("가져왓냐?", data);
 				setRegion(regions);
@@ -55,11 +58,12 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 	// 장소 버튼 누르면 밑에 상세 조회 뾰롱
 	const handleRegionSelect = (region) => {
 		setSelectedRegion(region);
-		// setTravelData(prevData => ({
-		// 	...prevData,
-		// 	regions: [...prevData.regions, region]
-		// }));
-		// console.log("이건 뭐임 정보가", setTravelData);
+		setTravelData(prevData => ({
+			...prevData,
+			// regions: [...prevData.regions, region]
+			regions: [region]
+		}));
+		console.log("이건 뭐임 정보가", setTravelData);
 
 		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/region/${region.regionCode}`)
 			.then(response => response.json())
@@ -95,8 +99,9 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 	// 검색 처리
 	const handleSearchSubmit = () => {
 		if (searchQuery.trim()) {
+			setSearchAddress(searchQuery);
 			const searchedRegion = {
-				regionName: searchQuery,
+				regionUserDetail: searchQuery,
 				// 필요한 다른 필드들도 추가
 			};
 			
@@ -113,14 +118,17 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 		<div class="tema-title">
 			<div class="chat-container">
 				<form class="chat-form" action="post">
+				<p class="chat-head" style={{ margin: 'auto',fontSize: '18px' }}>{selectedRegion ? (selectedRegion.regionName) : ('어떤 여행을 하고 싶나요?')}</p>
+				<p style={{marginTop: '5px', marginBottom: '25px', fontSize: '15px' }}>{startDate ? moment(startDate, 'MM-DD(ddd)').format('YYYY-MM-DD(ddd)') : ''} ~ {endDate ? moment(endDate, 'MM-DD(ddd)').format('YYYY-MM-DD(ddd)') : ''}</p>
 					<div class='chat-container-r'>
 					<div id="chat-box2-r">
-						<button type='button' onClick={() => tabChange('select')}>장소 선택</button>
-						<button type='button' onClick={() => tabChange('search')}>장소 검색</button>
+						<button type='button' onClick={() => tabChange('select')}>지역 선택</button>
+						<button type='button' onClick={() => { if(!selectedRegion) {alert('지역을 먼저 선택해주세요.');} else {tabChange('search');}}} >장소 상세 검색</button>
 					</div>
 					</div>
 					<div class="tema-title">
-						<legend>가고싶은 도시를 선택해주세요.</legend>
+						{ regionTab === 'select' ? (<legend>가고 싶은 지역을 선택해주세요.</legend>) : (<legend>상세 장소를 검색해주세요.</legend>)}
+						{/* <legend>가고싶은 도시를 선택해주세요.</legend> */}
 					</div>
 					{ regionTab === 'select' &&  (
 					<div className="region-scroll">
@@ -143,9 +151,9 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 					</div>
 					)}
 					{ regionTab === 'search' && (
-					<div className='region-search'>
-						<div style={{display: 'flex', textAlign: 'left'}}>
-						<input type='search' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
+					<div className='region-search' style={{marginBottom: '500px'}}>
+						<div style={{display: 'flex', textAlign: 'left', marginLeft: '25px'}}>
+						<input type='search' placeholder='주소를 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
 						<img src='/Img/search-icon.png' width={'35px'} height={'35px'} style={{cursor: 'pointer'}} onClick={handleSearchSubmit}/>
 						</div>
 						<button className="region-button2" onClick={onNext} disabled={!searchQuery} style={{marginTop: '0'}}>다음</button>
@@ -183,16 +191,16 @@ function RegionSchedule({ onNext, selectedRegion, setSelectedRegion, setTravelDa
 							<Map regionName={selectedRegion.regionName} style={{width: '500px', height: '800px'}}/>
 								) : (<Map regionName={selectedRegionDetails? (selectedRegion.regionName) : (null)} style={{width: '800px', height: '800px'}} />)}
 							</div> */}
-							<div style={{marginTop: '100px'}}>
+							<div>
 								{regionTab === 'search' ? (
 									// 검색 탭일 때
-									<Map regionName={searchQuery} style={{width: '800px', height: '800px'}}/>
+									<Map regionName={searchAddress} style={{width: '1100px', height: '800px'}}/>
 								) : (
 									// 선택 탭일 때
 									selectedRegion ? (
-										<Map regionName={selectedRegion.regionName} style={{width: isToggleOpen ? '500px' : '800px', height: '800px'}}/>
+										<Map regionName={selectedRegion.regionName} style={{width: isToggleOpen ? '800px' : '1100px', height: '800px'}}/>
 									) : (
-										<Map regionName={null} style={{width: '800px', height: '800px'}}/>
+										<Map regionName={null} style={{width: '1100px', height: '800px'}}/>
 									)
 								)}
 							</div>

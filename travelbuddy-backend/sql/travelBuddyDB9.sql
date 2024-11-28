@@ -101,6 +101,7 @@ CREATE TABLE
                                  region_description VARCHAR(255) NOT NULL COMMENT '지역설명',
                                  region_img TEXT NULL COMMENT '지역사진',
                                  region_thumbnail_img TEXT NULL COMMENT '지역썸네일사진',
+                                 region_user_detail TEXT NULL COMMENT '사용자입력상세주소',
                                  PRIMARY KEY (region_code)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '지역';
 
@@ -232,6 +233,7 @@ CREATE TABLE
                                         accom_addres VARCHAR(100) NULL COMMENT '숙소주소',
                                         accom_img TEXT NULL COMMENT '숙소사진',
                                         accom_thumbnail_img TEXT NULL COMMENT '숙소썸네일사진',
+                                        accom_user_detail TEXT NULL COMMENT '사용자입력상세주소',
                                         PRIMARY KEY (accom_code)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '숙소 테이블';
 

@@ -25,6 +25,14 @@ ul {
 	font-family: 'IBM Plex Sans KR', sans-serif;
 }
 
+.menu {
+	font-family: '카페24 써라운드 에어';
+}
+
+.menu>li>a {
+	color: black !important; 
+}
+
 
 /* 이미지 위에 텍스트 편집 */
 

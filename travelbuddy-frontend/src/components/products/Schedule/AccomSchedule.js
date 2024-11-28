@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Map from './Map';
+import moment from 'moment';
 
 function AccomSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, selectedRegion, setTravelData }) {
 // function AccomSchedule({ onNext, setTravelData }) {
@@ -28,7 +29,8 @@ function AccomSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, s
 					accomName: accom.accomName,
 					accomAddres: accom.accomAddres,
 					accomImg: accom.accomImg,
-					accomThumbnailImg: accom.accomThumbnailImg
+					accomThumbnailImg: accom.accomThumbnailImg,
+					accomUserDetail: accom.accomUserDetail
 				}));
 				console.log("가져왓냐?", data);
 				setAccom(accommodations);
@@ -41,7 +43,8 @@ function AccomSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, s
 		setSelectedAccom(accom);
 		setTravelData(prevData => ({
 			...prevData,
-			accommodations: [...prevData.accommodations, accom]
+			// accommodations: [...prevData.accommodations, accom]
+			accommodations: [accom]
 		}));
 
 		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/accom/${accom.accomCode}`)
@@ -91,8 +94,8 @@ const handleSearchSubmit = () => {
         setSearchAddress(searchQuery);
         const searchedAccom = {
             // accomType: '검색',  // 또는 적절한 타입
-            accomName: '사용자 지정 숙소',
-            accomAddres: searchQuery  // 검색한 주소를 저장
+            // accomName: '사용자 지정 숙소',
+            accomUserDetail: searchQuery  // 검색한 주소를 저장
         };
         
         setSelectedAccom(searchedAccom);
@@ -109,14 +112,17 @@ const handleSearchSubmit = () => {
 		<div class="tema-title">
 			<div class="chat-container">
 				<form class="chat-form" action="post">
+				<p class="chat-head" style={{ margin: 'auto',fontSize: '18px' }}>{selectedRegion ? (selectedRegion.regionName) : ('어떤 여행을 하고 싶나요?')}</p>
+				<p style={{marginTop: '5px', marginBottom: '25px', fontSize: '15px' }}>{startDate ? moment(startDate, 'MM-DD(ddd)').format('YYYY-MM-DD(ddd)') : ''} ~ {endDate ? moment(endDate, 'MM-DD(ddd)').format('YYYY-MM-DD(ddd)') : ''}</p>
 				<div class='chat-container-r'>
 					<div id="chat-box2-r">
-						<button type='button' onClick={() => tabChange('select')}>숙소 선택</button>
-						<button type='button' onClick={() => tabChange('search')}>숙소 검색</button>
+						<button type='button' onClick={() => tabChange('select')}>숙소 타입 선택</button>
+						<button type='button' onClick={() => { if(!selectedAccom) {alert('숙소 타입을 먼저 선택해주세요.');} else {tabChange('search');}}} >숙소 상세 검색</button>
 					</div>
 					</div>
 					<div class="tema-title">
-						<legend>선호하는 숙소형태를 선택해주세요.</legend>
+					{ accomTab === 'select' ? (<legend>원하는 숙소 테마를 선택해주세요.</legend>) : (<legend>숙소 상세 주소를 검색해주세요.</legend>)}
+						{/* <legend>선호하는 숙소형태를 선택해주세요.</legend> */}
 					</div>
 					{ accomTab === 'select' && (
 					<div className='accom-scroll'>
@@ -136,12 +142,12 @@ const handleSearchSubmit = () => {
 					</div>
 					)}
 					{ accomTab === 'search' && (
-					<div className='region-search'>
-						<div>
+					<div className='region-search' style={{marginBottom: '500px'}}>
+						<div style={{display: 'flex', textAlign: 'left', marginLeft: '25px'}}>
 						<input type='search' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
 						<img src='/Img/search-icon.png' width={'35px'} height={'35px'} style={{cursor: 'pointer'}} onClick={handleSearchSubmit}/>
 						</div>
-						<button className='accom-button2' onClick={onNext} disabled={!searchQuery}>다음</button>
+						<button className='accom-button2' onClick={onNext} disabled={!searchQuery} style={{marginTop: '0'}}>다음</button>
 					</div>
 					)}
 				</form>
@@ -188,14 +194,14 @@ const handleSearchSubmit = () => {
 						<Map regionName={searchQuery} style={{ width: '800px', height: '800px' }} />
 					)}
 				</div> */}
-				<div style={{marginTop: '100px'}}>
+				<div>
 					{accomTab === 'search' ? (
 						// 검색 탭일 때
 						<Map regionName={searchAddress} style={{width: '1100px', height: '800px'}}/>
 					) : (
 						// 선택 탭일 때
 						selectedAccomDetails && selectedRegion ? (
-							<Map regionName={selectedRegion.regionName} style={{width: isToggleOpen ? '800px' : '800px', height: '800px'}}/>
+							<Map regionName={selectedRegion.regionName} style={{width: isToggleOpen ? '800px' : '1100px', height: '800px'}}/>
 						) : (
 							<Map regionName={null} style={{width: '1100px', height: '800px'}}/>
 						)

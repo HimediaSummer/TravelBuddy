@@ -101,6 +101,7 @@ CREATE TABLE
                                  region_description VARCHAR(255) NOT NULL COMMENT '지역설명',
                                  region_img TEXT NULL COMMENT '지역사진',
                                  region_thumbnail_img TEXT NULL COMMENT '지역썸네일사진',
+                                 region_user_detail TEXT NULL COMMENT '사용자입력상세주소',
                                  PRIMARY KEY (region_code)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '지역';
 
@@ -232,6 +233,7 @@ CREATE TABLE
                                         accom_addres VARCHAR(100) NULL COMMENT '숙소주소',
                                         accom_img TEXT NULL COMMENT '숙소사진',
                                         accom_thumbnail_img TEXT NULL COMMENT '숙소썸네일사진',
+                                        accom_user_detail TEXT NULL COMMENT '사용자입력상세주소',
                                         PRIMARY KEY (accom_code)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '숙소 테이블';
 
@@ -1048,8 +1050,7 @@ VALUES
         'hotel_thumb.jpg'
     ),
     (3, '에어비앤비', '에어비앤비', '정형화된 숙소의 느낌보단 현지에서 생활하는 것 같은 느낌으로 숙박을 할 수 있습니다.', 'villa_thumb.jpg'),
-    (4, '펜션', '펜션', '자연과 어울리며 일행과 함께 프라이빗한 숙박을 할 수 있습니다.', 'cottage_thumb.jpg'),
-    (5, '사용자 지정 숙소', '사용자 지정 숙소', '사용자가 지정한 숙소입니다.', null);
+    (4, '펜션', '펜션', '자연과 어울리며 일행과 함께 프라이빗한 숙박을 할 수 있습니다.', 'cottage_thumb.jpg');
 -- tbl_questionnaire
 INSERT INTO
     tbl_questionnaire (quest_code, theme_code, question)

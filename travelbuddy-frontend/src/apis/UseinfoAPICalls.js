@@ -120,7 +120,9 @@ export const insertUseinfoAPI = ({useinfoDTO}) => {
         const result = await fetch(requestURL, {
             method: 'POST',
             headers: {
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             },
             body: useinfoDTO
         }).then((response) => response.json());
@@ -141,7 +143,9 @@ export const updateUseinfoAPI = (useinfoCode, updateData) => {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             },
             body: JSON.stringify(updateData)
         }).then((response) => response.json());
@@ -156,7 +160,9 @@ export const deleteUseinfoAPI = (useinfoCode) => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         dispatch({type: DELETE_USEINFO, payload: result });

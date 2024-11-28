@@ -76,6 +76,13 @@ const onClickSearch = async () => {
     }
     };
 
+    const clickToBuddy = () => {
+        navigate(`/mypage/myBuddy`)
+    };
+    const clickToSchedule = () => {
+        navigate(`/mypage/mySchedule`)
+    };
+
     return (
         <>
             <div className={MemberCSS.bodyDiv}>
@@ -126,10 +133,10 @@ const onClickSearch = async () => {
                                     <td>{m.memberEmail}</td>
                                     <td>{m.memberPhone}</td>
                                     <td>
-                                        <button>버디</button>
+                                    <button onClick={(e) => { e.stopPropagation(); clickToBuddy(); }}>버디</button>
                                     </td>
                                     <td>
-                                        <button>일정</button>
+                                    <button onClick={(e) => { e.stopPropagation(); clickToSchedule(); }}>일정</button>
                                     </td>
                                     <td>
                                         {m.memberSuspension === "N" &&

@@ -1,13 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { decodeJwt } from '../../utils/tokenUtils';
+import AdminNavbarCSS from './AdminNavbarCSS.css';
 
 function AdminNavbar() {
     return (
-		<div>
+		<div className='adminNavBarContainer'>
 			<ul>
-				<li>
-					<NavLink to="/">홈으로</NavLink>
-				</li>
 				<li>
 					<NavLink to="/admin/notices">공지사항관리</NavLink>
 				</li>

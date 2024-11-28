@@ -3,6 +3,7 @@ package travelbuddy.function.member.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 

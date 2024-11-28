@@ -1,4 +1,4 @@
-import NoticeCSS from './NoticeCSS.css';
+import AdminAllCSS from '../../../components/common/AdminAllCSS.css';
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,6 +14,9 @@ function Notices() {
     const notice = useSelector((state) => state.noticeReducer) || {};
     const noticeList = notice.data || {};
     const pageInfo = notice.pageInfo || {};
+
+    console.log('noticeList는 ?',noticeList);
+    console.log('pageInfo ?',pageInfo);
 
     
     const [currentPage, setCurrentPage] = useState(1);
@@ -91,33 +94,26 @@ useEffect(() => {
 
     return (
         <>
-         <div className={NoticeCSS.bodyDiv}>
-                    <h2>공지사항</h2>
+         <div className='AdminAllContainer'>
+            <div className='header'>
+                    <p>공지사항</p>
                     <input
                     type="text"
                     placeholder="검색어를 입력하세요"
                     value={search}
                     onChange={onChangeHandler}
                     onKeyDown={onChangeHandler}
-                ></input>
+                />
                 <button onClick={onClickSearch}>검색</button>
-                <table className={NoticeCSS.productTable}>
-                    <colgroup>
-                        <col width="10%" />
-                        <col width="35%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="15%" />
-
-                    </colgroup>
+                </div>
+                <table>
                     <thead>
                         <tr>
-                            <th>번호</th>
-                            <th colSpan={3}>제목</th>
-                            <th>조회</th>
-                            <th>작성일</th>
-                            <th>상태</th>
+                            <th className='th1'>번호</th>
+                            <th className='th2'colSpan={3}>제목</th>
+                            <th className='th3'>조회</th>
+                            <th className='th4'>작성일</th>
+                            <th className='th5'>상태</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -127,11 +123,11 @@ useEffect(() => {
                                     key={n.noticeCode}
                                     onClick={() => onClickTableTr(n.noticeCode)}
                                 >
-                                    <td>{n.noticeCode}</td>
-                                    <td colSpan={3}>{n.noticeTitle}</td>
-                                    <td>{n.noticeCount}</td>
-                                    <td>{n.noticeCreate}</td>
-                                    <td>
+                                    <td className='td1'>{n.noticeCode}</td>
+                                    <td className='td2' colSpan={3}>{n.noticeTitle}</td>
+                                    <td className='td3'>{n.noticeCount}</td>
+                                    <td className='td4'>{n.noticeCreate}</td>
+                                    <td className='td5'>
                                             {n.noticeAt === "N" ? (
                                                 <button>공개</button>
                                             ) : (
@@ -148,7 +144,6 @@ useEffect(() => {
                 <button 
                     onClick={() => setCurrentPage(currentPage - 1)} 
                     disabled={currentPage === 1}
-                    className={ NoticeCSS.pagingBtn }
                 >
                     &lt;
                 </button>
@@ -157,7 +152,6 @@ useEffect(() => {
                 <li key={num} onClick={() => setCurrentPage(num)}>
                     <button
                         style={ currentPage === num ? {backgroundColor : 'skyblue' } : null}
-                        className={ NoticeCSS.pagingBtn }
                     >
                         {num}
                     </button>
@@ -165,7 +159,6 @@ useEffect(() => {
                 ))}
                 { Array.isArray(filteredNoticeList) &&
                 <button 
-                    className={ NoticeCSS.pagingBtn }
                     onClick={() => setCurrentPage(currentPage + 1)} 
                     disabled={currentPage === pageInfo.pageEnd  || pageInfo.total == 0}
                 >

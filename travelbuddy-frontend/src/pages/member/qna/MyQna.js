@@ -98,18 +98,6 @@ function MyQna() {
                         </td>
                     </tr>
                     <tr>
-                    <td>회원번호</td>
-                        <td>
-                            <input
-                                type="number"
-                                name="memberCode"
-                                value={qnaDTO.memberCode}
-                                placeholder="숫자를 입력하세요."
-                                onChange={handleInputChange}
-                                required
-                                maxLength={50}
-                            />
-                        </td>
                     </tr>
                     <tr></tr>
                 </tbody>

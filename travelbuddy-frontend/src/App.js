@@ -4,6 +4,7 @@ import Main from './components/products/Main';
 import Members from './pages/admin/Member/Members';
 import MemberDetail from './pages/admin/Member/MemberDetail';
 import Notice from './pages/admin/Notice/Notice';
+
 import Notices from './pages/admin/Notice/Notices';
 import NoticeDetail from './pages/admin/Notice/NoticeDetail';
 import MyNotices from './pages/member/notice/MyNotices';
@@ -29,6 +30,7 @@ import MyDeletion from './pages/member/mypage/MyDeletion';
 import MyBuddy from './pages/member/mypage/MyBuddy';
 import MyBuddyDetail from './pages/member/mypage/MyBuddyDetail';
 import MyPutBuddy from './pages/member/mypage/MyPutBuddy';
+import MyMatchDetail from './pages/member/mypage/MyMatchDetail';
 import MySchedule from './pages/member/mypage/MySchedule';
 import MyScheduleDetail from './pages/member/mypage/MyScheduleDetail';
 import AdminLayout from './layouts/AdminLayout';
@@ -43,6 +45,7 @@ import Error from './pages/Error';
 import Buddies from './pages/member/comunity/Buddy';
 import BuddyDetail from './pages/member/comunity/BuddyDetail';
 import BuddyRegist from './pages/member/comunity/BuddyRegist';
+import BuddyUpdate from './pages/member/comunity/BuddyUpdate';
 import FindId from './pages/member/FindId';
 import FindPw from './pages/member/FindPw';
 
@@ -55,12 +58,14 @@ function App() {
           <Route path="/" element= {<Layout />} >
             <Route index element={ <Main/> }/>
             <Route path="schedule" element={ <Schedule /> }/>
-            {/* <Route path="Scheduletest" element={ <Scheduletest /> }/> */}
+
+            {/* 로그인관련 */}
             <Route path="/login" element={ <Login/> } />
             <Route path="/signup" element={ <Register/> } />
             <Route path="*" element={ <Error/> }/>
             <Route path='/findId' element={ <FindId/> }/>
             <Route path='/findPw' element={ <FindPw/> }/>
+            
           </Route>
 
           {/*ADMIN 페이지*/}
@@ -91,6 +96,7 @@ function App() {
             <Route path="buddies" element={<Buddies />} />
             <Route path="buddyDetail/:buddyCode" element={ <BuddyDetail/>} />
             <Route path="buddyRegist" element={ <BuddyRegist/>} />
+              <Route path="buddyUpdate/:buddyCode" element={ <BuddyUpdate/>} />
           </Route>
 
           {/* CS 페이지 */}
@@ -111,9 +117,12 @@ function App() {
             <Route path="myBuddy" element={<MyBuddy />} />
             <Route path="myBuddy/:buddyCode" element={<MyBuddyDetail />} />
             <Route path="myBuddy/:buddyCode/update" element={<MyPutBuddy />} />
+            <Route path="/mypage/mymatch" element={<MyMatchDetail />} />
             <Route path="mySchedule" element={<MySchedule />} />
             <Route path="mySchedule/:scheCode" element={<MyScheduleDetail />} />
           </Route>
+
+          
         </Route>
       </Routes>
     </BrowserRouter>

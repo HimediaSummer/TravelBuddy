@@ -14,6 +14,8 @@ function FaqDetail() {
     const params = useParams();
     const {faqCode} = params;
     const faqData = useSelector((state) => state.faqReducer) || {};
+    const fqType = useSelector((state) => state.fqTypeReducer) || {};
+    const fqTypeList = fqType.data || {};
     const faq = faqData.data;
 
     useEffect (
@@ -62,7 +64,7 @@ function FaqDetail() {
                 <td>제목</td>
                 <td>{faq.faqTitle}</td>
                 <td>유형</td>
-                <td>{faq.fqTypeCode}</td>
+                <td>{fqTypeList.find(f=>f.fqTypeCode === faq.fqTypeCode)?.fqTypeName || "알수없음"}</td>
                 </tr>
 
                 <tr>

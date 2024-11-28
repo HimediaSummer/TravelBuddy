@@ -20,7 +20,8 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler{
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 					   AccessDeniedException accessDeniedException) throws IOException, ServletException {
-		
+
+		response.setContentType("application/json;charset=UTF-8");
 		/* 설명. 유효한 자격증명을 제공하지 않고 접근 시 401 상태코드 발생 */
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 	}

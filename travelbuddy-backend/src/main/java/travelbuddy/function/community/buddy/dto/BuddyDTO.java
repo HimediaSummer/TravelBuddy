@@ -18,7 +18,7 @@ public class BuddyDTO {
     public BuddyDTO() {
     }
 
-    public BuddyDTO(int buddyCode, int memberCode, int regionCode, int buddyTypeCode, String buddyTitle, String buddyContents, String buddyCreate, String buddyStatus, String buddyImg, int buddyCount, String buddyAt, String regionName, String buddyTypeName, String memberName) {
+    public BuddyDTO(int buddyCode, int memberCode, int regionCode, int buddyTypeCode, String buddyTitle, String buddyContents, String buddyCreate, String buddyStatus, String buddyImg, int buddyCount, String buddyAt) {
         this.buddyCode = buddyCode;
         this.memberCode = memberCode;
         this.regionCode = regionCode;

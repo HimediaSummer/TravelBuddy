@@ -56,11 +56,11 @@ function RegionSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, 
 	// 장소 버튼 누르면 밑에 상세 조회 뾰롱
 	const handleRegionSelect = (region) => {
 		setSelectedRegion(region);
-		// setTravelData(prevData => ({
-		// 	...prevData,
-		// 	regions: [...prevData.regions, region]
-		// }));
-		// console.log("이건 뭐임 정보가", setTravelData);
+		setTravelData(prevData => ({
+			...prevData,
+			regions: [...prevData.regions, region]
+		}));
+		console.log("이건 뭐임 정보가", setTravelData);
 
 		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/region/${region.regionCode}`)
 			.then(response => response.json())

@@ -374,41 +374,52 @@ select,
 
 
 
-/* 출발지, 여행지, 출발일, 도착일 title 글씨 굵게*/
-.chat-container p {
-	font-weight: bold;
-}
-
-/* user 여행 일정 입력, 답변 칸 div 나란히 정렬 */
-
-.chat-container {
-	display: flex;
-	/* justify-content: space-evenly; */
-	justify-content: flex-start;
-	gap: 50px;
-	border-radius: 4px;
-	font-size: large;
-	flex-wrap: wrap;
-	/* margin-left: 80px; */
-	margin-bottom: 80px;
-	height: auto; /* 또는 적절한 높이 설정 */
-    max-height: 100vh; /* 전체 높이 사용 */
-}
-
+/* 공통 스타일 */
+.chat-container, 
 .chat-container-q {
-	display: flex;
-	justify-content: space-evenly;
-	/* justify-content: flex-start;
-	gap: 50px; */
-	border-radius: 4px;
-	font-size: large;
-	flex-wrap: wrap;
-	/* margin-left: 80px; */
-	margin-bottom: 80px;
-	height: auto; /* 또는 적절한 높이 설정 */
-    max-height: 100vh; /* 전체 높이 사용 */
+    position: relative;
+    margin-left: 100px; /* 기본 왼쪽 여백 (사이드바 너비) */
+    margin-right: 20px; /* 오른쪽 여백 */
+    display: flex;
+    gap: 20px; /* 요소 간 간격 */
+    border-radius: 4px;
+    font-size: large;
+    flex-wrap: wrap; /* 작은 화면에서는 줄바꿈 */
+    height: auto;
+    max-height: calc(100vh - 160px); /* 화면 높이에 맞게 조정 */
 }
 
+/* 큰 화면 (데스크톱) */
+@media (min-width: 1200px) {
+    .chat-container, 
+    .chat-container-q {
+        gap: 50px; /* 넓은 화면에서는 더 큰 간격 */
+        justify-content: flex-start; /* 좌측 정렬 */
+    }
+}
+
+/* 중간 화면 (태블릿) */
+@media (max-width: 1199px) and (min-width: 768px) {
+    .chat-container, 
+    .chat-container-q {
+        margin-left: 80px; /* 여백을 줄여서 화면에 맞춤 */
+        gap: 30px;
+        justify-content: center; /* 가운데 정렬 */
+    }
+}
+
+/* 작은 화면 (모바일) */
+@media (max-width: 767px) {
+    .chat-container, 
+    .chat-container-q {
+        margin-left: 0; /* 사이드바 제거를 가정 */
+        margin-right: 0;
+        gap: 10px; /* 요소 간 최소 간격 */
+        flex-direction: column; /* 세로로 나열 */
+        align-items: center; /* 중앙 정렬 */
+        font-size: medium; /* 글씨 크기 축소 */
+    }
+}
 .chat-form {
 	display: flex;
 	flex-direction: column;
@@ -745,7 +756,7 @@ select,
 	background: #1F709E;
 }
 
-#plan-order2 {
+#plan-order3 {
     display: flex;
     flex-direction: column; /* 수직으로 정렬 */
     align-items: flex-start; /* 왼쪽 정렬 */
@@ -758,9 +769,76 @@ select,
 	margin: 80px 0px 80px 0px;
 }
 
+#plan-order4 {
+    position: fixed; /* 고정 위치 */
+    top: 80px; /* 화면 위쪽에서 80px */
+    left: 0; /* 화면 왼쪽에서 0px */
+    display: flex;
+    flex-direction: column; /* 수직으로 정렬 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+    padding: 20px; /* 여백 추가 */
+    background-color: #ffffff; /* 배경색 설정 */
+    border-right: 1px solid #ccc; /* 오른쪽 경계선 추가 */
+    height: calc(100vh - 160px); /* 상단과 하단 여백 제외 전체 높이 */
+    width: 100px; /* 사이드바 너비 설정 */
+    margin: 80px 0px 80px 0px;
+}
+
+/* 기본 사이드바 스타일 */
+#plan-order2 {
+    position: fixed; /* 고정 위치 */
+    top: 80px; /* 화면 위쪽 여백 */
+    left: 0; /* 화면 왼쪽 정렬 */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #ffffff;
+    border-right: 1px solid #ccc;
+    height: calc(100vh - 160px); /* 상단과 하단 여백 제외한 높이 */
+    width: 100px; /* 기본 너비 */
+    z-index: 10; /* 다른 요소보다 위에 표시 */
+	margin: 80px 0px 80px 0px;
+}
+
+/* 큰 화면 (데스크톱) */
+@media (min-width: 1200px) {
+    #plan-order2 {
+        width: 100px; /* 넓은 화면에서 기본 크기 유지 */
+    }
+}
+
+/* 중간 화면 (태블릿) */
+@media (max-width: 1199px) and (min-width: 768px) {
+    #plan-order2 {
+        width: 80px; /* 너비를 줄여 공간 확보 */
+        font-size: 0.9em; /* 글씨 크기 약간 축소 */
+        padding: 15px; /* 패딩도 줄임 */
+    }
+}
+
+/* 작은 화면 (모바일) */
+@media (max-width: 767px) {
+    #plan-order2 {
+        position: absolute; /* 고정 대신 화면에 따라 움직이도록 변경 */
+        width: 60px; /* 최소 너비 */
+        top: 0; /* 상단에 붙임 */
+        height: 100vh; /* 전체 화면 높이 */
+        padding: 10px;
+        font-size: 0.8em; /* 글씨 크기 축소 */
+        background-color: rgba(255, 255, 255, 0.9); /* 투명 배경 */
+        z-index: 10; /* 가장 위에 표시 */
+		margin: 80px 0px 80px 0px;
+    }
+    /* 숨기기 버튼 추가 (옵션) */
+    #plan-order2.hidden {
+        display: none; /* 사이드바 숨김 */
+    }
+}
+
 .order-title {
     margin-bottom: 20px; /* 각 단계 간의 간격 */
-    cursor: pointer; /* 마우스 커서 변경 */
+    /* cursor: pointer; 마우스 커서 변경 */
     transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
     padding: 10px; /* 패딩 추가 */
     border-radius: 5px; /* 모서리 둥글게 */

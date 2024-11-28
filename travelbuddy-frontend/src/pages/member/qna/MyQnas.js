@@ -33,11 +33,11 @@ function MyQnas() {
 
 
     const onClickTableTr = (qnaCode) => {
-        navigate(`/MyqnaDetail/${qnaCode}`, { replace: false });
+        navigate(`/cs/myqnas/${qnaCode}`, { replace: false });
     };
 
     const onClickNavigation = () => {
-        navigate(`/MyQna`);
+        navigate(`/cs/myQna`);
     };
 
 
@@ -80,9 +80,9 @@ function MyQnas() {
                                 >
                                     <td>{q.qnaDTO.qnaCode}</td>
                                     <td>{q.qnaDTO.fqTypeCode}</td>
-                                    <td colSpan={5}>{q.qnaDTO.qnaContents}</td>
+                                    <td colSpan={5}>{q.qnaDTO.qnaTitle}</td>
                                     <td>{q.qnaDTO.memberCode}</td>
-                                    <td>{q.qnaAnswerDTO.ansCode}</td>
+                                    <td>{q.qnaAnswerDTO.ansContents ? "답변완료" : ""}</td>
                                     <td>{q.qnaDTO.qnaCreate}</td>
                                 </tr>
                             )})}

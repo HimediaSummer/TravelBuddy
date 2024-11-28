@@ -17,8 +17,11 @@ import travelbuddy.function.admin.repository.AdminNoticeRepository;
 import travelbuddy.function.community.notice.controller.NoticeController;
 import travelbuddy.function.community.notice.dto.NoticeDTO;
 import travelbuddy.function.community.notice.entity.Notice;
+import travelbuddy.function.community.qnafaq.dto.FaqDTO;
+import travelbuddy.function.community.qnafaq.entity.Faq;
 import travelbuddy.util.FileUploadUtils;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,6 +39,7 @@ public class AdminNoticeService {
     private String IMAGE_DIR;
     @Value("${image.image-url}")
     private String IMAGE_URL;
+
 
     @Autowired
     public AdminNoticeService(AdminNoticeRepository adminNoticeRepository, ModelMapper modelMapper) {
@@ -78,6 +82,7 @@ public class AdminNoticeService {
         log.info("[AdminNoticeService] selectNotice() start");
 
         Notice notice = adminNoticeRepository.findById(noticeCode).orElse(null);
+        notice.setNoticeImg(IMAGE_URL + notice.getNoticeImg());
 
         log.info("[AdminNoticeService] selectNotice() end");
 
@@ -86,7 +91,7 @@ public class AdminNoticeService {
 
     /*공지 1개를 등록한다.*/
     @Transactional
-    public Object insertNotice(NoticeDTO noticeDTO, MultipartFile noticeImg) {
+    public Object insertNotice(NoticeDTO noticeDTO, MultipartFile noticeImage) {
         log.info("[AdminNoticeService] insertNotice() start");
 
         String imageName = UUID.randomUUID().toString().replace("-", "");
@@ -95,10 +100,16 @@ public class AdminNoticeService {
 
         try {
 
-            /* 설명. util 패키지에 FileUploadUtils 추가 */
-            replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, noticeImg);
+            if (noticeImage == null) {
+                noticeDTO.setNoticeImg("");
 
+            } else {
+
+            /* 설명. util 패키지에 FileUploadUtils 추가 */
+            replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, noticeImage);
             noticeDTO.setNoticeImg(replaceFileName);
+
+            }
 
             log.info("[ProductService] insert Image Name : {}", replaceFileName);
 
@@ -110,15 +121,16 @@ public class AdminNoticeService {
 
             log.info("[AdminNoticeService] insertNotice() end");
 
+
         } catch (Exception e) {
             FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
             throw new RuntimeException(e);
         }
 
-        return (result > 0) ? "상품 입력 성공" : "상품 입력 실패";
+        return (result > 0) ? "공지 등록 성공" : "공지 등록 실패";
     }
 
-    /*공지 1개를 수정한다.*/
+    /*공지 1개의 본문을 수정한다.*/
     @Transactional
     public Object updateNotice(int noticeCode, NoticeDTO noticeDTO) {
 
@@ -129,6 +141,21 @@ public class AdminNoticeService {
         adminNoticeRepository.save(updateNotice);
 
         log.info("[AdminNoticeService] updateNotice() end");
+
+        return modelMapper.map(updateNotice, NoticeDTO.class);
+    }
+
+    /*공지 1개의 조회수를 올린다.*/
+    @Transactional
+    public Object appendNoticeCount(int noticeCode, NoticeDTO noticeDTO) {
+
+        log.info("[AdminNoticeService] appendNoticeCount() start");
+
+        Notice updateNotice = adminNoticeRepository.findById(noticeCode).orElse(null);
+        updateNotice.setNoticeCount(updateNotice.getNoticeCount() + 1);
+        adminNoticeRepository.save(updateNotice);
+
+        log.info("[AdminNoticeService] appendNoticeCount() end");
 
         return modelMapper.map(updateNotice, NoticeDTO.class);
 
@@ -151,5 +178,11 @@ public class AdminNoticeService {
 
         return (result > 0) ? "삭제 성공" : "삭제 실패";
 
+    }
+
+    public Object selectSearchNoticeList(String search) {
+        List<Notice> noticeListWithSearchValue = adminNoticeRepository.findByNoticeTitleContaining(search);
+
+        return noticeListWithSearchValue.stream().map(Faq -> modelMapper.map(Faq, NoticeDTO.class)).collect(Collectors.toList());
     }
 }

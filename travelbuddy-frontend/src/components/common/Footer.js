@@ -1,8 +1,8 @@
-import FooterCSS from './Footer.module.css';
+// import FooterCSS from './Footer.module.css';
 
 function Footer() {
 	return (
-		<div className={FooterCSS.footerDiv}>
+		<div>
 			<h3 style={{ width: '100%', textAlign: 'center' }}>
 				Copyright 2024. ohgiraffers All rights reserved.{' '}
 			</h3>

@@ -8,11 +8,9 @@ function Layout() {
 	return (
 		<>
 			<Header />
-			<Navbar />
 			<main className={LayoutCSS.main}>
 				<Outlet />
 			</main>
-			<Footer />
 		</>
 	);
 }

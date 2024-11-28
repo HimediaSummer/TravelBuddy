@@ -1,21 +1,16 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import MyPageLayoutCSS from "./MyPageLayout.module.css";
+import { Outlet } from "react-router-dom";
 import MyPageNavbar from "../components/common/MyPageNavbar";
-import { Navigate } from "react-router-dom";
-import { useEffect } from "react";
+import Header from "../components/common/Header";
+
 
 function MyPageLayout() {
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		navigate("/mypage/payment", { replace: false });
-	}, []);
 
 	return (
 		<>
-			<div className={MyPageLayoutCSS.myPageLayoutDiv}>
+			<div>
+				<Header/>
 				<MyPageNavbar />
-				<main className={MyPageLayoutCSS.main}>
+				<main>
 					<Outlet />
 				</main>
 			</div>

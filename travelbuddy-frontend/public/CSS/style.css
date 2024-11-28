@@ -78,7 +78,7 @@ ul {
 form>div {
 	margin-bottom: 10px;
 	display: flex;
-	align-items: center;
+	/* align-items: center; */
 }
 
 .save-id {
@@ -402,13 +402,21 @@ select,
 	border-radius: 4px;
 	font-size: large;
 	flex-wrap: wrap;
-	margin-left: 80px;
+	/* margin-left: 80px; */
 	margin-bottom: 80px;
 	height: auto; /* 또는 적절한 높이 설정 */
     max-height: 100vh; /* 전체 높이 사용 */
 }
 
-.chat-form,
+.chat-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	/* justify-content: center; */
+	text-align: center;
+	margin-top: 0;
+}
+
 .chat-answer {
 	display: flex;
 	flex-direction: column;
@@ -550,7 +558,7 @@ select,
 }
 
 .tema-title {
-	padding-right: 20px;
+	/* padding-right: 20px; */
 }
 
 .rent-title {
@@ -863,6 +871,11 @@ select,
     color: black; /* 마우스 오버 시 글자 색상 변경 */
 }
 
+.region-button2:disabled {
+	cursor: default;
+	color: white;
+}
+
 .region-button.selected {
     background-color: var(--accent-color); /* 선택된 상태에서 배경색 변경 */
     color: black; /* 선택된 상태에서 글자 색상 변경 */
@@ -882,20 +895,51 @@ select,
 .region-search {
 	position: relative;
 	overflow-y: auto; /* 세로 스크롤 가능 */
-	height: 100%;
+	/* height: 100%; */
     /*max-height: 3350px; /* 최대 높이 설정 (필요에 따라 조정) */
-    max-height: 1200px; /* 최대 높이 설정 (필요에 따라 조정) */
-	min-height: 600px;
+    /* max-height: 1200px; 최대 높이 설정 (필요에 따라 조정) */
+	/* min-height: 600px; */
     border-radius: 5px; /* 모서리 둥글게 */
 	padding: 10px; /* 내부 여백 추가 */
 	margin-top: 20px; /* 위쪽 여백 추가 */
 	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
 }
 
 .region-search input {
-	position: absolute;
-	top: 10px;
-	width: 100%;
+	/* position: absolute; */
+	/* top: 10px;
+	width: 300px; */
+	width: calc(100% - 30px);
+	height: 30px;
+	border: none;
+	outline-style: none;
+	font-size: 16px;
+	
+}
+
+.chat-form .region-search>div {
+	align-self: flex-start;
+	display: flex !important;
+	align-items: center;
+	width: 420px !important;
+	height: 40px !important;
+	border: 1px solid lightgray !important;
+	border-radius: 15px !important;
+	padding: 5px 5px !important;
+}
+
+.region-search img {
+	flex-shrink: 0;
+	margin-left: 5px;
+}
+
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-results-button {
+    display: none; /* X 버튼 및 검색 결과 버튼 숨기기 */
 }
 
 .regions {
@@ -1013,6 +1057,11 @@ select,
     color: black; /* 마우스 오버 시 글자 색상 변경 */
 }
 
+.accom-button2:disabled {
+	cursor: default;
+	color: white;
+}
+
 .accom-button.selected {
     background-color: var(--accent-color); /* 선택된 상태에서 배경색 변경 */
     color: black; /* 선택된 상태에서 글자 색상 변경 */
@@ -1118,3 +1167,106 @@ select,
 	border: 1px solid #8CC8EA;
 	
 }
+
+.toggle-button {
+	position: absolute;
+	right: -30px;
+	top: 40%;
+	transform: translateY(-50%);
+	padding: 5px 10px;
+	cursor: pointer;
+	background-color: white;
+	border: 1px solid lightgray;
+	border-radius: 15px;
+}
+
+.toggle-button2 {
+	position: absolute;
+	right: -30px;
+	top: 60%;
+	transform: translateY(-50%);
+	padding: 5px 10px;
+	cursor: pointer;
+	background-color: white;
+	border: 1px solid lightgray;
+	border-radius: 15px;
+}
+
+  /* 원형 아이콘 스타일 */
+  .schedulecircle {
+    width: 30px;
+    height: 30px;
+    background-color: #87ceeb; /* 배경색 */
+    color: white; /* 텍스트 색상 */
+    border-radius: 50%; /* 원형 만들기 */
+    display: flex;
+    justify-content: center; /* 텍스트 가운데 정렬 (가로) */
+    align-items: center; /* 텍스트 가운데 정렬 (세로) */
+    margin-right: 10px; /* 텍스트와 원 사이 간격 */
+    position: relative;
+    z-index: 1; /* 원을 선 위로 배치 */
+  }
+    
+  .schedulecircle {
+	width: 30px;
+	height: 30px;
+	background-color: #87ceeb; /* 원형 배경색 */
+	color: white; /* 원형 텍스트 색상 */
+	border-radius: 50%; /* 원형 만들기 */
+	display: flex;
+	justify-content: center; /* 원 내부 텍스트 가로 정렬 */
+	align-items: center; /* 원 내부 텍스트 세로 정렬 */
+	margin-right: 10px; /* 원과 텍스트 간 간격 */
+  }
+
+	/* 개별 일정 아이템 스타일 */
+	.scheduleitem {
+	display: flex; /* 가로 방향 정렬 */
+	align-items: center; /* 수직 가운데 정렬 */
+	margin-bottom: 30px; /* 아이템 간 간격 */
+	position: relative; /* 연결 선을 그리기 위해 상대 위치 설정 */
+	}
+	/* 각 아이템 간 연결 선 스타일 */
+	.scheduleitem::before {
+	content: ""; /* 가상 요소 추가 */
+	position: absolute;
+	top: 50%; /* 선을 원의 중앙에 맞춤 */
+	left: 15px; /* 선을 원의 중앙과 맞춤 */
+	width: 2px; /* 선 두께 */
+	height: 120px; /* 선 길이 (아이템 간 간격에 맞춰 조정) */
+	background-color: #87ceeb; /* 선 색상 */
+	z-index: 0; /* 선을 원 뒤로 배치 */
+	}
+
+	/* 마지막 아이템에서는 선을 제거 */
+	.scheduleitem:last-child::before {
+	display: none; /* 마지막 아이템에서 선을 숨김 */
+	}
+  
+  .schedule {
+	display: flex; /* 날짜별 일정 블록을 가로로 배치 */
+	gap: 20px; /* 각 날짜 블록 간 간격 */
+	overflow-x: auto; /* 일정이 많을 경우 스크롤 가능하도록 설정 */
+	padding: 20px;
+	margin-top: 80px;
+  }
+    
+  .time {
+	font-size: 0.9rem; /* 시간 텍스트 크기 */
+	color: gray; /* 시간 텍스트 색상 */
+  }
+    
+  .day-header {
+	display: flex; /* dayIndex와 date를 가로로 배치 */
+	justify-content: space-between; /* 왼쪽은 dayIndex, 오른쪽은 date */
+	margin-bottom: 20px; /* 날짜 정보 아래 여백 */
+  }
+  
+  .day-header h3 {
+	margin: 0;
+  }
+  
+  .day-header .date {
+	font-size: 1rem;
+	color: gray;
+  }

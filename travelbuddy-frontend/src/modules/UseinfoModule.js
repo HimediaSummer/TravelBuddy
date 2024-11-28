@@ -22,6 +22,15 @@ const actions = createActions({
 const useinfoReducer = handleActions(
 	{
 		[GET_USEINFOS]: (state, { payload }) => {
+			if (Array.isArray(payload)) {
+				return {
+					data: payload,
+					pageInfo: {
+						...payload,
+						total: payload.length
+					}
+				}
+			}
 			return payload;
 		},
 		[GET_USEINFO]: (state, { payload }) => {

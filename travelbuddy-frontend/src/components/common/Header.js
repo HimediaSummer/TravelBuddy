@@ -32,7 +32,7 @@ function Header() {
     function BeforeLogin() {
         return (
             <div>
-                <NavLink to="/login">로그인</NavLink>
+                <NavLink to="/login" style={{color: 'black'}}>로그인</NavLink>
             </div>
         );
     }

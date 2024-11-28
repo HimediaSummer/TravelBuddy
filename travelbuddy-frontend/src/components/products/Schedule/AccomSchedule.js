@@ -143,7 +143,7 @@ const handleSearchSubmit = () => {
 					)}
 					{ accomTab === 'search' && (
 					<div className='region-search' style={{marginBottom: '500px'}}>
-						<div>
+						<div style={{display: 'flex', textAlign: 'left', marginLeft: '25px'}}>
 						<input type='search' placeholder='주소만 검색해주세요.' value={searchQuery} onChange={handleSearchChange} onKeyDown={handleKeyDown} style={{width: '400px'}}/>
 						<img src='/Img/search-icon.png' width={'35px'} height={'35px'} style={{cursor: 'pointer'}} onClick={handleSearchSubmit}/>
 						</div>

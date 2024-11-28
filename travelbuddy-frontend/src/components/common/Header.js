@@ -60,7 +60,7 @@ function Header() {
     function BeforeLogin() {
         return (
             <div>
-                <NavLink to="/login">로그인</NavLink>
+                <NavLink to="/login" style={{color: 'black'}}>로그인</NavLink>
             </div>
         );
     }
@@ -75,10 +75,17 @@ function Header() {
 
     return (
         <div className="HeaderContainer">
-            <title>Travel Buddy</title>
-            <p>Travel Buddy</p>
+            {/* <title>Travel Buddy</title>
+            <p>Travel Buddy</p> */}
             {loginModal ? <LoginModal setLoginModal={setLoginModal} /> : null}
-            <ul>
+			<header class="header">
+					<h1>
+						<div class="header-click">
+							{/* <i class="fa-solid fa-globe"></i> */}
+							<a href="http://localhost:3000"><img src="/Img/TravelBuddy(128).png" alt="Main logo" style={{marginLeft: '20px'}}/></a>
+						</div>
+					</h1>
+            <ul class="menu">
                 <li>
                     <NavLink to="/mypage">MY정보</NavLink>
                 </li>
@@ -100,6 +107,7 @@ function Header() {
             <button class="header_toogleBtn">
                 <i class="fas fa-bars"></i>
             </button>
+			</header>
         </div>
     );
 }

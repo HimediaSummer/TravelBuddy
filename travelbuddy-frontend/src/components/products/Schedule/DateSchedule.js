@@ -9,7 +9,7 @@ import 'moment/locale/ko';
 Modal.setAppElement('#root');
 moment.locale('ko');
 
-function DateSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, setTravelData }) {
+function DateSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, selectedRegion, setTravelData }) {
 
 	const [currentStep, setCurrentStep] = useState(0); // z컴포넌트 바꾸기?
 	//   const [message, setMessage] = useState('');
@@ -83,7 +83,7 @@ function DateSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, se
 			<div class="chat-container">
 				<form class="chat-form" action="post" style={{margin: '10px'}}>
 					<div id="chat-box2">
-						<h2>날짜 선택</h2>
+						{/* <h2>날짜 선택</h2> */}
 					</div>
 					{/* 날짜 선택 UI 구현 */}
 					{/* 날짜 선택 모달 */}
@@ -134,8 +134,10 @@ function DateSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, se
 					</Modal>
 
 					<div class="user_input">
-						<h2 class="chat-head" style={{ margin: 'auto' }}>장소를 입력해주세요.</h2>
-						<h4 style={{ margin: 'auto' }}>{startDate || ""} ~ {endDate || ""}</h4>
+					<h2 class="chat-head" style={{ margin: 'auto' }}>{selectedRegion ? (selectedRegion.regionName) : ('어떤 여행을 하고 싶나요?')}</h2>
+					<h4>{startDate || ''} ~ {endDate || ''}</h4>
+						{/* <h2 class="chat-head" style={{ margin: 'auto' }}>장소를 입력해주세요.</h2>
+						<h4 style={{ margin: 'auto' }}>{startDate || ""} ~ {endDate || ""}</h4> */}
 						{/* 출발일, 도착일 */}
 						<div class="travel-date">
 							<div class="depart">
@@ -155,13 +157,13 @@ function DateSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, se
 						</div>
 						{/* Qestion */}
 						{/* Schedule */}
-						<button className="date-button" onClick={onNext}>다음</button>
+						<button className="date-button2" onClick={onNext}>시간 설정 완료</button>
 					</div>
 					{/* Loading */}
 				</form>
 				{/* <div style={{marginTop: '100px'}}> */}
 				<div>
-					<img src='/Img/schedulemain.PNG' alt='main' width={'800px'}/>
+					<img src='/Img/schedulemain.PNG' alt='main' width={'1100px'}/>
 				</div>
 			</div>
 		</div>

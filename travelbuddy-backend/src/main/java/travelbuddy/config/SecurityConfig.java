@@ -60,7 +60,7 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web.ignoring()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-                .requestMatchers("/css/**", "/js/**", "/images/**", "/lib/**", "/productimgs/**");
+                .requestMatchers("/css/**", "/js/**", "/images/**", "/lib/**", "/member-imgs/**", "/buddyimgs");
     }
 
     /* 목차. 3. HTTP요청에 대한 권한별 설정 (세션 인증 -> 토큰 인증으로 인해 바뀐 부분 존재) */
@@ -91,7 +91,7 @@ public class SecurityConfig {
                     // root 경로는 인증 필요
                      auth.requestMatchers("/").authenticated();
                     // 특정 경로는 무조건 허용
-                    auth.requestMatchers("/**").permitAll();
+                    auth.requestMatchers("/**","/auth/**", "/buddyBoard/buddies","/buddyBoard/buddies/{buddyCode}", "/images/**", "buddyBoard/region/{regionName}","/memberimgs/**", "/buddyimgs/**").permitAll();
                     // Swagger API 문서 허용
                     auth.requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll();
                     // API 경로는 USER 또는 ADMIN 역할을 가진 사용자만 접근 가능

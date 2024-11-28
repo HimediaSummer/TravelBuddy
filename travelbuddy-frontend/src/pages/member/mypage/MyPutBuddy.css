@@ -1,0 +1,4 @@
+.ql-picker-options {
+    display: block !important; /* 드롭다운이 닫히지 않도록 강제 표시 */
+    z-index: 10; /* 드롭다운이 다른 요소 위에 나타나도록 설정 */
+}

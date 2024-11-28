@@ -4,7 +4,7 @@ import { decodeJwt } from '../../../utils/tokenUtils';
 import { json, useNavigate } from 'react-router-dom';
 import Schedule from '../Schedule';
 
-function SummarySchedule({ travelData }) {
+function SummarySchedule({ onNext, startDate, setStartDate, endDate, setEndDate, selectedRegion, travelData }) {
 	const [schedule, setSchedule] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [scheduleCreateButton, setScheduleCreateButton] = useState(false); // 일정 생성 버튼 숨기기
@@ -182,11 +182,11 @@ function SummarySchedule({ travelData }) {
 		const token = decodeJwt(window.localStorage.getItem("accessToken"));
 		console.log("scheduleDetails12 : " , scheduleDetails)
 
-		console.log('token:????', token);
-		const memberCode = token.memberCode;
-		console.log('memberCode:????', memberCode);
+		// console.log('token잇냐??????????', token);
+		// const memberCode = token.memberCode;
+		// console.log('memberCode잇냐?????', memberCode);
 
-		if(!token) {
+		if(token === null) {
 			alert('로그인이 필요한 서비스입니다.');
 			navigate('/login');
 			return;
@@ -216,9 +216,8 @@ function SummarySchedule({ travelData }) {
 			console.log('accomCode:', accomCode);
 
 
-
-			const memberCode = window.localStorage.getItem('memberCode');
-			console.log('회원번호 잘 왔냐?????????', memberCode);
+			// const memberCode = window.localStorage.getItem('memberCode');
+			// console.log('회원번호 잘 왔냐?????????', memberCode);
 
 
 			const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/save`, {
@@ -244,6 +243,7 @@ function SummarySchedule({ travelData }) {
 
 			const result = await response.json();
 			alert('일정 저장에 성공했습니다.');
+			navigate("/mypage/mySchedule");
 		} catch(error) {
 			console.error('일정 저장 중 오류 발생쉬먀', error);
 			alert('일정 저장에 실패했습니다.');
@@ -316,7 +316,7 @@ function SummarySchedule({ travelData }) {
 							{loading && <img src="./Img/spin.gif" alt="로딩이미지" />}
 						</div>
 						<div className="reset-travel">
-							<button id="button" type="reset" onClick={() => window.location.reload()}>
+							<button id="button" type="reset" onClick={() => window.location.replace("http://localhost:3000/schedule")}>
 								다시하기
 							</button>
 						</div>

@@ -8,25 +8,19 @@ public class AccommodationDTO {
     private String accomAddres; // 숙소주소
     private String accomImg;    // 숙소이미지경로
     private String accomThumbnailImg;   // 썸네일이미지경로
+    private String accomUserDetail;
 
     public AccommodationDTO() {
     }
 
-    public AccommodationDTO(String accomAddres, int accomCode, String accomImg, String accomName, String accomThumbnailImg, String accomType) {
-        this.accomAddres = accomAddres;
+    public AccommodationDTO(int accomCode, String accomType, String accomName, String accomAddres, String accomImg, String accomThumbnailImg, String accomUserDetail) {
         this.accomCode = accomCode;
-        this.accomImg = accomImg;
-        this.accomName = accomName;
-        this.accomThumbnailImg = accomThumbnailImg;
         this.accomType = accomType;
-    }
-
-    public String getAccomAddres() {
-        return accomAddres;
-    }
-
-    public void setAccomAddres(String accomAddres) {
+        this.accomName = accomName;
         this.accomAddres = accomAddres;
+        this.accomImg = accomImg;
+        this.accomThumbnailImg = accomThumbnailImg;
+        this.accomUserDetail = accomUserDetail;
     }
 
     public int getAccomCode() {
@@ -37,12 +31,12 @@ public class AccommodationDTO {
         this.accomCode = accomCode;
     }
 
-    public String getAccomImg() {
-        return accomImg;
+    public String getAccomType() {
+        return accomType;
     }
 
-    public void setAccomImg(String accomImg) {
-        this.accomImg = accomImg;
+    public void setAccomType(String accomType) {
+        this.accomType = accomType;
     }
 
     public String getAccomName() {
@@ -53,6 +47,22 @@ public class AccommodationDTO {
         this.accomName = accomName;
     }
 
+    public String getAccomAddres() {
+        return accomAddres;
+    }
+
+    public void setAccomAddres(String accomAddres) {
+        this.accomAddres = accomAddres;
+    }
+
+    public String getAccomImg() {
+        return accomImg;
+    }
+
+    public void setAccomImg(String accomImg) {
+        this.accomImg = accomImg;
+    }
+
     public String getAccomThumbnailImg() {
         return accomThumbnailImg;
     }
@@ -61,23 +71,24 @@ public class AccommodationDTO {
         this.accomThumbnailImg = accomThumbnailImg;
     }
 
-    public String getAccomType() {
-        return accomType;
+    public String getAccomUserDetail() {
+        return accomUserDetail;
     }
 
-    public void setAccomType(String accomType) {
-        this.accomType = accomType;
+    public void setAccomUserDetail(String accomUserDetail) {
+        this.accomUserDetail = accomUserDetail;
     }
 
     @Override
     public String toString() {
         return "AccommodationDTO{" +
-                "accomAddres='" + accomAddres + '\'' +
-                ", accomCode=" + accomCode +
+                "accomCode=" + accomCode +
                 ", accomType='" + accomType + '\'' +
                 ", accomName='" + accomName + '\'' +
+                ", accomAddres='" + accomAddres + '\'' +
                 ", accomImg='" + accomImg + '\'' +
                 ", accomThumbnailImg='" + accomThumbnailImg + '\'' +
+                ", accomUserDetail='" + accomUserDetail + '\'' +
                 '}';
     }
 }

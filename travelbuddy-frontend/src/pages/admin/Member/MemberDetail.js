@@ -44,10 +44,10 @@ function MemberDetail () {
             setIsMemberSuspension(newSuspensionStatus);
             if (newSuspensionStatus !== 'Y') {
                 alert("계정을 정지상태로 변경합니다.");
-                navigate(`/members`);
+                navigate(`/admin/members`);
             } else {
                 alert("정지 상태를 해제합니다.");
-                navigate(`/members`);
+                navigate(`/admin/members`);
             }
         })
         .catch(error => {
@@ -63,10 +63,10 @@ function MemberDetail () {
             setIsMemberDeletion(newDeletionStatus);
             if (newDeletionStatus !== 'Y') {
                 alert("계정을 삭제상태로 변경합니다.");
-                navigate(`/members`);
+                navigate(`/admin/members`);
             } else {
                 alert("삭제 상태를 해제합니다.");
-                navigate(`/members`);
+                navigate(`/admin/members`);
             }
         })
         .catch(error => {
@@ -107,8 +107,8 @@ function MemberDetail () {
                 <td>{member.memberCreate}</td>
                 </tr>
                 <tr>
-                    <td>임시정지상태확인 : {member.memberSuspension}</td>
-                    <td>임시탈퇴상태확인 : {member.memberDeletion}</td>
+                    <td>정지상태확인 : {member.memberSuspension}</td>
+                    <td>탈퇴상태확인 : {member.memberDeletion}</td>
                     <td><button onClick={onClickChangeHandlerSus}>정지</button></td>
                     <td><button onClick={onClickChangeHandlerDel}>정보삭제</button></td>
                 </tr>

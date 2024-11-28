@@ -1,46 +1,49 @@
-.bodyDiv {
-	display: flex;
-	flex-direction: column;
-	margin-top: 15px;
-	height: 100%;
+.noticeContainer {
+
+
 }
 
-.buttonDiv {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
+.noticeContainer p {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 36px;
+    font: bold;
+    color: #8CC8EA;
+    margin-left : 30px;
 }
-.buttonDiv button {
-	width: 100px;
+
+.noticeContainer button {
+	width: 124px;
+	height: 50px;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	margin-right: 25px;
-	height: 30px;
 	border-radius: 25px;
 	background-color: white;
 	font-weight: bold;
 }
 
-.productTable {
+.noticeContainer {
 	width: 900px;
 }
 
-.productTable tr:hover {
+.noticeContainer tr:hover {
 	background-color: #f5f5f5;
 }
 
-.productTable tr {
+.noticeContainer tr {
 	cursor: pointer;
 }
 
-.pagingBtn {
+.noticeContainer {
 	margin: 5px;
 	border-radius: 25px;
 	background-color: white;
 	font-weight: bold;
 }
 
-.pagingBtn:hover {
+.noticeContainer:hover {
 	cursor: pointer;
 	background-color: burlywood;
 }
+
+

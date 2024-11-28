@@ -75,8 +75,8 @@ function Header() {
 
     return (
         <div className="HeaderContainer">
-            <title>Travel Buddy</title>
-            <p>Travel Buddy</p>
+            {/* <title>Travel Buddy</title>
+            <p>Travel Buddy</p> */}
             {loginModal ? <LoginModal setLoginModal={setLoginModal} /> : null}
 			<header class="header">
 					<h1>

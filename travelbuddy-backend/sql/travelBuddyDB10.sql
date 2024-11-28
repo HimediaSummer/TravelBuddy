@@ -59,6 +59,7 @@ CREATE TABLE
                                  region_description VARCHAR(255) NOT NULL COMMENT '지역설명',
                                  region_img TEXT NULL COMMENT '지역사진',
                                  region_thumbnail_img TEXT NULL COMMENT '지역썸네일사진',
+								 region_user_detail TEXT NULL COMMENT '사용자입력상세주소',
                                  PRIMARY KEY (region_code)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '지역';
 
@@ -84,6 +85,7 @@ CREATE TABLE
                                         accom_addres VARCHAR(100) NULL COMMENT '숙소주소',
                                         accom_img TEXT NULL COMMENT '숙소사진',
                                         accom_thumbnail_img TEXT NULL COMMENT '숙소썸네일사진',
+										accom_user_detail TEXT NULL COMMENT '사용자입력상세주소',
                                         PRIMARY KEY (accom_code)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '숙소 테이블';
 
@@ -99,7 +101,7 @@ CREATE TABLE
                                   member_suspension VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '정지여부',
                                   member_deletion VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '탈퇴여부',
                                   member_like INT NULL DEFAULT 0 COMMENT '좋아요',
-                                  member_img VARCHAR(255) NOT NULL DEFAULT 'member_img_default2.png' COMMENT '프로필사진',
+                                  member_img VARCHAR(255) NOT NULL DEFAULT 'member_img_default.png' COMMENT '프로필사진',
                                   authority_code INT NOT NULL COMMENT '권한코드',
                                   member_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT  '가입일',
                                   member_leave DATE NULL COMMENT '탈퇴일',
@@ -241,14 +243,14 @@ CREATE TABLE
                                    region_code INT NOT NULL COMMENT '지역코드',
                                    accom_code INT NOT NULL COMMENT '숙소코드',
                                    member_code INT NOT NULL COMMENT '회원코드',
-                                   member_answer_code INT NOT NULL COMMENT '회원답변코드',
-                                   sche_list VARCHAR(255) NOT NULL COMMENT '생성된스케줄',
+                                   member_answer_code INT NULL COMMENT '회원답변코드',
+                                   sche_list TEXT NOT NULL COMMENT '생성된스케줄',
                                    sche_start_date DATE NOT NULL COMMENT '여행시작날짜',
                                    sche_end_date DATE NOT NULL COMMENT '여행종료날짜',
                                    sche_start_time time NOT NULL COMMENT '여행시작날짜',
                                    sche_end_time time NOT NULL COMMENT '여행종료날짜',
-                                   travel_time VARCHAR(100) NOT NULL COMMENT '이동시간',
-                                   sche_time VARCHAR(100) NOT NULL COMMENT '스케줄시간',
+                                   travel_time VARCHAR(100) NULL COMMENT '이동시간',
+                                   sche_time VARCHAR(100) NULL COMMENT '스케줄시간',
                                    PRIMARY KEY (sche_code),
                                    FOREIGN KEY (region_code) REFERENCES tbl_region (region_code) ON DELETE CASCADE,
                                    FOREIGN KEY (accom_code) REFERENCES tbl_accommodation (accom_code) ON DELETE CASCADE,

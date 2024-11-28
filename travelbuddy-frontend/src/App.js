@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Schedule from './components/products/Schedule';
-import Scheduletest from './components/products/Schedule/testSchedule';
 import Main from './components/products/Main';
 import Members from './pages/admin/Member/Members';
 import MemberDetail from './pages/admin/Member/MemberDetail';
@@ -58,7 +57,6 @@ function App() {
           <Route path="/" element= {<Layout />} >
             <Route index element={ <Main/> }/>
             <Route path="schedule" element={ <Schedule /> }/>
-            <Route path="Scheduletest" element={ <Scheduletest /> }/>
           </Route>
 
           {/*ADMIN 페이지*/}

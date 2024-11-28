@@ -16,11 +16,12 @@ spring:
   servlet:
     multipart:
       enabled: true
-      max-request-size: 10MB
-      max-file-size: 10MB
+      max-request-size: 1MB
+      max-file-size: 1MB
   web:
     resources:
-      static-locations: classpath:/productimgs/
+      # static-locations: classpath:/static/
+      static-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/
   # JPA config
   jpa:
     generate-ddl: false
@@ -38,6 +39,26 @@ spring:
 # static resource(image media file) config
 ## ???? ??? ??? ??? ? ??? ?? ??
 image:
+#  profile:
+#    image-dir: src/main/resources/static/member-imgs/
+#    image-url: http://localhost:8080/member-imgs/
+  profile:
+    resource-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/
+    resource-handler: /memberimgs/**
+    image-dir: C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/
+    image-url: http://localhost:8080/memberimgs/
+
+    # 게시글 이미지 설정
+  buddy:
+    resource-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/
+    resource-handler: /buddyimgs/**
+    image-dir: C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/
+    image-url: http://localhost:8080/buddyimgs/
+  #      resource-locations: file:///springboot-app/buddyimgs/
+  #      resource-handler: /buddyimgs/**
+
+
+
   # Local Dev
   add-resource-locations: classpath:/static/productimgs/
   add-resource-handler: /productimgs/**

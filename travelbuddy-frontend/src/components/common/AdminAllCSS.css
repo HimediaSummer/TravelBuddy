@@ -1,47 +1,124 @@
 .AdminAllContainer {
 
-	width: 1522px;
-	
+	width: 1500px;
+	display: flexbox; /* flexbox 사용 */
+	flex-direction: column; /* 세로 방향으로 정렬 */
 
 }
 
 .AdminAllContainer p {
 	font-family: 'Cafe24 Ssurround';
-    font-size: 36px;
+    font-size: 40px;
     font: bold;
-    color: #8CC8EA;
-    margin-left : 30px;
+    color: #1F709E;
+	margin-right: 610px;
 }
 
+.AdminAllContainer input {
+	font-family: 'Cafe24 Ssurround air';
+    font-size: 20px;
+    color: #8CC8EA;
+	border-radius: 15px;
+	margin-right: 5px;
+	width: 248px;
+	height: 50px;
+	text-align: center;
+}
+
+
+.AdminAllContainer .header {
+    display: flex; /* 수평 정렬을 위해 flexbox 사용 */
+    align-items: center; /* 수직 가운데 정렬 */
+    justify-content: flex-end; /* 오른쪽으로 정렬 */
+	margin-top: 0;
+	margin-bottom: 0;
+	height: 91px;
+}
+
+.AdminAllContainer table {
+
+	display: grid; /* grid 사용 */
+    place-items: center; /* 수평 및 수직 가운데 정렬 */
+    height: 100%; /* 전체 화면 높이 */
+	width: 100%; /* 테이블의 너비를 100%로 설정 (필요시) */
+    border-collapse: collapse; /* 테이블 셀 간의 경계 제거 */
+	margin-top: 0;
+
+}
 .AdminAllContainer button {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 20px;
+    color: #ffffff;
 	width: 124px;
 	height: 50px;
-	margin-top: 5px;
-	margin-bottom: 5px;
 	margin-right: 25px;
-	border-radius: 25px;
-	background-color: white;
-	font-weight: bold;
+	border-radius: 15px;
+	background-color: #8CC8EA;
+	border: none; /* 버튼의 테두리 제거 */
+	
 }
 
-.AdminAllContainer tr:hover {
+.AdminAllContainer thead {
 	background-color: #f5f5f5;
 }
 
-.AdminAllContainer tr {
-	cursor: pointer;
+
+.AdminAllContainer tr:Hover {
+	background-color: #f3f2f2;
+	
+	
 }
 
-.AdminAllContainer {
-	margin: 5px;
-	border-radius: 25px;
-	background-color: white;
-	font-weight: bold;
+.AdminAllContainer th {
+    text-align: center; /* 텍스트 정렬 (필요시) */
+    border-bottom: 1px solid #ccc; /* 하단 경계선 추가 (선택 사항) */
 }
 
-.AdminAllContainer:hover {
+.AdminAllContainer td {
+    text-align: center; /* 텍스트 정렬 (필요시) */
+    border-bottom: 1px solid #ccc; /* 하단 경계선 추가 (선택 사항) */
 	cursor: pointer;
-	background-color: burlywood;
+	transition: background-color 0.3s;
+	
 }
+
+.th1 {
+    width: 80px;
+}
+.th2 {
+    width: 500px;
+}
+.th3 {
+    width: 100px;
+}
+.th4 {
+    width: 150px;
+}
+.th5 {
+    width: 150px;
+}
+
+.td1 {
+    width: 50px;
+}
+.td2 {
+    width: 500px;
+}
+.td3 {
+    width: 100px;
+}
+.td4 {
+    width: 100px;
+}
+.td5 {
+    width: 50px;
+}
+
+.td5 button {
+	
+}
+
+
+
 
 

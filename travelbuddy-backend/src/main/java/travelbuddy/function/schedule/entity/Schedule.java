@@ -495,14 +495,7 @@
 
 package travelbuddy.function.schedule.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import travelbuddy.function.member.entity.Account;
 import travelbuddy.function.member.entity.MemberAnswer;
 
@@ -527,7 +520,7 @@ public class Schedule {
     @JoinColumn(name="member_code", referencedColumnName = "member_code")
     private Account account;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="member_answer_code", referencedColumnName = "member_answer_code")
     private MemberAnswer memberAnswer;
 

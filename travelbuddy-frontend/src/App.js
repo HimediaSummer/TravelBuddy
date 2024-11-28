@@ -30,6 +30,7 @@ import MyDeletion from './pages/member/mypage/MyDeletion';
 import MyBuddy from './pages/member/mypage/MyBuddy';
 import MyBuddyDetail from './pages/member/mypage/MyBuddyDetail';
 import MyPutBuddy from './pages/member/mypage/MyPutBuddy';
+import MyMatchDetail from './pages/member/mypage/MyMatchDetail';
 import MySchedule from './pages/member/mypage/MySchedule';
 import MyScheduleDetail from './pages/member/mypage/MyScheduleDetail';
 import AdminLayout from './layouts/AdminLayout';
@@ -116,6 +117,7 @@ function App() {
             <Route path="myBuddy" element={<MyBuddy />} />
             <Route path="myBuddy/:buddyCode" element={<MyBuddyDetail />} />
             <Route path="myBuddy/:buddyCode/update" element={<MyPutBuddy />} />
+            <Route path="/mypage/mymatch" element={<MyMatchDetail />} />
             <Route path="mySchedule" element={<MySchedule />} />
             <Route path="mySchedule/:scheCode" element={<MyScheduleDetail />} />
           </Route>

@@ -1,0 +1,74 @@
+/* General container styling */
+.profile-container {
+    display: flex;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    border: 0.5px solid rgba(140, 200, 234, 0.6);
+}
+
+.profile-left {
+    flex: 1; /* 왼쪽 열 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-right: 20px;
+}
+
+/* 프로필 이미지 */
+.profile-left img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile-left .like-count {
+    font-size: 20px;
+    color: #000;
+}
+
+.profile-right {
+    flex: 2;
+}
+
+.profile-info p {
+    font-size: 20px;
+    text-align: left;
+    position: relative;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #8CC8EA;
+    width: 500px;
+}
+
+.profile-info .profile-like {
+    font-size: 20px;
+    color: #ff4d4f;
+    margin-top: 10px;
+}
+
+/* 버튼 */
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.button-container button {
+    background-color: #8CC8EA;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px 20px;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+

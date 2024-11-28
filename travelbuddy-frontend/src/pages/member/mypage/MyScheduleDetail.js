@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getSchedule } from "../../../modules/mypage/MyScheduleModule.js"
 
 function MyScheduleDetail() {
 
@@ -52,7 +51,6 @@ function MyScheduleDetail() {
               ) : (
                 <p>Loading...</p>
             )}
-            <button>다시만들기</button>
             <button>삭제</button>
         </div>
     );

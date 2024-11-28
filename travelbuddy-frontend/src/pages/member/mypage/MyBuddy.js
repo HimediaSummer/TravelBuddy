@@ -1,75 +1,153 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { getBuddy } from "../../../modules/mypage/MyBuddyModule.js"
+import { callMyBuddyListAPI, deleteBuddyAPI } from '../../../apis/MypageAPICalls.js';
 
 function MyBuddy() {
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [buddy, setBuddy] = useState("");
-    useEffect(
-        () => {
-            fetch('/mypage/mybuddy')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })   
-            .then((data) => {
-                console.log('Fetched Data:', data);
-                setBuddy(data.data || []); 
-                console.log('setBuddy 발동', data);
-            })
-            .catch((error) => {
-                console.error('Error fetching buddy:', error);
-            });
-    }, []);
 
+    const buddyList = useSelector(state => state.myBuddyReducer.buddy); // Redux 상태에서 buddy 목록 가져오기
+    
+    const itemsPerPage = 10; // 페이지당 항목 수
+    const totalItems = buddyList?.pageInfo?.total || 0; // 전체 게시글 수
+    const totalPages = Math.ceil(totalItems / itemsPerPage); // 총 페이지 수 계산
+    
+    const [selectedRows, setSelectedRows] = useState([]); // 선택된 행
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
+   
+
+    // API로 목록 가져오기
     useEffect(() => {
-        console.log('Buddy State:', buddy);
-    }, [buddy]);
+        console.log("현재 페이지:", currentPage);
+        dispatch(callMyBuddyListAPI(currentPage)); // 현재 페이지로 API 호출
+    }, [dispatch, currentPage]);
 
-    if (buddy.length === 0) {
-        return <p>게시글을 작성 해 주세요</p>;
-    }
+    // 데이터 상태 확인 로그
+    useEffect(() => {
+        console.log("Redux 상태에서 가져온 buddyList:", buddyList);
+    }, [buddyList]);
+
+    // 전체 체크박스 선택
+    const handleSelectAll = (e) => {
+        if (e.target.checked) {
+            const allRowIds = buddyList.map(item => item.buddyCode);
+            setSelectedRows(allRowIds);
+        } else {
+            setSelectedRows([]);
+        }
+    };
+
+    // 개별 체크박스 선택
+    const handleSelectRow = (buddyCode) => {
+        setSelectedRows((prevSelectedRows) => {
+            const newSelectedRows = prevSelectedRows.includes(buddyCode)
+                ? prevSelectedRows.filter(code => code !== buddyCode)
+                : [...prevSelectedRows, buddyCode];
+            return newSelectedRows;
+        });
+    };
+
+    // 행 클릭 이벤트
+    const handleRowClick = (buddyCode, e) => {
+        if (e.target.type === 'checkbox') return; // 체크박스 클릭 시 이벤트 무시
+        navigate(`/mypage/mybuddy/${buddyCode}`);
+    };
+
+    // 선택된 행 삭제
+    const handleDeleteSelected = () => {
+        if (selectedRows.length === 0) {
+            alert("삭제할 항목을 선택해주세요.");
+            return;
+        }
+
+        // API로 삭제 요청
+        dispatch(deleteBuddyAPI(selectedRows)).then(() => {
+            alert("삭제되었습니다.");
+            setSelectedRows([]);
+            dispatch(callMyBuddyListAPI(currentPage)); // 삭제 후 목록 갱신
+        }).catch(error => {
+            console.error("Error deleting buddy:", error);
+            alert("문제가 발생했습니다. 다시 시도해주세요.");
+        });
+    };
 
     return (
         <div>
             <table>
-                    <thead>
+                <thead>
+                    <tr>
                         <th>
-                            <input type="checkbox" id="selectAll" onclick="selectAllRows(this)" />
+                            <input
+                                type="checkbox"
+                                onChange={handleSelectAll}
+                                checked={selectedRows.length === (buddyList?.data?.length || 0) && buddyList?.data?.length > 0}
+                            />
                         </th>
                         <th>버디</th>
                         <th>지역</th>
                         <th>제목</th>
                         <th>작성일</th>
                         <th>상태</th>
-                    </thead>
-                    <tbody>
-                        {buddy.map((item, index) => (
-                            <tr 
-                                key={index} 
-                                onClick={() => navigate(`/mypage/mybuddy/${item.buddyCode}`)}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                <td>
-                                    <input type="checkbox" id={`select-${index}`} onClick={() => {}} />
-                                </td>
-                                <td>{item.buddyTypeName}</td>
-                                <td>{item.regionName}</td>
-                                <td>{item.buddyTitle}</td>
-                                <td>{item.buddyCreate}</td>
-                                <td>{item.buddyStatus}</td>
-                            </tr>
-                        ))}
-                    </tbody>
+                    </tr>
+                </thead>
+                <tbody>
+                    {buddyList?.data?.length > 0 ? (
+                        buddyList.data.map((item, index) => (
+                        <tr
+                            key={index}
+                            onClick={(e) => handleRowClick(item.buddyCode, e)}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <td>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedRows.includes(item.buddyCode)}
+                                    onChange={() => handleSelectRow(item.buddyCode)}
+                                />
+                            </td>
+                            <td>{item.buddyTypeName}</td>
+                            <td>{item.regionName}</td>
+                            <td>{item.buddyTitle}</td>
+                            <td>{item.buddyCreate}</td>
+                            <td>{item.buddyStatus}</td>
+                        </tr>
+                    ))
+                    ) : (
+                        <tr>
+                            <td colSpan="6">게시글을 작성해 주세요</td>
+                        </tr>
+                    )}
+                </tbody>
             </table>
+            <button onClick={handleDeleteSelected}>삭제</button>
+            <br />
+            {/* 페이지네이션 */}
+            <div style={{ marginTop: "20px" }}>
+                <button
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                >
+                    {"<"}
+                </button>
+                {[...Array(totalPages).keys()].map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => setCurrentPage(index + 1)}
+                        disabled={currentPage === index + 1}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+                <button
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                >
+                    {">"}
+                </button>
+            </div>
         </div>
     );
 }
 
 export default MyBuddy;
-

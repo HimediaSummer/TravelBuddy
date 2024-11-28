@@ -118,6 +118,9 @@ public class TokenProvider {
 //                .setSubject(String.valueOf(account.getMemberCode()))
                 // 회원의 권한들을 "auth"라는 클레임으로 토큰에 추가
                 .claim(AUTHORITIES_KEY, role)
+
+                .claim("memberCode", account.getMemberCode()) // memberCode 추가
+
                 // 만료 시간 설정
                 .setExpiration(accessTokenExpiresIn)
                 // 서명 및 알고리즘 설정

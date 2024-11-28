@@ -51,7 +51,6 @@ function MyScheduleDetail() {
               ) : (
                 <p>Loading...</p>
             )}
-            <button>다시만들기</button>
             <button>삭제</button>
         </div>
     );

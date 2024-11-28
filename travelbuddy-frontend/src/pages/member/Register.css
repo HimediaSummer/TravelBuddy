@@ -11,8 +11,25 @@
     background-size: cover; */
 }
 
-.loginDiv{    
-    height: 640px;
+.registDiv h1 {
+    margin-bottom: 5px;
+}
+
+.registDiv h2 {
+    margin-bottom: 14px;
+    text-align: left;
+    width: 65%;
+}
+
+.registDiv p {
+    margin-top: 0px;
+    margin-bottom: 24px;
+    text-align: left;
+    width: 65%;
+}
+
+.registDiv{    
+    height: 800px;
     width: 460px;
     display: flex;
     flex-wrap: wrap;
@@ -27,21 +44,30 @@
     border-radius: 25px;    
 }
 
-.loginDiv input {
-    margin-top: 5px;
+.registDiv input {
+    margin-top: 0px;
     margin-bottom: 20px;
 	margin-left: 0px;
-    height: 70px;
-    width: 380px;
+    height: 43px;
+    width: 300px;
     border-radius: 15px;
     text-indent: 30px;
 	font-size: 24px;
-	line-height: 70px;
+	line-height: 43px;
 	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
 	transition: background-color 0.3s ease;
 }
 
-.loginDiv button {
+.registDiv input[name="memberPassword"] {
+    margin-bottom: 5px;
+}
+
+.registDiv .pwText {
+    margin-left: 30px;
+    margin-bottom: 5px;
+}
+
+.registDiv button {
     margin-top: 5px;
     margin-bottom: 5px;
     height: 70px;
@@ -56,12 +82,12 @@
 	transition: background-color 0.5s ease;
 }
 
-.loginDiv button:hover {
+.registDiv button:hover {
     background-color: #31A3BE;
 	color: white;
 }
 
-.loginDiv .footer {
+.registDiv .footer {
     margin-top: 10px;
     font-size: 20px;
     color: #8CC8EA;
@@ -69,7 +95,7 @@
     justify-content: space-around;
 }
 
-.loginDiv .footer a {
+.registDiv .footer a {
 	margin-left: 20px;
 	margin-right: 20px;
 	font-size: 20px;
@@ -77,7 +103,7 @@
     color: #8CC8EA;
 }
 
-.loginDiv .footer a:hover {
+.registDiv .footer a:hover {
     text-decoration: underline;
 	color: #31A3BE;
 }

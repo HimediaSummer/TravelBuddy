@@ -1,3 +1,4 @@
+import  FindIdCSS  from "./FindId.css";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -42,18 +43,26 @@ function FindId() {
     };
 
     return (
-        <div >
-            <h1>아이디 찾기</h1>
-            <div >
-                <input
-                    type="email"
-                    placeholder="이메일"
-                    value={Email}
-                    onChange={onChangeHandler}
-                />
-                <button onClick={onClickFindIdHandler}>아이디 찾기</button>
+        <div className="backgroundDiv">
+            <div className="findIdDiv">
+                <h1>
+                    <div class="header-click">
+                        {/* <i class="fa-solid fa-globe"></i> */}
+                        <a href="http://localhost:3000"><img src="/Img/TravelBuddy(256).png" alt="Main logo" style={{marginLeft: '20px'}}/></a>
+                    </div>
+                </h1>
+                <h2>아이디 찾기</h2>
+                <div >
+                    <input
+                        type="email"
+                        placeholder="이메일"
+                        value={Email}
+                        onChange={onChangeHandler}
+                    />
+                    {message && <p>{message}</p>}
+                    <button onClick={onClickFindIdHandler}>아이디 찾기</button>
+                </div>
             </div>
-            {message && <p>{message}</p>}
         </div>
     );
 }

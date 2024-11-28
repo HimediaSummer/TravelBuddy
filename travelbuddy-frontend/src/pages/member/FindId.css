@@ -11,9 +11,27 @@
     background-size: cover; */
 }
 
-.loginDiv{    
-    height: 640px;
-    width: 460px;
+.findIdDiv h1 {
+    margin-bottom: 5px;
+}
+
+.findIdDiv h2 {
+    margin-bottom: 14px;
+    text-align: left;
+    width: 65%;
+}
+
+.findIdDiv p {
+    margin-top: 0px;
+    margin-bottom: 24px;
+    text-align: center;
+    width: 100%;
+    font-size: 24px;
+}
+
+.findIdDiv{    
+    height: 525px;
+    width: 465px;
     display: flex;
     flex-wrap: wrap;
 	/*수평 정렬*/
@@ -27,21 +45,30 @@
     border-radius: 25px;    
 }
 
-.loginDiv input {
-    margin-top: 5px;
+.findIdDiv input {
+    margin-top: 0px;
     margin-bottom: 20px;
-	margin-left: 0px;
-    height: 70px;
-    width: 380px;
+	margin-left: 40px;
+    height: 43px;
+    width: 300px;
     border-radius: 15px;
     text-indent: 30px;
 	font-size: 24px;
-	line-height: 70px;
+	line-height: 43px;
 	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
 	transition: background-color 0.3s ease;
 }
 
-.loginDiv button {
+.findIdDiv input[name="memberPassword"] {
+    margin-bottom: 5px;
+}
+
+.findIdDiv .pwText {
+    margin-left: 30px;
+    margin-bottom: 5px;
+}
+
+.findIdDiv button {
     margin-top: 5px;
     margin-bottom: 5px;
     height: 70px;
@@ -56,12 +83,12 @@
 	transition: background-color 0.5s ease;
 }
 
-.loginDiv button:hover {
+.findIdDiv button:hover {
     background-color: #31A3BE;
 	color: white;
 }
 
-.loginDiv .footer {
+.findIdDiv .footer {
     margin-top: 10px;
     font-size: 20px;
     color: #8CC8EA;
@@ -69,7 +96,7 @@
     justify-content: space-around;
 }
 
-.loginDiv .footer a {
+.findIdDiv .footer a {
 	margin-left: 20px;
 	margin-right: 20px;
 	font-size: 20px;
@@ -77,7 +104,7 @@
     color: #8CC8EA;
 }
 
-.loginDiv .footer a:hover {
+.findIdDiv .footer a:hover {
     text-decoration: underline;
 	color: #31A3BE;
 }

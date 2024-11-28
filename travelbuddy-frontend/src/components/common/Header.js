@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import HeaderCSS from './HeaderCSS.css';
 import { useSelector, useDispatch } from "react-redux";
 
 import { callLogoutAPI } from "../../apis/MemberAPICalls";

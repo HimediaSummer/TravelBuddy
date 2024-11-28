@@ -106,7 +106,9 @@ export const insertNoticeAPI = ({noticeDTO}) => {
         const result = await fetch(requestURL, {
             method: 'POST',
             headers: {
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             },
             body: noticeDTO
         }).then((response) => response.json());
@@ -127,7 +129,9 @@ export const updateNoticeAPI = (noticeCode, updateData) => {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             },
             body: JSON.stringify(updateData)
         }).then((response) => response.json());
@@ -157,7 +161,9 @@ export const deleteNoticeAPI = (noticeCode) => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         dispatch({type: DELETE_NOTICE, payload: result });

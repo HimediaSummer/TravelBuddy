@@ -4,6 +4,7 @@ import Main from './components/products/Main';
 import Members from './pages/admin/Member/Members';
 import MemberDetail from './pages/admin/Member/MemberDetail';
 import Notice from './pages/admin/Notice/Notice';
+
 import Notices from './pages/admin/Notice/Notices';
 import NoticeDetail from './pages/admin/Notice/NoticeDetail';
 import MyNotices from './pages/member/notice/MyNotices';
@@ -52,43 +53,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* React에서 보여줄 화면 주소(URL) 정하는곳 */}
-        {/* 자세한건 Schedule으로 이동바람 (컨트롤 좌클릭)  */}
-        <Route path="/">
-          <Route index element={ <Main/> }/>          
-          <Route path="Schedule" element={ <Schedule /> }/>   
-          <Route path="Members" element={ <Members/> }/>
-          <Route path="MemberDetail/:memberCode" element={ <MemberDetail/>} />
-          <Route path="Qnas" element={ <Qnas/> }/>
-          <Route path="QnaDetail/:qnaCode" element={ <QnaDetail/>} />
-          <Route path="Faq" element={ <Faq/> }/>
-          <Route path="FaqDetail/:faqCode" element={ <FaqDetail/> }/>
-          <Route path="Faqs" element={ <Faqs/> }/>  //
-          <Route path="MyFaqs" element={ <MyFaqs/> }/>
-          <Route path="MyQnas" element={ <MyQnas/> }/>
-          <Route path="MyQna" element={ <MyQna/> }/>
-          <Route path="MyQnaDetail/:qnaCode" element={ <MyQnaDetail/>} />
-          <Route path="Useinfo" element={<Useinfo />}/>
-          <Route path="Useinfos" element={<Useinfos />}/>
-          <Route path="UseinfoDetail/:useinfoCode" element={<UseinfoDetail />}/>
-          <Route path="Notice" element={<Notice />}/>
-          <Route path="Notices" element={<Notices />}/>
-          <Route path="NoticeDetail/:noticeCode" element={<NoticeDetail />}/>
-          <Route path="MyNotices" element={<MyNotices />}/>
-          <Route path="MyNoticeDetail/:noticeCode" element={<MyNoticeDetail />}/>
-          {/* <Route path="MyPage" element={<MyPage />}/>
-          <Route path="MyBuddyList" element={<MypageBuddyList />} /> */}
-          
-          {/* Mypage */}
-          <Route path="/mypage" element={<Mypage />}>
-            <Route path="/mypage/myProfile" element={<MyProfile />} />
-            <Route path="/mypage/updateMyProfile" element={<MyPutProfile />} />
-            <Route path="/mypage/deletion" element={<MyDeletion />} />
-            <Route path="/mypage/myBuddy" element={<MyBuddy />} />
-            <Route path="/mypage/myBuddy/:buddyCode" element={<MyBuddyDetail />} />
-            <Route path="/mypage/myBuddy/:buddyCode/update" element={<MyPutBuddy />} />
-            <Route path="/mypage/mySchedule" element={<MySchedule />} />
-            <Route path="/mypage/mySchedule/:scheCode" element={<MyScheduleDetail />} />
+        <Route>
+          <Route path="/" element= {<Layout />} >
+            <Route index element={ <Main/> }/>
+            <Route path="schedule" element={ <Schedule /> }/>
           </Route>
 
           {/*ADMIN 페이지*/}
@@ -119,6 +87,7 @@ function App() {
             <Route path="buddies" element={<Buddies />} />
             <Route path="buddyDetail/:buddyCode" element={ <BuddyDetail/>} />
             <Route path="buddyRegist" element={ <BuddyRegist/>} />
+              <Route path="buddyUpdate/:buddyCode" element={ <BuddyUpdate/>} />
           </Route>
 
           {/* CS 페이지 */}
@@ -143,15 +112,12 @@ function App() {
             <Route path="mySchedule/:scheCode" element={<MyScheduleDetail />} />
           </Route>
 
+          {/* 로그인관련 */}
           <Route path="/login" element={ <Login/> } />
           <Route path="/signup" element={ <Register/> } />
           <Route path="*" element={ <Error/> }/>
-          <Route path="buddies" element={<Buddies />} />
-          <Route path="buddyDetail/:buddyCode" element={ <BuddyDetail/>} />
-          <Route path="buddyRegist" element={ <BuddyRegist/>} />
-          <Route path='/findid' element={ <FindId/> }/>
-          <Route path='/findpw' element={ <FindPw/> }/>
-          <Route path="buddyUpdate/:buddyCode" element={ <BuddyUpdate/>} />
+          <Route path='/findId' element={ <FindId/> }/>
+          <Route path='/findPw' element={ <FindPw/> }/>
         </Route>
       </Routes>
     </BrowserRouter>

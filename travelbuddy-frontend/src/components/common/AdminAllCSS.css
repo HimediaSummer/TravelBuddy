@@ -1,0 +1,47 @@
+.AdminAllContainer {
+
+	width: 1522px;
+	
+
+}
+
+.AdminAllContainer p {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 36px;
+    font: bold;
+    color: #8CC8EA;
+    margin-left : 30px;
+}
+
+.AdminAllContainer button {
+	width: 124px;
+	height: 50px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-right: 25px;
+	border-radius: 25px;
+	background-color: white;
+	font-weight: bold;
+}
+
+.AdminAllContainer tr:hover {
+	background-color: #f5f5f5;
+}
+
+.AdminAllContainer tr {
+	cursor: pointer;
+}
+
+.AdminAllContainer {
+	margin: 5px;
+	border-radius: 25px;
+	background-color: white;
+	font-weight: bold;
+}
+
+.AdminAllContainer:hover {
+	cursor: pointer;
+	background-color: burlywood;
+}
+
+

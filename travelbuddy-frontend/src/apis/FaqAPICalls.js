@@ -76,7 +76,9 @@ export const insertFaqAPI = (faqDTO) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             },
             body: JSON.stringify(faqDTO)
         }).then((response) => response.json());
@@ -91,7 +93,9 @@ export const updateFaqAPI = (faqCode, updateData) => {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             },
             body: JSON.stringify(updateData)
         }).then((response) => response.json());
@@ -107,7 +111,9 @@ export const deleteFaqAPI = (faqCode) => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: '*/*'
+                Accept: '*/*',
+                Authorization:
+                'Bearer ' + window.localStorage.getItem('accessToken')
             }
         }).then((response) => response.json());
         dispatch({type: DELETE_FAQ, payload: result });

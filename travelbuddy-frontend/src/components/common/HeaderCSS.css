@@ -1,0 +1,34 @@
+.HeaderContainer {
+    width: auto;
+    height: 95px;
+    top: 135px;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    background-color: #ffffff;    
+}
+.HeaderContainer p {
+    font-family: 'Cafe24 Ssurround';
+    font-size: 36px;
+    font: bold;
+    text-align: left;
+    color: #8CC8EA;
+    margin-left : 30px;
+}
+.HeaderContainer ul{
+    font-family: 'Cafe24 Ssurround air';
+    color: #000000;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 40px;
+    margin: 0;
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+
+}
+
+.HeaderContainer ul li {
+    margin-right: 35px;
+}

@@ -1048,7 +1048,8 @@ VALUES
         'hotel_thumb.jpg'
     ),
     (3, '에어비앤비', '에어비앤비', '정형화된 숙소의 느낌보단 현지에서 생활하는 것 같은 느낌으로 숙박을 할 수 있습니다.', 'villa_thumb.jpg'),
-    (4, '펜션', '펜션', '자연과 어울리며 일행과 함께 프라이빗한 숙박을 할 수 있습니다.', 'cottage_thumb.jpg');
+    (4, '펜션', '펜션', '자연과 어울리며 일행과 함께 프라이빗한 숙박을 할 수 있습니다.', 'cottage_thumb.jpg'),
+    (5, '사용자 지정 숙소', '사용자 지정 숙소', '사용자가 지정한 숙소입니다.', null);
 -- tbl_questionnaire
 INSERT INTO
     tbl_questionnaire (quest_code, theme_code, question)

@@ -4,7 +4,7 @@ import { decodeJwt } from '../../../utils/tokenUtils';
 import { json, useNavigate } from 'react-router-dom';
 import Schedule from '../Schedule';
 
-function SummarySchedule({ travelData }) {
+function SummarySchedule({ onNext, startDate, setStartDate, endDate, setEndDate, selectedRegion, travelData }) {
 	const [schedule, setSchedule] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [scheduleCreateButton, setScheduleCreateButton] = useState(false); // 일정 생성 버튼 숨기기
@@ -216,9 +216,8 @@ function SummarySchedule({ travelData }) {
 			console.log('accomCode:', accomCode);
 
 
-
-			const memberCode = window.localStorage.getItem('memberCode');
-			console.log('회원번호 잘 왔냐?????????', memberCode);
+			// const memberCode = window.localStorage.getItem('memberCode');
+			// console.log('회원번호 잘 왔냐?????????', memberCode);
 
 
 			const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/save`, {

@@ -182,11 +182,11 @@ function SummarySchedule({ onNext, startDate, setStartDate, endDate, setEndDate,
 		const token = decodeJwt(window.localStorage.getItem("accessToken"));
 		console.log("scheduleDetails12 : " , scheduleDetails)
 
-		console.log('token:????', token);
-		const memberCode = token.memberCode;
-		console.log('memberCode:????', memberCode);
+		// console.log('token잇냐??????????', token);
+		// const memberCode = token.memberCode;
+		// console.log('memberCode잇냐?????', memberCode);
 
-		if(!token) {
+		if(token === null) {
 			alert('로그인이 필요한 서비스입니다.');
 			navigate('/login');
 			return;
@@ -243,6 +243,7 @@ function SummarySchedule({ onNext, startDate, setStartDate, endDate, setEndDate,
 
 			const result = await response.json();
 			alert('일정 저장에 성공했습니다.');
+			navigate("/mypage/mySchedule");
 		} catch(error) {
 			console.error('일정 저장 중 오류 발생쉬먀', error);
 			alert('일정 저장에 실패했습니다.');

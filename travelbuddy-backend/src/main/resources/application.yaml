@@ -20,8 +20,8 @@ spring:
       max-file-size: 1MB
   web:
     resources:
-      # static-locations: classpath:/static/
-      static-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/
+       static-locations: classpath:/static/
+#      static-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/
   # JPA config
   jpa:
     generate-ddl: false
@@ -43,17 +43,17 @@ image:
 #    image-dir: src/main/resources/static/member-imgs/
 #    image-url: http://localhost:8080/member-imgs/
   profile:
-    resource-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/
-    resource-handler: /memberimgs/**
-    image-dir: C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/
-    image-url: http://localhost:8080/memberimgs/
+#    resource-locations: classpath:/static/memberimgs/
+#    resource-handler: /memberimgs/**
+    image-dir: ./src/main/resources/static/productimgs/
+    image-url: http://localhost:8080/productimgs/
 
     # 게시글 이미지 설정
   buddy:
-    resource-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/
-    resource-handler: /buddyimgs/**
-    image-dir: C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/
-    image-url: http://localhost:8080/buddyimgs/
+#    resource-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/
+#    resource-handler: /buddyimgs/**
+    image-dir: ./src/main/resources/static/productimgs/
+    image-url: http://localhost:8080/productimgs/
   #      resource-locations: file:///springboot-app/buddyimgs/
   #      resource-handler: /buddyimgs/**
 

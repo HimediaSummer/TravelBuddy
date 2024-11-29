@@ -120,7 +120,8 @@ function MySchedule() {
                                     </td>
                                     <td>{item.scheCode}</td>
                                     <td>{item.regionName}</td>
-                                    <td>{item.scheList}</td>
+                                    <td>{item.scheStartDate} ~ {item.scheEndDate} 까지의 {item.regionName} 의 일정 입니다.</td>
+                                    {/* <td>{item.scheList}</td> */}
                                     <td>{item.scheStartDate}</td>
                                     <td>{item.scheEndDate}</td>
                                 </tr>

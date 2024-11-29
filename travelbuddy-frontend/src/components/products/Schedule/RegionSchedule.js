@@ -118,15 +118,15 @@ function RegionSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, 
 		<div class="tema-title">
 			<div class="chat-container">
 				<form class="chat-form" action="post">
-				<p class="chat-head" style={{ margin: 'auto',fontSize: '18px' }}>{selectedRegion ? (selectedRegion.regionName) : ('어떤 여행을 하고 싶나요?')}</p>
-				<p style={{marginTop: '5px', marginBottom: '25px', fontSize: '15px' }}>{startDate ? moment(startDate, 'MM-DD(ddd)').format('YYYY-MM-DD(ddd)') : ''} ~ {endDate ? moment(endDate, 'MM-DD(ddd)').format('YYYY-MM-DD(ddd)') : ''}</p>
+				<p class="chat-head" style={{ margin: 'auto',fontSize: '20px' }}>{selectedRegion ? (selectedRegion.regionName) : ('어떤 여행을 하고 싶나요?')}</p>
+				<p style={{marginTop: '5px', marginBottom: '25px', fontSize: '15px'}}>{startDate ? moment(startDate, 'MM-DD(ddd)').format('YYYY-MM-DD(ddd)') : ''} ~ {endDate ? moment(endDate, 'MM-DD(ddd)').format('YYYY-MM-DD(ddd)') : ''}</p>
 					<div class='chat-container-r'>
 					<div id="chat-box2-r">
 						<button type='button' onClick={() => tabChange('select')}>지역 선택</button>
-						<button type='button' onClick={() => { if(!selectedRegion) {alert('지역을 먼저 선택해주세요.');} else {tabChange('search');}}} >장소 상세 검색</button>
+						<button type='button' onClick={() => { if(!selectedRegion) {alert('지역을 먼저 선택해주세요.');} else {tabChange('search');}}}>장소 상세 검색</button>
 					</div>
 					</div>
-					<div class="tema-title">
+					<div class="tema-title" style={{fontFamily: '카페24 써라운드 에어'}} >
 						{ regionTab === 'select' ? (<legend>가고 싶은 지역을 선택해주세요.</legend>) : (<legend>상세 장소를 검색해주세요.</legend>)}
 						{/* <legend>가고싶은 도시를 선택해주세요.</legend> */}
 					</div>
@@ -172,7 +172,7 @@ function RegionSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, 
 						<div>
 							<img src={`/Img/${selectedRegionDetails.regionImg}`} alt={selectedRegionDetails.regionName} width={'300px'} height={'200px'} />
 							<h3>{selectedRegionDetails.regionName}</h3>
-							<p>{selectedRegionDetails.regionDescription}</p>
+							<p  style={{fontFamily: '카페24 써라운드 에어'}} >{selectedRegionDetails.regionDescription}</p>
 							<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 								<button className="region-button2" onClick={onNext}>다음</button>
 							</div>

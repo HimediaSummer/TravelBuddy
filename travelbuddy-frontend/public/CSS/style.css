@@ -22,7 +22,8 @@ fieldset,
 ul {
 	margin: 0;
 	padding: 0;
-	font-family: 'IBM Plex Sans KR', sans-serif;
+	/* font-family: 'IBM Plex Sans KR', sans-serif; */
+	font-family: '카페24 써라운드';
 }
 
 .menu {
@@ -435,6 +436,7 @@ select,
 	/* justify-content: center; */
 	text-align: center;
 	margin-top: 0;
+	font-family: '카페24 써라운드';
 }
 
 .chat-answer {
@@ -463,6 +465,10 @@ select,
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+}
+
+.chat-form button {
+	font-family: '카페24 써라운드';
 }
 
 .chat-head {
@@ -541,6 +547,7 @@ select,
 	padding: 10px 15px 0px 15px;
 	border-radius: 15px;
 	font-size: large;
+	font-family: '카페24 써라운드 에어';
 }
 
 
@@ -636,6 +643,7 @@ select,
 	cursor: pointer;
 	font-family: '카페24 써라운드', sans-serif;
 	font-weight: bold;
+	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 #button:hover {
@@ -929,6 +937,7 @@ select,
     font-size: 24px; /* 글자 크기 설정 */
     position: relative; /* 위치 설정 */
 	transition: background-color 0.3s, color 0.3s; /* 부드러운 색상 전환 */
+	font-family: '카페24 써라운드';
 }
 
 .region-button2 {
@@ -946,6 +955,8 @@ select,
     position: relative; /* 위치 설정 */
     align-self: flex-end; /* 버튼을 오른쪽 정렬 */
     margin-top: auto; /* 버튼을 맨 아래로 이동 */
+	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
+	font-family: '카페24 써라운드';
 }
 
 .region-button:before {
@@ -1065,6 +1076,8 @@ select,
     align-self: flex-end; /* 버튼을 오른쪽 정렬 */
     /* margin-top: auto; 버튼을 맨 아래로 이동 */
 	margin-right: 20px;
+	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
+	font-family: '카페24 써라운드';
 }
 
 .date-button2 {
@@ -1084,6 +1097,8 @@ select,
     align-self: flex-end; /* 버튼을 오른쪽 정렬 */
     /* margin-top: auto; 버튼을 맨 아래로 이동 */
 	margin-right: 20px;
+	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
+	font-family: '카페24 써라운드';
 }
 
 .date-button:hover {
@@ -1144,6 +1159,7 @@ select,
     font-size: 24px; /* 글자 크기 설정 */
     position: relative; /* 위치 설정 */
 	transition: background-color 0.3s, color 0.3s; /* 부드러운 색상 전환 */
+	font-family: '카페24 써라운드';
 }
 
 .accom-button2 {
@@ -1161,6 +1177,8 @@ select,
     position: relative; /* 위치 설정 */
     align-self: flex-end; /* 버튼을 오른쪽 정렬 */
     margin-top: auto; /* 버튼을 맨 아래로 이동 */
+	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
+	font-family: '카페24 써라운드';
 }
 
 .accom-button:before {
@@ -1279,6 +1297,8 @@ select,
     position: relative; /* 위치 설정 */
     align-self: flex-end; /* 버튼을 오른쪽 정렬 */
     margin-top: auto; /* 버튼을 맨 아래로 이동 */
+	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
+	font-family: '카페24 써라운드';
 }
 
 .quest-button2:hover {

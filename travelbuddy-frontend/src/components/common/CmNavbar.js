@@ -7,13 +7,25 @@ function CmNavbar() {
 		<div className='cmNavBarContainer'>
 			<ul>
 				<li>
-					<NavLink to="/cm/mynotices">공지사항</NavLink>
+					<NavLink to="/cm/mynotices"
+						className={({ isActive }) => isActive ? 'active-link' : ''}
+					>
+						공지사항
+					</NavLink>
 				</li>
 				<li>
-					<NavLink to="/cm/myuseinfos">이용방법</NavLink>
+					<NavLink to="/cm/myuseinfos"
+							className={({ isActive }) => isActive ? 'active-link' : ''}
+					>
+						이용방법
+					</NavLink>
 				</li>
 				<li>
-					<NavLink to="/cm/buddies">버디매칭</NavLink>
+					<NavLink to="/cm/buddies"
+						className={({ isActive }) => isActive ? 'active-link' : ''}
+					>
+						버디매칭
+					</NavLink>
 				</li>
 			</ul>
 		</div>

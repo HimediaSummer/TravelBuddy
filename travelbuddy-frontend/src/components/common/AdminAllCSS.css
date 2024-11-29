@@ -36,14 +36,20 @@
 }
 
 .AdminAllContainer table {
-
 	display: grid; /* grid 사용 */
-    place-items: center; /* 수평 및 수직 가운데 정렬 */
-    height: 100%; /* 전체 화면 높이 */
-	width: 100%; /* 테이블의 너비를 100%로 설정 (필요시) */
-    border-collapse: collapse; /* 테이블 셀 간의 경계 제거 */
+	/* 수평 및 수직 가운데 정렬 */
+    place-items: center; 
+	/*  수직 가운데 정렬 */
+    align-items: center;
+	/* 전체 화면 높이 */
+    height: 100%; 
+	/* 테이블의 너비를 100%로 설정 (필요시) */
+	width: 100%; 
+	/* 테이블 셀 간의 경계 제거 */
+    border-collapse: collapse; 
 	margin-top: 0;
-	margin-left: 160px;
+	margin-left: 95px;
+	justify-content: center;
 }
 .AdminAllContainer button {
 	font-family: 'Cafe24 Ssurround';
@@ -55,6 +61,7 @@
 	border-radius: 15px;
 	background-color: #8CC8EA;
 	border: none; /* 버튼의 테두리 제거 */
+	cursor: pointer;
 	
 }
 
@@ -76,6 +83,7 @@
     font-size: 20px;
     text-align: center; /* 텍스트 정렬 (필요시) */
     border-bottom: 1px solid #ccc; /* 하단 경계선 추가 (선택 사항) */
+
 }
 
 .AdminAllContainer td {
@@ -84,45 +92,306 @@
     text-align: center; /* 텍스트 정렬 (필요시) */
     border-bottom: 1px solid #ccc; /* 하단 경계선 추가 (선택 사항) */
 	cursor: pointer;
-	transition: background-color 0.3s;
-	
+	transition: background-color 0.3s;	
 }
 
 .th1 {
-    width: 105px;
+    width: 120px;
 }
 .th2 {
-    width: 445px;
+    width: 500px;
 }
 .th3 {
-    width: 105px;
+    width: 120px;
 }
 .th4 {
-    width: 210px;
+    width: 220px;
 }
 .th5 {
-    width: 155px;
+    width: 165px;
 }
 
 .td1 {
-    width: 80px;
+    width: 100px;
 }
 .td2 {
-    width: 445px;
+    width: 500px;
 }
 .td3 {
-    width: 80px;
+    width: 100px;
 }
 .td4 {
-    width: 195px;
+    width: 200px;
 }
 .td5 {
-    width: 50px;
+    width: 100px;
 }
 
-.td5 button {
+.AdminAllCSSButtonList {
+	list-style-type: none;
+	/* 그리드 사용 */
+	display: flex;
+	justify-content: center;
+	width: 1700px;
+	margin-top: 10px;	
+
+.AdminAllCSSButtonList button {
+    font-size: 20px;
+    color: #ffffff;
+    width: 124px;
+    height: 50px;
+    margin-right: 25px;
+    border-radius: 15px;
+    background-color: #8CC8EA;
+    border: none;
+    
+	}
+
+.CreateButton {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 20px;
+    color: #ffffff;
+    width: 124px;
+    height: 50px;
+    margin-right: 25px;
+    border-radius: 15px;
+    background-color: #8CC8EA;
+    border: none;
+	cursor: pointer;
+	
 
 }
+
+
+	
+}
+
+
+
+/* Rectangle 37 */
+
+position: absolute;
+width: 1522px;
+height: 711px;
+left: 200px;
+top: 218px;
+
+background: #FFFFFF;
+
+
+/* Frame 25 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 37px;
+height: 35px;
+left: 815px;
+top: 887px;
+
+background: #FFFFFF;
+border: 1px solid #E3E3E3;
+border-radius: 15px;
+
+
+/* Frame 26 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 36px;
+height: 35px;
+left: 858px;
+top: 887px;
+
+background: #FFFFFF;
+border: 1px solid #E3E3E3;
+border-radius: 15px;
+
+
+/* Frame 31 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 37px;
+height: 35px;
+left: 984px;
+top: 887px;
+
+background: #FFFFFF;
+border: 1px solid #E3E3E3;
+border-radius: 15px;
+
+
+/* Frame 28 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 37px;
+height: 35px;
+left: 942px;
+top: 887px;
+
+background: #FFFFFF;
+border: 1px solid #E3E3E3;
+border-radius: 15px;
+
+
+/* Frame 27 */
+
+position: absolute;
+width: 36px;
+height: 35px;
+left: 900px;
+top: 887px;
+
+background: #BFDCEC;
+border-radius: 15px;
+
+
+/* Frame 29 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 37px;
+height: 35px;
+left: 1026px;
+top: 887px;
+
+background: #FFFFFF;
+border: 1px solid #E3E3E3;
+border-radius: 15px;
+
+
+/* Frame 30 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 37px;
+height: 35px;
+left: 1068px;
+top: 887px;
+
+background: #FFFFFF;
+border: 1px solid #E3E3E3;
+border-radius: 15px;
+
+
+/* Rectangle 37 */
+
+position: absolute;
+width: 1522px;
+height: 711px;
+left: 200px;
+top: 218px;
+
+background: #FFFFFF;
+
+
+/* Frame 25 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 37px;
+height: 35px;
+left: 815px;
+top: 887px;
+
+background: #FFFFFF;
+border: 1px solid #E3E3E3;
+border-radius: 15px;
+
+
+/* Frame 26 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 36px;
+height: 35px;
+left: 858px;
+top: 887px;
+
+background: #FFFFFF;
+border: 1px solid #E3E3E3;
+border-radius: 15px;
+
+
+/* Frame 31 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 37px;
+height: 35px;
+left: 984px;
+top: 887px;
+
+background: #FFFFFF;
+border: 1px solid #E3E3E3;
+border-radius: 15px;
+
+
+/* Frame 28 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 37px;
+height: 35px;
+left: 942px;
+top: 887px;
+
+background: #FFFFFF;
+border: 1px solid #E3E3E3;
+border-radius: 15px;
+
+
+/* Frame 27 */
+
+position: absolute;
+width: 36px;
+height: 35px;
+left: 900px;
+top: 887px;
+
+background: #BFDCEC;
+border-radius: 15px;
+
+
+/* Frame 29 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 37px;
+height: 35px;
+left: 1026px;
+top: 887px;
+
+background: #FFFFFF;
+border: 1px solid #E3E3E3;
+border-radius: 15px;
+
+
+/* Frame 30 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 37px;
+height: 35px;
+left: 1068px;
+top: 887px;
+
+background: #FFFFFF;
+border: 1px solid #E3E3E3;
+border-radius: 15px;
 
 
 

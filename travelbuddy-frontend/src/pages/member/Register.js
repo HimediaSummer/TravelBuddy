@@ -1,3 +1,4 @@
+import  RegistCSS  from "./Register.css";
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,7 +26,7 @@ function Register() {
     useEffect(() => {
         if(member.status == 201){
             console.log("[Login] Register SUCCESS {}", member);
-            navigate("/login", { replace: true })
+            // navigate("/login", { replace: true })
         }
     },
     [member]);
@@ -37,11 +38,11 @@ function Register() {
         });
     };    
 
-    const onClickBackHandler = () => {
+    // const onClickBackHandler = () => {
 
-        /* 돌아가기 클릭시 메인 페이지로 이동 */
-        navigate("/", { replace: true })
-    }
+    //     /* 돌아가기 클릭시 메인 페이지로 이동 */
+    //     navigate("/", { replace: true })
+    // }
     //  이메일 가입 양식
     const isValidEmail = (email) => {
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -82,16 +83,28 @@ function Register() {
         dispatch(callRegisterAPI({
             form: form
         }));
+        navigate("/success", { replace: true })
     }
 
     return (
-        <div >
-            <div >
-                <h1>회원가입</h1>
+        <div className='backgroundDiv'>
+            <div className='registDiv'>
+                <h1>
+                    <div class="header-click">
+                        {/* <i class="fa-solid fa-globe"></i> */}
+                        <a href="http://localhost:3000"><img src="/Img/TravelBuddy(256).png" alt="Main logo" style={{marginLeft: '20px'}}/></a>
+                    </div>
+                </h1>
+                <h2>회원가입</h2>
+                <p>
+                    회원가입을 위한 정보를 입력해주세요.
+                    <br></br>
+                    *는 필수 입력사항입니다.
+                </p>
                 <input 
                     type="text" 
                     name="memberName"
-                    placeholder="아이디" 
+                    placeholder="아이디*" 
                     autoComplete='off'
                     onChange={ onChangeHandler }
                     required
@@ -99,15 +112,16 @@ function Register() {
                 <input 
                     type="password"
                     name="memberPassword" 
-                    placeholder="패스워드" 
+                    placeholder="패스워드*" 
                     autoComplete='off'
                     onChange={ onChangeHandler }
                     required
                 />
+                <div className="pwText">* 최소 6자의 영문/숫자/특수문자를 사용해 주세요.</div>
                 <input 
                     type="email" 
                     name="memberEmail"
-                    placeholder="이메일" 
+                    placeholder="이메일*" 
                     autoComplete='off'
                     onChange={ onChangeHandler }
                     required
@@ -115,7 +129,7 @@ function Register() {
                 <input 
                     type="text" 
                     name="memberFullName"
-                    placeholder="이름" 
+                    placeholder="이름*" 
                     autoComplete='off'
                     onChange={ onChangeHandler }
                     required
@@ -123,7 +137,7 @@ function Register() {
                 <input 
                     type="date" 
                     name="memberBirthday"
-                    placeholder="생일" 
+                    placeholder="생일*" 
                     autoComplete='off'
                     onChange={ onChangeHandler }
                     required
@@ -131,7 +145,7 @@ function Register() {
                 <input 
                     type="tel" 
                     name="memberPhone"
-                    placeholder="ex)01012345678" 
+                    placeholder="ex)01012345678(*)" 
                     autoComplete='off'
                     onChange={ onChangeHandler }
                     pattern='[0-1]{3}[0-9]{4}[0-9]{4}'
@@ -144,12 +158,12 @@ function Register() {
                 >   
                     회원가입
                 </button>
-                <button
+                {/* <button
                     style={ { border: 'none', margin: 0, fontSize: '10px', height: '10px' } }
                     onClick = { onClickBackHandler }
                 >
                     돌아가기
-                </button>
+                </button> */}
             </div>
         </div>
     );

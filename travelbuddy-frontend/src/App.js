@@ -48,6 +48,7 @@ import BuddyRegist from './pages/member/comunity/BuddyRegist';
 import BuddyUpdate from './pages/member/comunity/BuddyUpdate';
 import FindId from './pages/member/FindId';
 import FindPw from './pages/member/FindPw';
+import Success from './pages/member/Success';
 
 function App() {
 
@@ -65,7 +66,7 @@ function App() {
             <Route path="*" element={ <Error/> }/>
             <Route path='/findId' element={ <FindId/> }/>
             <Route path='/findPw' element={ <FindPw/> }/>
-            
+            <Route path='/success' element={ <Success/> }/>
           </Route>
 
           {/*ADMIN 페이지*/}

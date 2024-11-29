@@ -76,9 +76,14 @@ function Login() {
     }
 
     return (
-        <div >
+        <div className="backgroundDiv">
             <div className= "loginDiv">
-                <h1>로그인</h1>
+                <h1>
+                    <div class="header-click">
+                        {/* <i class="fa-solid fa-globe"></i> */}
+                        <a href="http://localhost:3000"><img src="/Img/TravelBuddy(256).png" alt="Main logo" style={{marginLeft: '20px'}}/></a>
+                    </div>
+                </h1>
                 <input 
                     type="text" 
                     name='memberName'

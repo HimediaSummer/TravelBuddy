@@ -125,8 +125,10 @@ function Buddies() {
 
     return (
         <>
-            <div className="container">
-                <h2>버디매칭</h2>
+            <div className="BuddyContainer">
+                {/* <div className="header"> */}
+                    <h2>버디매칭</h2>
+                {/* </div> */}
                 {/* <input
                     type="text"
                     placeholder="검색어를 입력하세요"
@@ -152,27 +154,16 @@ function Buddies() {
                     </select>
                 </div> */}
                 <table >
-                    <colgroup>
-                        <col width="5%" />
-                        <col width="5%" />
-                        <col width="10%" />
-                        <col width="15%" />
-                        <col width="15%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                    </colgroup>
                     <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>유형</th>
-                            <th>지역</th>
-                            <th >제목</th>
-                            <th>작성자</th>
+                        <tr className="tableTitle">
+                            <th className="th1buddy">번호</th>
+                            <th className="th2buddy">유형</th>
+                            <th className="th3buddy">지역</th>
+                            <th className="th4buddy">제목</th>
+                            <th className="th5buddy">작성자</th>
                             {/* <th>좋아요</th> */}
-                            <th >신청여부</th>
-                            <th>작성일</th>
+                            <th className="th6buddy">신청여부</th>
+                            <th className="th7buddy">작성일</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -185,66 +176,68 @@ function Buddies() {
                                         onClickTableTr(b.buddyCode)
                                     }
                                 >
-                                    <td>{b.buddyCode}</td>
-                                    <td>{b.buddyType ?b.buddyType.buddyTypeName :'유형없음'}</td>
-                                    <td>{b.region ? b.region.regionName : "지역없음"}</td>
-                                    <td >{b.buddyTitle}</td>
-                                    <td>{b.account? b.account.memberName : "작성자없음"}</td>
+                                    <td className="td1buddy">{b.buddyCode}</td>
+                                    <td className="td2buddy">{b.buddyType ?b.buddyType.buddyTypeName :'유형없음'}</td>
+                                    <td className="td3buddy">{b.region ? b.region.regionName : "지역없음"}</td>
+                                    <td className="td4buddy">{b.buddyTitle}</td>
+                                    <td className="td5buddy">{b.account? b.account.memberName : "작성자없음"}</td>
                                     {/* <td>{b.buddyCount}</td> */}
-                                    <td>{b.buddyStatus}</td>
-                                    <td>{b.buddyCreate}</td>
+                                    <td className="td6buddy">{b.buddyStatus}</td>
+                                    <td className="td7buddy">{b.buddyCreate}</td>
                                 </tr>
                             )})}
                     </tbody>
                     
                 </table>
-                <button className="write-button" onClick={onClickBuddyRegist}>게시글 작성</button>
-            </div>
-            <div 
-                // style={{
-                //     listStyleType: "none",
-                //     display: "flex",
-                //     justifyContent: "center",
-                // }}
-            >
-                {Array.isArray(buddyList.data) && (
-                    <button
-                        onClick={() => setCurrentPage(currentPage - 1)}
-                        disabled={currentPage === 1}
-                        
-                    >
-                        &lt;
-                    </button>
-                )}
-                {pageNumber.map((num) => (
-                    <li key={num} onClick={() => setCurrentPage(num)}>
+
+                <div className="AdminAllCSSButtonList"
+                    // style={{
+                    //     listStyleType: "none",
+                    //     display: "flex",
+                    //     justifyContent: "center",
+                    // }}
+                >
+                    {Array.isArray(buddyList.data) && (
                         <button
-                            style={
-                                currentPage === num
-                                    ? { backgroundColor: "skyBlue" }
-                                    : null
-                            }
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                            disabled={currentPage === 1}
                             
                         >
-                            {num}
+                            &lt;
                         </button>
-                    </li>
-                ))}
-                {Array.isArray(buddyList.data) && (
-                    <button
-                        
-                        onClick={() => setCurrentPage(currentPage + 1)}
-                        disabled={
-                            currentPage === pageInfo.pageEnd ||
-                            pageInfo.total === 0
-                        }
-                    >
-                        &gt;
-                    </button>
-                )}
-                
+                    )}
+                    {pageNumber.map((num) => (
+                        <li key={num} onClick={() => setCurrentPage(num)}>
+                            <button
+                                style={
+                                    currentPage === num
+                                        ? { backgroundColor: "skyBlue" }
+                                        : null
+                                }
+                                
+                            >
+                                {num}
+                            </button>
+                        </li>
+                    ))}
+                    {Array.isArray(buddyList.data) && (
+                        <button
+                            
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                            disabled={
+                                currentPage === pageInfo.pageEnd ||
+                                pageInfo.total === 0
+                            }
+                        >
+                            &gt;
+                        </button>
+                    )}
+                    
+                </div>
+                <div className="CreateButton" >
+                    <button onClick={onClickBuddyRegist}>게시글 작성</button>
+                </div>
             </div>
-            
         </>
     );
 }

@@ -1,3 +1,4 @@
+import  FindPwCSS  from "./FindPw.css";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -44,7 +45,7 @@ function FindPw() {
 
         try {
             const verificationCode = await dispatch(callFindPwAPI({ Email })); 
-            setMessage(`비밀번호 찾기 성공 : 코드 ${verificationCode}`);
+            setMessage(`인증번호 코드 ${verificationCode}`);
             setIsCodeSent(true);
         } catch (error) {
             setMessage(error.message);
@@ -73,39 +74,58 @@ function FindPw() {
 
 
     return (
-        <div >
-            <h1>비밀번호 찾기</h1>
-            <div >
-                <input
-                    type="email"
-                    placeholder="이메일"
-                    value={Email}
-                    onChange={onChangeHandler}
-                />
-                <button onClick={onClickFindPwHandler}>비밀번호 찾기</button>
+        <div className="backgroundDiv">
+            <div className="findPwDiv">
+                <h1>
+                    <div class="header-click">
+                        {/* <i class="fa-solid fa-globe"></i> */}
+                        <a href="http://localhost:3000"><img src="/Img/TravelBuddy(256).png" alt="Main logo" style={{marginLeft: '20px'}}/></a>
+                    </div>
+                </h1>
+                <h2>비밀번호 찾기</h2>
+                <div >
+                    <input
+                        type="email"
+                        placeholder="이메일"
+                        value={Email}
+                        onChange={onChangeHandler}
+                    />
+                </div>
+                <div >
+                    <button onClick={onClickFindPwHandler}>비밀번호 찾기</button>
+                </div>
+                {isCodeSent && (
+                    <div className="varifyCode">
+                        <input
+                            type="text"
+                            placeholder="인증 코드 입력"
+                            value={verificationCode}
+                            onChange={(e) => setVerificationCode(e.target.value)}
+                        />
+                    </div>
+                )}
+                <div>
+                    {message && <p>{message}</p>}
+                </div>
+                {isCodeSent && (
+                    <div>
+                        <div className="newPw">
+                            <input
+                                type="password"
+                                placeholder="새로운 비밀번호 입력"
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <button onClick={onResetPasswordHandler}>비밀번호 변경</button>
+                        </div>
+                    </div>
+                )}
+                {/* <div>
+                    {message && <p>{message}</p>}
+                </div> */}
             </div>
-            {isCodeSent && (
-                <div>
-                    <input
-                        type="text"
-                        placeholder="인증 코드 입력"
-                        value={verificationCode}
-                        onChange={(e) => setVerificationCode(e.target.value)}
-                    />
-                </div>
-            )}
-            {isCodeSent && (
-                <div>
-                    <input
-                        type="password"
-                        placeholder="새로운 비밀번호 입력"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                    />
-                    <button onClick={onResetPasswordHandler}>비밀번호 변경</button>
-                </div>
-            )}
-            {message && <p>{message}</p>}
         </div>
     );
 }

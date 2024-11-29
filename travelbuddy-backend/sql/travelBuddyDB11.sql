@@ -101,7 +101,7 @@ CREATE TABLE
                                   member_suspension VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '정지여부',
                                   member_deletion VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT '탈퇴여부',
                                   member_like INT NULL DEFAULT 0 COMMENT '좋아요',
-                                  member_img VARCHAR(255) NOT NULL DEFAULT 'member_img_default.png' COMMENT '프로필사진',
+                                  member_img VARCHAR(255) NOT NULL DEFAULT 'member_img_default2.png' COMMENT '프로필사진',
                                   authority_code INT NOT NULL COMMENT '권한코드',
                                   member_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT  '가입일',
                                   member_leave DATE NULL COMMENT '탈퇴일',

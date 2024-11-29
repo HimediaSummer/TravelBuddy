@@ -3,11 +3,8 @@ import { decodeJwt } from '../../utils/tokenUtils';
 
 function CsNavbar() {
     return (
-		<div>
+		<div className='adminNavBarContainer'>
 			<ul>
-				<li>
-					<NavLink to="/">홈으로</NavLink>
-				</li>
 				<li>
 					<NavLink to="/cs/myfaqs">FAQ</NavLink>
 				</li>

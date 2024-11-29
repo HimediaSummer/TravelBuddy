@@ -85,8 +85,9 @@ const onClickSearch = async () => {
 
     return (
         <>
-            <div className={MemberCSS.bodyDiv}>
-                <h2>회원</h2>
+            <div className='MemberContainer'>
+            <div className='MemberHeader'>
+                <p>회원</p>
                 <input
                     type="text"
                     placeholder="검색어를 입력하세요"
@@ -95,29 +96,19 @@ const onClickSearch = async () => {
                     onKeyDown={onChangeHandler}
                 ></input>
                 <button onClick={onClickSearch}>검색</button>
+                </div>
                 <table className={MemberCSS.productTable}>
-                    <colgroup>
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="15%" />
-                        <col width="15%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                    </colgroup>
                     <thead>
                         <tr>
-                            <th>번호</th>
-                            <th>아이디</th>
-                            <th>이름</th>
-                            <th>이메일</th>
-                            <th>연락처</th>
-                            <th>버디</th>
-                            <th>일정</th>
-                            <th>상태</th>
-                            <th>가입일</th>
+                            <th className='th1member'>번호</th>
+                            <th className='th2member'>아이디</th>
+                            <th className='th3member'>이름</th>
+                            <th className='th4member'>이메일</th>
+                            <th className='th5member'>연락처</th>
+                            <th className='th6member'>버디</th>
+                            <th className='th7member'>일정</th>
+                            <th className='th8member'>상태</th>
+                            <th className='th9member'>가입일</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -127,18 +118,18 @@ const onClickSearch = async () => {
                                     key={m.memberCode}
                                     onClick={() => onClickTableTr(m.memberCode)}
                                 >
-                                    <td>{m.memberCode}</td>
-                                    <td>{m.memberName}</td>
-                                    <td>{m.memberFullName}</td>
-                                    <td>{m.memberEmail}</td>
-                                    <td>{m.memberPhone}</td>
-                                    <td>
+                                    <td className='td1member'>{m.memberCode}</td>
+                                    <td className='td2member'>{m.memberName}</td>
+                                    <td className='td3member'>{m.memberFullName}</td>
+                                    <td className='td4member'>{m.memberEmail}</td>
+                                    <td className='td5member'>{m.memberPhone}</td>
+                                    <td className='td6member'>
                                     <button onClick={(e) => { e.stopPropagation(); clickToBuddy(); }}>버디</button>
                                     </td>
-                                    <td>
+                                    <td className='td7member'>
                                     <button onClick={(e) => { e.stopPropagation(); clickToSchedule(); }}>일정</button>
                                     </td>
-                                    <td>
+                                    <td className='td8member'>
                                         {m.memberSuspension === "N" &&
                                         m.memberDeletion === "N" ? (
                                             <button>정상</button>
@@ -152,18 +143,17 @@ const onClickSearch = async () => {
                                             <p></p>
                                         )}
                                     </td>
-                                    <td>{m.memberCreate}</td>
+                                    <td className='td9member'>{m.memberCreate}</td>
                                 </tr>
                             ))}
                     </tbody>
                 </table>
             </div>
-            <div style={{ listStyleType: "none", display: "flex" }}>
+            <div  className='AdminAllCSSButtonList'>
                 {Array.isArray(filteredMemberList) && (
                     <button
                         onClick={() => setCurrentPage(currentPage - 1)}
                         disabled={currentPage === 1}
-                        className={MemberCSS.pagingBtn}
                     >
                         &lt;
                     </button>

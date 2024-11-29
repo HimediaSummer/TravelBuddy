@@ -1,4 +1,4 @@
-.QnaContainer {
+.MyUseinfoContainer {
 
 	width: 1500px;
 	display: flexbox; /* flexbox 사용 */
@@ -6,15 +6,15 @@
 
 }
 
-.QnaContainer p {
+.MyUseinfoContainer p {
 	font-family: 'Cafe24 Ssurround';
     font-size: 40px;
     font: bold;
     color: #1F709E;
-	margin-right: 610px;
+	margin-right: 572px;
 }
 
-.QnaContainer input {
+.MyUseinfoContainer input {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
     color: #8CC8EA;
@@ -26,18 +26,18 @@
 }
 
 
-.QnaContainer .QnaHeader {
+.MyUseinfoContainer .MyUseinfoHeader {
     display: flex; /* 수평 정렬을 위해 flexbox 사용 */
     align-items: center; /* 수직 가운데 정렬 */
     justify-content: left;
 	margin-top: 0;
 	margin-bottom: 0;
 	margin-right: 10px;
-	margin-left: 280px;
+	margin-left: 270px;
 	height: 91px;
 }
 
-.QnaContainer table {
+.MyUseinfoContainer table {
 	display: grid; /* grid 사용 */
 	/* 수평 및 수직 가운데 정렬 */
     place-items: center; 
@@ -52,9 +52,8 @@
 	/* 테이블 셀 간의 경계 제거 */
     border-collapse: collapse; 
 	margin-top: 0;
-
 }
-.QnaContainer button {
+.MyUseinfoContainer button {
 	font-family: 'Cafe24 Ssurround';
     font-size: 20px;
     color: #ffffff;
@@ -68,19 +67,19 @@
 	
 }
 
-.QnaContainer thead {
+.MyUseinfoContainer thead {
 	height: 60px;
 	
 }
 
 
-.QnaContainer tr:Hover:not(thead tr) {
+.MyUseinfoContainer tr:Hover:not(thead tr) {
 	background-color: #f3f2f2;
 	
 	
 }
 
-.QnaContainer th {
+.MyUseinfoContainer th {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
 	height: 60px;
@@ -89,7 +88,7 @@
 
 }
 
-.QnaContainer td {
+.MyUseinfoContainer td {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
     text-align: center; /* 텍스트 정렬 (필요시) */
@@ -98,41 +97,39 @@
 	transition: background-color 0.3s;	
 }
 
-.th1qna {
-    width: 110px;
+.th1myuseinfo {
+    width: 120px;
 }
-.th2qna {
-    width: 110px;
-}
-.th3qna {
+.th2myuseinfo {
     width: 500px;
 }
-.th4qna {
-    width: 220px;
+.th3myuseinfo {
+    width: 120px;
 }
-.th5qna {
+.th4myuseinfo {
+    width: 380px;
+}
+.th5myuseinfo {
     width: 165px;
 }
-.th6qna {
-	width: 120px;
-}
 
-.td1qna {
+
+.td1myuseinfo {
     width: 100px;
 }
-.td2qna {
+.td2myuseinfo {
+    width: 500px;
+}
+.td3myuseinfo {
     width: 100px;
 }
-.td3qna {
-    width: 480px;
+.td4myuseinfo {
+    width: 360px;
 }
-.td4qna {
-    width: 200px;
+.td5myuseinfo {
+    width: 00px;
 }
-.td5qna {
-    width: 100px;
-}
-.td6qna {
+.td6myuseinfo {
 	width: 150px;
 }
 

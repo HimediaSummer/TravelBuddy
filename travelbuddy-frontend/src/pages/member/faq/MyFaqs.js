@@ -46,34 +46,29 @@ function MyFaqs() {
     return (
         <>
          {/* 카테고리 필터 버튼 추가 */}
-         <div className={MyFaqsCSS.categoryButtons}>
+         <div className='categoryButtons'>
                 <button 
                     onClick={() => handleCategorySelect(null)}
-                    className={selectedCategory === null ? MyFaqsCSS.activeCategory : ''}
                 >
                     전체보기
                 </button>
                 <button 
                     onClick={() => handleCategorySelect(1)}
-                    className={selectedCategory === 1 ? MyFaqsCSS.activeCategory : ''}
                 >
                     일정
                 </button>
                 <button 
                     onClick={() => handleCategorySelect(2)}
-                    className={selectedCategory === 2 ? MyFaqsCSS.activeCategory : ''}
                 >
                     숙소
                 </button>
                 <button 
                     onClick={() => handleCategorySelect(3)}
-                    className={selectedCategory === 3 ? MyFaqsCSS.activeCategory : ''}
                 >
                     지역
                 </button>
                 <button 
                     onClick={() => handleCategorySelect(4)}
-                    className={selectedCategory === 4 ? MyFaqsCSS.activeCategory : ''}
                 >
                     보안
                 </button>

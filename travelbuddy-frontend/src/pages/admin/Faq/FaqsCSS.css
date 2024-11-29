@@ -1,4 +1,4 @@
-.QnaContainer {
+.FaqContainer {
 
 	width: 1500px;
 	display: flexbox; /* flexbox 사용 */
@@ -6,15 +6,15 @@
 
 }
 
-.QnaContainer p {
+.FaqContainer p {
 	font-family: 'Cafe24 Ssurround';
     font-size: 40px;
     font: bold;
     color: #1F709E;
-	margin-right: 610px;
+	margin-right: 490px;
 }
 
-.QnaContainer input {
+.FaqContainer input {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
     color: #8CC8EA;
@@ -26,7 +26,7 @@
 }
 
 
-.QnaContainer .QnaHeader {
+.FaqContainer .FaqHeader {
     display: flex; /* 수평 정렬을 위해 flexbox 사용 */
     align-items: center; /* 수직 가운데 정렬 */
     justify-content: left;
@@ -37,7 +37,7 @@
 	height: 91px;
 }
 
-.QnaContainer table {
+.FaqContainer table {
 	display: grid; /* grid 사용 */
 	/* 수평 및 수직 가운데 정렬 */
     place-items: center; 
@@ -52,9 +52,8 @@
 	/* 테이블 셀 간의 경계 제거 */
     border-collapse: collapse; 
 	margin-top: 0;
-
 }
-.QnaContainer button {
+.FaqContainer button {
 	font-family: 'Cafe24 Ssurround';
     font-size: 20px;
     color: #ffffff;
@@ -68,19 +67,19 @@
 	
 }
 
-.QnaContainer thead {
+.FaqContainer thead {
 	height: 60px;
 	
 }
 
 
-.QnaContainer tr:Hover:not(thead tr) {
+.FaqContainer tr:Hover:not(thead tr) {
 	background-color: #f3f2f2;
 	
 	
 }
 
-.QnaContainer th {
+.FaqContainer th {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
 	height: 60px;
@@ -89,7 +88,7 @@
 
 }
 
-.QnaContainer td {
+.FaqContainer td {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
     text-align: center; /* 텍스트 정렬 (필요시) */
@@ -98,41 +97,41 @@
 	transition: background-color 0.3s;	
 }
 
-.th1qna {
+.th1faq {
     width: 110px;
 }
-.th2qna {
+.th2faq {
     width: 110px;
 }
-.th3qna {
+.th3faq {
     width: 500px;
 }
-.th4qna {
+.th4faq {
     width: 220px;
 }
-.th5qna {
+.th5faq {
     width: 165px;
 }
-.th6qna {
+.th6faq {
 	width: 120px;
 }
 
-.td1qna {
+.td1faq {
     width: 100px;
 }
-.td2qna {
+.td2faq {
     width: 100px;
 }
-.td3qna {
+.td3faq {
     width: 480px;
 }
-.td4qna {
+.td4faq {
     width: 200px;
 }
-.td5qna {
+.td5faq {
     width: 100px;
 }
-.td6qna {
+.td6faq {
 	width: 150px;
 }
 

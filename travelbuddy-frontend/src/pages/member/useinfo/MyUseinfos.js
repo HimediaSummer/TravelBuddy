@@ -1,4 +1,4 @@
-import UseinfoCSS from './UseinfoCSS.css';
+import MyUseinfoCSS from './MyUseinfoCSS.css';
 
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -94,8 +94,9 @@ const onClickTableTr = (useinfoCode) => {
 
     return (
         <>
-         <div className={UseinfoCSS.bodyDiv}>
-                    <h2>사용설명서</h2>
+         <div className="MyUseinfoContainer">
+            <div className='MyUseinfoHeader'>
+                <p>사용설명서</p>
                     <input
                     type="text"
                     placeholder="검색어를 입력하세요"
@@ -104,22 +105,14 @@ const onClickTableTr = (useinfoCode) => {
                     onKeyDown={onChangeHandler}
                 ></input>
                 <button onClick={onClickSearch}>검색</button>
-                <table className={UseinfoCSS.productTable}>
-                    <colgroup>
-                        <col width="10%" />
-                        <col width="35%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="15%" />
-
-                    </colgroup>
+                </div>
+                <table>
                     <thead>
                         <tr>
-                            <th>번호</th>
-                            <th colSpan={3}>제목</th>
-                            <th>조회</th>
-                            <th>작성일</th>
+                            <th className='th1myuseinfo'>번호</th>
+                            <th className='th2myuseinfo'>제목</th>
+                            <th className='th3myuseinfo'>조회</th>
+                            <th className='th4myuseinfo'>작성일</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -129,21 +122,20 @@ const onClickTableTr = (useinfoCode) => {
                                     key={u.useinfoCode}
                                     onClick={() => onClickTableTr(u.useinfoCode)}
                                 >
-                                    <td>{u.useinfoCode}</td>
-                                    <td colSpan={3}>{u.useinfoTitle}</td>
-                                    <td>{u.useinfoCount}</td>
-                                    <td>{u.useinfoCreate}</td>
+                                    <td className='td1myuseinfo'>{u.useinfoCode}</td>
+                                    <td className='td2myuseinfo'>{u.useinfoTitle}</td>
+                                    <td className='td3myuseinfo'>{u.useinfoCount}</td>
+                                    <td className='td4myuseinfo'>{u.useinfoCreate}</td>
                                 </tr>
                             ))}
                     </tbody>
                 </table>
             </div>
-            <div style={{ listStyleType: "none", display: "flex" }}>
+            <div className='AdminAllCSSButtonList'>
                 { Array.isArray(useinfoList) &&
                 <button 
                     onClick={() => setCurrentPage(currentPage - 1)} 
                     disabled={currentPage === 1}
-                    className={ UseinfoCSS.pagingBtn }
                 >
                     &lt;
                 </button>
@@ -152,7 +144,6 @@ const onClickTableTr = (useinfoCode) => {
                 <li key={num} onClick={() => setCurrentPage(num)}>
                     <button
                         style={ currentPage === num ? {backgroundColor : 'skyblue' } : null}
-                        className={ UseinfoCSS.pagingBtn }
                     >
                         {num}
                     </button>
@@ -160,7 +151,6 @@ const onClickTableTr = (useinfoCode) => {
                 ))}
                 { Array.isArray(useinfoList) &&
                 <button 
-                    className={ UseinfoCSS.pagingBtn }
                     onClick={() => setCurrentPage(currentPage + 1)} 
                     disabled={currentPage === pageInfo.pageEnd  || pageInfo.total == 0}
                 >

@@ -1,4 +1,4 @@
-.QnaContainer {
+.MyQnaContainer {
 
 	width: 1500px;
 	display: flexbox; /* flexbox 사용 */
@@ -6,38 +6,26 @@
 
 }
 
-.QnaContainer p {
+.header p {
 	font-family: 'Cafe24 Ssurround';
     font-size: 40px;
     font: bold;
     color: #1F709E;
-	margin-right: 610px;
-}
+	margin-right: 890px;
 
-.QnaContainer input {
-	font-family: 'Cafe24 Ssurround air';
-    font-size: 20px;
-    color: #8CC8EA;
-	border-radius: 15px;
-	margin-right: 5px;
-	width: 248px;
-	height: 50px;
-	text-align: center;
 }
 
 
-.QnaContainer .QnaHeader {
+.MyQnaContainer .header {
     display: flex; /* 수평 정렬을 위해 flexbox 사용 */
     align-items: center; /* 수직 가운데 정렬 */
-    justify-content: left;
+    justify-content: flex-end; /* 오른쪽으로 정렬 */
 	margin-top: 0;
 	margin-bottom: 0;
-	margin-right: 10px;
-	margin-left: 280px;
 	height: 91px;
 }
 
-.QnaContainer table {
+.MyQnaContainer table {
 	display: grid; /* grid 사용 */
 	/* 수평 및 수직 가운데 정렬 */
     place-items: center; 
@@ -46,15 +34,14 @@
 	/* 전체 화면 높이 */
     height: 100%; 
 	/* 테이블의 너비를 100%로 설정 (필요시) */
-	width: 1500px; 
-	margin-left: 270px;
-	justify-content: left;
+	width: 100%; 
 	/* 테이블 셀 간의 경계 제거 */
     border-collapse: collapse; 
 	margin-top: 0;
-
+	margin-left: 95px;
+	justify-content: center;
 }
-.QnaContainer button {
+.MyQnaContainer button {
 	font-family: 'Cafe24 Ssurround';
     font-size: 20px;
     color: #ffffff;
@@ -68,19 +55,19 @@
 	
 }
 
-.QnaContainer thead {
+.MyQnaContainer thead {
 	height: 60px;
 	
 }
 
 
-.QnaContainer tr:Hover:not(thead tr) {
+.MyQnaContainer tr:Hover {
 	background-color: #f3f2f2;
 	
 	
 }
 
-.QnaContainer th {
+.MyQnaContainer th {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
 	height: 60px;
@@ -89,7 +76,7 @@
 
 }
 
-.QnaContainer td {
+.MyQnaContainer td {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
     text-align: center; /* 텍스트 정렬 (필요시) */

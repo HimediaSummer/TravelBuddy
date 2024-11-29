@@ -99,8 +99,9 @@ const onClickTableTr = (useinfoCode) => {
 
     return (
         <>
-         <div className={UseinfoCSS.bodyDiv}>
-                    <h2>사용설명서</h2>
+         <div className="UseinfoContainer">
+            <div className='UseinfoHeader'>
+                    <p>사용설명서</p>
                     <input
                     type="text"
                     placeholder="검색어를 입력하세요"
@@ -109,23 +110,15 @@ const onClickTableTr = (useinfoCode) => {
                     onKeyDown={onChangeHandler}
                 ></input>
                 <button onClick={onClickSearch}>검색</button>
+                </div>
                 <table className={UseinfoCSS.productTable}>
-                    <colgroup>
-                        <col width="10%" />
-                        <col width="35%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="15%" />
-
-                    </colgroup>
                     <thead>
                         <tr>
-                            <th>번호</th>
-                            <th colSpan={3}>제목</th>
-                            <th>조회</th>
-                            <th>작성일</th>
-                            <th>상태</th>
+                            <th className='th1useinfo'>번호</th>
+                            <th className='th2useinfo' colSpan={3}>제목</th>
+                            <th className='th3useinfo'>조회</th>
+                            <th className='th4useinfo'>작성일</th>
+                            <th className='th5useinfo'>상태</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -135,11 +128,11 @@ const onClickTableTr = (useinfoCode) => {
                                     key={u.useinfoCode}
                                     onClick={() => onClickTableTr(u.useinfoCode)}
                                 >
-                                    <td>{u.useinfoCode}</td>
-                                    <td colSpan={3}>{u.useinfoTitle}</td>
-                                    <td>{u.useinfoCount}</td>
-                                    <td>{u.useinfoCreate}</td>
-                                    <td>{u.useinfoAt === "N" ? (
+                                    <td className='td1useinfo'>{u.useinfoCode}</td>
+                                    <td className='td2useinfo' colSpan={3}>{u.useinfoTitle}</td>
+                                    <td className='td3useinfo'>{u.useinfoCount}</td>
+                                    <td className='td4useinfo'>{u.useinfoCreate}</td>
+                                    <td className='td5useinfo'>{u.useinfoAt === "N" ? (
                                                 <button>공개</button>
                                             ) : (
                                                 <button>비공개</button>
@@ -149,7 +142,7 @@ const onClickTableTr = (useinfoCode) => {
                     </tbody>
                 </table>
             </div>
-            <div style={{ listStyleType: "none", display: "flex" }}>
+            <div className='AdminAllCSSButtonList'>
                 { Array.isArray(filteredUseinfoList) &&
                 <button 
                     onClick={() => setCurrentPage(currentPage - 1)} 
@@ -179,7 +172,9 @@ const onClickTableTr = (useinfoCode) => {
                 </button>
                 }
             </div>
+            <div className='InsertButton'>
             <button onClick={onClickNavigation}>작성</button>
+            </div>
         </>
     );
 }

@@ -1,4 +1,4 @@
-.QnaContainer {
+.NoticeContainer {
 
 	width: 1500px;
 	display: flexbox; /* flexbox 사용 */
@@ -6,7 +6,7 @@
 
 }
 
-.QnaContainer p {
+.NoticeContainer p {
 	font-family: 'Cafe24 Ssurround';
     font-size: 40px;
     font: bold;
@@ -14,7 +14,7 @@
 	margin-right: 610px;
 }
 
-.QnaContainer input {
+.NoticeContainer input {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
     color: #8CC8EA;
@@ -26,18 +26,20 @@
 }
 
 
-.QnaContainer .QnaHeader {
+.NoticeContainer .NoticeHeader {
     display: flex; /* 수평 정렬을 위해 flexbox 사용 */
     align-items: center; /* 수직 가운데 정렬 */
     justify-content: left;
 	margin-top: 0;
 	margin-bottom: 0;
 	margin-right: 10px;
-	margin-left: 280px;
+	margin-left: 270px;
 	height: 91px;
+	
+	
 }
 
-.QnaContainer table {
+.NoticeContainer table {
 	display: grid; /* grid 사용 */
 	/* 수평 및 수직 가운데 정렬 */
     place-items: center; 
@@ -52,9 +54,8 @@
 	/* 테이블 셀 간의 경계 제거 */
     border-collapse: collapse; 
 	margin-top: 0;
-
 }
-.QnaContainer button {
+.NoticeContainer button {
 	font-family: 'Cafe24 Ssurround';
     font-size: 20px;
     color: #ffffff;
@@ -68,28 +69,27 @@
 	
 }
 
-.QnaContainer thead {
+.NoticeContainer thead {
 	height: 60px;
 	
 }
 
 
-.QnaContainer tr:Hover:not(thead tr) {
+.NoticeContainer tr:Hover:not(thead tr) {
 	background-color: #f3f2f2;
 	
 	
 }
 
-.QnaContainer th {
+.NoticeContainer th {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
 	height: 60px;
     text-align: center; /* 텍스트 정렬 (필요시) */
-	margin-top: 0;
 
 }
 
-.QnaContainer td {
+.NoticeContainer td {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
     text-align: center; /* 텍스트 정렬 (필요시) */
@@ -98,42 +98,36 @@
 	transition: background-color 0.3s;	
 }
 
-.th1qna {
-    width: 110px;
+.th1notice {
+    width: 120px;
 }
-.th2qna {
-    width: 110px;
-}
-.th3qna {
+.th2notice {
     width: 500px;
 }
-.th4qna {
+.th3notice {
+    width: 120px;
+}
+.th4notice {
     width: 220px;
 }
-.th5qna {
+.th5notice {
     width: 165px;
 }
-.th6qna {
-	width: 120px;
-}
 
-.td1qna {
+.td1notice {
     width: 100px;
 }
-.td2qna {
+.td2notice {
+    width: 500px;
+}
+.td3notice {
     width: 100px;
 }
-.td3qna {
-    width: 480px;
-}
-.td4qna {
+.td4notice {
     width: 200px;
 }
-.td5qna {
+.td5notice {
     width: 100px;
-}
-.td6qna {
-	width: 150px;
 }
 
 .AdminAllCSSButtonList {
@@ -188,3 +182,6 @@
 .InsertButton button:Hover {
 	background-color: #1F709E;	
 }
+
+
+

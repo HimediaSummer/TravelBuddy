@@ -1,46 +1,187 @@
-.bodyDiv {
-	display: flex;
-	flex-direction: column;
-	margin-top: 15px;
-	height: 100%;
+.MyNoticeContainer {
+
+	width: 1500px;
+	display: flexbox; /* flexbox 사용 */
+	flex-direction: column; /* 세로 방향으로 정렬 */
+
 }
 
-.buttonDiv {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
+.MyNoticeContainer p {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 40px;
+    font: bold;
+    color: #1F709E;
+	margin-right: 610px;
 }
-.buttonDiv button {
-	width: 100px;
-	margin-top: 5px;
-	margin-bottom: 5px;
+
+.MyNoticeContainer input {
+	font-family: 'Cafe24 Ssurround air';
+    font-size: 20px;
+    color: #8CC8EA;
+	border-radius: 15px;
+	margin-right: 5px;
+	width: 248px;
+	height: 50px;
+	text-align: center;
+}
+
+
+.MyNoticeContainer .MyNoticeHeader {
+    display: flex; /* 수평 정렬을 위해 flexbox 사용 */
+    align-items: center; /* 수직 가운데 정렬 */
+    justify-content: left;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-right: 10px;
+	margin-left: 270px;
+	height: 91px;
+	
+	
+}
+
+.MyNoticeContainer table {
+	display: grid; /* grid 사용 */
+	/* 수평 및 수직 가운데 정렬 */
+    place-items: center; 
+	/*  수직 가운데 정렬 */
+    align-items: center;
+	/* 전체 화면 높이 */
+    height: 100%; 
+	/* 테이블의 너비를 100%로 설정 (필요시) */
+	width: 1500px; 
+	margin-left: 270px;
+	justify-content: left;
+	/* 테이블 셀 간의 경계 제거 */
+    border-collapse: collapse; 
+	margin-top: 0;
+}
+.MyNoticeContainer button {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 20px;
+    color: #ffffff;
+	width: 124px;
+	height: 50px;
 	margin-right: 25px;
-	height: 30px;
-	border-radius: 25px;
-	background-color: white;
-	font-weight: bold;
-}
-
-.productTable {
-	width: 900px;
-}
-
-.productTable tr:hover {
-	background-color: #f5f5f5;
-}
-
-.productTable tr {
+	border-radius: 15px;
+	background-color: #8CC8EA;
+	border: none; /* 버튼의 테두리 제거 */
 	cursor: pointer;
+	
 }
 
-.pagingBtn {
-	margin: 5px;
-	border-radius: 25px;
-	background-color: white;
-	font-weight: bold;
+.MyNoticeContainer thead {
+	height: 60px;
+	
 }
 
-.pagingBtn:hover {
+
+.MyNoticeContainer tr:Hover:not(thead tr) {
+	background-color: #f3f2f2;
+	
+	
+}
+
+.MyNoticeContainer th {
+	font-family: 'Cafe24 Ssurround air';
+    font-size: 20px;
+	height: 60px;
+    text-align: center; /* 텍스트 정렬 (필요시) */
+
+}
+
+.MyNoticeContainer td {
+	font-family: 'Cafe24 Ssurround air';
+    font-size: 20px;
+    text-align: center; /* 텍스트 정렬 (필요시) */
+    border-bottom: 1px solid #ccc; /* 하단 경계선 추가 (선택 사항) */
 	cursor: pointer;
-	background-color: burlywood;
+	transition: background-color 0.3s;	
 }
+
+.th1mynotice {
+    width: 120px;
+}
+.th2mynotice {
+    width: 500px;
+}
+.th3mynotice {
+    width: 120px;
+}
+.th4mynotice {
+    width: 380px;
+}
+.th5mynotice {
+    width: 165px;
+}
+
+.td1mynotice {
+    width: 100px;
+}
+.td2mynotice {
+    width: 500px;
+}
+.td3mynotice {
+    width: 100px;
+}
+.td4mynotice {
+    width: 360px;
+}
+.td5mynotice {
+    width: 100px;
+}
+
+.AdminAllCSSButtonList {
+	list-style-type: none;
+	/* 그리드 사용 */
+	display: flex;
+	justify-content: center;
+	width: 1750px;
+	margin-top: 10px;
+}
+
+.AdminAllCSSButtonList button {
+	margin: 0 5px; /* 버튼 간의 간격 조정 */
+    padding: 10px 20px; /* 버튼의 패딩 조정 */
+    border-radius: 50%; /* 버튼의 모서리 둥글게 */
+    background-color: #eef0f2; /* 버튼 배경색 */
+    color: #2e2d2d; /* 버튼 글자색 */
+    border: #2e2d2d;
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+	
+	}
+
+.CreateButton button {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 20px;
+    color: #ffffff;
+    width: 124px;
+    height: 50px;
+    margin-left: 300px;
+    border-radius: 15px;
+    background-color: #8CC8EA;
+    border: none;
+	cursor: pointer;
+	margin-bottom: 0;
+}
+
+
+
+.InsertButton button {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 20px;
+    color: #ffffff;
+    width: 124px;
+    height: 50px;
+    border-radius: 15px;
+    background-color: #8CC8EA;
+    border: none;
+	cursor: pointer;
+	margin-left: 1260px;
+	margin-top: 0;
+}
+.InsertButton button:Hover {
+	background-color: #1F709E;	
+}
+
+
+

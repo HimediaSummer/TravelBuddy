@@ -4,6 +4,19 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
 /* font-family: 'IBM Plex Sans KR', sans-serif; */
 
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('/font/Cafe24Ssurround-v2.0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cafe24SsurroundAir';
+    src: url('/font/Cafe24SsurroundAir-v1.1.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 :root {
 	--text-color: #8CC8EA;
@@ -22,7 +35,7 @@ fieldset,
 ul {
 	margin: 0;
 	padding: 0;
-	font-family: 'IBM Plex Sans KR', sans-serif;
+	/* font-family: 'IBM Plex Sans KR', sans-serif; */
 }
 
 .menu {

@@ -1,0 +1,109 @@
+.my-put-profile-page {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #8CC8EA;
+    border-radius: 10px;
+    background-color: #fff;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+}
+
+.page-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #1F709E;
+    font-family: 'Cafe24Ssurround', sans-serif;
+    text-align: center;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.profile-preview {
+    margin-top: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+/* 입력 필드 스타일 */
+.info-value {
+    border: none; /* 테두리 제거 */
+    background-color: transparent; /* 배경 투명화 */
+    outline: none; /* 포커스 시 생기는 테두리 제거 */
+    width: 100%; /* 입력 창 전체 너비 */
+    font-size: 16px; /* 폰트 크기 */
+    color: #333; /* 글자 색상 */
+    padding: 5px 0; /* 상하 간격 */
+}
+
+/* 힌트 텍스트 스타일 */
+.info-value::placeholder {
+    color: #aaa; /* 힌트 텍스트 색상 */
+    font-size: 14px; /* 힌트 텍스트 폰트 크기 */
+}
+
+/* 비활성화된 필드 */
+.info-value[disabled] {
+    color: #555; /* 비활성화 상태 색상 */
+    background-color: transparent; /* 투명 배경 */
+    cursor: not-allowed; /* 포인터 변경 */
+}
+
+/* 각 행 스타일 */
+.info-row {
+    border-bottom: 1px solid #ddd; /* 밑줄 스타일 */
+    margin-bottom: 15px; /* 행 간격 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 라벨 스타일 */
+.info-label {
+    font-weight: bold;
+    color: #333;
+    width: 25%; /* 라벨의 너비 */
+}
+
+/* 중복확인 버튼 스타일 */
+.duplicate-button {
+    font-size: 14px;
+    padding: 5px 10px;
+    color: #555;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.duplicate-button:hover {
+    background-color: #e0e0e0;
+}
+
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}

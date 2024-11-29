@@ -72,20 +72,19 @@ function MyPutBuddy() {
         }));
     };
 
-    
     // 파일 변경 핸들러
     const handleFileChange = (e) => {
+        const file = e.target.files[0]; // 첫 번째 파일만 선택
 
-        const files = Array.from(e.target.files);
-        let totalSize = files.reduce((acc, file) => acc + file.size, 0);
-        
+        if (!file) return;
+
         // 크기 검사 (1MB = 1048576 bytes)
-        if (totalSize > 1048576) {
-            alert("이미지의 총 용량은 최대 1MB까지 허용됩니다.");
+        if (file.size > 1048576) {
+            alert("이미지의 크기는 최대 1MB까지 허용됩니다.");
             e.target.value = null; // 파일 선택 초기화
             setFormData((prev) => ({
                 ...prev,
-                postImg: [], // 선택된 파일 초기화
+                postImg: [], // 파일 데이터 초기화
             }));
             setPreviewImage([]); // 미리보기 초기화
             return;
@@ -93,30 +92,75 @@ function MyPutBuddy() {
 
         // 확장자 검사
         const allowedExtensions = ["png", "jpg", "jpeg"];
-        for (let file of files) {
-            const fileExtension = file.name.split(".").pop().toLowerCase();
-            if (!allowedExtensions.includes(fileExtension)) {
-                alert("이미지는 .png, .jpg, .jpeg만 가능합니다.");
-                e.target.value = null; // 파일 선택 초기화
-                setFormData((prev) => ({
-                    ...prev,
-                    postImg: [], // 선택된 파일 초기화
-                }));
-                setPreviewImage([]); // 미리보기 초기화
-                return;
-            }
+        const fileExtension = file.name.split(".").pop().toLowerCase();
+        if (!allowedExtensions.includes(fileExtension)) {
+            alert("이미지는 .png, .jpg, .jpeg만 가능합니다.");
+            e.target.value = null; // 파일 선택 초기화
+            setFormData((prev) => ({
+                ...prev,
+                postImg: [], // 파일 데이터 초기화
+            }));
+            setPreviewImage([]); // 미리보기 초기화
+            return;
         }
 
+        // 파일 상태 업데이트
         setFormData((prev) => ({
             ...prev,
-            postImg: [...prev.postImg, ...files], // 기존 이미지에 새로 선택한 이미지 추가
+            postImg: [file], // 한 개의 파일만 저장
         }));
-            
+
         // 미리보기 이미지 생성
-        const previewUrls = files.map((file) => URL.createObjectURL(file));
-        setPreviewImage((prev) => [...prev, ...previewUrls]);
-        
+        const previewUrl = URL.createObjectURL(file);
+        setPreviewImage([previewUrl]); // 한 개의 미리보기만 저장
     };
+
+
+
+    // 파일 변경 핸들러
+    // const handleFileChange = (e) => {
+
+    //     const files = e.target.files[0];
+    //     let totalSize = files.reduce((acc, file) => acc + file.size, 0);
+        
+    //     // 크기 검사 (1MB = 1048576 bytes)
+    //     if (totalSize > 1048576) {
+    //         alert("이미지의 총 용량은 최대 1MB까지 허용됩니다.");
+    //         e.target.value = null; // 파일 선택 초기화
+    //         setFormData((prev) => ({
+    //             ...prev,
+    //             postImg: [], // 선택된 파일 초기화
+    //         }));
+    //         setPreviewImage([]); // 미리보기 초기화
+    //         return;
+    //     }
+
+    //     // 확장자 검사
+    //     const allowedExtensions = ["png", "jpg", "jpeg"];
+    //     for (let file of files) {
+    //         const fileExtension = file.name.split(".").pop().toLowerCase();
+    //         if (!allowedExtensions.includes(fileExtension)) {
+    //             alert("이미지는 .png, .jpg, .jpeg만 가능합니다.");
+    //             e.target.value = null; // 파일 선택 초기화
+    //             setFormData((prev) => ({
+    //                 ...prev,
+    //                 postImg: [], // 선택된 파일 초기화
+    //             }));
+    //             setPreviewImage([]); // 미리보기 초기화
+    //             return;
+    //         }
+    //     }
+
+    //     setFormData((prev) => ({
+    //         ...prev,
+    //         postImg: [...prev.postImg, ...files], // 기존 이미지에 새로 선택한 이미지 추가
+    //     }));
+            
+    //     // 미리보기 이미지 생성
+    //     const previewUrls = files.map((file) => URL.createObjectURL(file));
+    //     setPreviewImage((prev) => [...prev, ...previewUrls]);
+        
+    // };
 
     // 폼 제출 핸들러
     const handleSubmit = async (e) => {
@@ -130,9 +174,13 @@ function MyPutBuddy() {
         updatedData.append("buddyTypeCode", formData.buddyTypeCode);
         
         // 여러 파일 추가
-        formData.postImg.forEach((file) => {
-            updatedData.append("postImg", file);
-        });
+        // formData.postImg.forEach((file) => {
+        //     updatedData.append("postImg", file);
+        // });
+        
+        if (formData.postImg.length > 0) {
+            updatedData.append("postImg", formData.postImg[0]); // 한 개의 파일만 추가
+        }
 
         try {
             const response = await fetch(`/mypage/mybuddy/${buddyCode}/update`, {

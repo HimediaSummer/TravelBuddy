@@ -34,7 +34,7 @@ function Main() {
                     <li class="slide-container">
                     <div class="slide">
                         <img src="/Img/schedulemain.PNG" alt="Busan"/>
-						<button type='button' id='button' onClick={() => window.location.href='http://localhost:3000/schedule'} style={{position: 'absolute', top: '80%', left: '20%', transform: 'translate(-50%, -50%)', padding: '10px 20px'}}>시작하기</button>
+						<button type='button' id='button' onClick={() => window.location.href='http://localhost:3000/schedule'} style={{position: 'absolute', top: '80%', left: '20%', transform: 'translate(-50%, -50%)', padding: '10px 20px', zindex:20, cursor: 'pointer' }}>시작하기</button>
                     </div>
                     <div class="nav">
                     <label for="img-6" class="prev">&#x2039;</label>

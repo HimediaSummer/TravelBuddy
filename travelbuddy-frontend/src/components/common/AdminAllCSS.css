@@ -66,8 +66,7 @@
 }
 
 .AdminAllContainer thead {
-	
-	background-color: #f5f5f5;
+	height: 60px;
 	
 }
 
@@ -81,8 +80,8 @@
 .AdminAllContainer th {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
+	height: 60px;
     text-align: center; /* 텍스트 정렬 (필요시) */
-    border-bottom: 1px solid #ccc; /* 하단 경계선 추가 (선택 사항) */
 
 }
 
@@ -95,35 +94,35 @@
 	transition: background-color 0.3s;	
 }
 
-.th1 {
+.th1notice {
     width: 120px;
 }
-.th2 {
+.th2notice {
     width: 500px;
 }
-.th3 {
+.th3notice {
     width: 120px;
 }
-.th4 {
+.th4notice {
     width: 220px;
 }
-.th5 {
+.th5notice {
     width: 165px;
 }
 
-.td1 {
+.td1notice {
     width: 100px;
 }
-.td2 {
+.td2notice {
     width: 500px;
 }
-.td3 {
+.td3notice {
     width: 100px;
 }
-.td4 {
+.td4notice {
     width: 200px;
 }
-.td5 {
+.td5notice {
     width: 100px;
 }
 
@@ -132,268 +131,53 @@
 	/* 그리드 사용 */
 	display: flex;
 	justify-content: center;
-	width: 1700px;
-	margin-top: 10px;	
+	width: 1750px;
+	margin-top: 10px;
+}
 
 .AdminAllCSSButtonList button {
-    font-size: 20px;
-    color: #ffffff;
-    width: 124px;
-    height: 50px;
-    margin-right: 25px;
-    border-radius: 15px;
-    background-color: #8CC8EA;
-    border: none;
-    
+	margin: 0 5px; /* 버튼 간의 간격 조정 */
+    padding: 10px 20px; /* 버튼의 패딩 조정 */
+    border-radius: 50%; /* 버튼의 모서리 둥글게 */
+    background-color: #eef0f2; /* 버튼 배경색 */
+    color: #2e2d2d; /* 버튼 글자색 */
+    border: #2e2d2d;
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+	
 	}
 
-.CreateButton {
+.CreateButton button {
 	font-family: 'Cafe24 Ssurround';
     font-size: 20px;
     color: #ffffff;
     width: 124px;
     height: 50px;
-    margin-right: 25px;
+    margin-left: 300px;
     border-radius: 15px;
     background-color: #8CC8EA;
     border: none;
 	cursor: pointer;
-	
-
-}
-
-
-	
+	margin-bottom: 0;
 }
 
 
 
-/* Rectangle 37 */
-
-position: absolute;
-width: 1522px;
-height: 711px;
-left: 200px;
-top: 218px;
-
-background: #FFFFFF;
-
-
-/* Frame 25 */
-
-box-sizing: border-box;
-
-position: absolute;
-width: 37px;
-height: 35px;
-left: 815px;
-top: 887px;
-
-background: #FFFFFF;
-border: 1px solid #E3E3E3;
-border-radius: 15px;
-
-
-/* Frame 26 */
-
-box-sizing: border-box;
-
-position: absolute;
-width: 36px;
-height: 35px;
-left: 858px;
-top: 887px;
-
-background: #FFFFFF;
-border: 1px solid #E3E3E3;
-border-radius: 15px;
-
-
-/* Frame 31 */
-
-box-sizing: border-box;
-
-position: absolute;
-width: 37px;
-height: 35px;
-left: 984px;
-top: 887px;
-
-background: #FFFFFF;
-border: 1px solid #E3E3E3;
-border-radius: 15px;
-
-
-/* Frame 28 */
-
-box-sizing: border-box;
-
-position: absolute;
-width: 37px;
-height: 35px;
-left: 942px;
-top: 887px;
-
-background: #FFFFFF;
-border: 1px solid #E3E3E3;
-border-radius: 15px;
-
-
-/* Frame 27 */
-
-position: absolute;
-width: 36px;
-height: 35px;
-left: 900px;
-top: 887px;
-
-background: #BFDCEC;
-border-radius: 15px;
-
-
-/* Frame 29 */
-
-box-sizing: border-box;
-
-position: absolute;
-width: 37px;
-height: 35px;
-left: 1026px;
-top: 887px;
-
-background: #FFFFFF;
-border: 1px solid #E3E3E3;
-border-radius: 15px;
-
-
-/* Frame 30 */
-
-box-sizing: border-box;
-
-position: absolute;
-width: 37px;
-height: 35px;
-left: 1068px;
-top: 887px;
-
-background: #FFFFFF;
-border: 1px solid #E3E3E3;
-border-radius: 15px;
-
-
-/* Rectangle 37 */
-
-position: absolute;
-width: 1522px;
-height: 711px;
-left: 200px;
-top: 218px;
-
-background: #FFFFFF;
-
-
-/* Frame 25 */
-
-box-sizing: border-box;
-
-position: absolute;
-width: 37px;
-height: 35px;
-left: 815px;
-top: 887px;
-
-background: #FFFFFF;
-border: 1px solid #E3E3E3;
-border-radius: 15px;
-
-
-/* Frame 26 */
-
-box-sizing: border-box;
-
-position: absolute;
-width: 36px;
-height: 35px;
-left: 858px;
-top: 887px;
-
-background: #FFFFFF;
-border: 1px solid #E3E3E3;
-border-radius: 15px;
-
-
-/* Frame 31 */
-
-box-sizing: border-box;
-
-position: absolute;
-width: 37px;
-height: 35px;
-left: 984px;
-top: 887px;
-
-background: #FFFFFF;
-border: 1px solid #E3E3E3;
-border-radius: 15px;
-
-
-/* Frame 28 */
-
-box-sizing: border-box;
-
-position: absolute;
-width: 37px;
-height: 35px;
-left: 942px;
-top: 887px;
-
-background: #FFFFFF;
-border: 1px solid #E3E3E3;
-border-radius: 15px;
-
-
-/* Frame 27 */
-
-position: absolute;
-width: 36px;
-height: 35px;
-left: 900px;
-top: 887px;
-
-background: #BFDCEC;
-border-radius: 15px;
-
-
-/* Frame 29 */
-
-box-sizing: border-box;
-
-position: absolute;
-width: 37px;
-height: 35px;
-left: 1026px;
-top: 887px;
-
-background: #FFFFFF;
-border: 1px solid #E3E3E3;
-border-radius: 15px;
-
-
-/* Frame 30 */
-
-box-sizing: border-box;
-
-position: absolute;
-width: 37px;
-height: 35px;
-left: 1068px;
-top: 887px;
-
-background: #FFFFFF;
-border: 1px solid #E3E3E3;
-border-radius: 15px;
-
-
+.InsertButton button {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 20px;
+    color: #ffffff;
+    width: 124px;
+    height: 50px;
+    border-radius: 15px;
+    background-color: #8CC8EA;
+    border: none;
+	cursor: pointer;
+	margin-left: 1260px;
+	margin-top: 0;
+}
+.InsertButton button:Hover {
+	background-color: #1F709E;	
+}
 
 
 

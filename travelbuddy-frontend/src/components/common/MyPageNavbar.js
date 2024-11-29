@@ -1,21 +1,19 @@
 import { NavLink } from 'react-router-dom';
 import { decodeJwt } from '../../utils/tokenUtils';
+import MyPageNavbarCSS from './MyPageNavbarCSS.css';
 
 function MyPageNavbar() {
     return (
-		<div>
+		<div className='adminNavBarContainer'>
 			<ul>
 				<li>
-					<NavLink to="/">홈으로</NavLink>
+					<NavLink to="/mypage/myBuddy">MY매칭</NavLink>
 				</li>
 				<li>
-					<NavLink to="/mypage/myBuddy">My매칭</NavLink>
-				</li>
-				<li>
-					<NavLink to="/mypage/mySchedule">My일정</NavLink>
+					<NavLink to="/mypage/mySchedule">MY일정</NavLink>
 				</li>
                 <li>
-					<NavLink to="/mypage/myProfile">My정보</NavLink>
+					<NavLink to="/mypage/myProfile">MY정보</NavLink>
 				</li>
 				{/* {decoded === 'ROLE_ADMIN' && (
 					<li>

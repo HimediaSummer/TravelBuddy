@@ -131,7 +131,29 @@ function Main() {
                 </div>
 					<button type='button' id='button' onClick={() => window.location.href='http://localhost:3000/schedule'} style={{position: 'absolute', top: '80%', left: '20%', transform: 'translate(-50%, -50%)', padding: '10px 20px', zindex:20, cursor: 'pointer' }}>시작하기</button>
             </div>
-                
+			<br/>
+			<hr/>
+			<div class="intro">
+				<div class="intro-content">
+				<h2>여행의 모든 걸 한 번에!</h2>
+				<h3>
+					원하는 여행 타입을 입력하면<br/>
+					완벽한 여행 일정을 생성해주는 서비스!
+					</h3>
+					<h3>
+					친구와의 특별한 여행부터 혼자만의 힐링 여행까지,<br/>
+					맞춤형으로 제안해줘.
+					</h3>
+					<h3>
+					새롭고 신나는 여행이 너를 기다리고 있어!<br/>
+					준비 됐어? 떠나보자!
+				</h3>
+				</div>
+				<div class="intro-image">
+					<img src="/Img/intro-image.png" alt='인트로이미지' width={'600px'} height={'300px'} />
+				</div>
+			</div>
+			<hr/>
             <div class="popular-city-title">
                 <i id="location-icon"class="fa-solid fa-location-dot"></i>
                 <h3>한국 여행 인기 도시</h3>

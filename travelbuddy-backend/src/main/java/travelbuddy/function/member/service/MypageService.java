@@ -51,16 +51,13 @@ public class MypageService {
     private final BuddyTypeRepository buddyTypeRepository;
     private final RegionRepository regionRepository;
     private final MyScheduleRepository myScheduleRepository;
-    private final AccountRepository accountRepository;
-    private final AccommodationRepository accommodationRepository;
-    private final MemberAnswerRepository memberAnswerRepository;
     private final ModelMapper modelMapper;
 
     /* 프로필사진 루트 */
     @Value("${image.profile.image-dir}")
-    private String IMAGE_DIR;
+    private String profileImgDir;
     @Value("${image.profile.image-url}")
-    private String IMAGE_URL;
+    private String profileImgUrl;
 
     /* buddyImg 루트 */
     @Value("${image.buddy.image-dir}")
@@ -69,16 +66,13 @@ public class MypageService {
     private String buddyImageUrl;
 
     @Autowired
-    public MypageService(MyBuddyRepository myBuddyRepository, MyBuddyMatchRepository myBuddyMatchRepository, MyProfileRepository myProfileRepository, BuddyTypeRepository buddyTypeRepository, RegionRepository regionRepository, MyScheduleRepository myScheduleRepository, AccountRepository accountRepository, AccommodationRepository accommodationRepository, MemberAnswerRepository memberAnswerRepository, ModelMapper modelMapper) {
+    public MypageService(MyBuddyRepository myBuddyRepository, MyBuddyMatchRepository myBuddyMatchRepository, MyProfileRepository myProfileRepository, BuddyTypeRepository buddyTypeRepository, RegionRepository regionRepository, MyScheduleRepository myScheduleRepository, ModelMapper modelMapper) {
         this.myBuddyRepository = myBuddyRepository;
         this.myBuddyMatchRepository = myBuddyMatchRepository;
         this.myProfileRepository = myProfileRepository;
         this.buddyTypeRepository = buddyTypeRepository;
         this.regionRepository = regionRepository;
         this.myScheduleRepository = myScheduleRepository;
-        this.accountRepository = accountRepository;
-        this.accommodationRepository = accommodationRepository;
-        this.memberAnswerRepository = memberAnswerRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -115,9 +109,12 @@ public class MypageService {
         }
 
         // 이미지 URL 추가 처리
-        accountMyProfile.forEach(account ->
-                account.setMemberImg(account.getMemberImg() == null ? null : IMAGE_URL + account.getMemberImg())
-        );
+        accountMyProfile.forEach(account -> {
+            String memberImg = account.getMemberImg();
+            account.setMemberImg((memberImg == null || memberImg.isEmpty())
+                    ? null
+                    : profileImgUrl + memberImg);
+        });
 
         log.info("[MypageService] selectMyProfile() END");
         return accountMyProfile;
@@ -135,7 +132,6 @@ public class MypageService {
 
         // 2. 기존 파일 삭제
         String oldImage = account.getMemberImg();
-
         String randomFileName = null;
 
         // 3. 새 파일 처리
@@ -146,28 +142,34 @@ public class MypageService {
             try {
                 randomFileName = UUID.randomUUID().toString().replace("-", "") + "." +
                         FilenameUtils.getExtension(profileImg.getOriginalFilename());
-                File dest = new File("C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/" + randomFileName);
 
-                // 파일 저장
-                profileImg.transferTo(dest);
-                log.info("File saved successfully to!!!!!!!!!!!!!!!!!!!!!!! {}", dest.getAbsolutePath());
-                log.info("[updateMyProfile] 새 파일 저장 완료: {}", randomFileName);
-
-                // 기존 파일 삭제 (default.png는 제외)
-                if (oldImage != null && !oldImage.equals("default.png")) {
-                    File oldFile = new File("C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/" + oldImage);
-                    if (oldFile.exists() && oldFile.delete()) {
-                        log.info("[updateMyProfile] 기존 파일 삭제 완료: {}", oldImage);
-                    } else {
-                        log.warn("[updateMyProfile] 기존 파일 삭제 실패: {}", oldImage);
-                    }
+                // 파일 저장 경로 설정 (profileImgDir 사용)
+                Path uploadPath = Paths.get(profileImgDir).toAbsolutePath(); // profileImgDir 값 활용
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                    log.info("Created directory: {}", uploadPath.toString());
                 }
 
+                Path destinationPath = uploadPath.resolve(randomFileName);
+                profileImg.transferTo(destinationPath.toFile());
+                log.info("File saved successfully to {}", destinationPath.toString());
+
+                // 기존 파일 삭제 (기본 이미지 제외)
+                if (oldImage != null && !oldImage.equals("member_img_default.png")) { // 기본 이미지명만 비교
+                    Path oldFilePath = Paths.get(profileImgDir).resolve(oldImage).toAbsolutePath(); // 절대 경로로 확인
+                    File oldFile = oldFilePath.toFile();
+                    if (oldFile.exists() && oldFile.delete()) {
+                        log.info("Deleted old image: {}", oldImage);
+                    } else {
+                        log.warn("Failed to delete old image or file not found: {}", oldImage);
+                    }
+                }
             } catch (IOException e) {
-                log.error("[updateMyProfile] 파일 저장 중 오류 발생", e);
-                throw new RuntimeException("파일 저장 중 오류 발생", e);
+                log.error("Error occurred while saving file", e);
+                throw new RuntimeException("File save error", e);
             }
         }
+
         // 2. 새로운 값이 있을 경우 기존 Account 엔티티 업데이트
         if (accountDTO.getMemberFullName() != null && !accountDTO.getMemberFullName().trim().isEmpty()) {
             account.setMemberFullName(accountDTO.getMemberFullName());
@@ -192,10 +194,6 @@ public class MypageService {
         if (randomFileName != null) {
             account.setMemberImg(randomFileName);
         }
-
-        // 저장 전후 비교 로그
-        log.info("After Update -> FullName: {}, Email: {}, Phone: {}, Profile Image: {}",
-                account.getMemberFullName(), account.getMemberEmail(), account.getMemberPhone(), account.getMemberImg());
 
         myProfileRepository.save(account);
         log.info("[MypageService] Account saved successfully!저장해라");
@@ -347,7 +345,7 @@ public class MypageService {
         if (getBuddyDetail.getBuddyImg() != null && !getBuddyDetail.getBuddyImg().isEmpty()) {
             // `,`로 나눠 List<String>으로 변환
             List<String> imageUrls = Arrays.stream(getBuddyDetail.getBuddyImg().split(","))
-                    .map(img -> buddyImageUrl + img.trim()) // 각 이미지 경로에 URL 추가
+                    .map(img -> profileImgUrl + img.trim()) // 각 이미지 경로에 URL 추가
                     .collect(Collectors.toList());
 
             // List<String> -> String으로 변환하여 DTO에 설정

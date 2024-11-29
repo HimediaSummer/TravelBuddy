@@ -94,13 +94,13 @@ form>div {
 	justify-content: center;
 }
 
-[type="text"] {
+/* [type="text"] { */
 	/* width: 290px;
 	height: 32px; */
 	/* border: 1px solid #ccc; */
 	/* border-radius: 4px; */
 	/* margin-left: 10px; */
-}
+/* } */
 
 [type="text"]:read-only {
 	background-color: #ccc
@@ -198,6 +198,13 @@ legend {
 	font-weight: bold;
 	font-size: 28px;
 }
+
+.popular-city-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px; /* 각 도시 간의 간격 */
+	justify-content: center; /* 가운데 정렬 */
+  }
 
 .popular-city-list p {
 	font-size: large;
@@ -584,9 +591,9 @@ select,
 	margin-bottom: 15px;
 }
 
-.tema-title {
-	/* padding-right: 20px; */
-}
+/* .tema-title {
+	padding-right: 20px;
+} */
 
 .rent-title {
 	padding-right: 23px;

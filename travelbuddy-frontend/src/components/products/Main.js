@@ -8,6 +8,7 @@ import LoginModal from '../common/LoginModal';
 function Main() {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+	const [region, setRegion] = useState([]);
 
   const dispatch = useDispatch(); // Redux dispatch
   const loginMember = useSelector((state) => state.memberReducer); // 저장소에서 가져온 loginMember 정보
@@ -23,6 +24,26 @@ function Main() {
       .then(data => setMessage(data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);
+
+  	// 장소 전체
+	useEffect(() => {
+		// 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
+		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/region`)
+			.then(response => response.json())
+			.then(data => {
+				const regions = data.data.regions.map(region => ({
+					regionCode: region.regionCode,
+					regionName: region.regionName,
+					regionDescription: region.regionDescription,
+					regionImg: region.regionImg,
+					regionThumbnailImg: region.regionThumbnailImg,
+					regionUserDetail: region.regionUserDetail
+				}));
+				console.log("가져왓냐?", data);
+				setRegion(regions);
+			})
+			.catch(error => console.error('Error fetching data:', error));
+	}, []);
 
 
   return (
@@ -114,7 +135,7 @@ function Main() {
                 <h3>한국 여행 인기 도시</h3>
             </div>
             <div class="popular-city-list">
-                <div class="city-box">
+                {/* <div class="city-box">
                     <img src="/Img/seoul.jpg"/>
                     <p id="city-title">seoul</p>
                     <p>서울</p>
@@ -129,7 +150,17 @@ function Main() {
                     <img src="/Img/jeju.jpg"/>
                     <p id="city-title">Jeju</p>
                     <p>제주</p>
-                </div>
+                </div> */}
+				{region.map((region) => (
+					<div className='city-box' key={region.regionCode}>
+						<div>
+							<img src={`/Img/${region.regionThumbnailImg}`} alt={region.regionName}/>
+						</div>
+						<div>
+							{region.regionName}
+						</div>
+					</div>
+				))}
             </div>
             </main>
             {/* Footer */}

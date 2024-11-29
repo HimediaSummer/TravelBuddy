@@ -422,17 +422,18 @@ VALUES
 
 -- 숙소 유형 데이터 예시
 INSERT INTO
-    tbl_accommodation (accom_code, accom_type, accom_name, accom_addres)
+    tbl_accommodation (accom_code, accom_type, accom_name, accom_addres, accom_thumbnail_img)
 VALUES
-    (1, '게스트하우스', '우리나라전통하우스', '서울시 강동구 청화로 37길 11 2층'),
+    (1, '게스트하우스', '게스트하우스', '다양한 사람들과 어울리며 숙박을 할 수 있습니다.', 'guesthouse_thumb.jpg'),
     (
         2,
         '호텔',
-        '트럼프 호텔',
-        '경주 맨하튼거리 372-531길 88 그린호스 사거리'
+        '호텔',
+        '깔끔하고 객실과 친절한 서비스를 받으며 숙박을 할 수 있습니다.',
+        'hotel_thumb.jpg'
     ),
-    (3, '빌라', '대흥빌라', '서울시 동작구 사당동 382 - 1길'),
-    (4, '펜션', '풍선 펜션', '강원도 언주시 망하산로 286길 우리은행 옆');
+    (3, '에어비앤비', '에어비앤비', '정형화된 숙소의 느낌보단 현지에서 생활하는 것 같은 느낌으로 숙박을 할 수 있습니다.', 'villa_thumb.jpg'),
+    (4, '펜션', '펜션', '자연과 어울리며 일행과 함께 프라이빗한 숙박을 할 수 있습니다.', 'cottage_thumb.jpg');
 
 -- tbl_Account
 INSERT INTO

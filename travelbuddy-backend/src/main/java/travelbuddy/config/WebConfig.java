@@ -6,20 +6,22 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.nio.file.Paths;
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     // Profile 이미지
-    @Value("${image.profile.resource-locations}")
-    private String profileResourceLocation;
-    @Value("${image.profile.resource-handler}")
-    private String profileResourceHandler;
+    @Value("${image.profile.image-dir}")
+    private String profileImgDir;
+    @Value("${image.profile.image-url}")
+    private String profileImgUrl;
 
     // Buddy 이미지
-    @Value("${image.buddy.resource-locations}")
-    private String buddyResourceLocation;
-    @Value("${image.buddy.resource-handler}")
-    private String buddyResourceHandler;
+    @Value("${image.buddy.image-dir}")
+    private String buddyImgDir;
+    @Value("${image.buddy.image-url}")
+    private String buddyImgUrl;
 
     @Value("${image.add-resource-locations}")
     private String ADD_RESOURCE_LOCATION;
@@ -34,11 +36,13 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations(ADD_RESOURCE_LOCATION);
 
         // Profile 이미지
-        registry.addResourceHandler(profileResourceHandler)
-                .addResourceLocations(profileResourceLocation);
+        String absoluteProfileImgDir = Paths.get(profileImgDir).toAbsolutePath().toString();
+        registry.addResourceHandler("/productimgs/**")
+                .addResourceLocations("file:" + absoluteProfileImgDir + "/");
 
         // Buddy 이미지
-        registry.addResourceHandler(buddyResourceHandler)
-                .addResourceLocations(buddyResourceLocation);
+        String absoluteBuddyImgDir = Paths.get(buddyImgDir).toAbsolutePath().toString();
+        registry.addResourceHandler("/productimgs/**")
+                .addResourceLocations("file:" + absoluteBuddyImgDir + "/");
     }
 }

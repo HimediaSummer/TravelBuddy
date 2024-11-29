@@ -71,7 +71,7 @@ function MyScheduleDetail() {
                             {testScheduleData && testScheduleData.length > 0 ? (
                                 Object.entries(groupByDate(testScheduleData.slice(1))).map(([date, items], dayIndex) => (
                                 <div className="day" key={dayIndex}>
-                                    <div className="day-header">
+                                    <div className="day-header2">
                                     <h3>{dayIndex + 1}일차</h3> {/* 1일차, 2일차 등의 표시 */}
                                     <span className="date">{date}</span>
                                     {/* <h3>{date}</h3> 날짜 표시 */}

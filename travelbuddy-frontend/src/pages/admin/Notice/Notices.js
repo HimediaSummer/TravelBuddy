@@ -139,7 +139,7 @@ useEffect(() => {
                     </tbody>
                 </table>
             </div>
-            <div style={{ listStyleType: "none", display: "flex" }}>
+            <div className='AdminAllCSSButtonList'>
                 { Array.isArray(filteredNoticeList) &&
                 <button 
                     onClick={() => setCurrentPage(currentPage - 1)} 
@@ -166,7 +166,7 @@ useEffect(() => {
                 </button>
                 }
             </div>
-            <button onClick={onClickNavigation}>작성</button>
+            <button className='CreateButton' onClick={onClickNavigation}>작성</button>
         </>
     );
 }

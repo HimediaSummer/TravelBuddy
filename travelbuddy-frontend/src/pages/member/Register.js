@@ -26,7 +26,7 @@ function Register() {
     useEffect(() => {
         if(member.status == 201){
             console.log("[Login] Register SUCCESS {}", member);
-            navigate("/login", { replace: true })
+            // navigate("/login", { replace: true })
         }
     },
     [member]);
@@ -83,6 +83,7 @@ function Register() {
         dispatch(callRegisterAPI({
             form: form
         }));
+        navigate("/success", { replace: true })
     }
 
     return (

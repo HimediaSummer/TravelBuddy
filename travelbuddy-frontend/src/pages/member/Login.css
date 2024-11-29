@@ -27,6 +27,11 @@
     border-radius: 25px;    
 }
 
+.loginDiv .check img{    
+    height: 400px;
+    width: 400px;
+}
+
 .loginDiv input {
     margin-top: 5px;
     margin-bottom: 20px;
@@ -54,6 +59,7 @@
 	border: none;
 	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
 	transition: background-color 0.5s ease;
+    cursor: pointer; /* 손가락 커서 */
 }
 
 .loginDiv button:hover {
@@ -75,6 +81,7 @@
 	font-size: 20px;
     text-decoration: none;
     color: #8CC8EA;
+    cursor: pointer; /* 손가락 커서 */
 }
 
 .loginDiv .footer a:hover {

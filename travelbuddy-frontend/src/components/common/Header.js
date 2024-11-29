@@ -67,7 +67,8 @@ function Header() {
     function AfterLogin() {
         return (
             <div>
-                <button onClick={onClickLogoutHandler}>로그아웃</button>
+                {/* <button onClick={onClickLogoutHandler}>로그아웃</button> */}
+                <a onClick={onClickLogoutHandler} style={{color: 'black'}}>로그아웃</a>
             </div>
         );
     }

@@ -1,16 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from "react";
 import { useParams } from 'react-router-dom';
-// import ReactQuill from 'react-quill';
-// import 'react-quill/dist/quill.snow.css';
 // import './MyPutBuddy.css';
 
 function MyPutBuddy() {
 
     const navigate = useNavigate();
     const { buddyCode } = useParams(); 
-      // Quill 에디터 내용 상태 관리
-    // const editorRef = useRef();
 
     const [formData, setFormData] = useState({
         buddyTitle: "",
@@ -66,42 +62,6 @@ function MyPutBuddy() {
         };
         fetchData();
     }, [buddyCode]);
-
-
-    // Quill 에디터 변경 핸들러
-    // const handleEditorChange = (content) => {
-    //     console.log("변경 핸들러 작동");
-    //     setFormData((prev) => ({
-    //         ...prev,
-    //         buddyContents: content,
-    //     }));
-    // };
-
-    // Quill 드롭다운 문제 해결
-    // useEffect(() => {
-    //     if (editorRef.current) {
-    //         const editor = editorRef.current.getEditor();
-    //         const toolbar = editor.root.parentNode.querySelector(".ql-toolbar");
-
-    //         if (toolbar) {
-    //             toolbar.addEventListener("mousedown", (e) => {
-    //                 const target = e.target;
-    //                 if (target && target.closest(".ql-picker-options")) {
-    //                     e.stopPropagation();
-    //                 }
-    //             });
-
-    //             return () => {
-    //                 toolbar.removeEventListener("mousedown", (e) => {
-    //                     const target = e.target;
-    //                     if (target && target.closest(".ql-picker-options")) {
-    //                         e.stopPropagation();
-    //                     }
-    //                 });
-    //             };
-    //         }
-    //     }
-    // }, []);
 
     // 입력 필드 변경 핸들러
     const handleInputChange = (e) => {
@@ -164,9 +124,7 @@ function MyPutBuddy() {
 
         const updatedData = new FormData();
         updatedData.append("buddyTitle", formData.buddyTitle);
-
-        // const editorContent = editorRef.current.getEditor().root.innerHTML;
-        // updatedData.append('buddyContents', editorContent);
+        updatedData.append('buddyContents', formData.buddyContents);
         updatedData.append("buddyContents", formData.buddyContents);
         updatedData.append("regionCode", formData.regionCode);
         updatedData.append("buddyTypeCode", formData.buddyTypeCode);
@@ -247,27 +205,6 @@ function MyPutBuddy() {
                         value={formData.buddyContents || ""}
                         onChange={handleInputChange}
                     />
-
-                {/* <ReactQuill
-                    ref={editorRef}
-                    value={formData.buddyContents } // 초기값
-                    onChange={handleEditorChange}
-                    theme="snow" // Quill 테마
-                    modules={{
-                        toolbar: [
-                            ["bold", "italic", "underline", "strike"],
-                            [{ header: [1, 2, 3, false] }],
-                            [{ list: "ordered" }, { list: "bullet" }],
-                            ["image"],
-                        ]
-                    }}
-                    formats={[
-                        "header",
-                        "bold", "italic", "underline", "strike",
-                        "list", "bullet",
-                        "image",
-                    ]}
-                /> */}
                 </label>
                 <br />
                 <label>

@@ -34,7 +34,7 @@ function MyMatchDetail() {
                         <li key={index}>
                             <p>제목 : {buddy.buddyTitle}</p>
                             <p>내용 : {buddy.buddyContents}</p>
-                            <p>이미지 : {buddy.buddyImg}</p>
+                            {/* <p>이미지 : {buddy.buddyImg}</p> */}
                             <p>지역 : {buddy.region.regionName}</p>
                             <p>작성일자 : {buddy.buddyCreate}</p>
                             <p>작성자 : {buddy.account.memberName}</p>

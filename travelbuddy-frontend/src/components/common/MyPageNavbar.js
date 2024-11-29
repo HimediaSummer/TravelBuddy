@@ -3,14 +3,13 @@ import React, { useState } from 'react';
 import './MypageNavbar.css';
 
 function MyPageNavbar() {
-
 	const [activeSubMenu, setActiveSubMenu] = useState(null);
 	const toggleSubMenu = (menu) => {
         setActiveSubMenu((prev) => (prev === menu ? null : menu)); // 현재 열려있으면 닫고, 아니면 연다
     };
 
     return (
-		<div>
+        <div className="navbar-main">
 			<ul>
 				<li>
 					<NavLink 
@@ -19,11 +18,12 @@ function MyPageNavbar() {
                             e.preventDefault(); // 기본 링크 동작 막기
                             toggleSubMenu('myInfo'); // 하위 메뉴 토글
                         }}
+                        className={({ isActive }) => (isActive ? 'active' : '')}
                     >
                         My정보
                     </NavLink>
 					{activeSubMenu === 'myInfo' && ( // My정보 하위 메뉴 표시 여부
-                        <ul style={{ marginLeft: '20px' }}>
+                         <ul className="navbar-sub">
                             <li>
                                 <NavLink to="/mypage/myprofile">내정보</NavLink>
                             </li>
@@ -48,11 +48,12 @@ function MyPageNavbar() {
                             e.preventDefault(); // 기본 링크 동작 막기
                             toggleSubMenu('myBuddy'); // 하위 메뉴 토글
                         }}
+                        className={({ isActive }) => (isActive ? 'active' : '')}
                     >
                         My버디
                     </NavLink>
 					{activeSubMenu === 'myBuddy' && ( // My버디 하위 메뉴 표시 여부
-                        <ul style={{ marginLeft: '20px' }}>
+                        <ul className="navbar-sub">
                             <li>
                                 <NavLink to="/mypage/mybuddy">My게시글</NavLink>
                             </li>

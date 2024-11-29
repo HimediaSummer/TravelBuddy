@@ -152,23 +152,8 @@ function MyBuddyDetail() {
                 <h3>내가 쓴 버디 게시글 상세 조회</h3>
                 <ul>
                     <li key={buddyDetail.buddyCode}>
-                       
-                        
-                        {/* 이미지 */}
                         {/* 이미지 슬라이드 */}
                         <ImageSlider images={buddyDetail.buddyImg} />
-                        {/* {buddyDetail.buddyImg && buddyDetail.buddyImg.length > 0 ? (
-                            buddyDetail.buddyImg.map((img, index) => (
-                                <img 
-                                    key={index}
-                                    src={img}
-                                    alt={`Buddy Image ${index + 1}`}
-                                    style={{ width: '200px', height: 'auto', marginRight: '10px' }}
-                                />
-                            ))
-                        ) : (
-                            <p>이미지가 없습니다.</p>
-                        )} */}
                         <p>제목 : {buddyDetail.buddyTitle}</p> 
                         <p>내용 : {buddyDetail.buddyContents}</p>
                         <p>지역 : {regionName}</p> 

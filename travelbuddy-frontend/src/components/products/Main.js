@@ -8,6 +8,7 @@ import LoginModal from '../common/LoginModal';
 function Main() {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+	const [region, setRegion] = useState([]);
 
   const dispatch = useDispatch(); // Redux dispatch
   const loginMember = useSelector((state) => state.memberReducer); // 저장소에서 가져온 loginMember 정보
@@ -24,6 +25,26 @@ function Main() {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
+  	// 장소 전체
+	useEffect(() => {
+		// 스프링에서 쏴준 URL을 리액트가 잡는곳 fetch로 잡아서 return을 화면에 message출력
+		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/region`)
+			.then(response => response.json())
+			.then(data => {
+				const regions = data.data.regions.map(region => ({
+					regionCode: region.regionCode,
+					regionName: region.regionName,
+					regionDescription: region.regionDescription,
+					regionImg: region.regionImg,
+					regionThumbnailImg: region.regionThumbnailImg,
+					regionUserDetail: region.regionUserDetail
+				}));
+				console.log("가져왓냐?", data);
+				setRegion(regions);
+			})
+			.catch(error => console.error('Error fetching data:', error));
+	}, []);
+
 
   return (
     <div className="Main">
@@ -36,7 +57,7 @@ function Main() {
                     <li class="slide-container">
                     <div class="slide">
                         <img src="/Img/schedulemain.PNG" alt="Busan"/>
-						<button type='button' id='button' onClick={() => window.location.href='http://localhost:3000/schedule'} style={{position: 'absolute', top: '80%', left: '20%', transform: 'translate(-50%, -50%)', padding: '10px 20px', zindex:20, cursor: 'pointer' }}>시작하기</button>
+						{/* <button type='button' id='button' onClick={() => window.location.href='http://localhost:3000/schedule'} style={{position: 'absolute', top: '80%', left: '20%', transform: 'translate(-50%, -50%)', padding: '10px 20px', zindex:20, cursor: 'pointer' }}>시작하기</button> */}
                     </div>
                     <div class="nav">
                     <label for="img-6" class="prev">&#x2039;</label>
@@ -104,17 +125,41 @@ function Main() {
                     </li>
                 </ul>
                 <div class="subtitle">
-                    <h2>여행의 모든 것 "트래블 버디"에 오신 것을 환영합니다</h2>
-                    <a href="#chat-box">여행계획부터 두근거리는 여행 사이트</a>
+                    <h2>여행의 모든 것 '트래블 버디'에 오신 것을 환영합니다</h2>
+                    {/* <a href="#chat-box">여행계획부터 두근거리는 여행 사이트</a> */}
+                    <h4>여행계획부터 두근거리는 여행 사이트</h4>
                 </div>
+					<button type='button' id='button' onClick={() => window.location.href='http://localhost:3000/schedule'} style={{position: 'absolute', top: '80%', left: '20%', transform: 'translate(-50%, -50%)', padding: '10px 20px', zindex:20, cursor: 'pointer' }}>시작하기</button>
             </div>
-                
+			<br/>
+			<hr/>
+			<div class="intro">
+				<div class="intro-content">
+				<h2>여행의 모든 걸 한 번에!</h2>
+				<h3>
+					원하는 여행 타입을 입력하면<br/>
+					완벽한 여행 일정을 생성해주는 서비스!
+					</h3>
+					<h3>
+					친구와의 특별한 여행부터 혼자만의 힐링 여행까지,<br/>
+					맞춤형으로 제안해줘.
+					</h3>
+					<h3>
+					새롭고 신나는 여행이 너를 기다리고 있어!<br/>
+					준비 됐어? 떠나보자!
+				</h3>
+				</div>
+				<div class="intro-image">
+					<img src="/Img/intro-image.png" alt='인트로이미지' width={'600px'} height={'300px'} />
+				</div>
+			</div>
+			<hr/>
             <div class="popular-city-title">
                 <i id="location-icon"class="fa-solid fa-location-dot"></i>
                 <h3>한국 여행 인기 도시</h3>
             </div>
             <div class="popular-city-list">
-                <div class="city-box">
+                {/* <div class="city-box">
                     <img src="/Img/seoul.jpg"/>
                     <p id="city-title">seoul</p>
                     <p>서울</p>
@@ -129,7 +174,18 @@ function Main() {
                     <img src="/Img/jeju.jpg"/>
                     <p id="city-title">Jeju</p>
                     <p>제주</p>
-                </div>
+                </div> */}
+				{region.map((region) => (
+					<div className='city-box' key={region.regionCode}>
+						<div>
+							<img src={`/Img/${region.regionThumbnailImg}`} alt={region.regionName} style={{borderRadius: '15px'}}/>
+						</div>
+						<div>
+							<br/>
+							{region.regionName}
+						</div>
+					</div>
+				))}
             </div>
             </main>
             {/* Footer */}

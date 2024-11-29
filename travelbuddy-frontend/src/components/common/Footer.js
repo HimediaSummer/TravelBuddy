@@ -3,7 +3,7 @@
 function Footer() {
 	return (
 		<div>
-			<h3 style={{ width: '100%', textAlign: 'center' }}>
+			<h3 style={{ width: '100%', textAlign: 'center'}}>
 				Copyright 2024. ohgiraffers All rights reserved.{' '}
 			</h3>
 		</div>

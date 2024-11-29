@@ -57,7 +57,7 @@ function Main() {
                     <li class="slide-container">
                     <div class="slide">
                         <img src="/Img/schedulemain.PNG" alt="Busan"/>
-						<button type='button' id='button' onClick={() => window.location.href='http://localhost:3000/schedule'} style={{position: 'absolute', top: '80%', left: '20%', transform: 'translate(-50%, -50%)', padding: '10px 20px', zindex:20, cursor: 'pointer' }}>시작하기</button>
+						{/* <button type='button' id='button' onClick={() => window.location.href='http://localhost:3000/schedule'} style={{position: 'absolute', top: '80%', left: '20%', transform: 'translate(-50%, -50%)', padding: '10px 20px', zindex:20, cursor: 'pointer' }}>시작하기</button> */}
                     </div>
                     <div class="nav">
                     <label for="img-6" class="prev">&#x2039;</label>
@@ -125,9 +125,11 @@ function Main() {
                     </li>
                 </ul>
                 <div class="subtitle">
-                    <h2>여행의 모든 것 "트래블 버디"에 오신 것을 환영합니다</h2>
-                    <a href="#chat-box">여행계획부터 두근거리는 여행 사이트</a>
+                    <h2>여행의 모든 것 '트래블 버디'에 오신 것을 환영합니다</h2>
+                    {/* <a href="#chat-box">여행계획부터 두근거리는 여행 사이트</a> */}
+                    <h4>여행계획부터 두근거리는 여행 사이트</h4>
                 </div>
+					<button type='button' id='button' onClick={() => window.location.href='http://localhost:3000/schedule'} style={{position: 'absolute', top: '80%', left: '20%', transform: 'translate(-50%, -50%)', padding: '10px 20px', zindex:20, cursor: 'pointer' }}>시작하기</button>
             </div>
                 
             <div class="popular-city-title">
@@ -154,9 +156,10 @@ function Main() {
 				{region.map((region) => (
 					<div className='city-box' key={region.regionCode}>
 						<div>
-							<img src={`/Img/${region.regionThumbnailImg}`} alt={region.regionName}/>
+							<img src={`/Img/${region.regionThumbnailImg}`} alt={region.regionName} style={{borderRadius: '15px'}}/>
 						</div>
 						<div>
+							<br/>
 							{region.regionName}
 						</div>
 					</div>

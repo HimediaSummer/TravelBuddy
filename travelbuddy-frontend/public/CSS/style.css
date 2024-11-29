@@ -26,6 +26,11 @@ ul {
 	font-family: '카페24 써라운드';
 }
 
+footer div {
+	font-family: '카페24 써라운드 에어' !important;
+	font-size: 15px;
+}
+
 .menu {
 	font-family: '카페24 써라운드 에어';
 }
@@ -44,11 +49,20 @@ ul {
 .subtitle {
 	font-size: large;
 	position: absolute;
-	color: #ffffff;
+	color: var(--accent-color);
 	font-weight: bold;
 	top: 5px;
 	margin: 5px 0px 0px 20px;
+}
 
+.subtitle h2 {
+	margin-left: 50px;
+	color: var(--accent-color);
+}
+
+.subtitle h4 {
+	margin-left: 50px;
+	color: var(--accent-color);
 }
 
 .subtitle>a:hover {
@@ -235,6 +249,7 @@ legend {
 	border-radius: 4px;
 	text-align: center;
 	overflow: hidden;
+	border-radius: 15px;
 }
 
 #city-title {

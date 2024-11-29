@@ -123,7 +123,6 @@ function Schedule() {
 						{/* Region */}
 						{/* Accommodation */}
 						{/* Qestion */}
-						{/* Schedule */}
 						{/* Loading */}
 						{steps[currentStep]}
 					</div>

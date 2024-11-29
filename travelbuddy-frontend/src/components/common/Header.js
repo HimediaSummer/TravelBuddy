@@ -73,6 +73,13 @@ function Header() {
         );
     }
 
+    const getMyPageLink = () => {
+        if (token?.auth && token.auth.includes('ROLE_ADMIN')) {
+            return { link: "/admin", text: "관리자페이지" };
+        }
+        return { link: "/mypage", text: "MY정보" };
+    };
+
     return (
         <div className="HeaderContainer">
             {/* <title>Travel Buddy</title>
@@ -87,7 +94,11 @@ function Header() {
 					</h1>
             <ul class="menu">
                 <li>
-                    <NavLink to="/mypage">MY정보</NavLink>
+                    {/* <NavLink to="/mypage">MY정보</NavLink> */}
+                    {(() => {
+                            const myPage = getMyPageLink();
+                            return <NavLink to={myPage.link}>{myPage.text}</NavLink>;
+                        })()}
                 </li>
                 <li>
                     {/* <li onClick={handleLoginClick}>로그인</li> */}

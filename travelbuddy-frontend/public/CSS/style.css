@@ -4,6 +4,19 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap');
 /* font-family: 'IBM Plex Sans KR', sans-serif; */
 
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('/font/Cafe24Ssurround-v2.0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cafe24SsurroundAir';
+    src: url('/font/Cafe24SsurroundAir-v1.1.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 :root {
 	--text-color: #8CC8EA;
@@ -53,7 +66,6 @@ footer div {
 	font-weight: bold;
 	top: 5px;
 	margin: 5px 0px 0px 20px;
-}
 
 .subtitle h2 {
 	margin-left: 50px;
@@ -1461,11 +1473,11 @@ select,
 	justify-content: space-between; /* 왼쪽은 dayIndex, 오른쪽은 date */
 	margin-bottom: 20px; /* 날짜 정보 아래 여백 */
   }
-  
+
   .day-header2 h3 {
 	margin: 0;
   }
-  
+
   .day-header2 .date {
 	font-size: 1rem;
 	color: gray;
@@ -1481,9 +1493,9 @@ select,
 	width: 1500px;
 	display: flexbox; /* flexbox 사용 */
 	flex-direction: column; /* 세로 방향으로 정렬 */
-	
+
 	}
-	
+
 	.BuddyContainer p {
 	font-family: 'Cafe24 Ssurround';
 		font-size: 40px;
@@ -1491,7 +1503,7 @@ select,
 		color: #1F709E;
 	margin-right: 610px;
 	}
-	
+
 	.BuddyContainer h2 {
 	font-family: 'Cafe24 Ssurround';
 		font-size: 40px;
@@ -1499,7 +1511,7 @@ select,
 		color: #1F709E;
 		margin-left: 340px;
 	}
-	
+
 	.BuddyContainer input {
 	font-family: 'Cafe24 Ssurround air';
 		font-size: 20px;
@@ -1510,8 +1522,8 @@ select,
 	height: 50px;
 	text-align: center;
 	}
-	
-	
+
+
 	.BuddyContainer .header {
 		display: flex; /* 수평 정렬을 위해 flexbox 사용 */
 		align-items: center; /* 수직 가운데 정렬 */
@@ -1520,19 +1532,19 @@ select,
 	margin-bottom: 0;
 	height: 91px;
 	}
-	
+
 	.BuddyContainer table {
 	display: grid; /* grid 사용 */
 	/* 수평 및 수직 가운데 정렬 */
-		place-items: center; 
+		place-items: center;
 	/*  수직 가운데 정렬 */
 		align-items: center;
 	/* 전체 화면 높이 */
-		height: 100%; 
+		height: 100%;
 	/* 테이블의 너비를 100%로 설정 (필요시) */
-	width: 100%; 
+	width: 100%;
 	/* 테이블 셀 간의 경계 제거 */
-		border-collapse: collapse; 
+		border-collapse: collapse;
 	margin-top: 0;
 	margin-left: 270px;
 	justify-content: center;
@@ -1548,20 +1560,20 @@ select,
 	background-color: #8CC8EA;
 	border: none; /* 버튼의 테두리 제거 */
 	cursor: pointer;
-	
+
 	}
-	
+
 	.BuddyContainer thead {
 	height: 60px;
-	
+
 	}
-	
-	
+
+
 	.BuddyContainer tr:Hover:not(thead tr) {
 	background-color: #f3f2f2;
 	}
 	/* border-radius: 25px; */
-	
+
 	.BuddyContainer th {
 	font-family: 'Cafe24 Ssurround air';
 		font-size: 20px;
@@ -1569,16 +1581,16 @@ select,
 		text-align: center; /* 텍스트 정렬 (필요시) */
 	background-color: #8CC8EA;
 	}
-	
+
 	.BuddyContainer td {
 	font-family: 'Cafe24 Ssurround air';
 		font-size: 20px;
 		text-align: center; /* 텍스트 정렬 (필요시) */
 		border-bottom: 1px solid #ccc; /* 하단 경계선 추가 (선택 사항) */
 	cursor: pointer;
-	transition: background-color 0.3s;   
+	transition: background-color 0.3s;
 	}
-	
+
 	.th1buddy {
 		width: 120px;
 	}
@@ -1600,7 +1612,7 @@ select,
 	.th7buddy {
 		width: 165px;
 	}
-	
+
 	.td1buddy {
 		width: 120px;
 	}
@@ -1622,7 +1634,7 @@ select,
 	.td7buddy {
 		width: 165px;
 	}
-	
+
 	.AdminAllCSSButtonList {
 	list-style-type: none;
 	/* 그리드 사용 */
@@ -1631,7 +1643,7 @@ select,
 	width: 1750px;
 	margin-top: 10px;
 	}
-	
+
 	.AdminAllCSSButtonList button {
 	margin: 0 5px; /* 버튼 간의 간격 조정 */
 		padding: 10px 20px; /* 버튼의 패딩 조정 */
@@ -1640,9 +1652,9 @@ select,
 		color: #2e2d2d; /* 버튼 글자색 */
 		border: #2e2d2d;
 		cursor: pointer; /* 마우스 커서를 포인터로 변경 */
-	
+
 	}
-	
+
 	.CreateButton button {
 	font-family: 'Cafe24 Ssurround';
 		font-size: 20px;
@@ -1656,14 +1668,14 @@ select,
 	cursor: pointer;
 	margin-bottom: 0;
 	}
-	
+
 	.BuddyContainer button:Hover {
-		background-color: #1F709E;   
-		transition: background-color 0.3s;   
+		background-color: #1F709E;
+		transition: background-color 0.3s;
 	}
-	
-	
-	
+
+
+
 	.InsertButton button {
 	font-family: 'Cafe24 Ssurround';
 		font-size: 20px;
@@ -1678,9 +1690,8 @@ select,
 	margin-top: 0;
 	}
 	.InsertButton button:Hover {
-	background-color: #1F709E;   
+	background-color: #1F709E;
 	}
-	
-	
-	
-	
+
+
+

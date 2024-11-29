@@ -434,50 +434,52 @@ public class MypageService {
 
         // 4. 이미지 처리
         if (postImg != null && postImg.length > 0) {
-            long totalSize = 0;
-            List<String> savedFileNames = new ArrayList<>();
-            String basePath = "C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/";
-
-            // 총 용량 확인 및 파일 저장
-            for (MultipartFile file : postImg) {
-                totalSize += file.getSize();
-
-                // 유효성 검사: 파일 크기 제한
-                if (totalSize > 1048576) { // 1MB = 1,048,576 bytes
-                    throw new IllegalArgumentException("이미지의 총 용량은 최대 1MB까지 허용됩니다.");
+            try {
+                // 디렉토리 생성 여부 확인
+                Path uploadPath = Paths.get(buddyImageDir).toAbsolutePath(); // buddyImageDir 사용
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                    log.info("Created directory: {}", uploadPath.toString());
                 }
 
-                // 파일 저장
-                String randomFileName = UUID.randomUUID().toString().replace("-", "") + "." +
-                        FilenameUtils.getExtension(file.getOriginalFilename());
-                Path destPath = Paths.get(basePath, randomFileName);
+                // 새 파일 저장 및 총 용량 제한 확인
+                List<String> savedFileNames = new ArrayList<>();
+                long totalSize = 0;
+                for (MultipartFile file : postImg) {
+                    totalSize += file.getSize();
+                    if (totalSize > 1048576) { // 총 용량 제한: 1MB
+                        throw new IllegalArgumentException("이미지의 총 용량은 최대 1MB까지 허용됩니다.");
+                    }
 
-                try {
-                    Files.copy(file.getInputStream(), destPath);
+                    String randomFileName = UUID.randomUUID().toString().replace("-", "") + "." +
+                            FilenameUtils.getExtension(file.getOriginalFilename());
+                    Path destinationPath = uploadPath.resolve(randomFileName);
+                    file.transferTo(destinationPath.toFile());
+                    log.info("File saved successfully: {}", destinationPath.toString());
                     savedFileNames.add(randomFileName);
-                    log.info("Saved file: {}", randomFileName);
-                } catch (IOException e) {
-                    log.error("Error while saving image file", e);
-                    throw new RuntimeException("파일 저장 중 오류 발생", e);
                 }
-            }
 
-            // 기존 파일 삭제 (기본 이미지 제외)
-            String existingImages = buddy.getBuddyImg();
-            if (existingImages != null && !existingImages.isEmpty()) {
-                for (String oldImage : existingImages.split(",")) {
-                    if (!oldImage.equals("default.png")) {
-                        File oldFile = new File(basePath + oldImage.trim());
+                // 기존 파일 삭제 (기본 이미지 제외)
+                if (buddy.getBuddyImg() != null && !buddy.getBuddyImg().equals("default.png")) {
+                    String[] oldImages = buddy.getBuddyImg().split(",");
+                    for (String oldImage : oldImages) {
+                        Path oldFilePath = uploadPath.resolve(oldImage).toAbsolutePath();
+                        File oldFile = oldFilePath.toFile();
                         if (oldFile.exists() && oldFile.delete()) {
-                            log.info("Deleted old file: {}", oldImage);
+                            log.info("Deleted old image: {}", oldImage);
                         } else {
-                            log.warn("Failed to delete old file: {}", oldImage);
+                            log.warn("Failed to delete old image: {}", oldImage);
                         }
                     }
                 }
+
+                // 새 이미지 이름 저장
+                buddy.setBuddyImg(String.join(",", savedFileNames));
+
+            } catch (IOException e) {
+                log.error("Error occurred while processing files", e);
+                throw new RuntimeException("파일 저장 중 오류 발생", e);
             }
-            // 새로운 파일 이름 저장
-            buddy.setBuddyImg(String.join(",", savedFileNames));
         }
 
         // 5. 변경된 게시글 저장

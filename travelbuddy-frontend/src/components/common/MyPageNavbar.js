@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MypageNavbar.css';
 import { decodeJwt } from '../../utils/tokenUtils';
 import MyPageNavbarCSS from './MyPageNavbarCSS.css';
@@ -10,9 +10,27 @@ function MyPageNavbar() {
 	const toggleSubMenu = (menu) => {
         setActiveSubMenu((prev) => (prev === menu ? null : menu)); // 현재 열려있으면 닫고, 아니면 연다
     };
+    const closeSubMenu = () => {
+        setActiveSubMenu(null); // 하위 네비바 닫기
+    };
+
+    useEffect(() => {
+        // 페이지 외부 클릭 감지
+        const handleClickOutside = (event) => {
+            if (!event.target.closest('.navbar-main')) {
+                closeSubMenu(); // 네비게이션 외부 클릭 시 하위 네비바 닫기
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
     return (
-		<div className='adminNavBarContainer'>
+        <div className="navbar-main">
+		{/*<div className='adminNavBarContainer'>*/}
 			<ul>
 				<li>
 					<NavLink
@@ -21,11 +39,12 @@ function MyPageNavbar() {
                             e.preventDefault(); // 기본 링크 동작 막기
                             toggleSubMenu('myInfo'); // 하위 메뉴 토글
                         }}
+                        className={({ isActive }) => (isActive ? 'active' : '')}
                     >
-                        My정보
+                        MY정보
                     </NavLink>
 					{activeSubMenu === 'myInfo' && ( // My정보 하위 메뉴 표시 여부
-                        <ul style={{ marginLeft: '20px' }}>
+                         <ul className="navbar-sub">
                             <li>
                                 <NavLink to="/mypage/myprofile">내정보</NavLink>
                             </li>
@@ -40,7 +59,7 @@ function MyPageNavbar() {
 				</li>
 				<li>
 					<NavLink to="/mypage/myschedule">
-                        My일정
+                        MY일정
                     </NavLink>
 				</li>
 				<li>
@@ -50,11 +69,12 @@ function MyPageNavbar() {
                             e.preventDefault(); // 기본 링크 동작 막기
                             toggleSubMenu('myBuddy'); // 하위 메뉴 토글
                         }}
+                        className={({ isActive }) => (isActive ? 'active' : '')}
                     >
-                        My버디
+                        MY버디
                     </NavLink>
 					{activeSubMenu === 'myBuddy' && ( // My버디 하위 메뉴 표시 여부
-                        <ul style={{ marginLeft: '20px' }}>
+                        <ul className="navbar-sub">
                             <li>
                                 <NavLink to="/mypage/mybuddy">My게시글</NavLink>
                             </li>

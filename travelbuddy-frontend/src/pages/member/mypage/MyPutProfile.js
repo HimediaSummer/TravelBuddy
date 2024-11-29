@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import{callMyProfileAPI,updateProfileAPI } from '../../../apis/MypageAPICalls.js';
+import { callMyProfileAPI, updateProfileAPI } from '../../../apis/MypageAPICalls.js';
+import './MyPutProfile.css';
 
 function MyPutProfile() {
     const navigate = useNavigate();
@@ -17,30 +18,23 @@ function MyPutProfile() {
     });
     const [previewImage, setPreviewImage] = useState(null); // 이미지 미리보기
 
-     // 회원정보 조회
-     useEffect(() => {
+    // 회원정보 조회
+    useEffect(() => {
         dispatch(callMyProfileAPI());
     }, [dispatch]);
 
     // Redux 상태가 변경되면 formData에 반영
     useEffect(() => {
-        console.log("Redux에서 가져온 profile:", profile);
-        if (profile) {
-            const FormData = {
-                memberName: profile[0].memberName || "",
-                memberFullName: profile[0].memberFullName || "",
-                memberEmail: profile[0].memberEmail || "",
-                memberPhone: profile[0].memberPhone || "",
+        if (profile && profile.length > 0) {
+            setFormData({
+                memberName: profile[0]?.memberName || "",
+                memberFullName: profile[0]?.memberFullName || "",
+                memberEmail: profile[0]?.memberEmail || "",
+                memberPhone: profile[0]?.memberPhone || "",
                 profileImg: null,
-            };
-            console.log("기존 formData:", FormData); // formData 상태 확인
-            setFormData(FormData);
+            });
         }
     }, [profile]);
-
-
-
-
 
     useEffect(() => {
         if (formData.profileImg) {
@@ -55,49 +49,10 @@ function MyPutProfile() {
     const handleChange = (e) => {
         const { name, value, files } = e.target;
 
-
-    console.log("Input name시험을망쳤어 오 집에가기싫었어:", name); // 어떤 input 필드인지 확인
-    console.log("Input value시험을망쳤어 오 집에가기싫었어:", value); // 입력된 값 확인
-    console.log("Input files시험을망쳤어 오 집에가기싫었어:", files); // 파일 입력 여부 확인
-
-        if (files) {
-            const profileImg = files[0];
-            const allowedExtensions = ["png", "jpg", "jpeg"];
-            const fileExtension = profileImg.name.split(".").pop().toLowerCase();
-    
-            console.log("Uploaded file시험을망쳤어 오 집에가기싫었어:", profileImg);
-
-            if (!allowedExtensions.includes(fileExtension)) {
-                alert("이미지는 .png, .jpg, .jpeg만 가능합니다.");
-                e.target.value = null;
-                return;
-            }
-            if (profileImg.size > 1048576) {
-                alert("이미지는 최대 1MB까지 첨부 가능합니다.");
-                e.target.value = null;
-
-                
-                return;
-            }
-    
-            setFormData((prevFormData) => {
-                const updatedFormData = {
-                    ...prevFormData,
-                    profileImg,
-                };
-                console.log("Updated formData after file upload시험을망쳤어 오 집에가기싫었어:", updatedFormData); // 업데이트된 상태 확인
-                return updatedFormData;
-        });
+        if (files && files.length > 0) {
+            setFormData((prevFormData) => ({ ...prevFormData, profileImg: files[0] }));
         } else {
-           // 텍스트 입력일 경우
-            setFormData((prevFormData) => {
-                const updatedFormData = {
-                    ...prevFormData,
-                    [name]: value, // name 속성을 키로 사용
-                };
-                console.log("Updated formData after text input시험을망쳤어 오 집에가기싫었어:", updatedFormData); // 업데이트된 상태 확인
-                return updatedFormData;
-            });
+            setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
         }
     };
 
@@ -105,92 +60,166 @@ function MyPutProfile() {
         e.preventDefault();
         const data = new FormData();
         Object.keys(formData).forEach((key) => {
-            if (key !== "profileImg" && formData[key]) {
+            if (formData[key]) {
                 data.append(key, formData[key]);
             }
         });
-        if (formData.profileImg) {
-            data.append("profileImg", formData.profileImg);
-        } else if (profile.memberImg) {
-            data.append("profileImg", profile.memberImg);
-        } else {
-            data.append("profileImg", "default.png");
-        }
-
         dispatch(updateProfileAPI(data, navigate));
-        
     };
 
-    if (!profile) {
-        return <p>Loading...</p>;
+    if (!profile || profile.length === 0) {
+        return <p>Loading...</p>; // profile 데이터가 없으면 로딩 메시지를 표시
     }
 
     return (
-        <div>
-            <h3>회원 정보 수정</h3>
-            <form onSubmit={handleUpdate}>
-                <label>
-                    아이디:
-                    <input
-                        type="text"
-                        name="memberName"
-                        value={formData.memberName || ""}
-                        onChange={handleChange}
-                    />
-                </label>
-                <br />
-                <label>
-                    이름:
-                    <input
-                        type="text"
-                        name="memberFullName"
-                        value={formData.memberFullName || ""}
-                        onChange={handleChange}
-                    />
-                </label>
-                <br />
-                <label>
-                    이메일:
-                    <input
-                        type="email"
-                        name="memberEmail"
-                        value={formData.memberEmail || ""}
-                        onChange={handleChange}
-                    />
-                </label>
-                <br />
-                <label>
-                    전화번호:
-                    <input
-                        type="text"
-                        name="memberPhone"
-                        value={formData.memberPhone || ""}
-                        onChange={handleChange}
-                    />
-                </label>
-                <br />
-                <label>
-                    이미지:
-                    <input
-                        type="file"
-                        name="profileImg"
-                        accept="image/*"
-                        onChange={handleChange}
-                    />
-                    <br />
-                    <small>이미지는 최대 1MB까지 첨부 가능합니다. (.png, .jpg, .jpeg만 허용)</small>
-                    {previewImage ? (
-                        <img src={previewImage} alt="Profile Preview" style={{ width: "100px", height: "100px" }} />
-                    ) : profile.memberImg && (
-                        <img src={profile.memberImg} alt="Profile" style={{ width: "100px", height: "100px" }} />
-                    )}
-                </label>
-                <br />
-                <button type="submit">수정완료</button>
-                <button type="button" onClick={() => navigate('/mypage/myprofile')}>취소</button>
+        <div className="my-put-profile-page">
+            <h1 className="page-title">회원 정보 수정</h1>
+            <form className="profile-form" onSubmit={handleUpdate}>
+                <div className="profile-row">
+                    
+                    {/* 왼쪽 열 */}
+                    <div className="profile-left">
+                        {previewImage ? (
+                            <img src={previewImage} alt="Profile Preview" className="profile-img" />
+                        ) : (
+                            <img
+                                src={profile[0]?.memberImg}
+                                alt="Profile"
+                                className="profile-img"
+                            />
+                        )}
+                        <button
+                            type="button"
+                            className="image-upload-button"
+                            onClick={handleChange}
+                        >
+                            이미지 수정
+                        </button>
+                    </div>
+                    {/* 오른쪽 열 */}
+                    <div className="profile-right">
+                        <div className="profile-info">
+                            <div className="info-row">
+                                <label className="info-label" htmlFor="memberName">아이디</label>
+                                <input
+                                    type="text"
+                                    id="memberName"
+                                    name="memberName"
+                                    className="info-value"
+                                    value={formData.memberName || ""}
+                                    onChange={handleChange}
+                                    disabled
+                                />
+                            </div>
+                            <div className="info-row">
+                                <label className="info-label" htmlFor="memberFullName">이름</label>
+                                <input
+                                    type="text"
+                                    id="memberFullName"
+                                    name="memberFullName"
+                                    className="info-value"
+                                    value={formData.memberFullName || ""}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="info-row">
+                                <label className="info-label" htmlFor="memberEmail">이메일</label>
+                                <input
+                                    type="email"
+                                    id="memberEmail"
+                                    name="memberEmail"
+                                    className="info-value"
+                                    value={formData.memberEmail || ""}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="info-row">
+                                <label className="info-label" htmlFor="memberPhone">전화번호</label>
+                                <input
+                                    type="text"
+                                    id="memberPhone"
+                                    name="memberPhone"
+                                    className="info-value"
+                                    value={formData.memberPhone || ""}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="button-container">
+                    <button type="submit">수정완료</button>
+                    <button type="button" onClick={() => navigate('/mypage/myprofile')}>취소</button>
+                </div>
             </form>
         </div>
     );
 }
+
+
+
+
+
+
+                    {/* <label htmlFor="memberName">아이디</label>
+                        <input
+                            type="text"
+                            name="memberName"
+                            value={formData.memberName || ""}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                    <label htmlFor="memberFullName">이름</label>
+                        <input
+                            type="text"
+                            name="memberFullName"
+                            value={formData.memberFullName || ""}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                    <label htmlFor="memberEmail">이메일</label>
+                        <input
+                            type="email"
+                            name="memberEmail"
+                            value={formData.memberEmail || ""}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                    <label htmlFor="memberPhone">전화번호</label>
+                        <input
+                            type="text"
+                            name="memberPhone"
+                            value={formData.memberPhone || ""}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="profileImg">이미지</label>
+                        <input
+                            type="file"
+                            id="profileImg"
+                            name="profileImg"
+                            accept="image/*"
+                            onChange={handleChange}
+                        />
+                        {previewImage ? (
+                            <img src={previewImage} alt="Profile Preview" className="profile-preview" />
+                        ) : (
+                            profile[0]?.memberImg && (
+                                <img src={profile[0].memberImg} alt="Profile" className="profile-preview" />
+                            )
+                        )}
+                    </div> */}
+//                     <div className="button-container">
+//                         <button type="submit">수정완료</button>
+//                         <button type="button" onClick={() => navigate('/mypage/myprofile')}>취소</button>
+//                     </div>
+//             </form>
+//         </div>
+//     );
+// }
 
 export default MyPutProfile;

@@ -1,6 +1,53 @@
-/* General container styling */
-.profile-container {
+@font-face {
+    font-family: 'Cafe24SsurroundAir';
+    src: url('/font/Cafe24SsurroundAir-v1.1.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('/font/Cafe24Ssurround-v2.0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.profile-container * {
+    font-family: 'Cafe24SsurroundAir' !important;
+}
+
+.my-profile-page {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+}
+
+.page-title {
+    font-family: 'Cafe24Ssurround', sans-serif;
+    margin: 20px 0;
+    position: absolute; 
+    top: 20px;
+    left: 20px;
+    color: #1F709E;
+}
+
+/* 테이블 스타일 */
+.profile-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+/* 헤더 셀 */
+.profile-header {
+    font-size: 32px;
+    padding: 20px 0;
+}
+
+/* .profile-container {
     display: flex;
+    flex-direction: column;
     max-width: 800px;
     margin: 0 auto;
     background-color: #ffffff;
@@ -9,15 +56,25 @@
     font-family: Arial, sans-serif;
     color: #333;
     border: 0.5px solid rgba(140, 200, 234, 0.6);
-}
+} */
 
-.profile-left {
-    flex: 1; /* 왼쪽 열 */
+/* 테이블 스타일 */
+.profile-table {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 20px; /* 각 행 간 간격 */
+}
+
+/* 각 행 스타일 */
+.profile-row {
+    display: flex;
+    gap: 20px; 
+}
+
+/* 이미지와 좋아요가 들어가는 셀 */
+.profile-left {
     text-align: center;
-    margin-right: 20px;
+    padding: 20px;
 }
 
 /* 프로필 이미지 */
@@ -28,36 +85,50 @@
     margin-bottom: 10px;
 }
 
-.profile-left .like-count {
-    font-size: 20px;
+.like-count {
+    font-size: 18px;
     color: #000;
 }
 
 .profile-right {
-    flex: 2;
+    padding: 20px;
 }
 
-.profile-info p {
-    font-size: 20px;
-    text-align: left;
-    position: relative;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #8CC8EA;
-    width: 500px;
-}
-
-.profile-info .profile-like {
-    font-size: 20px;
-    color: #ff4d4f;
-    margin-top: 10px;
-}
-
-/* 버튼 */
-.button-container {
+.profile-info {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.info-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* 1:2 비율로 열 분배 */
+    align-items: center;
+    border-bottom: 1px solid #8CC8EA;
+    padding: 10px 0;
+}
+
+.info-label {
+    font-weight: bold;
+    text-align: left;
+    color: #333;
+}
+
+.info-value {
+    text-align: left;
+    color: #555;
+}
+
+
+.button-container {
+    font-family: 'Cafe24Ssurround', sans-serif;
+    position: fixed;
+    bottom: 20px;
+    right: 20px; 
+    display: flex;
     gap: 15px;
+    z-index: 100; 
 }
 
 .button-container button {

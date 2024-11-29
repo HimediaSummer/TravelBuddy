@@ -1,1 +1,79 @@
-/* dd */
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('/font/Cafe24Ssurround-v2.0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.navbar-main, .navbar-main * {
+    font-family: 'Cafe24Ssurround' !important;
+}
+
+/* 상위 네비바 스타일 */
+.navbar-main {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    font-family: 'Cafe24Ssurround';
+}
+
+.navbar-main ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-main li {
+    position: relative;
+}
+
+.navbar-main a {
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 12px;
+    font-size: 32px;
+    color: #8CC8EA;
+}
+
+/* 활성화된 상위 메뉴 */
+.navbar-main .active {
+    color: #1F709E;
+}
+
+/* 하위 네비바 스타일 */
+.navbar-sub {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    margin-left: 27px;
+    list-style: none;
+    padding: 0;
+    background-color: #f2f2f2;
+    border-radius: 15px;
+    min-width: 150px;
+}
+
+.navbar-sub li {
+    margin: 0;
+}
+
+.navbar-sub a {
+    padding: 8px 20px;
+    display: inline-block;
+    text-decoration: none;
+    transition: color 0.3s, background-color 0.3s;
+    font-size: 26px;
+    white-space: nowrap;
+}
+
+.navbar-sub a:hover {
+    color: #1F709E;
+}

@@ -81,7 +81,7 @@ function Header() {
 					<h1>
 						<div class="header-click">
 							{/* <i class="fa-solid fa-globe"></i> */}
-							<a href="http://localhost:3000"><img src="/Img/TravelBuddy(128).png" alt="Main logo" style={{marginLeft: '20px'}}/></a>
+							<a href="http://localhost:3000"><img src="/Img/TravelBuddy(256).png" alt="Main logo" style={{marginLeft: '20px'}}/></a>
 						</div>
 					</h1>
             <ul class="menu">

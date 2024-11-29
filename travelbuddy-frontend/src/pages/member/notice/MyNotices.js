@@ -1,4 +1,4 @@
-import NoticeCSS from './MyNoticeCSS.css';
+import MyNoticeCSS from './MyNoticeCSS.css';
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -91,8 +91,9 @@ useEffect(() => {
 
     return (
         <>
-         <div className={NoticeCSS.bodyDiv}>
-                    <h2>공지사항</h2>
+         <div className="MyNoticeContainer">
+            <div className='MyNoticeHeader'>
+                    <p>공지사항</p>
                     <input
                     type="text"
                     placeholder="검색어를 입력하세요"
@@ -101,22 +102,14 @@ useEffect(() => {
                     onKeyDown={onChangeHandler}
                 ></input>
                 <button onClick={onClickSearch}>검색</button>
-                <table className={NoticeCSS.productTable}>
-                    <colgroup>
-                        <col width="10%" />
-                        <col width="35%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="15%" />
-
-                    </colgroup>
+                </div>
+                <table>
                     <thead>
                         <tr>
-                            <th>번호</th>
-                            <th colSpan={3}>제목</th>
-                            <th>조회</th>
-                            <th>작성일</th>
+                            <th className='th1mynotice'>번호</th>
+                            <th className='th2mynotice'>제목</th>
+                            <th className='th3mynotice'>조회</th>
+                            <th className='th4mynotice'>작성일</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -126,21 +119,20 @@ useEffect(() => {
                                     key={n.noticeCode}
                                     onClick={() => onClickTableTr(n.noticeCode)}
                                 >
-                                    <td>{n.noticeCode}</td>
-                                    <td colSpan={3}>{n.noticeTitle}</td>
-                                    <td>{n.noticeCount}</td>
-                                    <td>{n.noticeCreate}</td>
+                                    <td className='td1mynotice'>{n.noticeCode}</td>
+                                    <td  className='td2mynotice'>{n.noticeTitle}</td>
+                                    <td className='td3mynotice'>{n.noticeCount}</td>
+                                    <td className='td4mynotice'>{n.noticeCreate}</td>
                                 </tr>
                             ))}
                     </tbody>
                 </table>
             </div>
-            <div style={{ listStyleType: "none", display: "flex" }}>
+            <div className='AdminAllCSSButtonList'>
                 { Array.isArray(noticeList) &&
                 <button 
                     onClick={() => setCurrentPage(currentPage - 1)} 
                     disabled={currentPage === 1}
-                    className={ NoticeCSS.pagingBtn }
                 >
                     &lt;
                 </button>
@@ -149,7 +141,6 @@ useEffect(() => {
                 <li key={num} onClick={() => setCurrentPage(num)}>
                     <button
                         style={ currentPage === num ? {backgroundColor : 'skyblue' } : null}
-                        className={ NoticeCSS.pagingBtn }
                     >
                         {num}
                     </button>
@@ -157,7 +148,6 @@ useEffect(() => {
                 ))}
                 { Array.isArray(noticeList) &&
                 <button 
-                    className={ NoticeCSS.pagingBtn }
                     onClick={() => setCurrentPage(currentPage + 1)} 
                     disabled={currentPage === pageInfo.pageEnd  || pageInfo.total == 0}
                 >

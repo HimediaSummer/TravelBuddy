@@ -143,23 +143,31 @@ function BuddyDetail () {
                             <th colSpan="4">버디매칭</th>
                         </tr> */}
                         <tr>
-                            <th>제목</th>
+                            {/* <th>제목</th>
                             <th>유형</th>
                             <th>지역</th>
-                            <th>작성자</th>
+                            <th>작성자</th> */}
+                            <td>제목</td>
+                            <td>{data.buddyTitle}</td>
+                            <td>유형</td>
+                            <td>{data.buddyType ? data.buddyType.buddyTypeName : "없음"}</td>
+                            <td>지역</td>
+                            <td>{data.region ? data.region.regionName : "없음"}</td>
+                            <td>작성자</td>
+                            <td>{data.account ? data.account.memberName : "없음"}</td>
                         </tr>
                     </thead>
                     <tbody>
                         {data ? (
                             <>
                                 <tr>
-                                    {/* <td>제목</td> */}
+                                    <td>제목</td>
                                     <td>{data.buddyTitle}</td>
-                                    {/* <td>유형</td> */}
+                                    <td>유형</td>
                                     <td>{data.buddyType ? data.buddyType.buddyTypeName : "없음"}</td>
-                                    {/* <td>지역</td> */}
+                                    <td>지역</td>
                                     <td>{data.region ? data.region.regionName : "없음"}</td>
-                                    {/* <td>작성자</td> */}
+                                    <td>작성자</td>
                                     <td>{data.account ? data.account.memberName : "없음"}</td>
                                 </tr>
 

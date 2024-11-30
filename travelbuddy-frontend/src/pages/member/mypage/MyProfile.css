@@ -16,6 +16,14 @@
     font-family: 'Cafe24SsurroundAir' !important;
 }
 
+.line {
+    border: 1px solid #8CC8EA; 
+    border-radius: 10px;
+    padding: 20px; 
+    margin: 20px 0; 
+    background-color: #ffffff; 
+}
+
 .my-profile-page {
     max-width: 800px;
     margin: 20px auto;

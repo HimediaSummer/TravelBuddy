@@ -26,62 +26,62 @@ function MyPageNavbar() {
     }, []);
 
     return (
-        <div className="navbar-main">
-			<ul>
-				<li>
-					<NavLink 
-                        to="/mypage/myProfile" 
-                        onClick={(e) => {
-                            e.preventDefault(); // 기본 링크 동작 막기
-                            toggleSubMenu('myInfo'); // 하위 메뉴 토글
-                        }}
-                        className={({ isActive }) => (isActive ? 'active' : '')}
-                    >
-                        MY정보
-                    </NavLink>
-					{activeSubMenu === 'myInfo' && ( // My정보 하위 메뉴 표시 여부
-                         <ul className="navbar-sub">
-                            <li>
-                                <NavLink to="/mypage/myprofile">내정보</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/mypage/updatemyprofile">내정보 수정</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/mypage/deletion">탈퇴</NavLink>
-                            </li>
-                        </ul>
-                    )}
-				</li>
-				<li>
-					<NavLink to="/mypage/myschedule">
-                        MY일정
-                    </NavLink>
-				</li>
-				<li>
-					<NavLink 
-                        to="/mypage/mybuddy" 
-                        onClick={(e) => {
-                            e.preventDefault(); // 기본 링크 동작 막기
-                            toggleSubMenu('myBuddy'); // 하위 메뉴 토글
-                        }}
-                        className={({ isActive }) => (isActive ? 'active' : '')}
-                    >
-                        MY버디
-                    </NavLink>
-					{activeSubMenu === 'myBuddy' && ( // My버디 하위 메뉴 표시 여부
-                        <ul className="navbar-sub">
-                            <li>
-                                <NavLink to="/mypage/mybuddy">My게시글</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/mypage/mymatch">MY신청</NavLink>
-                            </li>
-                        </ul>
-                    )}
-				</li>
-			</ul>
-		</div>
+            <div className="navbar-main">
+                <ul>
+                    <li>
+                        <NavLink 
+                            to="/mypage/myProfile" 
+                            onClick={(e) => {
+                                e.preventDefault(); // 기본 링크 동작 막기
+                                toggleSubMenu('myInfo'); // 하위 메뉴 토글
+                            }}
+                            className={({ isActive }) => (isActive ? 'active' : '')}
+                        >
+                            MY정보
+                        </NavLink>
+                        {activeSubMenu === 'myInfo' && ( // My정보 하위 메뉴 표시 여부
+                            <ul className="navbar-sub" style={{width: '400px'}}>
+                                <li>
+                                    <NavLink to="/mypage/myprofile">내정보</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/mypage/updatemyprofile">내정보 수정</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/mypage/deletion">탈퇴</NavLink>
+                                </li>
+                            </ul>
+                        )}
+                    </li>
+                    <li>
+                        <NavLink to="/mypage/myschedule">
+                            MY일정
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink 
+                            to="/mypage/mybuddy" 
+                            onClick={(e) => {
+                                e.preventDefault(); // 기본 링크 동작 막기
+                                toggleSubMenu('myBuddy'); // 하위 메뉴 토글
+                            }}
+                            className={({ isActive }) => (isActive ? 'active' : '')}
+                        >
+                            MY버디
+                        </NavLink>
+                        {activeSubMenu === 'myBuddy' && ( // My버디 하위 메뉴 표시 여부
+                            <ul className="navbar-sub" style={{width:'281px'}}>
+                                <li>
+                                    <NavLink to="/mypage/mybuddy">My게시글</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/mypage/mymatch">MY신청</NavLink>
+                                </li>
+                            </ul>
+                        )}
+                    </li>
+                </ul>
+            </div>
     );
 }
 

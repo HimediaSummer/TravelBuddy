@@ -1,0 +1,136 @@
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('/font/Cafe24Ssurround-v2.0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cafe24SsurroundAir';
+    src: url('/font/Cafe24SsurroundAir-v2.0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 전체 페이지 스타일 */
+.buddy-page {
+    margin: 20px auto;
+    max-width: 1408px;
+    position: relative;
+    margin-left: 270px;
+}
+
+.buddy-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #1F709E;
+    text-align: center;
+    margin-top: 75px;
+    font-family: 'Cafe24Ssurround', sans-serif;
+}
+
+/* 테이블 스타일 */
+.buddy-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-align: left;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+}
+
+.buddy-table thead th,
+.buddy-table tbody td {
+    font-family: 'Cafe24SsurroundAir', sans-serif; 
+    font-size: 20px; 
+    text-align: center;
+    padding: 10px;
+}
+
+/* 헤더 스타일 */
+.buddy-table thead th {
+    background-color: #BADEF2;
+    color: #000000;
+}
+
+/* 본문 스타일 */
+.buddy-table tbody td {
+    color: #000000;
+}
+/* 상태 버튼 스타일 */
+.status-button {
+    background-color: #8CC8EA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 20px;
+    display: inline-block;
+    text-align: center;
+    font-family: 'Cafe24SsurroundAir', sans-serif; 
+}
+
+/* 삭제 버튼 */
+.delete-button {
+    position: absolute;
+    right: 0; /* 오른쪽 정렬 */
+    margin-top: -50px; /* 테이블 하단 바로 아래에 위치 */
+    background-color: #8CC8EA; /* 삭제 버튼 배경색 */
+    color: white;
+    border: none;
+    border-radius: 15px; /* 둥근 모서리 */
+    padding: 10px 20px;
+    font-size: 20px;
+    font-family: 'Cafe24Ssurround', sans-serif;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 124px; /* 고정된 버튼 너비 */
+    height: 50px; /* 고정된 버튼 높이 */
+}
+
+.delete-button:focus {
+    background-color: #1F709E;
+    color: #ffffff;
+}
+
+/* 페이지네이션 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination-button {
+    background-color: #eeeeee;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-button.active {
+    background-color: #8CC8EA;
+    color: #ffffff;
+}
+
+.pagination-button:hover:not(.active) {
+    background-color: #d1ecf7;
+}
+
+.pagination-button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}

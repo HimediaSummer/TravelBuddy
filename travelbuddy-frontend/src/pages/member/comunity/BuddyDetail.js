@@ -133,9 +133,16 @@ function BuddyDetail () {
     return (
         
         <div className="buddy-detail-container">
-            <div className="buddy-detail-header">
-                <h2>버디매칭</h2>
+            {isAuthor && (
+                        <div className="buddy-detail-author-buttons">
+                            <button onClick={onClickBuddyUpdate} className="update-button">수정</button>
+                            <button onClick={onClickBuddyDelete} className="delete-button">삭제</button>
+                        </div>
+                )}
+            <div className="BuddyHeader">
+                <h2>게시글</h2>
             </div>
+           
             <div className="buddy-detail-table">
                 <table>
                     <thead>
@@ -147,32 +154,32 @@ function BuddyDetail () {
                             <th>유형</th>
                             <th>지역</th>
                             <th>작성자</th> */}
-                            <td>제목</td>
+                            {/* <td>제목</td>
                             <td>{data.buddyTitle}</td>
                             <td>유형</td>
                             <td>{data.buddyType ? data.buddyType.buddyTypeName : "없음"}</td>
                             <td>지역</td>
                             <td>{data.region ? data.region.regionName : "없음"}</td>
                             <td>작성자</td>
-                            <td>{data.account ? data.account.memberName : "없음"}</td>
+                            <td>{data.account ? data.account.memberName : "없음"}</td> */}
                         </tr>
                     </thead>
                     <tbody>
                         {data ? (
                             <>
-                                <tr>
+                                <tr className='tableHead'>
                                     <td>제목</td>
-                                    <td>{data.buddyTitle}</td>
+                                    <td className='tableHeadData'>{data.buddyTitle}</td>
                                     <td>유형</td>
-                                    <td>{data.buddyType ? data.buddyType.buddyTypeName : "없음"}</td>
+                                    <td className='tableHeadData'>{data.buddyType ? data.buddyType.buddyTypeName : "없음"}</td>
                                     <td>지역</td>
-                                    <td>{data.region ? data.region.regionName : "없음"}</td>
+                                    <td className='tableHeadData'>{data.region ? data.region.regionName : "없음"}</td>
                                     <td>작성자</td>
-                                    <td>{data.account ? data.account.memberName : "없음"}</td>
+                                    <td className='tableHeadData'>{data.account ? data.account.memberName : "없음"}</td>
                                 </tr>
 
                                 <tr>
-                                    <td colSpan="4">
+                                    <td colSpan="8">
                                         <div className="buddy-description">
                                             {/* 본문 내용 */}
                                             <div dangerouslySetInnerHTML={{ __html: data.buddyContents }} />
@@ -197,31 +204,31 @@ function BuddyDetail () {
                                     </td>
                                 </tr>
 
-                                <tr>
-                                    <td colSpan="4">
+                                {/* <tr>
+                                    <td colSpan="4"> */}
                                         <div className="apply-button-container">
                                             <button className="apply-button" onClick={onClickApplyButton} disabled={isApplied}>
                                                 {isApplied ? "신청완료" : "신청하기"}
                                             </button>
                                         </div>
-                                    </td>
-                                </tr>
-                                        <>
+                                    {/* </td>
+                                </tr> */}
+                                        {/* <>
                                             {isAuthor && (
                                                 <tr>
                                                     <td colSpan="4">
                                                         <div>
-                                                            <button onClick={onClickBuddyUpdate} className="update-button">수정</button>
+                                                            <button onClick={onClickBuddyUpdate} className="update-button">수정</button> */}
                                                         {/* </td>
                                                     )}
                                                     {isAuthor && (
                                                         <td> */}
-                                                            <button onClick={onClickBuddyDelete} className="delete-button">삭제</button>
+                                                            {/* <button onClick={onClickBuddyDelete} className="delete-button">삭제</button>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             )}
-                                        </>
+                                        </> */}
                                 
                             </>
                         ) : (

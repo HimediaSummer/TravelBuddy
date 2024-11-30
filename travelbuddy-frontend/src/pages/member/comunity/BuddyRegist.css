@@ -1,0 +1,190 @@
+.buddy-regist-container {
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.buddy-regist-table {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.buddy-regist-table table {
+    font-family: 'Cafe24 Ssurround air';
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.buddy-regist-table th,
+.buddy-regist-table td {
+    padding: 5px;
+    /* border: 1px solid #ddd; */
+    text-align: center;
+    font-size: 20px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.buddy-regist-table tr {
+    border: 1px solid #8CC8EA;
+}
+
+.buddy-regist-table .tableHead {
+    background-color: #8CC8EA;
+}
+
+/* 게시글 제목과 입력 부분 비율 조정 */
+.buddy-regist-table .tableHead td:first-child {
+    width: 20%; /* 게시글 제목 칸을 줄임 */
+}
+.buddy-regist-table input[name="buddyTitle"] {
+    width: 80%; /* 입력 필드 비율을 늘림 */
+}
+
+/* .buddy-regist-table .buddy-regist-title {
+    width: 100px;
+} */
+
+/* 입력 필드와 드롭다운 스타일 */
+.buddy-regist-table input,
+.buddy-regist-table textarea,
+.buddy-regist-table select {
+    font-family: 'Cafe24 Ssurround';
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid white;
+    border-radius: 15px;
+    box-sizing: border-box;
+    background-color: white;
+    color: #333;
+}
+
+/* 드롭다운 스타일 */
+.buddy-regist-table select {
+    appearance: none;
+    -webkit-appearance: none; /* Safari/Chrome */
+    -moz-appearance: none; /* Firefox */
+    background-color: #f9f9f9;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='gray' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+/* 드롭다운 선택 시 효과 */
+.buddy-regist-table select:focus {
+    outline: none;
+    border: 1px solid #888;
+    background-color: #fff;
+}
+
+
+.buddy-detail-author-buttons {
+    position: absolute;
+    top: 0px;
+    right: 20px;
+}
+
+.back-button,
+.write-button {
+    font-family: 'Cafe24 Ssurround';
+    padding: 5px 10px;
+    margin-left: 10px;
+    background-color: #8CC8EA;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    width: 80px;
+    height: 40px;
+}
+
+.back-button:hover,
+.write-button:hover {
+    background-color: #1F709E;
+}
+
+.buddy-detail-apply-button {
+    text-align: right;
+    margin-top: 20px;
+}
+
+/* 텍스트 영역 스타일 */
+.buddy-regist-table textarea {
+    font-family: 'Cafe24 Ssurround';
+    resize: none;
+    height: 400px;
+    font-size: 20px;
+}
+
+/* 라벨 스타일 */
+.buddy-regist-table label {
+    font-family: 'Cafe24 Ssurround';
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/* 이미지 업로드 섹션 스타일 */
+/* .image-upload-container {
+    position: absolute;
+    bottom: 20px; 
+    right: 20px;
+    background-color: #8CC8EA; 
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+} */
+
+
+/* 이미지 미리보기 영역 스타일 */
+.image-preview-container {
+    margin-top: 10px;
+    padding: 10px;
+    text-align: center;
+}
+  
+.image-preview {
+    max-width: 100%;
+    max-height: 150px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+  
+  /* 파일 업로드 입력 스타일 */
+.image-upload-input {
+    display: none; 
+}
+
+.image-upload-button {
+    font-family: 'Cafe24 Ssurround';
+    margin-top: 10px;
+    margin-right: 10px;;
+    padding: 10px 20px;
+    background-color: #1F709E;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    width: 120px;
+    height: 40px;
+}
+
+.image-upload-button:hover {
+    background-color: #1F709E;
+}
+
+.image-upload-area {
+    background-color: #8CC8EA;
+    height: 110px;
+}

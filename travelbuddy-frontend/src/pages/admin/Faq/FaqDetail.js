@@ -50,29 +50,25 @@ function FaqDetail() {
     };
 
     return (
-        <div>
+        <div className="QnaDetailContainer">
+            <div className="QnaDetailHeader"><p>FAQ</p>
+                                    </div>
         <table>
-            <thead>
-                <tr>
-                <th>FAQ</th>
-                </tr>
-            </thead>
             <tbody>
                 {faq ? (
                     <>
-                <tr>
-                <td>제목</td>
-                <td>{faq.faqTitle}</td>
+                <tr className="tr1myqnadetail">
+                <td className="td1myqnadetail">제목</td>
+                <td className="td2myqnadetail">{faq.faqTitle}</td>
                 <td>유형</td>
                 <td>{fqTypeList.find(f=>f.fqTypeCode === faq.fqTypeCode)?.fqTypeName || "알수없음"}</td>
                 </tr>
 
                 <tr>
                     <td>FAQ 내용</td>
-                <td colSpan={5}>
+                <td  className="td3myqnadetail" colSpan={5}>
                 <input
                     type="text"
-                    style={{width: '500px', height: '100px'}}
                     onChange={handleInputChange}
                     name='faqContents'
                     value={ faqContents || faq.faqContents } />

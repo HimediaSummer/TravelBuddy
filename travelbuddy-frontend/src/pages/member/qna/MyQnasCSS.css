@@ -73,53 +73,55 @@
 	height: 60px;
     text-align: center; /* 텍스트 정렬 (필요시) */
 	margin-top: 0;
+	background-color: #8CC8EA;
 
 }
 
 .MyQnaContainer td {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
+	height: 50px;
     text-align: center; /* 텍스트 정렬 (필요시) */
     border-bottom: 1px solid #ccc; /* 하단 경계선 추가 (선택 사항) */
 	cursor: pointer;
 	transition: background-color 0.3s;	
 }
 
-.th1qna {
+.th1myqna {
     width: 110px;
 }
-.th2qna {
+.th2myqna {
     width: 110px;
 }
-.th3qna {
+.th3myqna {
     width: 500px;
 }
-.th4qna {
+.th4myqna {
     width: 220px;
 }
-.th5qna {
+.th5myqna {
     width: 165px;
 }
-.th6qna {
+.th6myqna {
 	width: 120px;
 }
 
-.td1qna {
-    width: 100px;
+.td1myqna {
+    width: 120px;
 }
-.td2qna {
-    width: 100px;
+.td2myqna {
+    width: 80px;
 }
-.td3qna {
-    width: 480px;
+.td3myqna {
+    width: 500px;
 }
-.td4qna {
-    width: 200px;
+.td4myqna {
+    width: 255px;
 }
-.td5qna {
-    width: 100px;
+.td5myqna {
+    width: 120px;
 }
-.td6qna {
+.td6myqna {
 	width: 150px;
 }
 
@@ -174,4 +176,94 @@
 }
 .InsertButton button:Hover {
 	background-color: #1F709E;	
+}
+
+/* MyQnaDetail */
+
+
+.MyQnaDetailContainer {
+	width: 1500px;
+	display: flexbox; /* flexbox 사용 */
+	flex-direction: column; /* 세로 방향으로 정렬 */
+}
+
+
+.MyQnaDetailContainer p {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 40px;
+    font: bold;
+    color: #1F709E;
+	margin-right: 562px;
+	margin-left: 270px;
+}
+
+.MyQnaDetailHeader {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.MyQnaDetailContainer table {
+	margin-top: 0;
+	margin-left: 270px;
+	border: 1px solid #8CC8EA;
+}
+
+
+.MyQnaDetailContainer button {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 20px;
+    color: #ffffff;
+	width: 124px;
+	height: 50px;
+	margin-right: 25px;
+	border-radius: 15px;
+	background-color: #8CC8EA;
+	border: none; /* 버튼의 테두리 제거 */
+	cursor: pointer;
+	/* margin-left: 150px; */
+}
+
+.MyQnaDetailContainer button:Hover {
+	background-color: #1F709E;	
+}
+
+.MyQnaDetailContainer .tr1myqnadetail {
+	background-color: #8CC8EA;
+	height: 60px;
+	width: 1200px;
+}
+
+.MyQnaDetailContainer td {
+	font-family: 'Cafe24 Ssurround air';
+    font-size: 20px;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid #8CC8EA;
+}
+
+.MyQnaDetailContainer .td1myqnadetail {
+	width: 100px;
+}
+
+.MyQnaDetailContainer .td2myqnadetail {
+	width: 400px;
+}
+
+.MyQnaDetailContainer .td3myqnadetail input {
+	width: 800px;
+	height: 300px;
+	background-color: #ffffff;
+	padding-left: 20px;
+	font-size: 24px;
+	border: none;
+}
+
+.MyQnaDetailContainer .td4myqnadetail input {
+	width: 800px;
+	height: 200px;
+	background-color: #ffffff;
+	padding-left: 20px;
+	font-size: 20px;
+	border: none;
 }

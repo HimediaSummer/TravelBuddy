@@ -37,38 +37,29 @@ function MyQnaDetail() {
     };
 
     return (
-        <div>
+        <div className="MyQnaDetailContainer">
+            <div className="MyQnaDetailHeader"><p>문의Q&A</p>
+            <button onClick={onClickQnaDelete}>
+                                        삭제
+                                    </button>
+                                    </div>
             <table>
-                <thead>
-                    <tr>
-                        <th>문의(Q&A)</th>
-                    </tr>
-                </thead>
                 <tbody>
                     {qnaDTO ? (
                         <>
-                            <tr>
-                                <td>제목</td>
-                                <td>{qnaDTO.qnaTitle}</td>
+                            <tr className="tr1myqnadetail">
+                                <td className="td1myqnadetail">제목</td>
+                                <td className="td2myqnadetail">{qnaDTO.qnaTitle}</td>
                                 <td>문의유형</td>
                                 <td>{Array.isArray(fqTypeList) 
     ? fqTypeList.find(f => f.fqTypeCode === qnaDTO.fqTypeCode)?.fqTypeName || "로딩중" : "로딩중"}</td>
-                                <td>
-                                    <button onClick={onClickQnaDelete}>
-                                        삭제
-                                    </button>
-                                </td>
                             </tr>
 
                             <tr>
                                 <td>문의 내용</td>
-                                <td colSpan={5}>
+                                <td className="td3myqnadetail" colSpan={5}>
                                     <input
                                         type="text"
-                                        style={{
-                                            width: "500px",
-                                            height: "100px",
-                                        }}
                                         readOnly
                                         value={qnaDTO.qnaContents}
                                     />
@@ -77,16 +68,15 @@ function MyQnaDetail() {
 
                             <tr>
                                 <td>답변 내용</td>
-                                <td><input
+                                <td className="td4myqnadetail" colSpan={5}><input
                     type="text"
                     name='ansContents'
-                    style={{width: '500px', height: '100px'}}
                     readOnly
                     value={qnaAnswerDTO.ansContents}/></td>
                             </tr>
                         <tr>
                             <td>답변시간</td>
-                            <td>{qnaAnswerDTO.ansCreate || ''}</td>
+                            <td colSpan={5}>{qnaAnswerDTO.ansCreate || ''}</td>
                         </tr>
                         </>
                     ) : (

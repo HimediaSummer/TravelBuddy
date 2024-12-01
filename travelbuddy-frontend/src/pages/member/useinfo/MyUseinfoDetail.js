@@ -61,16 +61,21 @@ function MyUseinfoDetail () {
 
     return (
         <>
-            <td style={{width:'50px'}}>제목</td>
-            <td style={{width:'350px'}}>{useinfo.useinfoTitle}</td>
-            <td style={{width:'80px'}}>글번호</td>
-            <td style={{width:'50px'}}>{useinfo.useinfoCode}</td>
-            <td style={{width:'80px'}}>작성일</td>
+        <div className='UseinfoDetailContainer'>
+        <div className='useinfoDetailHeader'>
+        <p>사용설명서</p>
+        </div>
+        <tr>
+        <td className='td1useinfoD'>제목</td>
+            <td className='td2useinfoD'>{useinfo.useinfoTitle}</td>
+            <td className='td3useinfoD'></td>
+            {/* <td style={{width:'80px'}}>작성일</td>
             <td style={{width:'180px'}}>{useinfo.useinfoCreate}</td>
             <td style={{width:'80px'}}>조회수</td> 
-            <td style={{width:'80px'}}>{useinfo.useinfoCount}</td>
-            <hr/>
-                <div>
+            <td style={{width:'80px'}}>{useinfo.useinfoCount}</td> */}
+            </tr>
+            </div>
+            <div className='UseinfoDetailViewer'>
                 <Viewer
                     initialValue={useinfoContents || useinfo.useinfoContents}
                     key={useinfoContents}

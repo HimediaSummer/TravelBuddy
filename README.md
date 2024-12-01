@@ -22,7 +22,7 @@
 
 |                    |                    |                     |                    |                    |
 |--------------------|--------------------|---------------------|--------------------|--------------------|
-| ![성호준](https://via.placeholder.com/100) | ![김현승](https://via.placeholder.com/100) | ![김호동](https://via.placeholder.com/100) | ![이은지](https://via.placeholder.com/100) | ![최예진](https://via.placeholder.com/100) |
+|  <img src="https://github.com/user-attachments/assets/8136d53e-807c-4e7a-a9a8-61ed0b637dfd" width="120" height="100"> | <img src="https://github.com/user-attachments/assets/033a4bc3-f4ac-4340-99a4-b6e88fe60d32" width="120" height="100"> | <img src="https://github.com/user-attachments/assets/749cc339-5cd3-4046-b588-917a093b16f5" width="100" height="100"> | <img src="https://github.com/user-attachments/assets/5d53b38f-4845-483e-af00-61c50b4be2f4" width="100" height="100"> | <img src="https://github.com/user-attachments/assets/1aaf3b7f-5c8b-4b0c-965a-1af8ad10267c" width="100" height="100"> | |
 | **성호준**         | **김현승**         | **김호동**          | **이은지**         | **최예진**         |
 | PM                 | 문서관리           | DB 관리             | 화면 및 테스트 관리 | 화면 및 이슈관리   |
 | 일정생성 및 API    | 로그인/회원가입/게시판 | 관리자 및 문의 페이지 | 일정생성 및 API    | 마이페이지         |

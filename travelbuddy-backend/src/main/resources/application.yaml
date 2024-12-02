@@ -46,6 +46,7 @@ image:
     #    resource-locations: classpath:/static/memberimgs/
     #    resource-handler: /memberimgs/**
     image-dir: ./src/main/resources/static/productimgs/
+#    자신의 도메인 주소를 입력하세요. http://  부터 :8080 앞까지
     image-url: http://travel-buddy3.site:8080/productimgs/
 
     # 게시글 이미지 설정
@@ -53,6 +54,7 @@ image:
     #    resource-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/
     #    resource-handler: /buddyimgs/**
     image-dir: ./src/main/resources/static/productimgs/
+    #    자신의 도메인 주소를 입력하세요. http://  부터 :8080 앞까지
     image-url: http://travel-buddy3.site:8080/productimgs/
   #      resource-locations: file:///springboot-app/buddyimgs/
   #      resource-handler: /buddyimgs/**
@@ -77,6 +79,7 @@ image:
   #  add-resource-handler: /productimgs/**
   # Docker(AWS)
   image-dir: /springboot-app/productimgs
+  #    자신의 도메인 주소를 입력하세요. http://  부터 :8080 앞까지
   image-url: http://travel-buddy3.site:8080/productimgs/
 
 

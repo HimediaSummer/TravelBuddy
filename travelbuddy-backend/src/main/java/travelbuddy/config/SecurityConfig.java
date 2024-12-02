@@ -122,7 +122,13 @@ public class SecurityConfig {
 
         // 허용할 도메인
         configuration.setAllowedOrigins(Arrays.asList(
+                "http://localhost:80",
                 "http://localhost:3000",
+                "http://travel-buddy.me",
+                "http://travel-buddy.site",
+                "http://travel-buddy2.site",
+                "http://travel-buddy3.site",
+                "http://travel-buddy0563.site",
                 "http://travel-buddy5.site"
         ));
         // 허용할 메서드

@@ -6,6 +6,7 @@ import RegionSchedule from './Schedule/RegionSchedule';
 import AccomSchedule from './Schedule/AccomSchedule';
 import QuestionSchedule from './Schedule/QuestionSchedule';
 import Summary from './Schedule/SummarySchedule';
+import { useNavigate } from 'react-router-dom';
 
 function Schedule() {
 	// 장소값 전달하기 도전중
@@ -65,6 +66,13 @@ function Schedule() {
 	// 	<QuestionSchedule onNext={() => setCurrentStep(4)} />,
 	// 	<Summary travelData={travelData} />
 	// ];
+
+	const navigate = useNavigate();
+
+const onClickMain = () => {
+	navigate('/');
+};
+
 
 
 	return (
@@ -132,8 +140,8 @@ function Schedule() {
 				<footer class="footer">
 					<div>
 						<div class="icon">
-							<a href="https://travel-buddy.me"><i id="icon" class="fa-brands fa-github"></i></a>
-							<a href="https://github.com/HimediaSummer/TravelBuddy" ><i id="icon" class="fa-solid fa-blog"></i></a>
+							<a href="https://github.com/HimediaSummer/TravelBuddy"><i id="icon" class="fa-brands fa-github"></i></a>
+							<i id="icon" class="fa-solid fa-blog" onClick={onClickMain} style={{cursor: 'pointer'}}></i>
 						</div>
 						Copyright 2024. Travel Buddy All rights reserved
 					</div>

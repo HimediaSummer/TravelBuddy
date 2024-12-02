@@ -45,6 +45,10 @@ function Main() {
 			.catch(error => console.error('Error fetching data:', error));
 	}, []);
 
+	// 메인으로
+	const onClickMain = () => {
+		navigate('/');
+	};
 
   return (
     <div className="Main">
@@ -129,7 +133,7 @@ function Main() {
                     {/* <a href="#chat-box">여행계획부터 두근거리는 여행 사이트</a> */}
                     <h4>여행계획부터 두근거리는 여행 사이트</h4>
                 </div>
-					<button type='button' id='button' onClick={() => window.location.href='http://localhost:3000/schedule'} style={{position: 'absolute', top: '80%', left: '20%', transform: 'translate(-50%, -50%)', padding: '10px 20px', zindex:20, cursor: 'pointer' }}>시작하기</button>
+					<button type='button' id='button' onClick={() => window.location.href=`http://${process.env.REACT_APP_RESTAPI_IP}:3000/schedule`} style={{position: 'absolute', top: '80%', left: '20%', transform: 'translate(-50%, -50%)', padding: '10px 20px', zindex:20, cursor: 'pointer' }}>시작하기</button>
             </div>
 			<br/>
 			<hr/>
@@ -192,8 +196,8 @@ function Main() {
             <footer class="footer">
                 <div>
                     <div class="icon">
-                        <a href="https://travel-buddy.me"><i id="icon"class="fa-brands fa-github"></i></a>
-                        <a href="https://github.com/HimediaSummer/TravelBuddy" ><i id="icon" class="fa-solid fa-blog"></i></a>
+                        <a href="https://github.com/HimediaSummer/TravelBuddy"><i id="icon"class="fa-brands fa-github"></i></a>
+                        <i id="icon" class="fa-solid fa-blog" onClick={onClickMain} style={{cursor: 'pointer'}}></i>
                     </div>
                     Copyright 2024. Travel Buddy All rights reserved
                 </div>

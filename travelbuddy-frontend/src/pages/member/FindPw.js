@@ -72,6 +72,11 @@ function FindPw() {
         }
     };
 
+		// 메인으로
+		const onClickMain = () => {
+			navigate('/');
+		};
+
 
     return (
         <div className="backgroundDiv">
@@ -79,7 +84,8 @@ function FindPw() {
                 <h1>
                     <div class="header-click">
                         {/* <i class="fa-solid fa-globe"></i> */}
-                        <a href="http://localhost:3000"><img src="/Img/TravelBuddy(256).png" alt="Main logo" style={{marginLeft: '20px'}}/></a>
+                        {/* <a href="http://travel-buddy5.site:3000"> */}
+						<img src="/Img/TravelBuddy(256).png" alt="Main logo" style={{marginLeft: '20px', cursor: 'pointer'}} onClick={onClickMain}/>
                     </div>
                 </h1>
                 <h2>비밀번호 찾기</h2>

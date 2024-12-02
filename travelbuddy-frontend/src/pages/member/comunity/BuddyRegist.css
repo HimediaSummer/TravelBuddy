@@ -1,6 +1,6 @@
 .buddy-regist-container {
     width: 100%;
-    max-width: 1320px;
+    max-width: 1450px;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
@@ -32,6 +32,7 @@
 
 .buddy-regist-table tr {
     border: 1px solid #8CC8EA;
+    
 }
 
 .buddy-regist-table .tableHead {
@@ -126,7 +127,7 @@
 /* 라벨 스타일 */
 .buddy-regist-table label {
     font-family: 'Cafe24 Ssurround';
-    display: block;
+    /* display: block; */
     font-weight: bold;
     font-size: 14px;
     margin-bottom: 8px;

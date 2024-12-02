@@ -69,8 +69,8 @@ function SummarySchedule({ onNext, startDate, setStartDate, endDate, setEndDate,
 				},
 				// body: JSON.stringify(travelData), // travelData는 날짜, 숙소, 지역, 질문지 정보를 포함해야 함
 				body: JSON.stringify({
-					model: "gpt-4o-mini",
-					// model: "gpt-4-turbo",
+					// model: "gpt-4o-mini",
+					model: "gpt-4-turbo",
 					messages: [
 					  { 
 						role: "user", 
@@ -316,7 +316,7 @@ function SummarySchedule({ onNext, startDate, setStartDate, endDate, setEndDate,
 							{loading && <img src="./Img/spin.gif" alt="로딩이미지" />}
 						</div>
 						<div className="reset-travel">
-							<button id="button" type="reset" onClick={() => window.location.replace("http://localhost:3000/schedule")}>
+							<button id="button" type="reset" onClick={() => window.location.replace(`http://${process.env.REACT_APP_RESTAPI_IP}:3000/schedule`)}>
 								다시하기
 							</button>
 						</div>

@@ -8,7 +8,7 @@ WORKDIR /react-app
 COPY package.json .
 
 # React 애플리케이션의 의존성 설치.
-RUN npm install
+RUN npm install --force
 
 # 현재 디렉토리의 모든 파일을 /react-app 디렉토리로 복사.
 COPY . .

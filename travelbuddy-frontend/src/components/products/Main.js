@@ -133,7 +133,7 @@ function Main() {
                     {/* <a href="#chat-box">여행계획부터 두근거리는 여행 사이트</a> */}
                     <h4>여행계획부터 두근거리는 여행 사이트</h4>
                 </div>
-					<button type='button' id='button' onClick={() => window.location.href=`http://${process.env.REACT_APP_RESTAPI_IP}:3000/schedule`} style={{position: 'absolute', top: '80%', left: '20%', transform: 'translate(-50%, -50%)', padding: '10px 20px', zindex:20, cursor: 'pointer' }}>시작하기</button>
+					<button type='button' id='button' onClick={() => window.location.href=`http://${process.env.REACT_APP_RESTAPI_IP}/schedule`} style={{position: 'absolute', top: '80%', left: '20%', transform: 'translate(-50%, -50%)', padding: '10px 20px', zindex:20, cursor: 'pointer' }}>시작하기</button>
             </div>
 			<br/>
 			<hr/>

@@ -41,20 +41,17 @@ function MyQna() {
     };
 
     return (
-        <div>
-            <h2>문의하기</h2>
+        <div className="MyQnaCreateContainer">
+            <div className="MyQnaCreateHeader">
+            <p>문의하기</p>
             <button onClick={cancleQnaInsert}>취소</button>
             <button onClick={inserMyQna}>작성완료</button>
+            </div>
             <table>
-                <thead>
-                    <tr>
-                        <th>문의(Q&A)</th>
-                    </tr>
-                </thead>
                 <tbody>
                     <tr>
                         <td>제목</td>
-                        <td>
+                        <td className="td4myqnacreate">
                             <input
                                 type="text"
                                 name="qnaTitle"
@@ -66,7 +63,7 @@ function MyQna() {
                             />
                         </td>
                         <td>문의유형</td>
-                        <td>
+                        <td className="td5myqnacreate">
                             <select
                                 name="fqTypeCode"
                                 value={qnaDTO.fqTypeCode}
@@ -81,11 +78,10 @@ function MyQna() {
                                 <option value={5}>기타</option>
                             </select>
                         </td>
-                        <td></td>
                     </tr>
                     <tr>
                         <td>내용</td>
-                        <td>
+                        <td className="td3myqnacreate" colSpan={3}>
                             <input
                                 type="text"
                                 name="qnaContents"

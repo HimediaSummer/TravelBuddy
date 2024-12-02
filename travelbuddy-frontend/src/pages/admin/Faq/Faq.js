@@ -29,20 +29,17 @@ function Faq() {
     };
 
     return (
-        <div>
-            <h2>FAQ</h2>
+        <div className="FaqCreateContainer">
+            <div className="FaqCreateHeader">
+            <p>FAQ 작성하기</p>
             <button onClick={cancleQnaInsert}>취소</button>
             <button onClick={inserMyFaq}>작성완료</button>
+            </div>
             <table>
-                <thead>
-                    <tr>
-                        <th>FAQ 작성하기</th>
-                    </tr>
-                </thead>
                 <tbody>
                     <tr>
                         <td>제목</td>
-                        <td>
+                        <td className="td4myqnacreate">
                             <input
                                 type="text"
                                 name="faqTitle"
@@ -54,7 +51,7 @@ function Faq() {
                             />
                         </td>
                         <td>유형</td>
-                        <td>
+                        <td className="td5myqnacreate">
                             <select
                                 name="fqTypeCode"
                                 value={faqDTO.fqTypeCode}
@@ -73,7 +70,7 @@ function Faq() {
                     </tr>
                     <tr>
                         <td>내용</td>
-                        <td>
+                        <td className="td3myqnacreate" colSpan={3}>
                             <input
                                 type="text"
                                 name="faqContents"

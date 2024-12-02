@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
+import { decodeJwt } from '../../../utils/tokenUtils';
 import { insertQnaAPI } from "../../../apis/QnaAPICalls";
 
 
 function MyQna() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const token = decodeJwt(window.localStorage.getItem("accessToken"));
 
     const [qnaDTO, setQnaDTO] = useState({});
 
@@ -15,6 +16,16 @@ function MyQna() {
         navigate(`/MyQnas`);
     };
 
+    useEffect(() => {
+        // 로그인 상태 확인
+        const token = window.localStorage.getItem('accessToken');
+        if (!token) {
+            alert('로그인이 필요한 서비스입니다.');
+            navigate('/login');
+            return;
+        }
+    }, []);
+    
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         console.log(`${name}:${value}`);

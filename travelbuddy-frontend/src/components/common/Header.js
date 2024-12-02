@@ -86,7 +86,11 @@ function Header() {
 					</h1>
             <ul class="menu">
                 <li>
-                    <NavLink to="/mypage">MY정보</NavLink>
+                    {token ? (
+                        <NavLink to="/mypage" style={{ color: "black" }}>MY정보</NavLink>
+                    ) : (
+                        <NavLink to="/login" style={{ color: "black" }}>MY정보</NavLink>
+                    )}
                 </li>
                 <li>
                     {/* <li onClick={handleLoginClick}>로그인</li> */}

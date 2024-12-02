@@ -72,7 +72,7 @@ function MyPageNavbar() {
                         {activeSubMenu === 'myBuddy' && ( // My버디 하위 메뉴 표시 여부
                             <ul className="navbar-sub" style={{width:'281px'}}>
                                 <li>
-                                    <NavLink to="/mypage/mybuddy">My게시글</NavLink>
+                                    <NavLink to="/mypage/mybuddy">MY게시글</NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/mypage/mymatch">MY신청</NavLink>

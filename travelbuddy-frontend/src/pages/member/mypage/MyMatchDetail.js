@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { callMyMatchDetailsAPI, cancelMatchAPI } from '../../../apis/MypageAPICalls';
 import { useParams } from 'react-router-dom';
+// import './MyMatchDetail.css';
 
 function MyMatchDetail() {
     const navigate = useNavigate();

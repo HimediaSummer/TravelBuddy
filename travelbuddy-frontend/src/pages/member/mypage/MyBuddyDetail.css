@@ -1,0 +1,209 @@
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('/font/Cafe24Ssurround-v2.0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cafe24SsurroundAir';
+    src: url('/font/Cafe24SsurroundAir-v2.0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.page-container {
+    margin-left: 255px;
+    margin-right: 255px;
+    box-sizing: border-box;
+}
+
+/* 전체 테이블 스타일 */
+.main-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    table-layout: fixed;
+}
+
+/* 테이블 헤더 */
+.main-table thead th {
+    color: black;
+    text-align: center;
+    font-size: 20px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    height: 0px;
+    vertical-align: middle;
+    line-height: 30px;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+}
+
+/* 테이블 데이터 셀 */
+.main-table td {
+    padding: 10px;
+    text-align: center;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+}
+
+/* 1열 칸 크기 조정 */
+.main-table td:nth-child(2), 
+.main-table th:nth-child(2) {
+    width: 30%; /* buddyTypeName 칸 좁게 */
+}
+
+.main-table td:nth-child(4),
+.main-table th:nth-child(4),
+.main-table td:nth-child(6),
+.main-table th:nth-child(6) {
+    width: 8%; /* TypeName, 지역 칸 넓게 */
+}
+
+/* 이미지 및 콘텐츠 셀 스타일 */
+.left-cell {
+    width: 50%;
+    vertical-align: top;
+    text-align: left;
+    padding: 20px;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+}
+
+/* 이미지 스타일 */
+.buddy-img {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.buddy-img img {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* 콘텐츠 스타일 */
+.buddyDetail-title {
+    background-color: white; /* 배경색 흰색 */
+    border-radius: 15px; /* 둥근 모서리 */
+    padding: 10px; /* 내부 여백 */
+    margin: 10px 0; /* 상하 여백 */
+}
+
+.buddy-contents {
+    background-color: white; /* 배경색 흰색 */
+    border-radius: 15px; /* 둥근 모서리 */
+    padding: 10px; /* 내부 여백 */
+    margin: 10px 0; /* 상하 여백 */
+    white-space: pre-line;
+}
+
+.buddy-typeName {
+    background-color: white; /* 배경색 흰색 */
+    border-radius: 15px; /* 둥근 모서리 */
+    padding: 10px; /* 내부 여백 */
+    margin: 10px 0; /* 상하 여백 */
+}
+
+.buddy-regionName {
+    background-color: white; /* 배경색 흰색 */
+    border-radius: 15px; /* 둥근 모서리 */
+    padding: 10px; /* 내부 여백 */
+    margin: 10px 0; /* 상하 여백 */
+}
+
+.buddy-contents p {
+    margin: 5px 0; /* 각 문단 간의 여백 */
+    font-size: 20px; /* 글씨 크기 */
+}
+
+.region {
+    background-color: white; /* 배경색 흰색 */
+    border-radius: 15px; /* 둥근 모서리 */
+    padding: 10px; /* 내부 여백 */
+
+    margin: 10px 0; /* 상하 여백 */
+    font-size: 20px; /* 글씨 크기 */
+}
+
+/* 신청 회원 리스트 스타일 */
+.right-cell {
+    width: 50%;
+    vertical-align: top;
+    text-align: right;
+    padding: 20px;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+}
+
+.right-cell h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+/* 신청 회원 리스트 테이블 */
+.application-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+    table-layout: fixed;
+}
+
+.application-table th, .application-table td {
+    padding: 10px;
+    text-align: center;
+}
+
+/* 개별 열의 너비 설정 */
+.application-table th:first-child, /* 체크박스 열 */
+.application-table td:first-child {
+    width: 10%; /* 체크박스 열 */
+}
+
+.application-table th:nth-child(2), /* 번호 열 */
+.application-table td:nth-child(2) {
+    width: 20%; /* 번호 열 */
+}
+
+.application-table th:nth-child(3), /* 회원 ID 열 */
+.application-table td:nth-child(3) {
+    width: 40%; /* 회원 ID 열 */
+}
+
+.application-table th:nth-child(4), /* 상태 열 */
+.application-table td:nth-child(4) {
+    width: 30%; /* 상태 열 */
+}
+
+.application-table th {
+    background-color: #8CC8EA;
+    color: white;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+}
+
+.application-table td {
+    background-color: white;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+}
+
+/* 버튼 스타일 */
+.button-group {
+    margin-top: 15px;
+    text-align: center;
+    font-family: 'Cafe24Ssurround', sans-serif;
+}
+
+.button-group button {
+    background-color: #8CC8EA;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: 'Cafe24Ssurround', sans-serif;
+}
+
+.button-group button:hover {
+    background-color: #1F709E;
+}

@@ -267,3 +267,100 @@
 	font-size: 20px;
 	border: none;
 }
+
+/* myQnacreate */
+
+
+
+.MyQnaCreateContainer {
+	width: 1500px;
+	display: flexbox; /* flexbox 사용 */
+	flex-direction: column; /* 세로 방향으로 정렬 */
+}
+
+
+.MyQnaCreateContainer p {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 40px;
+    font: bold;
+    color: #1F709E;
+	margin-right: 562px;
+	margin-left: 270px;
+}
+
+.MyQnaCreateHeader {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.MyQnaCreateContainer table {
+	margin-top: 0;
+	margin-left: 270px;
+	border: 1px solid #8CC8EA;
+}
+
+
+.MyQnaCreateContainer button {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 20px;
+    color: #ffffff;
+	width: 124px;
+	height: 50px;
+	margin-right: 25px;
+	border-radius: 15px;
+	background-color: #8CC8EA;
+	border: none; /* 버튼의 테두리 제거 */
+	cursor: pointer;
+	/* margin-left: 150px; */
+}
+
+.MyQnaCreateContainer button:Hover {
+	background-color: #1F709E;	
+}
+
+.MyQnaCreateContainer .tr1myqnadetail {
+	background-color: #8CC8EA;
+	height: 60px;
+	width: 1200px;
+}
+
+.MyQnaCreateContainer td {
+	font-family: 'Cafe24 Ssurround air';
+    font-size: 20px;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid #8CC8EA;
+}
+
+.MyQnaCreateContainer .td1myqnacreate {
+	width: 100px;
+}
+
+.MyQnaCreateContainer .td2myqnacreate {
+	width: 400px;
+}
+
+.MyQnaCreateContainer .td3myqnacreate input {
+	width: 1010px;
+	height: 300px;
+	background-color: #ffffff;
+	padding-left: 20px;
+	font-size: 24px;
+}
+
+.MyQnaCreateContainer .td4myqnacreate input {
+	width: 800px;
+	height: 60px;
+	background-color: #ffffff;
+	padding-left: 20px;
+	font-size: 20px;
+}
+
+.MyQnaCreateContainer .td5myqnacreate select {
+	width: 120px;
+	height: 60px;
+	background-color: #ffffff;
+	padding-left: 20px;
+	font-size: 20px;
+}

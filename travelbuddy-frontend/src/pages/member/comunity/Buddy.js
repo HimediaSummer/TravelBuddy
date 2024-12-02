@@ -127,7 +127,7 @@ function Buddies() {
         <>
             <div className="BuddyContainer">
                 <div className="BuddyHeader">
-                    <h2>버디매칭</h2>
+                    <p>버디매칭</p>
                 </div>
                 {/* <input
                     type="text"

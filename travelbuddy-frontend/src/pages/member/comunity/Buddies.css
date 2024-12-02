@@ -84,11 +84,11 @@ background-color: #f3f2f2;
 
 
 .BuddyContainer th {
-font-family: 'Cafe24 Ssurround air';
+    font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
-height: 60px;
+    height: 60px;
     text-align: center; 
-background-color: #8CC8EA;
+    background-color: #8CC8EA;
 }
 
 .BuddyContainer td {
@@ -212,12 +212,8 @@ background-color: #1F709E;
 
 /* 전체 컨테이너 */
 .BuddyContainer {
-    width: 100%;
-    max-width: 1450px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-    box-sizing: border-box;
+    width: 1500px;
+    display: flex;
     position: relative;
 }
 
@@ -226,20 +222,20 @@ background-color: #1F709E;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-    margin-left: 200px;
-}
-
-.BuddyHeader h3 {
+    margin-left: 270px;
     font-weight: bold;
     color: #1F709E;
-    margin: 0;
+    margin-top: -15px;
 }
+  
 
 /* 테이블 래퍼 */
 .TableWrapper {
-    overflow-x: auto;
+    /* overflow-x: auto; */
     margin-bottom: 20px;
+    margin-left: -65px;
+    margin-top: -35px;
+   
 }
 
 /* 테이블 스타일 */
@@ -247,13 +243,14 @@ background-color: #1F709E;
     width: 1500px;
     border-collapse: collapse;
     text-align: center;
+    margin-right: 200px;
 }
 
 .TableWrapper th,
 .TableWrapper td {
-    padding: 10px;
+    /* padding: 10px; */
     /* border: 1px solid #ddd; */
-    font-size: 16px;
+    /* font-size: 16px; */
 }
 
 .TableWrapper th {
@@ -279,8 +276,8 @@ background-color: #1F709E;
 /* 게시글 작성 버튼 */
 .writeButton {
     position: absolute;
-    right: 20px; /* 오른쪽 여백 */
-    bottom: 20px; /* 하단 여백 */
+    right: -200px;
+    bottom: 0px;
     background-color: #8CC8EA;
     color: white;
     border: none;
@@ -288,6 +285,7 @@ background-color: #1F709E;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+
 }
 
 .writeButton:hover {

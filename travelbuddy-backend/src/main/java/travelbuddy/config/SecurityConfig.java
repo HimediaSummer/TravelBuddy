@@ -123,8 +123,7 @@ public class SecurityConfig {
         // 허용할 도메인
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",
-                "http://localhost:8080",
-                "http://travel-buddy.me"
+                "http://travel-buddy5.site"
         ));
         // 허용할 메서드
         configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));

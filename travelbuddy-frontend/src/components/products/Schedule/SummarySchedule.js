@@ -69,8 +69,8 @@ function SummarySchedule({ onNext, startDate, setStartDate, endDate, setEndDate,
 				},
 				// body: JSON.stringify(travelData), // travelData는 날짜, 숙소, 지역, 질문지 정보를 포함해야 함
 				body: JSON.stringify({
-					model: "gpt-4o-mini",
-					// model: "gpt-4-turbo",
+					// model: "gpt-4o-mini",
+					model: "gpt-4-turbo",
 					messages: [
 					  { 
 						role: "user", 

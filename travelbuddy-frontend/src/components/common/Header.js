@@ -115,7 +115,7 @@ function Header() {
                     )}
                 </li>
                 <li>
-                    <NavLink to="/cm">커뮤니티</NavLink>
+                    <NavLink to="/cm/buddies">커뮤니티</NavLink>
                 </li>
                 <li>
                     <NavLink to="/cs">고객지원</NavLink>

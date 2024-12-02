@@ -126,9 +126,9 @@ function Buddies() {
     return (
         <>
             <div className="BuddyContainer">
-                {/* <div className="header"> */}
+                <div className="BuddyHeader">
                     <h2>버디매칭</h2>
-                {/* </div> */}
+                </div>
                 {/* <input
                     type="text"
                     placeholder="검색어를 입력하세요"
@@ -153,6 +153,7 @@ function Buddies() {
                         <option value="2">여행객</option>
                     </select>
                 </div> */}
+                <div className="TableWrapper">
                 <table >
                     <thead>
                         <tr className="tableTitle">
@@ -187,10 +188,14 @@ function Buddies() {
                                 </tr>
                             )})}
                     </tbody>
-                    
-                </table>
 
-                <div className="AdminAllCSSButtonList"
+                    {/* <div className="ButtonWrapper" > */}
+                        <button className="writeButton" onClick={onClickBuddyRegist}>게시글 작성</button>
+                    {/* </div> */}
+                </table>
+                </div>
+
+                <div className="Pagination"
                     // style={{
                     //     listStyleType: "none",
                     //     display: "flex",
@@ -233,9 +238,6 @@ function Buddies() {
                         </button>
                     )}
                     
-                </div>
-                <div className="CreateButton" >
-                    <button onClick={onClickBuddyRegist}>게시글 작성</button>
                 </div>
             </div>
         </>

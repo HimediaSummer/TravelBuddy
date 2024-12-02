@@ -1,8 +1,7 @@
-.BuddyContainer {
-/* width: 1500px; */
+/* .BuddyContainer {
 width: 100%;
-display: flexbox; /* flexbox 사용 */
-flex-direction: column; /* 세로 방향으로 정렬 */
+display: flexbox; 
+flex-direction: column; 
 }
 
 .BuddyContainer p {
@@ -34,25 +33,25 @@ text-align: center;
 
 
 .BuddyContainer .header {
-    display: flex; /* 수평 정렬을 위해 flexbox 사용 */
-    align-items: center; /* 수직 가운데 정렬 */
-    justify-content: flex-end; /* 오른쪽으로 정렬 */
+    display: flex; 
+    align-items: center; 
+    justify-content: flex-end; 
 margin-top: 0;
 margin-bottom: 0;
 height: 91px;
 }
 
 .BuddyContainer table {
-display: grid; /* grid 사용 */
-/* 수평 및 수직 가운데 정렬 */
+display: grid; 
+
     place-items: center; 
-/*  수직 가운데 정렬 */
+
     align-items: center;
-/* 전체 화면 높이 */
+
     height: 100%; 
-/* 테이블의 너비를 100%로 설정 (필요시) */
+
 width: 100%; 
-/* 테이블 셀 간의 경계 제거 */
+
     border-collapse: collapse; 
 margin-top: 0;
 margin-left: 0px;
@@ -68,7 +67,7 @@ height: 50px;
 margin-right: 25px;
 border-radius: 15px;
 background-color: #8CC8EA;
-border: none; /* 버튼의 테두리 제거 */
+border: none; 
 cursor: pointer;
 
 }
@@ -82,21 +81,21 @@ height: 60px;
 .BuddyContainer tr:Hover:not(thead tr) {
 background-color: #f3f2f2;
 }
-/* border-radius: 25px; */
+
 
 .BuddyContainer th {
 font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
 height: 60px;
-    text-align: center; /* 텍스트 정렬 (필요시) */
+    text-align: center; 
 background-color: #8CC8EA;
 }
 
 .BuddyContainer td {
 font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
-    text-align: center; /* 텍스트 정렬 (필요시) */
-    border-bottom: 1px solid #ccc; /* 하단 경계선 추가 (선택 사항) */
+    text-align: center; 
+    border-bottom: 1px solid #ccc; 
 cursor: pointer;
 transition: background-color 0.3s;   
 }
@@ -147,7 +146,6 @@ transition: background-color 0.3s;
 
 .AdminAllCSSButtonList {
 list-style-type: none;
-/* 그리드 사용 */
 display: flex;
 justify-content: center;
 width: 1750px;
@@ -156,20 +154,20 @@ margin-left: 150px;
 }
 
 .AdminAllCSSButtonList button {
-margin: 0 5px; /* 버튼 간의 간격 조정 */
-    padding: 10px 20px; /* 버튼의 패딩 조정 */
-    border-radius: 50%; /* 버튼의 모서리 둥글게 */
-    background-color: #8CC8EA; /* 버튼 배경색 */
-    color: #2e2d2d; /* 버튼 글자색 */
+margin: 0 5px; 
+    padding: 10px 20px; 
+    border-radius: 50%; 
+    background-color: #8CC8EA;
+    color: #2e2d2d; 
     border: #2e2d2d;
-    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+    cursor: pointer; 
 }
 
 .CreateButton {
     display: flex;
-    justify-content: flex-end; /* 오른쪽 정렬 */
-    margin-top: 20px; /* 버튼 위 공간 추가 */
-    margin-right: 0px; /* 표와의 간격 맞추기 */
+    justify-content: flex-end; 
+    margin-top: 20px; 
+    margin-right: 0px;
 }
 .CreateButton button {
 font-family: 'Cafe24 Ssurround';
@@ -210,7 +208,135 @@ margin-top: 0;
 }
 .InsertButton button:Hover {
 background-color: #1F709E;   
+} */
+
+/* 전체 컨테이너 */
+.BuddyContainer {
+    width: 100%;
+    max-width: 1450px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* 테이블 헤더 스타일 */
+.BuddyHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.BuddyHeader h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1F709E;
+    margin: 0;
+}
+
+/* 테이블 래퍼 */
+.TableWrapper {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+/* 테이블 스타일 */
+.TableWrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.TableWrapper th,
+.TableWrapper td {
+    padding: 10px;
+    /* border: 1px solid #ddd; */
+    font-size: 16px;
+}
+
+.TableWrapper th {
+    background-color: #8CC8EA;
+    /* color: #fff; */
+    font-weight: bold;
+}
+
+/* .TableWrapper tr:nth-child(even) {
+    background-color: #f9f9f9;
+} */
+
+/* 각 행 밑부분에 선 추가 */
+.TableWrapper tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.TableWrapper tr:hover {
+    background-color: #f1f1f1;
 }
 
 
+/* 게시글 작성 버튼 */
+.writeButton {
+    position: absolute;
+    right: 20px; /* 오른쪽 여백 */
+    bottom: 20px; /* 하단 여백 */
+    background-color: #8CC8EA;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
 
+.writeButton:hover {
+    background-color: #1F709E;
+}
+
+/* 페이지네이션 */
+.Pagination {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.Pagination button {
+    background-color: #8CC8EA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.Pagination button.active {
+    background-color: #1F709E;
+}
+
+.Pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* 반응형 */
+@media screen and (max-width: 768px) {
+    .Header h2 {
+        font-size: 20px;
+    }
+
+    .TableWrapper th, .TableWrapper td {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .ButtonWrapper button {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+
+    .Pagination button {
+        padding: 5px;
+        font-size: 12px;
+    }
+}

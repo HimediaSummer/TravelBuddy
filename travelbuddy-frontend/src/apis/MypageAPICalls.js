@@ -79,6 +79,11 @@ export const deletionProfileAPI = (navigate) => {
 
     return async (dispatch) => {
         try {
+            if (typeof navigate !== 'function') {
+                console.error('navigate가 함수가 아닙니다:', navigate);
+                throw new Error('navigate가 올바르지 않습니다.');
+            }
+
             const response = await fetch('/mypage/deletion', {
                 method: "PUT",
                 headers: {
@@ -87,18 +92,57 @@ export const deletionProfileAPI = (navigate) => {
                 },
             });
 
+            console.log("회원탈퇴 API 대답대답대답대답대답:", response);
+
+            // 1. 상태 코드 확인
             if (!response.ok) {
-                throw new Error("회원탈퇴 요청 실패!");
+                console.error("API 호출 실패:", response.status, response.statusText);
+                const errorText = await response.text();
+                console.error("API 실패 응답 본문:", errorText);
+                alert("회원탈퇴 요청 실패. 상태코드: " + response.status);
+                return;
             }
 
-            const data = await response.json();
-            console.log("회원탈퇴 성공 응답:", data);
+             // 2. 응답 데이터 확인
+            let data = null;
+            try {
+                const responseBody = await response.text();
+                console.log("응답 텍스트 원본:", responseBody);
 
-            alert("회원탈퇴가 완료되었습니다.");
+                if (responseBody.trim()) {
+                    data = JSON.parse(responseBody);
+                    console.log("JSON 응답 데이터:", data);
+                } else {
+                    console.warn("응답 본문이 비어 있습니다.");
+                    data = { message: "회원탈퇴가 완료되었습니다." };
+                }
+            } catch (jsonError) {
+                console.error("JSON 파싱 오류:", jsonError);
+                throw new Error("JSON 응답을 파싱하는 동안 오류가 발생했습니다.");
+            }
+
+            // 3. 성공 처리
+            alert(data.message || "회원탈퇴가 완료되었습니다.");
             navigate('/'); // 메인 페이지로 이동
+
+            // Redux Dispatch 호출
+            try {
+                dispatch({ type: "USER_DELETION_SUCCESS" }); // 예시 액션
+            } catch (dispatchError) {
+                console.error("Redux Dispatch 중 에러 발생:", dispatchError);
+                throw new Error("Redux 처리 중 문제가 발생했습니다.");
+            }
+
         } catch (error) {
-            console.error("회원탈퇴 실패:", error);
-            alert("회원탈퇴 중 문제가 발생했습니다. 다시 시도해주세요.");
+            // 5. catch 블록에서 에러 메시지 출력
+            console.error("회원탈퇴 중 예기치 않은 에러 발생:", error);
+
+            // 에러 메시지에 구체적인 정보 출력
+            if (error.message) {
+                alert("오류 메시지: " + error.message);
+            } else {
+                alert("회원탈퇴 중 문제가 발생했습니다. 다시 시도해주세요.");
+            }
         }
     };
 

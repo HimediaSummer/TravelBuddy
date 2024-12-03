@@ -2,7 +2,7 @@ services:
   # Front-end : React App
   web-server:
   # 자신이 만든 이미지 이름을 정확히 기입. (아마도 dockerhub 에 올려져있는 이미지 이름임)
-    image: kimhodong/travelbuddy-frontend
+    image: summerchoco/travelbuddy-frontend
     # build:
     #   context: ./travelbuddy-frontend
     #   dockerfile: Dockerfile
@@ -13,7 +13,7 @@ services:
   # Back-end : SpringBoot REST API Server
   backend-server:
   # 자신이 만든 이미지 이름을 정확히 기입. (아마도 dockerhub 에 올려져있는 이미지 이름임)
-    image: kimhodong/travelbuddy-backend
+    image: summerchoco/travelbuddy-backend
     # build:
     #   context: ./travelbuddy-backend
     #   dockerfile: Dockerfile

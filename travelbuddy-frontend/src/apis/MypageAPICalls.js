@@ -7,7 +7,7 @@ import { getSchedule, deleteSchedule } from '../modules/MypageModule';
 export const callMyProfileAPI = () => {
     return async (dispatch) => {
         try {
-            const response = await fetch('/mypage/myprofile', {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/myprofile`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export const updateProfileAPI = (formData, navigate) => {
 
             }
 
-            const response = await fetch('/mypage/updatemyprofile', {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/updatemyprofile`, {
                 method: "PUT",
                 body: formData,
                 headers: {
@@ -81,7 +81,7 @@ export const deletionProfileAPI = (navigate) => {
                 throw new Error('navigate가 올바르지 않습니다.');
             }
 
-            const response = await fetch('/mypage/deletion', {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/deletion`, {
                 method: "PUT",
                 headers: {
                     Accept: '*/*',
@@ -144,7 +144,7 @@ export const deletionProfileAPI = (navigate) => {
 // 일정조회
 export const callMyScheduleAPI = (currentPage = 1) => async (dispatch) => {
     try {
-        const response = await fetch(`/mypage/myschedule?offset=${currentPage}`, {
+        const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/myschedule?offset=${currentPage}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ export const callMyScheduleAPI = (currentPage = 1) => async (dispatch) => {
 export const deleteMyScheduleAPI = (selectedRows) => {
     return async (dispatch) => {
         try {
-            const response = await fetch(`/mypage/myschedule/delete`, {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/myschedule/delete`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -193,7 +193,7 @@ export const deleteMyScheduleAPI = (selectedRows) => {
 export const callMyBuddyListAPI = (page) => {
     return async (dispatch) => {
         try {
-            const response = await fetch(`/mypage/mybuddy?offset=${page}`, {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/mybuddy?offset=${page}`, {
                 method: 'GET',
                 headers: {
                     Accept: '*/*',
@@ -217,7 +217,7 @@ export const callMyBuddyListAPI = (page) => {
 export const deleteBuddyAPI = (selectedRows, callback) => {
     return async () => {
         try {
-            const response = await fetch(`/mypage/mybuddy/delete`, {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/mybuddy/delete`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -242,7 +242,7 @@ export const deleteBuddyAPI = (selectedRows, callback) => {
 export const callMyMatchDetailsAPI = () => {
     return async (dispatch) => {
         try {
-            const response = await fetch('/mypage/mymatch', {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/mymatch`, {
                 method: 'GET',
                 headers: {
                     Accept: '*/*',
@@ -267,7 +267,7 @@ export const callMyMatchDetailsAPI = () => {
 export const cancelMatchAPI = (buddyMatchCode) => {
     return async (dispatch) => {
         try {
-            const response = await fetch('/mypage/mymatch', {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/mymatch`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

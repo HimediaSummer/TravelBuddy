@@ -92,7 +92,6 @@ function NoticeDetail() {
                     initialValue={noticeContents || notice.noticeContents}
                     key={noticeContents}
                     previewStyle="vertical"
-                    height="600px"
                     initialEditType="wysiwyg"
                     ref={editorRef}
                 />

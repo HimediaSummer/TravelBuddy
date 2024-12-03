@@ -23,6 +23,8 @@ function BuddyDetail () {
     console.log("token = ", token)
     console.log("token type", typeof token);
 
+    const isLoggedIn = !!token;
+
     useEffect(() => {
         if(token) {
             dispatch(callGetMemberAPI({ 
@@ -139,7 +141,7 @@ function BuddyDetail () {
                             <button onClick={onClickBuddyDelete} className="delete-button">삭제</button>
                         </div>
                 )}
-            <div className="BuddyHeader">
+            <div className="BuddyDetailHeader">
                 <h2>게시글</h2>
             </div>
            
@@ -207,9 +209,11 @@ function BuddyDetail () {
                                 {/* <tr>
                                     <td colSpan="4"> */}
                                         <div className="apply-button-container">
+                                            {isLoggedIn && (
                                             <button className="apply-button" onClick={onClickApplyButton} disabled={isApplied}>
                                                 {isApplied ? "신청완료" : "신청하기"}
                                             </button>
+                                            )}
                                         </div>
                                     {/* </td>
                                 </tr> */}

@@ -73,8 +73,7 @@ function FaqDetail() {
                 <tr>
                     <td>FAQ 내용</td>
                 <td  className="td3myqnadetail" colSpan={5}>
-                <input
-                    type="text"
+                <textarea
                     onChange={handleInputChange}
                     name='faqContents'
                     value={ faqContents || faq.faqContents } />

@@ -177,7 +177,7 @@ function BuddyRegist() {
                 <button className="back-button" onClick={() => navigate(-1)}>돌아가기</button>
                 <button className="write-button" onClick={onClickBuddyRegistactionHandler}>작성 완료</button>                
             </div>
-            <div className="BuddyHeader">
+            <div className="BuddyRegistHeader">
                 <h2>게시글 작성</h2>
             </div>
             <div>

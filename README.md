@@ -2,7 +2,7 @@
 <br/>
 <img src="https://github.com/user-attachments/assets/c2b29c6a-0bb2-4962-b54a-b47de6a0c655" width="600">
 <br>
-<img src="https://github.com/user-attachments/assets/1097c9a5-7fa4-4bd1-b37e-cc5918de5566" width="400">
+<img src="https://github.com/user-attachments/assets/365bca25-1a89-4f72-b03e-b73028a49531" width="400">
 <br/>
 <h4>여행계획 짜기 힘들어! 그럴때 트래블버디!<img src="https://github.com/user-attachments/assets/9498b2ca-f201-4c7c-9865-bead57e87703" width="40"></h4>
 <h4>질문으로 내가 원하는 스타일을 고르고 나만의 완벽한 여행을 설계해주는 OpenAi API를 사용한 Ai 여행 디자이너!!</h4>
@@ -10,7 +10,7 @@
 <img src="https://github.com/user-attachments/assets/c02bcc15-560f-4ead-bab6-5edcc63a9010" alt="지역선택" width="400">
 
 
-<h4>내가 원하는 숙소🛏부터 맛집🍖, 명소🏖까지 다 알려주고 일정까지 만들어주는 트래블버디<img src="https://github.com/user-attachments/assets/9498b2ca-f201-4c7c-9865-bead57e87703" width="40"></h4>
+<h4>내가 원하는 여행지🌅부터 맛집🍖, 명소🏖까지 다 알려주고 일정까지 만들어주는 트래블버디<img src="https://github.com/user-attachments/assets/9498b2ca-f201-4c7c-9865-bead57e87703" width="40"></h4>
 <img src="https://github.com/user-attachments/assets/c266925f-ffe2-4c91-bff6-57d300c77e43" alt="일정완성" width="400">
 
 <br/>
@@ -31,6 +31,7 @@
 | **성호준**         | **김현승**         | **김호동**          | **이은지**         | **최예진**         |
 | PM                 | 문서관리           | DB 관리             | 화면 및 테스트 관리 | 화면 및 이슈관리   |
 | 일정생성 및 API    | 로그인/회원가입/게시판 | 관리자 및 문의 페이지 | 일정생성 및 API    | 마이페이지         |
+| https://github.com/summerchoco | https://github.com/kimkeny | https://github.com/KimHoDong | https://github.com/L2EJ2 | https://github.com/yeJin4069|
 
 <h3>개발환경</h3>
 

@@ -40,7 +40,7 @@
     margin: 0px;
     padding: 0;
     background-color: white;
-    border: solid 3px #8CC8EA;
+    border: solid 3px #BADEF2;
     border-radius: 25px;    
 }
 
@@ -73,7 +73,7 @@
     height: 70px;
     width: 380px;
     border-radius: 25px;
-    background-color: #8CC8EA;
+    background-color: #BADEF2;
 	color: white;
 	font-size: 32px;
     font-weight: bold;
@@ -91,7 +91,7 @@
 .registDiv .footer {
     margin-top: 10px;
     font-size: 20px;
-    color: #8CC8EA;
+    color: #BADEF2;
     display: flex;
     justify-content: space-around;
 }
@@ -101,7 +101,7 @@
 	margin-right: 20px;
 	font-size: 20px;
     text-decoration: none;
-    color: #8CC8EA;
+    color: #BADEF2;
 }
 
 .registDiv .footer a:hover {

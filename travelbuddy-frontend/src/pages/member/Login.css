@@ -23,7 +23,7 @@
     margin: 0px;
     padding: 0;
     background-color: white;
-    border: solid 3px #8CC8EA;
+    border: solid 3px #BADEF2;
     border-radius: 25px;    
 }
 
@@ -33,6 +33,7 @@
 }
 
 .loginDiv input {
+    font-family: 'Cafe24 Ssurround air';
     margin-top: 5px;
     margin-bottom: 20px;
 	margin-left: 0px;
@@ -48,12 +49,13 @@
 }
 
 .loginDiv button {
+    font-family: 'Cafe24 Ssurround';
     margin-top: 5px;
     margin-bottom: 5px;
     height: 70px;
     width: 380px;
     border-radius: 25px;
-    background-color: #8CC8EA;
+    background-color: #BADEF2;
 	color: white;
 	font-size: 32px;
     font-weight: bold;
@@ -72,17 +74,18 @@
 .loginDiv .footer {
     margin-top: 10px;
     font-size: 20px;
-    color: #8CC8EA;
+    color: #BADEF2;
     display: flex;
     justify-content: space-around;
 }
 
 .loginDiv .footer a {
+    font-family: 'Cafe24 Ssurround';
 	margin-left: 20px;
 	margin-right: 20px;
 	font-size: 20px;
     text-decoration: none;
-    color: #8CC8EA;
+    color: #BADEF2;
     cursor: pointer; /* 손가락 커서 */
 }
 

@@ -1494,7 +1494,7 @@ select,
 	width: 1500px;
 	display: flexbox; /* flexbox 사용 */
 	flex-direction: column; /* 세로 방향으로 정렬 */
-
+	margin-bottom: 50px;
 	}
 
 	.BuddyContainer p {
@@ -1522,6 +1522,11 @@ select,
 	width: 248px;
 	height: 50px;
 	text-align: center;
+	}
+
+	textarea {
+		font-family: 'Cafe24 Ssurround air';
+		font-size: 20px;
 	}
 
 
@@ -1554,14 +1559,13 @@ select,
 	font-family: 'Cafe24 Ssurround';
 		font-size: 20px;
 		color: #ffffff;
-	width: 124px;
+	/* width: 124px; */
 	height: 50px;
 	margin-right: 25px;
 	border-radius: 15px;
 	background-color: #8CC8EA;
-	border: none; /* 버튼의 테두리 제거 */
+	border: none; 
 	cursor: pointer;
-
 	}
 
 	.BuddyContainer thead {
@@ -1655,19 +1659,23 @@ select,
 		cursor: pointer; /* 마우스 커서를 포인터로 변경 */
 
 	}
-
-	.CreateButton button {
-	font-family: 'Cafe24 Ssurround';
-		font-size: 20px;
-		color: #ffffff;
-		width: 124px;
-		height: 50px;
-		margin-left: 300px;
-		border-radius: 15px;
+	.writeButton {
+		position: absolute;
+		right: -150px;
+		bottom: 0px;
 		background-color: #8CC8EA;
+		color: white;
 		border: none;
-	cursor: pointer;
-	margin-bottom: 0;
+		border-radius: 20px;
+		padding: 10px 20px;
+		font-size: 16px;
+		cursor: pointer;
+		width: 150px;
+	
+	}
+	
+	.writeButton:hover {
+		background-color: #1F709E;
 	}
 
 	.BuddyContainer button:Hover {

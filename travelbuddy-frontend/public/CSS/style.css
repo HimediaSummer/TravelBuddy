@@ -36,16 +36,16 @@ ul {
 	margin: 0;
 	padding: 0;
 	/* font-family: 'IBM Plex Sans KR', sans-serif; */
-	font-family: '카페24 써라운드';
+	font-family: 'Cafe24Ssurround';
 }
 
 footer div {
-	font-family: '카페24 써라운드 에어' !important;
+	font-family: 'Cafe24SsurroundAir' !important;
 	font-size: 15px;
 }
 
 .menu {
-	font-family: '카페24 써라운드 에어';
+	font-family: 'Cafe24SsurroundAir';
 }
 
 .menu>li>a {
@@ -93,6 +93,10 @@ footer div {
 }
 
 /* 로그인 페이지 */
+
+#login-button {
+	font-family: 'Cafe24Ssurround';
+}
 
 .login {
 	width: 380px;
@@ -492,7 +496,7 @@ select,
 	/* justify-content: center; */
 	text-align: center;
 	margin-top: 0;
-	font-family: '카페24 써라운드';
+	font-family: 'Cafe24Ssurround';
 }
 
 .chat-answer {
@@ -524,7 +528,7 @@ select,
 }
 
 .chat-form button {
-	font-family: '카페24 써라운드';
+	font-family: 'Cafe24Ssurround';
 }
 
 .chat-head {
@@ -603,7 +607,7 @@ select,
 	padding: 10px 15px 0px 15px;
 	border-radius: 15px;
 	font-size: large;
-	font-family: '카페24 써라운드 에어';
+	font-family: 'Cafe24SsurroundAir';
 }
 
 
@@ -697,7 +701,7 @@ select,
 	border-radius: 15px;
 	/* border: 1px solid rgb(30, 37, 65); */
 	cursor: pointer;
-	font-family: '카페24 써라운드', sans-serif;
+	font-family: 'Cafe24Ssurround', sans-serif;
 	font-weight: bold;
 	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
 }
@@ -784,7 +788,7 @@ select,
 
 .react-calendar__month-view__weekdays__weekday {
 	text-align: center !important;
-	font-family: '카페24 써라운드' !important;
+	font-family: 'Cafe24Ssurround' !important;
 	font-weight: 500 !important;
 	font-size: 14px !important;
 	margin-bottom: 25px !important;
@@ -795,7 +799,7 @@ select,
 }
 
 .react-calendar {
-	font-family: '카페24 써라운드 에어' !important;
+	font-family: 'Cafe24SsurroundAir' !important;
 	border: 1px solid white;
 	border-radius: 15px;
 	/* box-shadow: 0 0 20px #e0e0e0; */
@@ -804,7 +808,7 @@ select,
 }
 
 .react-calendar__navigation__label {
-	font-family: '카페24 써라운드' !important;
+	font-family: 'Cafe24Ssurround' !important;
 }
 
 .react-calendar__tile--now {
@@ -993,7 +997,7 @@ select,
     font-size: 24px; /* 글자 크기 설정 */
     position: relative; /* 위치 설정 */
 	transition: background-color 0.3s, color 0.3s; /* 부드러운 색상 전환 */
-	font-family: '카페24 써라운드';
+	font-family: 'Cafe24Ssurround';
 }
 
 .region-button2 {
@@ -1012,7 +1016,7 @@ select,
     align-self: flex-end; /* 버튼을 오른쪽 정렬 */
     margin-top: auto; /* 버튼을 맨 아래로 이동 */
 	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
-	font-family: '카페24 써라운드';
+	font-family: 'Cafe24Ssurround';
 }
 
 .region-button:before {
@@ -1133,7 +1137,7 @@ select,
     /* margin-top: auto; 버튼을 맨 아래로 이동 */
 	margin-right: 20px;
 	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
-	font-family: '카페24 써라운드';
+	font-family: 'Cafe24Ssurround';
 }
 
 .date-button2 {
@@ -1154,7 +1158,7 @@ select,
     /* margin-top: auto; 버튼을 맨 아래로 이동 */
 	margin-right: 20px;
 	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
-	font-family: '카페24 써라운드';
+	font-family: 'Cafe24Ssurround';
 }
 
 .date-button:hover {
@@ -1215,7 +1219,7 @@ select,
     font-size: 24px; /* 글자 크기 설정 */
     position: relative; /* 위치 설정 */
 	transition: background-color 0.3s, color 0.3s; /* 부드러운 색상 전환 */
-	font-family: '카페24 써라운드';
+	font-family: 'Cafe24Ssurround';
 }
 
 .accom-button2 {
@@ -1234,7 +1238,7 @@ select,
     align-self: flex-end; /* 버튼을 오른쪽 정렬 */
     margin-top: auto; /* 버튼을 맨 아래로 이동 */
 	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
-	font-family: '카페24 써라운드';
+	font-family: 'Cafe24Ssurround';
 }
 
 .accom-button:before {
@@ -1354,7 +1358,7 @@ select,
     align-self: flex-end; /* 버튼을 오른쪽 정렬 */
     margin-top: auto; /* 버튼을 맨 아래로 이동 */
 	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
-	font-family: '카페24 써라운드';
+	font-family: 'Cafe24Ssurround';
 }
 
 .quest-button2:hover {

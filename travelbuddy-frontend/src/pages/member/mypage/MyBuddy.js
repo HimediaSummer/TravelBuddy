@@ -20,19 +20,24 @@ function MyBuddy() {
 
     // API로 목록 가져오기
     useEffect(() => {
-
+        console.log("현재 페이지:", currentPage);
         dispatch(callMyBuddyListAPI(currentPage)); // 현재 페이지로 API 호출
     }, [dispatch, currentPage]);
 
     // 데이터 상태 확인 로그
     useEffect(() => {
-
+        console.log("Redux 상태에서 가져온 buddyList:", buddyList);
     }, [buddyList]);
 
     // 전체 체크박스 선택
     const handleSelectAll = (e) => {
+        if (!Array.isArray(buddyList?.data)) {
+            console.error("buddyList.data is not an array:", buddyList?.data);
+            return; // 배열이 아닌 경우 함수 종료
+        }
+    
         if (e.target.checked) {
-            const allRowIds = buddyList.map(item => item.buddyCode);
+            const allRowIds = buddyList.data.map((item) => item.buddyCode); // buddyList.data를 사용
             setSelectedRows(allRowIds);
         } else {
             setSelectedRows([]);
@@ -43,7 +48,7 @@ function MyBuddy() {
     const handleSelectRow = (buddyCode) => {
         setSelectedRows((prevSelectedRows) => {
             const newSelectedRows = prevSelectedRows.includes(buddyCode)
-                ? prevSelectedRows.filter(code => code !== buddyCode)
+                ? prevSelectedRows.filter((code) => code !== buddyCode)
                 : [...prevSelectedRows, buddyCode];
             return newSelectedRows;
         });
@@ -80,11 +85,14 @@ function MyBuddy() {
                 <thead>
                     <tr>
                         <th>
-                            <input
-                                type="checkbox"
-                                onChange={handleSelectAll}
-                                checked={selectedRows.length === (buddyList?.data?.length || 0) && buddyList?.data?.length > 0}
-                            />
+                        <input
+                            type="checkbox"
+                            onChange={handleSelectAll}
+                            checked={
+                                buddyList?.data?.length > 0 &&
+                                selectedRows.length === buddyList.data.length
+                            }
+                        />
                         </th>
                         <th>버디</th>
                         <th>지역</th>

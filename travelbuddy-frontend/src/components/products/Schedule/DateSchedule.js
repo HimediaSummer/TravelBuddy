@@ -164,7 +164,7 @@ function DateSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, se
 						</div>
 						{/* Qestion */}
 						{/* Schedule */}
-						<button className="date-button2" onClick={onNext}>시간 설정 완료</button>
+						<button className="date-button2" onClick={onNext}>날짜 설정 완료</button>
 					</div>
 					{/* Loading */}
 				</form>

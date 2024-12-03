@@ -45,6 +45,7 @@
 	line-height: 70px;
 	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
 	transition: background-color 0.3s ease;
+	font-family: 'Cafe24SsurroundAir';
 }
 
 .loginDiv button {
@@ -62,6 +63,7 @@
 	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
 	transition: background-color 0.5s ease;
     cursor: pointer; /* 손가락 커서 */
+	font-family: 'Cafe24Ssurround';
 }
 
 .loginDiv button:hover {

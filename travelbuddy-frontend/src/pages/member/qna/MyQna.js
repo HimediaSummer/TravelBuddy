@@ -34,21 +34,31 @@ function MyQna() {
 
 
     const inserMyQna = () => {
-        const now = new Date();
-        const formattedDate = now.toLocaleString('ko-KR', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        }).replace(/\. /g, '-').replace(',', '');
-        
-        const updatedQnaDTO = {...qnaDTO, qnaCreate: formattedDate};
-        dispatch(insertQnaAPI(updatedQnaDTO));
-        alert('문의가 등록되었습니다.');
-        navigate(`/cs/MyQnas`);
+        if (qnaDTO.qnaTitle == null) {
+            alert('제목을 입력해주세요');
+            return;
+        } else if (qnaDTO.qnaContents == null) {
+            alert('문의 내용을 입력해주세요');
+            return;
+        } else if (qnaDTO.fqTypeCode == null) {
+            alert('문의 유형을 선택해주세요');
+            return;
+        }
+            const now = new Date();
+            const formattedDate = now.toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            }).replace(/\. /g, '-').replace(',', '');
+            
+            const updatedQnaDTO = {...qnaDTO, qnaCreate: formattedDate};
+            dispatch(insertQnaAPI(updatedQnaDTO));
+            alert('문의가 등록되었습니다.');
+            navigate(`/cs/MyQnas`);
     };
 
     return (
@@ -71,6 +81,7 @@ function MyQna() {
                                 onChange={handleInputChange}
                                 required
                                 maxLength={100}
+                                pattern=""
                             />
                         </td>
                         <td>문의유형</td>

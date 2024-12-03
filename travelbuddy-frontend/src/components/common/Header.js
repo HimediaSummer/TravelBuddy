@@ -59,7 +59,7 @@ function Header() {
     function BeforeLogin() {
         return (
             <div>
-                <NavLink to="/login" style={{color: 'black'}}>로그인</NavLink>
+                <NavLink to="/login" style={{color: 'black', cursor: 'pointer'}}>로그인</NavLink>
             </div>
         );
     }
@@ -68,7 +68,7 @@ function Header() {
         return (
             <div>
                 {/* <button onClick={onClickLogoutHandler}>로그아웃</button> */}
-                <a onClick={onClickLogoutHandler} style={{color: 'black'}}>로그아웃</a>
+                <a onClick={onClickLogoutHandler} style={{color: 'black', cursor: 'pointer'}}>로그아웃</a>
             </div>
         );
     }

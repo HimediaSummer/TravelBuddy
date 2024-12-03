@@ -316,7 +316,7 @@ function SummarySchedule({ onNext, startDate, setStartDate, endDate, setEndDate,
 							{loading && <img src="./Img/spin.gif" alt="로딩이미지" />}
 						</div>
 						<div className="reset-travel">
-							<button id="button" type="reset" onClick={() => window.location.replace(`http://${process.env.REACT_APP_RESTAPI_IP}:3000/schedule`)}>
+							<button id="button" type="reset" onClick={() => window.location.replace(`http://${process.env.REACT_APP_RESTAPI_IP}/schedule`)}>
 								다시하기
 							</button>
 						</div>

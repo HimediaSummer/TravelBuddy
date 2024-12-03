@@ -16,7 +16,7 @@ function MyBuddyDetail() {
 	const [selectedBuddyMatches, setSelectedBuddyMatches] = useState([]);
 	const [isAllSelected, setIsAllSelected] = useState(false);
 
-	console.log("Buddy Code:", buddyCode);
+
 
 	useEffect(() => {
 		fetch(`/mypage/mybuddy/${buddyCode}`)
@@ -27,7 +27,7 @@ function MyBuddyDetail() {
 				return response.json();
 			})
 			.then((data) => {
-				console.log("Fetched Data:", data);
+
 
 				// buddyImg를 쉼표로 나눠 배열로 변환
 				const images = data.data.getBuddyDetail.buddyImg
@@ -44,7 +44,7 @@ function MyBuddyDetail() {
 				setBuddyTypeName(data.data.buddyTypeName);
 				setMemberName(data.data.memberName);
 				setBuddyMatch(data.data.getBuddyMatchList);
-				console.log("setBuddyDetail 발동", data);
+
 			})
 			.catch((error) => {
 				console.error("Error fetching buddy:", error);

@@ -261,7 +261,6 @@ function Map({ regionName, style }) {
 			
 			// 스크립트 로딩 후 온로드 이벤트 설정
 		script.onload = () => {
-			console.log('야로드야됏냐??????????????????');
 			if (window.kakao && window.kakao.maps) {
 				window.kakao.maps.load(() => {
 					const container = document.getElementById('map');
@@ -272,7 +271,6 @@ function Map({ regionName, style }) {
 						};
 						const map = new window.kakao.maps.Map(container, options);
 						setMapInstance(map); // 지도 객체 상태로 저장
-						console.log('ㅈㅣ도야!!!!!!!', map);
 					}
 				});
 			}
@@ -281,7 +279,7 @@ function Map({ regionName, style }) {
 
 		// 스크립트가 이미 존재하면 온로드를 바로 실행
 		if(window.kakao && window.kakao.maps) {
-			console.log('이미로드됏다~!');
+
 			window.kakao.maps.load(() => {
 				const container = document.getElementById('map');
 				if(!mapInstance) {
@@ -291,7 +289,7 @@ function Map({ regionName, style }) {
 					};
 					const map = new window.kakao.maps.Map(container, options);
 					setMapInstance(map); // 지도 객체 상태로 저장
-					console.log('지도야??????????',map);
+
 				}
 			});
 		}
@@ -306,7 +304,7 @@ function Map({ regionName, style }) {
 
 	// regionName 변경 시 마커 업데이트
 	useEffect(() => {
-		console.log('지금지역어디야!!!!!!!!!', regionName);
+
 		if (mapInstance && regionName) {
 			const geocoder = new window.kakao.maps.services.Geocoder();
 

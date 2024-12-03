@@ -9,7 +9,6 @@ import {
 } from '../modules/ProductModule.js';
 
 export const callSearchProductAPI = ({ search }) => {
-	console.log('[ProduceAPICalls] callSearchProductAPI Call');
 
 	const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/api/v1/products/search?s=${search}`;
 
@@ -22,14 +21,12 @@ export const callSearchProductAPI = ({ search }) => {
 			}
 		}).then((response) => response.json());
 
-		console.log('[ProduceAPICalls] callSearchProductAPI RESULT : ', result);
 
 		dispatch({ type: GET_PRODUCTS, payload: result.data });
 	};
 };
 
 export const callProductRegistAPI = ({ form }) => {
-	console.log('[ProduceAPICalls] callProductRegistAPI Call');
 
 	const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/api/v1/products`;
 
@@ -44,14 +41,12 @@ export const callProductRegistAPI = ({ form }) => {
 			body: form
 		}).then((response) => response.json());
 
-		console.log('[ProduceAPICalls] callProductRegistAPI RESULT : ', result);
 
 		dispatch({ type: POST_PRODUCT, payload: result });
 	};
 };
 
 export const callProductUpdateAPI = ({ form }) => {
-	console.log('[ProduceAPICalls] callProductUpdateAPI Call');
 
 	const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/api/v1/products`;
 
@@ -66,7 +61,6 @@ export const callProductUpdateAPI = ({ form }) => {
 			body: form
 		}).then((response) => response.json());
 
-		console.log('[ProduceAPICalls] callProductUpdateAPI RESULT : ', result);
 
 		dispatch({ type: PUT_PRODUCT, payload: result });
 	};
@@ -86,9 +80,8 @@ export const callProductDetailForAdminAPI = ({ productCode }) => {
 			}
 		}).then((response) => response.json());
 
-		console.log('[ProduceAPICalls] callProductDetailAPI RESULT : ', result);
+
 		if (result.status === 200) {
-			console.log('[ProduceAPICalls] callProductDetailAPI SUCCESS');
 			dispatch({ type: GET_PRODUCT, payload: result.data });
 		}
 	};
@@ -106,9 +99,9 @@ export const callProductDetailAPI = ({ productCode }) => {
 			}
 		}).then((response) => response.json());
 
-		console.log('[ProduceAPICalls] callProductDetailAPI RESULT : ', result);
+
 		if (result.status === 200) {
-			console.log('[ProduceAPICalls] callProductDetailAPI SUCCESS');
+
 			dispatch({ type: GET_PRODUCT, payload: result.data });
 		}
 	};
@@ -123,7 +116,6 @@ export const callProductListForAdminAPI = ({ currentPage }) => {
 		requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/api/v1/products-management`;
 	}
 
-	console.log('[ProduceAPICalls] requestURL : ', requestURL);
 
 	return async (dispatch, getState) => {
 		const result = await fetch(requestURL, {
@@ -136,10 +128,6 @@ export const callProductListForAdminAPI = ({ currentPage }) => {
 			}
 		}).then((response) => response.json());
 		if (result.status === 200) {
-			console.log(
-				'[ProduceAPICalls] callProductListForAdminAPI RESULT : ',
-				result
-			);
 			dispatch({ type: GET_PRODUCTS, payload: result.data });
 		}
 	};
@@ -154,7 +142,6 @@ export const callProductListAPI = ({ currentPage }) => {
 		requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/api/v1/products`;
 	}
 
-	console.log('[ProduceAPICalls] requestURL : ', requestURL);
 
 	return async (dispatch, getState) => {
 		const result = await fetch(requestURL, {
@@ -165,7 +152,6 @@ export const callProductListAPI = ({ currentPage }) => {
 			}
 		}).then((response) => response.json());
 		if (result.status === 200) {
-			console.log('[ProduceAPICalls] callProductAPI RESULT : ', result);
 			dispatch({ type: GET_PRODUCTS, payload: result.data });
 		}
 	};
@@ -183,10 +169,6 @@ export const callProductListAboutMealAPI = () => {
 			}
 		}).then((response) => response.json());
 		if (result.status === 200) {
-			console.log(
-				'[ProduceAPICalls] callProductListAboutMeal RESULT : ',
-				result
-			);
 			dispatch({ type: GET_PRODUCTS_MEAL, payload: result.data });
 		}
 	};
@@ -204,10 +186,7 @@ export const callProductListAboutDessertAPI = () => {
 			}
 		}).then((response) => response.json());
 		if (result.status === 200) {
-			console.log(
-				'[ProduceAPICalls] callProductListAboutDessert RESULT : ',
-				result
-			);
+
 			dispatch({ type: GET_PRODUCTS_DESSERT, payload: result.data });
 		}
 	};
@@ -225,10 +204,6 @@ export const callProductListAboutBeverageAPI = () => {
 			}
 		}).then((response) => response.json());
 		if (result.status === 200) {
-			console.log(
-				'[ProduceAPICalls] callProductListAboutBeverage RESULT : ',
-				result
-			);
 			dispatch({ type: GET_PRODUCTS_BEVERAGE, payload: result.data });
 		}
 	};

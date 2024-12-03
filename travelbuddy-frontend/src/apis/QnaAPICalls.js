@@ -6,7 +6,6 @@ export const callQnaListForAdminAPI = ({currentPage}) => {
     let requestURL;
     if (currentPage !== undefined || currentPage !== null) {
         requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/qnas?offset=${currentPage}`;
-        console.log('지금 나의 주소는?',requestURL);
     } else {
         requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/qnas`;
     }

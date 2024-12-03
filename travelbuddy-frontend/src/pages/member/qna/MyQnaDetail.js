@@ -16,7 +16,6 @@ function MyQnaDetail() {
     const { data } = qnaData;
     const { qnaDTO, qnaAnswerDTO } = data || {};
     const fqTypeList = fqType.data || {};
-    console.log("data 가 가지고있는것", data);
 
     useEffect(() => {
         dispatch(callQnaDetailAPI(qnaCode));

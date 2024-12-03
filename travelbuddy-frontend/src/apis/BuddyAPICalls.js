@@ -4,8 +4,6 @@ import { GET_REGIONS } from '../modules/RegionBuddyTypeModule';
 //게시글 전체조회
 export const callBuddiesListAPI = ({currentPage}) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies?offset=${currentPage}`;
-	console.log('callBuddiesListAPI 갔다오는거 확인');
-    console.log("currentPage = ", currentPage);
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'GET',
@@ -14,7 +12,6 @@ export const callBuddiesListAPI = ({currentPage}) => {
                 Accept: '*/*'
             }
         }).then((response) => response.json());
-		console.log("API응답:",result);
         dispatch({type: GET_BUDDIES, payload: result });
 		
     }}
@@ -32,7 +29,6 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
                     Accept: '*/*'
                 }
             }).then((response) => response.json());
-			console.log("API응답:",result);
             dispatch({type: GET_BUDDY, payload: result });
         }}
 
@@ -42,7 +38,6 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
         if (search !== undefined && search !== null) {
             requestURL =`http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies/search?s=${encodeURIComponent(search)}`;
         }
-        console.log('키워드가 뭡니까?',search);
         return async (dispatch, getState) => {
             const result = await fetch(requestURL, {
                 method: 'GET',
@@ -60,7 +55,6 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
         // 게시글 작성한다.
     export const callBuddyRegistAPI = (formData) => {
         const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddyRegist`;
-        console.log("callBuddyRegistAPI 갔다옴");
 
         console.log("API form = ", formData);
         return async (dispatch, getState) => {
@@ -77,23 +71,18 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
                 response.json());
 
             // console.log("accessToken = ", window.localStorage.getItem('accessToken'))
-            console.log("[BuddyAPICalls] callBuddyRegistAPI result : ", result);
-            console.log("API응답:",result);
             dispatch({type: POST_BUDDY, payload: result});
         }}
 
         //게시글 수정
     export const callBuddyUpdateAPI = (formData) => {
-        console.log('[callBuddyUpdateAPI 옴]');
 
         for (const pair of formData.entries()) {
             console.log(`${pair[0]}: ${pair[1]}`);
         }
         
-        console.log("API form = ", formData);
 
         const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddyUpdate/${formData.buddyCode}`;
-        console.log('callBuddyUpdateAPI 갔다오는거 확인');
         return async (dispatch, getState) => {
             const result = await fetch(requestURL, {
                 method: 'PUT',
@@ -105,16 +94,12 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
                 // body: JSON.stringify(formData)
                 body: formData
             }).then((response) => response.json());
-            console.log("accessToken = ", window.localStorage.getItem('accessToken'))
-            console.log("[BuddyAPICalls] callBuddyUpdateAPI result : ", result);
-            console.log('callBuddyUpdateAPI 가져온 result 값',result);
             dispatch({type: PUT_BUDDY, payload: result });
         }}
 
         // 권한이 있을경우 상세조회
         export const callbuddyDetailForAccountAPI = ({ buddyCode }) => {
             const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies/${buddyCode}`;
-            console.log("buddyCode = ", buddyCode)
             return async (dispatch, getState) => {
                 const result = await fetch(requestURL, {
                     method: 'GET',
@@ -125,10 +110,7 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
                             'Bearer ' + window.localStorage.getItem('accessToken')
                     }
                 }).then((response) => response.json());
-                console.log("accessToken = ", window.localStorage.getItem('accessToken'))
-                console.log('[BuddyAPICalls] callbuddyDetailForAccountAPI RESULT : ', result);
                 if (result.status === 200) {
-                    console.log('[BuddyAPICalls] callbuddyDetailForAccountAPI SUCCESS');
                     dispatch({ type: GET_BUDDY, payload: result.data });
                 }
             };
@@ -137,8 +119,6 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
         // 게시글 삭제
         export const callBuddyDeleteAPI = (buddyCode) => {
             const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddies/${buddyCode}`;
-            console.log("buddyCode = ", buddyCode)
-            console.log("삭제 API 옴")
             return async (dispatch) => {
                 const result = await fetch(requestURL, {
                     method: 'DELETE',
@@ -160,9 +140,7 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
         //버디 신청하기
         export const callApplyBuddyAPI = (applyData) => {
             const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/buddyApply`;
-            console.log("callBuddyRegistAPI 갔다옴");
     
-            console.log("API applyData = ", applyData);
             return async (dispatch, getState) => {
                 const result = await fetch(requestURL, {
                     method: 'POST',
@@ -177,16 +155,12 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
                 }).then((response) => 
                     response.json());
     
-                // console.log("accessToken = ", window.localStorage.getItem('accessToken'))
-                console.log("[BuddyAPICalls] callBuddyRegistAPI result : ", result);
-                console.log("API응답:",result);
                 dispatch({type: POST_BUDDY, payload: result});
             }}
 
             //지역 불러오기
             export const callBuddyRegionAPI = ({regionCode}) => {
                 const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/buddyBoard/region/`;
-                // console.log("region = ", regionName)
                 return async (dispatch, getState) => {
                     const result = await fetch(requestURL, {
                         method: 'GET',
@@ -195,7 +169,6 @@ export const callBuddyDetailAPI = ({buddyCode}) => {
                             Accept: '*/*'
                         }
                     }).then((response) => response.json());
-                    console.log("API응답:",result);
                     dispatch({type: GET_REGIONS, payload: result });
                 }}
     

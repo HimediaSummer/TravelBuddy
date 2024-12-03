@@ -22,11 +22,7 @@ function BuddyRegist() {
         }
     }, []);
 
-    console.log("member =" , member);
-    console.log("member type", typeof member);
 
-    console.log("token = ", token)
-    console.log("token type", typeof token);
 
     useEffect(() => {
         // 로그인 상태 확인
@@ -53,11 +49,10 @@ function BuddyRegist() {
     }
     );
 
-    console.log("form = ", form);
 
     // useEffect(() => {
     //     if(buddy.status == 201) {
-    //         console.log("[Buddy] Register SUCCESS {}", buddy);
+
     //         navigate("/buddies", { replace: true })
     //     }
     // }, [buddy]);
@@ -93,7 +88,7 @@ function BuddyRegist() {
             ...form, 
             [e.target.name]: e.target.value});
     };
-    console.log("onChangeHandler =" + onChangeHandler)
+
 
 
     const onClickBuddyRegistactionHandler = () => {
@@ -132,7 +127,6 @@ function BuddyRegist() {
 
         dispatch(callBuddyRegistAPI( formData));
 
-        console.log("전송 데이터", formData);
         alert("완료")
         navigate('/cm/buddies', { replace: true});
         window.location.reload();
@@ -144,7 +138,7 @@ function BuddyRegist() {
         //     alert("이미지를 제외한 모든 칸을 입력해주세요.");
         //     return;
         // }
-        // console.log("[BuddyRegist] onClickBuddyRegistactionHandler", onClickBuddyRegistactionHandler);
+
 
         // const formData = new FormData();
         // const formData = useSelector((state) => state.buddiesReducer);

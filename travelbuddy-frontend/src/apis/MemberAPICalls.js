@@ -3,7 +3,7 @@ import { GET_MEMBERS, GET_MEMBER, POST_MEMBER, POST_LOGIN, POST_SIGNUP, POST_EMA
 // 멤버 정보를 불러온다
 export const callGetMemberAPI = ({ memberName }) => {
 	const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/api/v1/members/${memberName}`;
-	console.log("memberName = ", memberName)
+
 
 	return async (dispatch, getState) => {
 		// 클라이언트 fetch mode : no-cors 사용시 application/json 방식으로 요청이 불가능
@@ -18,7 +18,7 @@ export const callGetMemberAPI = ({ memberName }) => {
 			}
 		}).then((response) => response.json());
 
-		console.log('[MemberAPICalls] callGetMemberAPI RESULT : ', result);
+
 
 		dispatch({ type: GET_MEMBER, payload: result });
 	};
@@ -45,7 +45,6 @@ export const callLoginAPI = ({ form }) => {
 			})
 		}).then((response) => response.json());
 
-		console.log('[MemberAPICalls] callLoginAPI RESULT : ', result);
 		if (result.status === 200) {
 			if(result.data.memberLeave) {
 				alert("유저를 찾을 수 없습니다.")
@@ -67,7 +66,6 @@ export const callLoginAPI = ({ form }) => {
 export const callLogoutAPI = () => {
 	return async (dispatch, getState) => {
 		dispatch({ type: POST_LOGIN, payload: '' });
-		console.log('[MemberAPICalls] callLogoutAPI RESULT : SUCCESS');
 	};
 };
 
@@ -92,7 +90,6 @@ export const callRegisterAPI = ({ form }) => {
 			})
 		}).then((response) => response.json());
 
-		console.log('[MemberAPICalls] callRegisterAPI RESULT : ', result);
 
 		if (result.status === 201) {
 			dispatch({ type: POST_SIGNUP, payload: result });
@@ -152,7 +149,6 @@ export const callSearchMemberListAPI = ( search ) => {
     if (search !== undefined && search !== null) {
         requestURL =`http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/members/search?s=${encodeURIComponent(search)}`;
     }
-    console.log('키워드가 뭡니까?',search);
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'GET',
@@ -220,7 +216,7 @@ export const toggleMemberDeletionAPI = ({memberCode}) => {
 
 			export const callFindIdAPI = ({ Email }) => {
 				const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/auth/findid`;
-				console.log("API memberEmail = ", Email)
+
 				return async (dispatch, getState) => {
 					const result = await fetch(requestURL, {
 						method: 'POST',
@@ -233,7 +229,8 @@ export const toggleMemberDeletionAPI = ({memberCode}) => {
 						})
 					}).then((response) => response.json());
 
-					console.log('[MemberAPICalls] callFindIdAPI RESULT : ', result);
+
+					
 
 					if (result.status === 200) {
 						return result.data;
@@ -258,7 +255,6 @@ export const toggleMemberDeletionAPI = ({memberCode}) => {
 						})
 					}).then((response) => response.json());
 
-					console.log('[MemberAPICalls] callFindPwAPI RESULT : ', result);
 
 					if (result && result.status === 200) {
 						return result.data; // 인증 코드를 반환
@@ -285,7 +281,6 @@ export const toggleMemberDeletionAPI = ({memberCode}) => {
 						})
 					}).then((response) => response.json());
 
-					console.log('[MemberAPICalls] callResetPwAPI RESULT : ', result);
 
 					if (result && result.status === 200) {
 						return true; // 비밀번호 변경 성공
@@ -306,7 +301,7 @@ export const toggleMemberDeletionAPI = ({memberCode}) => {
 			
 				if (response.ok) {
 					const data = await response.json();
-					console.log('fetch memberCode:', data);
+
 					return data; // memberCode 반환
 				} else {
 					throw new Error('Failed to fetch member code');
@@ -317,7 +312,6 @@ export const toggleMemberDeletionAPI = ({memberCode}) => {
 			export const handleLogin = async (form) => {
 				// 로그인 API 호출
 				const result = await callLoginAPI({ form });
-				console.log('login result', result);
 			
 				// memberName을 사용하여 memberCode 가져오기
 				const memberCode = await getMemberCode(form.memberName);

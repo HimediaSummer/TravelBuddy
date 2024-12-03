@@ -12,16 +12,14 @@ function BuddyDetail () {
     const dispatch = useDispatch();
     const params = useParams();
     const [isApplied, setIsApplied] = useState(false);
-    console.log("isAPPlied = ", isApplied);
+
 
     const buddyData = useSelector((state) => state.buddiesReducer);
     const member = useSelector(state => state.memberReducer); 
-    console.log("member =" , member);
-    console.log("member type", typeof member);
+
 
     const token = decodeJwt(window.localStorage.getItem("accessToken"));
-    console.log("token = ", token)
-    console.log("token type", typeof token);
+
 
     const isLoggedIn = !!token;
 
@@ -36,8 +34,6 @@ function BuddyDetail () {
 
     const {data} = buddyData;
 
-    console.log('data 가 가지고있는것',data);
-    console.log("data type",typeof data);
 
     const [isLoading, setIsLoading] = useState(true); // 데이터 로딩 상태 관리
 
@@ -69,8 +65,7 @@ function BuddyDetail () {
     //     dispatch(callGetMemberAPI({ memberName: token.sub }));
     // }, [dispatch, token.sub]);
 
-    console.log("token.sub = ", token?.sub);
-    console.log("token.sub type = ", typeof token?.sub);
+
 
     // const memberCode = data?.account?.memberCode; // Account의 memberCode
     // const memberName = data?.account?.memberName;
@@ -115,7 +110,6 @@ function BuddyDetail () {
             "applyStatus": 1 // 신청 상태 (1: 신청),
         };
 
-        console.log("applyData = ", applyData)
     
         dispatch(callApplyBuddyAPI(applyData))
             .then(() => {

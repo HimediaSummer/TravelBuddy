@@ -15,12 +15,11 @@ function QuestionSchedule({ onNext, setTravelData }) {
 		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/question`)
 			.then(response => response.json())
 			.then(data => {
-				console.log('가져온거', data);
 				const questionThemes = data.data.qThemes.map(qTheme => ({
 					themeCode: qTheme.themeCode,
 					questionTheme: qTheme.questionTheme
 				}));
-				console.log("가져왓냐?", data);
+
 				setQTheme(questionThemes);
 			})
 			.catch(error => console.error('Error fetching data:', error));

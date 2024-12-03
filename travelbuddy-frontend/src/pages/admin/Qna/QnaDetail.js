@@ -20,7 +20,6 @@ function QnaDetail () {
     const {data} = qnaData;
     const {qnaDTO, qnaAnswerDTO} = data || {};
     
-    console.log('제가 누굽니까',fqTypeList)
 
  
     useEffect (
@@ -31,8 +30,7 @@ function QnaDetail () {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        console.log(`${name}:${value}`);
-        console.log(answerState);
+
         setAnswerState((state) => ({ ...state, [name]: value }));
     }
     const onClickChangeHandlerInsert = () => {

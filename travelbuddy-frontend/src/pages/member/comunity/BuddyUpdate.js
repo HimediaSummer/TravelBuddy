@@ -14,18 +14,14 @@ function BuddyUpdate() {
 	const dispatch = useDispatch();
 	const params = useParams();
     const buddyCode = params.buddyCode;    
-    console.log("params에 담긴 buddyCode = ",buddyCode);
+
 
 	const buddyDetail = useSelector((state) => state.buddiesReducer || {});
-	console.log("buddyDetail = ",buddyDetail);
+
 
 	const member = useSelector(state => state.memberReducer);
     const token = decodeJwt(window.localStorage.getItem("accessToken"));
-	console.log("member =" , member);
-    console.log("member type", typeof member);
 
-    console.log("token = ", token)
-    console.log("token type", typeof token);
 
 	useEffect(() => {
         if(token) {
@@ -43,14 +39,13 @@ function BuddyUpdate() {
 
 
 	const [form, setForm] = useState({});
-	console.log("Form = ", form);
+
 
     // const buddyCode = props.buddyCode || state.buddyCode;
-    // console.log("버디코드 옴? ",buddyCode);
+
 
 	
 	useEffect(() => {
-		console.log('[BuddyUpdate] buddyCode : ', params.buddyCode);
 		
 		dispatch(
 			callbuddyDetailForAccountAPI({
@@ -60,7 +55,7 @@ function BuddyUpdate() {
 	}, []);
 
 	// const testDataList = buddyDetail;
-	// console.log("testdetalist",testDataList);
+
 
 
 	
@@ -101,7 +96,7 @@ function BuddyUpdate() {
 	}, [image]);
 
 	const onChangeImageUpload = (e) => {
-		console.log(e.target.files[0]);
+
 		const image = e.target.files[0];
 
 		setImage(image);
@@ -117,7 +112,7 @@ function BuddyUpdate() {
 		// 수정모드
 		if(buddyDetail) {
 		setModifyMode(true);
-		console.log("수정모드이전 :- -----------------------", buddyDetail.region, buddyDetail.buddyType);
+
 		setForm({
 				memberCode: member?.data?.memberCode,
 				buddyCode: buddyDetail?.buddyCode ,
@@ -129,7 +124,7 @@ function BuddyUpdate() {
 				buddyCreate: buddyDetail?.buddyCreate,
 				buddyAt: buddyDetail?.buddyAt 
 		})};
-		console.log("수정모드이후 :- -----------------------", form.regionCode, form.buddyTypeCode);
+
 	};
 
 	/* form 데이터 세팅 */
@@ -139,15 +134,15 @@ function BuddyUpdate() {
 			[e.target.name]: e.target.value
 		});
 	};
-	console.log("onChangeHandler =" + onChangeHandler)
+
 
 
 	useEffect(() => {
-		console.log("Current form state", form);
+
 	}, [form]);
 
 	const onClickBuddyUpdateHandler = () => {
-		console.log('[BuddyUpdate] onClickBuddyUpdateHandler');
+
 
 		const formData = new FormData();
 		formData.append("memberCode", member.data.memberCode);
@@ -164,7 +159,6 @@ function BuddyUpdate() {
 			formData.append('buddyImage', image);
 		}
 
-		console.log('API로 가기 전 formData = ', formData);
 
 		dispatch(
 			callBuddyUpdateAPI(
@@ -179,7 +173,7 @@ function BuddyUpdate() {
         window.location.reload();
 	};
 
-	console.log("Received buddyCode:", buddyCode);
+
 
 	return (
 		<div>

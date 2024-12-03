@@ -11,7 +11,6 @@ function MyScheduleDetail() {
     const [scheDetail, setScheDetail] = useState({});
     const [testScheduleData, setTestScheduleData] = useState([]); // 테스트
 
-    console.log('Sche Code:', scheCode);
 
     useEffect(
         () => {
@@ -23,26 +22,23 @@ function MyScheduleDetail() {
                 return response.json();
             })   
             .then((data) => {
-                console.log('Fetched Data:', data);
+
                 setScheDetail(data.data); 
-                console.log('Updated scheDetail:', data.data);
-                console.log('scheDetail:', scheDetail);
-                console.log('scheDetail.scheList:', scheDetail.scheList);
+
                 
                 // const content = scheDetail.scheList;
                 const content = data.data.scheList;
-                console.log("content : ", content);
+
             
                 // 문자열에서 JSON 배열 부분만 추출
                 const jsonString = content.slice(content.indexOf('['), content.lastIndexOf(']') + 1);
-                console.log('jsonString : ', jsonString);
+
             
                 // JSON 형식으로 변환
                 const jsonData = JSON.parse(jsonString);
-                console.log("jsonData summarySchedule에서 사용할 데이터 json.parse 한 형태 : ", jsonData);
+
                 setTestScheduleData(jsonData);
             
-                console.log("testScheduleData" , testScheduleData);
             })
             .catch((error) => {
                 console.error('Error fetching schedule:', error);

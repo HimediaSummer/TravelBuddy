@@ -14,7 +14,7 @@ function MyScheduleDetail() {
 
     useEffect(
         () => {
-            fetch(`/mypage/myschedule/${scheCode}`)
+            fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/myschedule/${scheCode}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);

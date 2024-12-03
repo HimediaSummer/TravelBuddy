@@ -53,8 +53,8 @@ image:
   # image-dir: /springboot-app/productimgs
   # image-url: http://localhost:8888/productimgs/
   # Docker(AWS)
-   add-resource-locations: file:///springboot-app/productimgs/
-   add-resource-handler: /productimgs/**
+  add-resource-locations: file:///springboot-app/productimgs/
+  add-resource-handler: /productimgs/**
   # Docker(AWS)
   image-dir: /springboot-app/productimgs
   #    자신의 도메인 주소를 입력하세요. http://  부터 :8080 앞까지

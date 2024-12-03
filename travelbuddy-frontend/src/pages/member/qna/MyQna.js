@@ -13,7 +13,7 @@ function MyQna() {
     const [qnaDTO, setQnaDTO] = useState({});
 
     const cancleQnaInsert = () => {
-        navigate(`/MyQnas`);
+        navigate(`/cs/MyQnas`);
     };
 
     useEffect(() => {

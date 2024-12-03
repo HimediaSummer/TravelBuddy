@@ -27,7 +27,7 @@
 
 |                    |                    |                     |                    |                    |
 |--------------------|--------------------|---------------------|--------------------|--------------------|
-|  <img src="https://github.com/user-attachments/assets/8136d53e-807c-4e7a-a9a8-61ed0b637dfd" width="120" height="100"> | <img src="https://github.com/user-attachments/assets/033a4bc3-f4ac-4340-99a4-b6e88fe60d32" width="120" height="100"> | <img src="https://github.com/user-attachments/assets/749cc339-5cd3-4046-b588-917a093b16f5" width="100" height="100"> | <img src="https://github.com/user-attachments/assets/5d53b38f-4845-483e-af00-61c50b4be2f4" width="100" height="100"> | <img src="https://github.com/user-attachments/assets/1aaf3b7f-5c8b-4b0c-965a-1af8ad10267c" width="100" height="100"> | |
+|<div align="center"> <img src="https://github.com/user-attachments/assets/6dcdd279-462c-4d95-b6f4-839fb530e8c8" width="100" height="100"> </div> | <div align="center"> <img src="https://github.com/user-attachments/assets/a2b23911-b33f-45e7-a826-283bed5efa0d" width="100" height="100"> </div>| <div align="center"> <img src="https://github.com/user-attachments/assets/d7ef0dee-f569-411c-9268-76262e873d28" width="100" height="100"> </div>| <div align="center"> <img src="https://github.com/user-attachments/assets/96f4c396-0ff4-49ee-96c9-f3615b1e8ca9" width="100" height="100"> </div>| <div align="center"> <img src="https://github.com/user-attachments/assets/bc6006f8-0af6-43cb-a592-4a4a0b5e330a" width="100" height="100"> </div>| |
 | **성호준**         | **김현승**         | **김호동**          | **이은지**         | **최예진**         |
 | PM                 | 문서관리           | DB 관리             | 화면 및 테스트 관리 | 화면 및 이슈관리   |
 | 일정생성 및 API    | 로그인/회원가입/게시판 | 관리자 및 문의 페이지 | 일정생성 및 API    | 마이페이지         |
@@ -124,8 +124,9 @@
 <h4>여행 일정과 동선까지 한번에 알려주는 초간단 여행계획 만들기!</h4>
 <img src="https://github.com/user-attachments/assets/c266925f-ffe2-4c91-bff6-57d300c77e43" alt="질문선택1" width="400">
 
-3. 관광객/현지인 매칭 게시판
-   게시판에서 원하는 관광상품을 선택해 신청을 누르면 끝!
-   (세부게시글에서 신청버튼)
-   내가 직접 원하는 가이드를 구할 수 있다!
-   (게시글작성 gif)
+관광객 / 버디(현지인) 매칭 게시판
+  혼자는 심심해😥 같이 놀수있는 친구가 필요해! 버디게시판에서 여행메이트를 찾아야 겠어!
+  <br>
+   <img src="https://github.com/user-attachments/assets/a2839eae-5d4c-49f2-9ee1-be6f61f7071d" alt="질문선택1" width="400">
+   <br>
+  버디게시판에서 내가 원하는 여행 메이트나 여행가이드를 찾아 신청을 누르면 끝!

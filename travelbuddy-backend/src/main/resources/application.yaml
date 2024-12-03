@@ -41,18 +41,18 @@ image:
   #  profile:
   #    image-dir: src/main/resources/static/member-imgs/
   #    image-url: http://localhost:8080/member-imgs/
-  profile:
+#  profile:
     #    resource-locations: classpath:/static/memberimgs/
     #    resource-handler: /memberimgs/**
-    image-dir: ./src/main/resources/static/productimgs/
-    image-url: http://localhost:8080/productimgs/
+#    image-dir: ./src/main/resources/static/productimgs/
+#    image-url: http://localhost:8080/productimgs/
 
     # 게시글 이미지 설정
-  buddy:
+#  buddy:
     #    resource-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/
     #    resource-handler: /buddyimgs/**
-    image-dir: ./src/main/resources/static/productimgs/
-    image-url: http://localhost:8080/productimgs/
+#    image-dir: ./src/main/resources/static/productimgs/
+#    image-url: http://localhost:8080/productimgs/
 #        resource-locations: file:///springboot-app/buddyimgs/
 #        resource-handler: /buddyimgs/**
 

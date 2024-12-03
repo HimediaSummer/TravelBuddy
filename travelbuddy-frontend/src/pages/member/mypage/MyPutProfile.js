@@ -73,88 +73,180 @@ function MyPutProfile() {
 
     return (
         <div className="my-put-profile-page">
-            <h1 className="page-title">회원 정보 수정</h1>
-            <form className="profile-form" onSubmit={handleUpdate}>
-                <div className="profile-row">
-                    
-                    {/* 왼쪽 열 */}
-                    <div className="profile-left">
-                        {previewImage ? (
-                            <img src={previewImage} alt="Profile Preview" className="profile-img" />
-                        ) : (
-                            <img
-                                src={profile[0]?.memberImg}
-                                alt="Profile"
-                                className="profile-img"
+            <h3 className="buddy-title">내 정보 수정</h3>
+            <div className="line">
+                <div className="profile-container">
+                    <div className="profile-row">
+                        {/* 왼쪽 열 */}
+                        <div className="profile-left">
+                            {previewImage ? (
+                                <img src={previewImage} alt="Profile Preview" className="profile-img" />
+                            ) : (
+                                <img
+                                    src={profile[0]?.memberImg}
+                                    alt="Profile"
+                                    className="profile-img"
+                                />
+                            )}
+                            <input
+                                type="file"
+                                id="profileImg"
+                                name="profileImg"
+                                accept="image/*"
+                                style={{ display: "none" }}
+                                onChange={handleChange}
                             />
-                        )}
-                        <button
-                            type="button"
-                            className="image-upload-button"
-                            onClick={handleChange}
-                        >
-                            이미지 수정
-                        </button>
-                    </div>
-                    {/* 오른쪽 열 */}
-                    <div className="profile-right">
-                        <div className="profile-info">
-                            <div className="info-row">
-                                <label className="info-label" htmlFor="memberName">아이디</label>
-                                <input
-                                    type="text"
-                                    id="memberName"
-                                    name="memberName"
-                                    className="info-value"
-                                    value={formData.memberName || ""}
-                                    onChange={handleChange}
-                                    disabled
-                                />
-                            </div>
-                            <div className="info-row">
-                                <label className="info-label" htmlFor="memberFullName">이름</label>
-                                <input
-                                    type="text"
-                                    id="memberFullName"
-                                    name="memberFullName"
-                                    className="info-value"
-                                    value={formData.memberFullName || ""}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="info-row">
-                                <label className="info-label" htmlFor="memberEmail">이메일</label>
-                                <input
-                                    type="email"
-                                    id="memberEmail"
-                                    name="memberEmail"
-                                    className="info-value"
-                                    value={formData.memberEmail || ""}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="info-row">
-                                <label className="info-label" htmlFor="memberPhone">전화번호</label>
-                                <input
-                                    type="text"
-                                    id="memberPhone"
-                                    name="memberPhone"
-                                    className="info-value"
-                                    value={formData.memberPhone || ""}
-                                    onChange={handleChange}
-                                />
+                            <label htmlFor="profileImg" className="image-profile-upload-button">
+                                이미지 수정
+                            </label>
+                        </div>
+                        {/* 오른쪽 열 */}
+                        <div className="profile-right">
+                            <div className="profile-info">
+                                <div className="info-row">
+                                    <label className="info-label" htmlFor="memberName">아이디</label>
+                                    <input
+                                        type="text"
+                                        id="memberName"
+                                        name="memberName"
+                                        className="info-value"
+                                        value={formData.memberName || ""}
+                                        onChange={handleChange}
+                                        disabled
+                                    />
+                                </div>
+                                <div className="info-row">
+                                    <label className="info-label" htmlFor="memberFullName">이름</label>
+                                    <input
+                                        type="text"
+                                        id="memberFullName"
+                                        name="memberFullName"
+                                        className="info-value"
+                                        value={formData.memberFullName || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="info-row">
+                                    <label className="info-label" htmlFor="memberEmail">이메일</label>
+                                    <input
+                                        type="email"
+                                        id="memberEmail"
+                                        name="memberEmail"
+                                        className="info-value"
+                                        value={formData.memberEmail || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="info-row">
+                                    <label className="info-label" htmlFor="memberPhone">전화번호</label>
+                                    <input
+                                        type="text"
+                                        id="memberPhone"
+                                        name="memberPhone"
+                                        className="info-value"
+                                        value={formData.memberPhone || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="button-container">
-                    <button type="submit">수정완료</button>
+                    <button type="submit" onClick={handleUpdate}>수정완료</button>
                     <button type="button" onClick={() => navigate('/mypage/myprofile')}>취소</button>
                 </div>
-            </form>
+            </div>
         </div>
     );
 }
+
+
+//             <form className="profile-form" onSubmit={handleUpdate}>
+//                 <div className="profile-row">
+                    
+//                     {/* 왼쪽 열 */}
+//                     <div className="profile-left">
+//                         {previewImage ? (
+//                             <img src={previewImage} alt="Profile Preview" className="profile-img" />
+//                         ) : (
+//                             <img
+//                                 src={profile[0]?.memberImg}
+//                                 alt="Profile"
+//                                 className="profile-img"
+//                             />
+//                         )}
+//                         <input
+//                             type="file"
+//                             id="profileImg"
+//                             name="profileImg"
+//                             accept="image/*"
+//                             style={{ display: "none" }} // 숨기기
+//                             onChange={handleChange}
+//                         />
+//                         <label htmlFor="profileImg" className="image-upload-button">
+//                             이미지 수정
+//                         </label>
+//                     </div>
+//                     {/* 오른쪽 열 */}
+//                     <div className="profile-right">
+//                         <div className="profile-info">
+//                             <div className="info-row">
+//                                 <label className="info-label" htmlFor="memberName">아이디</label>
+//                                 <input
+//                                     type="text"
+//                                     id="memberName"
+//                                     name="memberName"
+//                                     className="info-value"
+//                                     value={formData.memberName || ""}
+//                                     onChange={handleChange}
+//                                     disabled
+//                                 />
+//                             </div>
+//                             <div className="info-row">
+//                                 <label className="info-label" htmlFor="memberFullName">이름</label>
+//                                 <input
+//                                     type="text"
+//                                     id="memberFullName"
+//                                     name="memberFullName"
+//                                     className="info-value"
+//                                     value={formData.memberFullName || ""}
+//                                     onChange={handleChange}
+//                                 />
+//                             </div>
+//                             <div className="info-row">
+//                                 <label className="info-label" htmlFor="memberEmail">이메일</label>
+//                                 <input
+//                                     type="email"
+//                                     id="memberEmail"
+//                                     name="memberEmail"
+//                                     className="info-value"
+//                                     value={formData.memberEmail || ""}
+//                                     onChange={handleChange}
+//                                 />
+//                             </div>
+//                             <div className="info-row">
+//                                 <label className="info-label" htmlFor="memberPhone">전화번호</label>
+//                                 <input
+//                                     type="text"
+//                                     id="memberPhone"
+//                                     name="memberPhone"
+//                                     className="info-value"
+//                                     value={formData.memberPhone || ""}
+//                                     onChange={handleChange}
+//                                 />
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+//                 <div className="button-container">
+//                     <button type="submit">수정완료</button>
+//                     <button type="button" onClick={() => navigate('/mypage/myprofile')}>취소</button>
+//                 </div>
+//             </form>
+//         </div>
+//     );
+// }
 
 
 

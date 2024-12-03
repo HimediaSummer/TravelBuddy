@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { callMyBuddyListAPI, deleteBuddyAPI } from '../../../apis/MypageAPICalls.js';
+import './MyBuddy.css';
 
 function MyBuddy() {
     const navigate = useNavigate();
@@ -73,8 +74,9 @@ function MyBuddy() {
     };
 
     return (
-        <div>
-            <table>
+        <div className="buddy-page">
+            <h2 className="buddy-title">MY게시글</h2>
+            <table className="buddy-table">
                 <thead>
                     <tr>
                         <th>
@@ -109,21 +111,21 @@ function MyBuddy() {
                             <td>{item.buddyTypeName}</td>
                             <td>{item.regionName}</td>
                             <td>{item.buddyTitle}</td>
-                            <td>{item.buddyCreate}</td>
-                            <td>{item.buddyStatus}</td>
+                            <td>{item.buddyCreate.slice(0, 10)}</td>
+                            <td>
+                                <span className="status-button">{item.buddyStatus}</span>
+                            </td>
                         </tr>
                     ))
                     ) : (
                         <tr>
-                            <td colSpan="6">게시글을 작성해 주세요</td>
+                             <td colSpan="6" className="no-data">게시글을 작성해 주세요</td>
                         </tr>
                     )}
                 </tbody>
             </table>
-            <button onClick={handleDeleteSelected}>삭제</button>
-            <br />
             {/* 페이지네이션 */}
-            <div style={{ marginTop: "20px" }}>
+            <div className="pagination">
                 <button
                     onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                     disabled={currentPage === 1}
@@ -133,8 +135,8 @@ function MyBuddy() {
                 {[...Array(totalPages).keys()].map((_, index) => (
                     <button
                         key={index}
+                        className={`pagination-button ${currentPage === index + 1 ? "active" : ""}`}
                         onClick={() => setCurrentPage(index + 1)}
-                        disabled={currentPage === index + 1}
                     >
                         {index + 1}
                     </button>
@@ -146,6 +148,7 @@ function MyBuddy() {
                     {">"}
                 </button>
             </div>
+            <button className="delete-button" onClick={handleDeleteSelected}>삭제</button>
         </div>
     );
 }

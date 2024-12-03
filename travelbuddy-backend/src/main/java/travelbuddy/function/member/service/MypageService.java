@@ -54,16 +54,12 @@ public class MypageService {
     private final ModelMapper modelMapper;
 
     /* 프로필사진 루트 */
-    @Value("${image.profile.image-dir}")
-    private String profileImgDir;
-    @Value("${image.profile.image-url}")
-    private String profileImgUrl;
+    @Value("${image.image-dir}")
+    private String IMAGE_DIR;
+    @Value("${image.image-url}")
+    private String IMAGE_URL;
 
     /* buddyImg 루트 */
-    @Value("${image.buddy.image-dir}")
-    private String buddyImageDir;
-    @Value("${image.buddy.image-url}")
-    private String buddyImageUrl;
 
     @Autowired
     public MypageService(MyBuddyRepository myBuddyRepository, MyBuddyMatchRepository myBuddyMatchRepository, MyProfileRepository myProfileRepository, BuddyTypeRepository buddyTypeRepository, RegionRepository regionRepository, MyScheduleRepository myScheduleRepository, ModelMapper modelMapper) {
@@ -113,7 +109,7 @@ public class MypageService {
             String memberImg = account.getMemberImg();
             account.setMemberImg((memberImg == null || memberImg.isEmpty())
                     ? null
-                    : profileImgUrl + memberImg);
+                    : IMAGE_URL + memberImg);
         });
 
         log.info("[MypageService] selectMyProfile() END");
@@ -143,8 +139,8 @@ public class MypageService {
                 randomFileName = UUID.randomUUID().toString().replace("-", "") + "." +
                         FilenameUtils.getExtension(profileImg.getOriginalFilename());
 
-                // 파일 저장 경로 설정 (profileImgDir 사용)
-                Path uploadPath = Paths.get(profileImgDir).toAbsolutePath(); // profileImgDir 값 활용
+                // 파일 저장 경로 설정 (IMAGE_DIR 사용)
+                Path uploadPath = Paths.get(IMAGE_DIR).toAbsolutePath(); // IMAGE_DIR 값 활용
                 if (!Files.exists(uploadPath)) {
                     Files.createDirectories(uploadPath);
                     log.info("Created directory: {}", uploadPath.toString());
@@ -156,7 +152,7 @@ public class MypageService {
 
                 // 기존 파일 삭제 (기본 이미지 제외)
                 if (oldImage != null && !oldImage.equals("member_img_default.png")) { // 기본 이미지명만 비교
-                    Path oldFilePath = Paths.get(profileImgDir).resolve(oldImage).toAbsolutePath(); // 절대 경로로 확인
+                    Path oldFilePath = Paths.get(IMAGE_DIR).resolve(oldImage).toAbsolutePath(); // 절대 경로로 확인
                     File oldFile = oldFilePath.toFile();
                     if (oldFile.exists() && oldFile.delete()) {
                         log.info("Deleted old image: {}", oldImage);
@@ -345,7 +341,7 @@ public class MypageService {
         if (getBuddyDetail.getBuddyImg() != null && !getBuddyDetail.getBuddyImg().isEmpty()) {
             // `,`로 나눠 List<String>으로 변환
             List<String> imageUrls = Arrays.stream(getBuddyDetail.getBuddyImg().split(","))
-                    .map(img -> profileImgUrl + img.trim()) // 각 이미지 경로에 URL 추가
+                    .map(img -> IMAGE_URL + img.trim()) // 각 이미지 경로에 URL 추가
                     .collect(Collectors.toList());
 
             // List<String> -> String으로 변환하여 DTO에 설정
@@ -436,7 +432,7 @@ public class MypageService {
         if (postImg != null && postImg.length > 0) {
             try {
                 // 디렉토리 생성 여부 확인
-                Path uploadPath = Paths.get(buddyImageDir).toAbsolutePath(); // buddyImageDir 사용
+                Path uploadPath = Paths.get(IMAGE_DIR).toAbsolutePath(); // IMAGE_DIR 사용
                 if (!Files.exists(uploadPath)) {
                     Files.createDirectories(uploadPath);
                     log.info("Created directory: {}", uploadPath.toString());

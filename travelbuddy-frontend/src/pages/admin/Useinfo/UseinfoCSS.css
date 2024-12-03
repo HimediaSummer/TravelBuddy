@@ -3,7 +3,6 @@
 	width: 1500px;
 	display: flexbox; /* flexbox 사용 */
 	flex-direction: column; /* 세로 방향으로 정렬 */
-
 }
 
 .UseinfoContainer p {
@@ -85,12 +84,14 @@
 	height: 60px;
     text-align: center; /* 텍스트 정렬 (필요시) */
 	margin-top: 0;
+	background-color: #8CC8EA;
 
 }
 
 .UseinfoContainer td {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
+	height: 60px;
     text-align: center; /* 텍스트 정렬 (필요시) */
     border-bottom: 1px solid #ccc; /* 하단 경계선 추가 (선택 사항) */
 	cursor: pointer;
@@ -115,16 +116,16 @@
 
 
 .td1useinfo {
-    width: 100px;
+    width: 120px;
 }
 .td2useinfo {
-    width: 500px;
+    width: 490px;
 }
 .td3useinfo {
-    width: 100px;
+    width: 140px;
 }
 .td4useinfo {
-    width: 200px;
+    width: 230px;
 }
 .td5useinfo {
     width: 100px;
@@ -184,4 +185,92 @@
 }
 .InsertButton button:Hover {
 	background-color: #1F709E;	
+}
+
+/* UseinfoDetail */
+
+
+.UseinfoDetailContainer {
+	width: 1500px;
+	display: flexbox; /* flexbox 사용 */
+	flex-direction: column; /* 세로 방향으로 정렬 */
+}
+
+
+.UseinfoDetailContainer p {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 40px;
+    font: bold;
+    color: #1F709E;
+	margin-right: 562px;
+}
+
+.UseinfoDetailContainer .useinfoDetailHeader {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.UseinfoDetailContainer{
+	margin-top: 0;
+	margin-left: 270px;
+
+}
+
+.UseinfoDetailContainer button {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 20px;
+    color: #ffffff;
+	width: 124px;
+	height: 50px;
+	margin-right: 25px;
+	border-radius: 15px;
+	background-color: #8CC8EA;
+	border: none; /* 버튼의 테두리 제거 */
+	cursor: pointer;
+	/* margin-left: 150px; */
+}
+
+.UseinfoDetailContainer button:Hover {
+	background-color: #1F709E;	
+}
+
+.UseinfoDetailContainer tr {
+	background-color: #8CC8EA;
+	height: 60px;
+	width: 1200px;
+	
+	
+
+}
+
+.UseinfoDetailContainer td {
+	font-family: 'Cafe24 Ssurround air';
+    font-size: 20px;
+	text-align: center;
+	vertical-align: middle;
+	
+}
+
+.UseinfoDetailViewer {
+	margin-left: 270px;
+	width: 1200px;
+	height: 100%;
+	border: 1px solid #8CC8EA;
+	padding: 10px 10px 20px 20px;
+}
+
+.td1useinfoD {
+	width: 100px;
+}
+
+.td2useinfoD {
+	width: 600px;
+	background-color: #ffffff;
+	border: 1px solid #ccc;
+	border-radius: 20px;
+}
+
+.td3useinfoD {
+	width: 525px;
 }

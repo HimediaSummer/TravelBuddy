@@ -5,7 +5,7 @@
 <img src="https://github.com/user-attachments/assets/1097c9a5-7fa4-4bd1-b37e-cc5918de5566" width="400">
 <br/>
 <h4>여행계획 짜기 힘들어! 그럴때 트래블버디!<img src="https://github.com/user-attachments/assets/9498b2ca-f201-4c7c-9865-bead57e87703" width="40"></h4>
-<h4>질문으로 내가 원하는 스타일을 고르고 나만의 완벽한 여행을 설계해주는 디지털 여행 디자이너!</h4>
+<h4>질문으로 내가 원하는 스타일을 고르고 나만의 완벽한 여행을 설계해주는 OpenAi API를 사용한 Ai 여행 디자이너!!</h4>
 <img src="https://github.com/user-attachments/assets/6cc629c8-6eb0-48b0-acda-d024bdf1070b" alt="질문선택1" width="400">
 <img src="https://github.com/user-attachments/assets/c02bcc15-560f-4ead-bab6-5edcc63a9010" alt="지역선택" width="400">
 

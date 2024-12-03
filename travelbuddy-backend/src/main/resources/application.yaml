@@ -6,10 +6,10 @@ spring:
   # DB config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    # LocalDev
+    # LocalDev (자신의 컴에서 서버를 열때)
     url: jdbc:mysql://localhost:3306/tbdb
-    # Local Dev & Docker(AWS) deploy
-    #url: jdbc:mysql://database-server:3306/tbdb
+#     Local Dev & Docker(AWS) deploy ( 도커에서 서버 열때 )
+#    url: jdbc:mysql://database-server:3306/tbdb
     username: travelbuddy
     password: travelbuddy
   # fileupload config
@@ -20,8 +20,7 @@ spring:
       max-file-size: 1MB
   web:
     resources:
-       static-locations: classpath:/static/
-#      static-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/memberimgs/
+       static-locations: classpath:/static/productimgs
   # JPA config
   jpa:
     generate-ddl: false
@@ -39,39 +38,39 @@ spring:
 # static resource(image media file) config
 ## ???? ??? ??? ??? ? ??? ?? ??
 image:
-#  profile:
-#    image-dir: src/main/resources/static/member-imgs/
-#    image-url: http://localhost:8080/member-imgs/
+  #  profile:
+  #    image-dir: src/main/resources/static/member-imgs/
+  #    image-url: http://localhost:8080/member-imgs/
   profile:
-#    resource-locations: classpath:/static/memberimgs/
-#    resource-handler: /memberimgs/**
+    #    resource-locations: classpath:/static/memberimgs/
+    #    resource-handler: /memberimgs/**
     image-dir: ./src/main/resources/static/productimgs/
     image-url: http://localhost:8080/productimgs/
 
     # 게시글 이미지 설정
   buddy:
-#    resource-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/
-#    resource-handler: /buddyimgs/**
+    #    resource-locations: file:///C:/HiFinalProject/TravelBuddy/travelbuddy-backend/buddyimgs/
+    #    resource-handler: /buddyimgs/**
     image-dir: ./src/main/resources/static/productimgs/
     image-url: http://localhost:8080/productimgs/
-  #      resource-locations: file:///springboot-app/buddyimgs/
-  #      resource-handler: /buddyimgs/**
+#        resource-locations: file:///springboot-app/buddyimgs/
+#        resource-handler: /buddyimgs/**
 
 
 
   # Local Dev
   add-resource-locations: classpath:/static/productimgs/
   add-resource-handler: /productimgs/**
-#  # Local Dev
-#  image-dir: src/main/resources/static/productimgs
+  #  # Local Dev
+  #  image-dir: src/main/resources/static/productimgs
   image-dir: build/resources/main/static/productimgs
   image-url: http://localhost:8080/productimgs/
 #Docker(Local)
-# add-resource-locations: file:///springboot-app/productimgs/
-# add-resource-handler: /productimgs/**
+#  add-resource-locations: file:///springboot-app/productimgs/
+#  add-resource-handler: /productimgs/**
 # # Docker(Local)
-# image-dir: /springboot-app/productimgs
-# image-url: http://localhost:8888/productimgs/
+#  image-dir: /springboot-app/productimgs
+#  image-url: http://localhost:8080/productimgs/
 # Docker(AWS)
 #  add-resource-locations: file:///springboot-app/productimgs/
 #  add-resource-handler: /productimgs/**

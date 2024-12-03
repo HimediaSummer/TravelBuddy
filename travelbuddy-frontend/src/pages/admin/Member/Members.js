@@ -140,7 +140,7 @@ const onClickSearch = async () => {
                                           m.memberDeletion === "Y" ? (
                                             <button>탈퇴</button>
                                         ) : (
-                                            <p></p>
+                                            <button>없음</button>
                                         )}
                                     </td>
                                     <td className='td9member'>{m.memberCreate}</td>

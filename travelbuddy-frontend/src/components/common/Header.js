@@ -130,8 +130,11 @@ function Header() {
                 </li>
                 <li>
                     {isLoggedIn && (
-                    <label style={{ color: 'black' }}>
+                    <label style={{ 
+                        color: '#1f709e'
+                     }}>
                         {token.sub} {/* 로그인한 아이디 표시 */}
+                        님
                     </label>
                     )}
                 </li>

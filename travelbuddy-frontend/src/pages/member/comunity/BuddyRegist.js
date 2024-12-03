@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { callBuddyRegistAPI } from "../../../apis/BuddyAPICalls";
 import { decodeJwt } from '../../../utils/tokenUtils';
 import { callGetMemberAPI } from '../../../apis/MemberAPICalls';
+import BuddyRegistCSS from'./BuddyRegist.css';
 
 function BuddyRegist() {
 
@@ -133,7 +134,7 @@ function BuddyRegist() {
 
         console.log("전송 데이터", formData);
         alert("완료")
-        navigate('/buddies', { replace: true});
+        navigate('/cm/buddies', { replace: true});
         window.location.reload();
     }
 
@@ -171,50 +172,75 @@ function BuddyRegist() {
     // };
 
     return(
-        <div>
-            <div>
-                <button onClick={() => navigate(-1)}>돌아가기</button>
-                <button onClick={onClickBuddyRegistactionHandler}>게시글 등록</button>                
+        <div className="buddy-regist-container">
+            <div className="buddy-detail-author-buttons">
+                <button className="back-button" onClick={() => navigate(-1)}>돌아가기</button>
+                <button className="write-button" onClick={onClickBuddyRegistactionHandler}>작성 완료</button>                
+            </div>
+            <div className="BuddyHeader">
+                <h2>게시글 작성</h2>
             </div>
             <div>
-                <div>
-                    <div>
-                        {imageUrl && (
-                            <img
-                                src={imageUrl}
-                                alt="preview"
-                            />
-                        )}
-                        <input
-                            type="file"
-                            name="buddyImg"
-                            accept="image/jpg, image/png, image/jpeg, image/gif"
-                            onChange={onChangeImageUpload}
-                            ref={imageInput}
-                        />
-                        <button
-                            onClick={onClickImageUpload}
-                        >
-                            이미지 업로드
-                        </button>
-                    </div>
-                </div>
-                <div>
+                <div className="buddy-regist-table">
                     <table>
                         <tbody>
-                            <tr>
+                            <tr className="tableHead">
                                 <td>
-                                    <label>게시글 제목</label>
+                                    <label className="buddy-regist-title">게시글 제목</label>
                                 </td>
-                                <td>
+                                <td >
                                     <input
                                         name="buddyTitle"
                                         placeholder="게시글 제목"
                                         onChange={onChangeHandler}
                                     />
                                 </td>
+                                <td>
+                                    <label>버디 유형</label>
+                                </td>
+                                <td>
+                                    <select
+                                        name="buddyTypeCode"
+                                        onChange={onChangeHandler}
+                                        value={form.buddyTypeCode}
+                                    >
+                                        <option value="">선택</option>
+                                        <option value="1">버디</option>
+                                        <option value="2">여행객</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label>지역 선택</label>
+                                </td>
+                                <td>
+                                    <select
+                                        name="regionCode"
+                                        onChange={onChangeHandler}
+                                        value={form.regionCode}
+                                    >
+                                        <option value="">선택</option>
+                                        <option value="101">서울</option>
+                                        <option value="102">경기도</option>
+                                        <option value="103">인천</option>
+                                        <option value="104">강원도</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label>신청 활성화 여부</label>
+                                </td>
+                                <td>
+                                    <select
+                                        name="buddyStatus"
+                                        onChange={onChangeHandler}
+                                        value={form.buddyStatus}
+                                    >
+                                        <option value="">선택</option>
+                                        <option value="Y">Y</option>
+                                        <option value="N">N</option>
+                                    </select>
+                                </td>
                             </tr>
-                            <tr>
+                            {/* <tr>
                                 <td>
                                     <label>버디 유형</label>
                                 </td>
@@ -243,8 +269,8 @@ function BuddyRegist() {
                                         여행객
                                     </label>{' '}
                                 </td>
-                            </tr>
-                            <tr>
+                            </tr> */}
+                            {/* <tr>
                                 <td>
                                     <label>지역 선택</label>
                                 </td>
@@ -292,9 +318,20 @@ function BuddyRegist() {
                                         />{' '}
                                         강원도
                                     </label>{' '}
+                                    <select
+                                        name="regionCode"
+                                        onChange={onChangeHandler}
+                                        value={form.regionCode}
+                                    >
+                                        <option value="">선택</option>
+                                        <option value="101">서울</option>
+                                        <option value="102">경기도</option>
+                                        <option value="103">인천</option>
+                                        <option value="104">강원도</option>
+                                    </select>
                                 </td>
-                            </tr>
-                            <tr>
+                            </tr> */}
+                            {/* <tr>
                                 <td>
                                     <label>신청 활성화 여부</label>
                                 </td>
@@ -319,19 +356,71 @@ function BuddyRegist() {
                                         N
                                     </label>{' '}
                                 </td>
-                            </tr>
+                            </tr> */}
                             <tr>
-                                <td>
+                                {/* <td>
                                     <label>게시글 내용</label>
-                                </td>
-                                <td>
-                                    <input
+                                </td> */}
+                                <td colSpan="8">
+                                    <textarea
                                         name="buddyContents"
                                         placeholder="내용을 입력하세요"
                                         onChange={onChangeHandler}
+                                        rows="5" cols="40"
                                     />
+                                    {imageUrl && (
+                                        <div className="image-preview-container">
+                                            <img
+                                            src={imageUrl}
+                                            alt="미리보기"
+                                            className="image-preview"
+                                            />
+                                        </div>
+                                        )}
                                 </td>
                             </tr>
+                                {/* <div>
+                                    <div className="image-upload-container">
+                                        {imageUrl && (
+                                            <img
+                                                src={imageUrl}
+                                                alt="preview"
+                                                style={{ width: "100px", height: "100px", borderRadius: "10px" }}
+                                            />
+                                        )}
+                                        <input
+                                            type="file"
+                                            name="buddyImg"
+                                            accept="image/jpg, image/png, image/jpeg, image/gif"
+                                            onChange={onChangeImageUpload}
+                                            ref={imageInput}
+                                        />
+                                        <button
+                                            className="image-upload-button"
+                                            onClick={onClickImageUpload}
+                                        >
+                                            이미지 업로드
+                                        </button>
+                                    </div>
+                                </div> */}
+                                <tr>
+                                    <td colSpan="8" className="image-upload-area">
+                                        <input
+                                            type="file"
+                                            name="buddyImg"
+                                            accept="image/jpg, image/png, image/jpeg, image/gif"
+                                            onChange={onChangeImageUpload}
+                                            ref={imageInput}
+                                            className="image-upload-input"
+                                        />
+                                        <button
+                                            className="image-upload-button"
+                                            onClick={onClickImageUpload}
+                                        >
+                                            이미지 업로드
+                                        </button>
+                                    </td>
+                                </tr>
                         </tbody>
                     </table>
                 </div>

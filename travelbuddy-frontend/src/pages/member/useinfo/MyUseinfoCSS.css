@@ -1,4 +1,4 @@
-.QnaContainer {
+.MyUseinfoContainer {
 
 	width: 1500px;
 	display: flexbox; /* flexbox 사용 */
@@ -6,15 +6,15 @@
 
 }
 
-.QnaContainer p {
+.MyUseinfoContainer p {
 	font-family: 'Cafe24 Ssurround';
     font-size: 40px;
     font: bold;
     color: #1F709E;
-	margin-right: 610px;
+	margin-right: 572px;
 }
 
-.QnaContainer input {
+.MyUseinfoContainer input {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
     color: #8CC8EA;
@@ -26,18 +26,18 @@
 }
 
 
-.QnaContainer .QnaHeader {
+.MyUseinfoContainer .MyUseinfoHeader {
     display: flex; /* 수평 정렬을 위해 flexbox 사용 */
     align-items: center; /* 수직 가운데 정렬 */
     justify-content: left;
 	margin-top: 0;
 	margin-bottom: 0;
 	margin-right: 10px;
-	margin-left: 280px;
+	margin-left: 270px;
 	height: 91px;
 }
 
-.QnaContainer table {
+.MyUseinfoContainer table {
 	display: grid; /* grid 사용 */
 	/* 수평 및 수직 가운데 정렬 */
     place-items: center; 
@@ -52,9 +52,8 @@
 	/* 테이블 셀 간의 경계 제거 */
     border-collapse: collapse; 
 	margin-top: 0;
-
 }
-.QnaContainer button {
+.MyUseinfoContainer button {
 	font-family: 'Cafe24 Ssurround';
     font-size: 20px;
     color: #ffffff;
@@ -68,19 +67,19 @@
 	
 }
 
-.QnaContainer thead {
+.MyUseinfoContainer thead {
 	height: 60px;
 	
 }
 
 
-.QnaContainer tr:Hover:not(thead tr) {
+.MyUseinfoContainer tr:Hover:not(thead tr) {
 	background-color: #f3f2f2;
 	
 	
 }
 
-.QnaContainer th {
+.MyUseinfoContainer th {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
 	height: 60px;
@@ -90,51 +89,49 @@
 
 }
 
-.QnaContainer td {
+.MyUseinfoContainer td {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
-	height: 60px;
+	height: 50px;
     text-align: center; /* 텍스트 정렬 (필요시) */
     border-bottom: 1px solid #ccc; /* 하단 경계선 추가 (선택 사항) */
 	cursor: pointer;
 	transition: background-color 0.3s;	
 }
 
-.th1qna {
-    width: 110px;
-}
-.th2qna {
-    width: 110px;
-}
-.th3qna {
-    width: 500px;
-}
-.th4qna {
-    width: 220px;
-}
-.th5qna {
-    width: 165px;
-}
-.th6qna {
-	width: 120px;
-}
-
-.td1qna {
-    width: 105px;
-}
-.td2qna {
-    width: 100px;
-}
-.td3qna {
-    width: 500px;
-}
-.td4qna {
-    width: 255px;
-}
-.td5qna {
+.th1myuseinfo {
     width: 120px;
 }
-.td6qna {
+.th2myuseinfo {
+    width: 500px;
+}
+.th3myuseinfo {
+    width: 120px;
+}
+.th4myuseinfo {
+    width: 380px;
+}
+.th5myuseinfo {
+    width: 165px;
+}
+
+
+.td1myuseinfo {
+    width: 110px;
+}
+.td2myuseinfo {
+    width: 500px;
+}
+.td3myuseinfo {
+    width: 150px;
+}
+.td4myuseinfo {
+    width: 360px;
+}
+.td5myuseinfo {
+    width: 00px;
+}
+.td6myuseinfo {
 	width: 150px;
 }
 
@@ -192,39 +189,37 @@
 }
 
 
-/* QnaDetail */
+/* UseinfoDetail */
 
 
-.QnaDetailContainer {
+.UseinfoDetailContainer {
 	width: 1500px;
 	display: flexbox; /* flexbox 사용 */
 	flex-direction: column; /* 세로 방향으로 정렬 */
 }
 
 
-.QnaDetailContainer p {
+.UseinfoDetailContainer p {
 	font-family: 'Cafe24 Ssurround';
     font-size: 40px;
     font: bold;
     color: #1F709E;
 	margin-right: 562px;
-	margin-left: 270px;
 }
 
-.QnaDetailHeader {
+.UseinfoDetailContainer .useinfoDetailHeader {
     display: flex;
     align-items: center;
     justify-content: left;
 }
 
-.QnaDetailContainer table {
+.UseinfoDetailContainer{
 	margin-top: 0;
 	margin-left: 270px;
-	border: 1px solid #8CC8EA;
+
 }
 
-
-.QnaDetailContainer button {
+.UseinfoDetailContainer button {
 	font-family: 'Cafe24 Ssurround';
     font-size: 20px;
     color: #ffffff;
@@ -238,54 +233,46 @@
 	/* margin-left: 150px; */
 }
 
-.QnaDetailContainer button:Hover {
+.UseinfoDetailContainer button:Hover {
 	background-color: #1F709E;	
 }
 
-.QnaDetailContainer .tr1myqnadetail {
+.UseinfoDetailContainer tr {
 	background-color: #8CC8EA;
 	height: 60px;
 	width: 1200px;
+	
+	
+
 }
 
-.QnaDetailContainer td {
+.UseinfoDetailContainer td {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
 	text-align: center;
 	vertical-align: middle;
-	border: 1px solid #8CC8EA;
+	
 }
 
-.QnaDetailContainer .td1myqnadetail {
+.UseinfoDetailViewer {
+	margin-left: 270px;
+	width: 1200px;
+	height: 100%;
+	border: 1px solid #8CC8EA;
+	padding: 10px 10px 20px 20px;
+}
+
+.td1useinfoD {
 	width: 100px;
 }
 
-.QnaDetailContainer .td2myqnadetail {
-	width: 400px;
+.td2useinfoD {
+	width: 600px;
+	background-color: #ffffff;
+	border: 1px solid #ccc;
+	border-radius: 20px;
 }
 
-.QnaDetailContainer .td3myqnadetail textarea {
-	width: 800px;
-	min-width: 800px;
-	max-width: 800px;
-	height: 300px;
-	min-height: 300px;
-	max-height: 300px;
-	background-color: #ffffff;
-	padding-left: 20px;
-	font-size: 24px;
-	border: none;
-}
-
-.QnaDetailContainer .td4myqnadetail textarea {
-	width: 800px;
-	min-width: 800px;
-	max-width: 800px;
-	height: 300px;
-	min-height: 300px;
-	max-height: 300px;
-	background-color: #ffffff;
-	padding-left: 20px;
-	font-size: 20px;
-	border: none;
+.td3useinfoD {
+	width: 525px;
 }

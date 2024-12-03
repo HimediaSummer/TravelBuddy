@@ -1,3 +1,4 @@
+import  FindIdCSS  from "./FindId.css";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -9,6 +10,7 @@ function FindId() {
     const dispatch = useDispatch();
     const [Email, setEmail] = useState("");
     const [message, setMessage] = useState("");
+    const [buttonLabel, setButtonLabel] = useState('아이디 찾기'); // 버튼 라벨 상태 관리
 
 	const isValidEmail = (Email) => {
 		const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -32,7 +34,10 @@ function FindId() {
 
         try {
             const foundId = await dispatch(callFindIdAPI({ Email })); // API 호출
-            setMessage(`찾은 아이디: ${foundId}`); // 아이디 찾기 성공 메시지
+            setMessage(`해당 이메일의 아이디는 ${foundId} 입니다`); // 아이디 찾기 성공 메시지
+            setButtonLabel('돌아가기'); // 버튼 라벨 변경
+            // alert(`찾은 아이디: ${foundId}`)
+            // navigate("/login", { replace: true })
         } catch (error) {
             setMessage(error.message); // 에러 메시지
         }
@@ -41,19 +46,45 @@ function FindId() {
         //     setMessage(`찾은 아이디: ${foundId}`); // 아이디 찾기 성공 메시지
     };
 
+    const onClickBackHandler = () => {
+        navigate('/login',{ replace: true }); // 메인 페이지로 이동
+    };
+
+	// 메인으로
+	const onClickMain = () => {
+		navigate('/');
+	};
+
     return (
-        <div >
-            <h1>아이디 찾기</h1>
-            <div >
-                <input
-                    type="email"
-                    placeholder="이메일"
-                    value={Email}
-                    onChange={onChangeHandler}
-                />
-                <button onClick={onClickFindIdHandler}>아이디 찾기</button>
+        <div className="backgroundDiv">
+            <div className="findIdDiv">
+                <h1>
+                    <div class="header-click">
+                        {/* <i class="fa-solid fa-globe"></i> */}
+                        {/* <a href="http://travel-buddy5.site:3000"> */}
+						<img src="/Img/TravelBuddy(256).png" alt="Main logo" style={{marginLeft: '20px', cursor: 'pointer'}} onClick={onClickMain}/>
+                    </div>
+                </h1>
+                <h2>아이디 찾기</h2>
+                
+                <div >
+                    <input
+                        type="email"
+                        placeholder="이메일"
+                        value={Email}
+                        onChange={onChangeHandler}
+                    />
+                </div>
+                    {message && <p>{message}</p>}
+                <div>
+                <button
+                        onClick={buttonLabel === '아이디 찾기' ? onClickFindIdHandler : onClickBackHandler}
+                    >
+                        {buttonLabel}
+                    </button>
+                </div>
+
             </div>
-            {message && <p>{message}</p>}
         </div>
     );
 }

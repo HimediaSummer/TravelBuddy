@@ -1,8 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import './MypageNavbar.css';
+import { decodeJwt } from '../../utils/tokenUtils';
+import MyPageNavbarCSS from './MyPageNavbarCSS.css';
 
 function MyPageNavbar() {
+
 	const [activeSubMenu, setActiveSubMenu] = useState(null);
 	const toggleSubMenu = (menu) => {
         setActiveSubMenu((prev) => (prev === menu ? null : menu)); // 현재 열려있으면 닫고, 아니면 연다
@@ -29,8 +32,8 @@ function MyPageNavbar() {
             <div className="navbar-main">
                 <ul>
                     <li>
-                        <NavLink 
-                            to="/mypage/myProfile" 
+                        <NavLink
+                            to="/mypage/myProfile"
                             onClick={(e) => {
                                 e.preventDefault(); // 기본 링크 동작 막기
                                 toggleSubMenu('myInfo'); // 하위 메뉴 토글
@@ -59,8 +62,8 @@ function MyPageNavbar() {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink 
-                            to="/mypage/mybuddy" 
+                        <NavLink
+                            to="/mypage/mybuddy"
                             onClick={(e) => {
                                 e.preventDefault(); // 기본 링크 동작 막기
                                 toggleSubMenu('myBuddy'); // 하위 메뉴 토글

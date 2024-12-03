@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { callBuddyDetailAPI, callBuddyDeleteAPI, callApplyBuddyAPI } from '../../../apis/BuddyAPICalls';
 import { callGetMemberAPI } from '../../../apis/MemberAPICalls';
 import { decodeJwt } from '../../../utils/tokenUtils';
+import BuddyDetailCSS from "./BuddyDetail.css";
 
 function BuddyDetail () {
     const navigate = useNavigate();
@@ -89,7 +90,7 @@ function BuddyDetail () {
                     .then(() => {
                         alert("게시글이 삭제되었습니다.");
                         // navigate('/buddyBoard/buddies'); // 삭제 후 목록 페이지로 이동
-                        navigate('/buddies', { replace: true});
+                        navigate('/cm/buddies', { replace: true});
                         window.location.reload();
                     })
                     .catch((error) => {
@@ -104,97 +105,140 @@ function BuddyDetail () {
 
 
     const onClickApplyButton = () => {
-        alert("개발 중입니다.");
-        // const applyData = {
-        //     "buddyCode": data.buddyCode,
-        //     "memberCode": member.data.memberCode,
-        //     "applyId": member.data.memberName, // 또는 다른 식별자
-        //     "applyStatus": 1 // 신청 상태 (1: 신청),
-        // };
+        // alert("개발 중입니다.");
+        const applyData = {
+            "buddyCode": data.buddyCode,
+            "memberCode": member.data.memberCode,
+            "applyId": member.data.memberName, // 또는 다른 식별자
+            "applyStatus": 1 // 신청 상태 (1: 신청),
+        };
 
-        // console.log("applyData = ", applyData)
+        console.log("applyData = ", applyData)
     
-        // dispatch(callApplyBuddyAPI(applyData))
-        //     .then(() => {
-        //         alert("신청이 완료되었습니다.");
-        //         // 버튼 상태 업데이트
-        //         setIsApplied(true); // 상태를 업데이트하여 UI에서 신청 완료로 표시
-        //         navigate('/buddies', { replace: true});
-        //         window.location.reload();
-        //     })
-        //     .catch((error) => {
-        //         console.error("신청 중 오류 발생:", error);
-        //         alert("신청 중 오류가 발생했습니다.");
-        //     });        
+        dispatch(callApplyBuddyAPI(applyData))
+            .then(() => {
+                alert("신청이 완료되었습니다.");
+                // 버튼 상태 업데이트
+                setIsApplied(true); // 상태를 업데이트하여 UI에서 신청 완료로 표시
+                navigate('/cm/buddies', { replace: true});
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.error("신청 중 오류 발생:", error);
+                alert("신청 중 오류가 발생했습니다.");
+            });        
     };
 
 
     return (
         
-        <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>버디매칭</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data ? (
-                        <>
-                            <tr>
-                                <td>제목</td>
-                                <td>{data.buddyTitle}</td>
-                                <td>유형</td>
-                                <td>{data.buddyType ? data.buddyType.buddyTypeName : "없음"}</td>
-                                <td>지역</td>
-                                <td>{data.region ? data.region.regionName : "없음"}</td>
-                                <td>작성자</td>
-                                <td>{data.account ? data.account.memberName : "없음"}</td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <img
-                                        src={data.buddyImg}
-                                        alt='게시글 이미지'
-                                        style={{
-                                            maxWidth: '400px',
-                                            height: 'auto',
-                                            margin: '10px 0'
-                                        }}
-                                    />
-                                </td>
-                                <td colSpan={data.buddyImg ? 4 : 5}>{data.buddyContents}</td>
-                            </tr>
-
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <button onClick={onClickApplyButton} disabled={isApplied}>
-                                        {isApplied ? "신청완료" : "신청하기"}
-                                    </button>
-                                </td>
-                                    <>
-                                        {isAuthor && (
-                                            <td>
-                                                <button onClick={onClickBuddyUpdate}>게시글 수정</button>
-                                            </td>
-                                        )}
-                                        {isAuthor && (
-                                            <td>
-                                                <button onClick={onClickBuddyDelete}>게시글 삭제</button>
-                                            </td>
-                                        )}
-                                    </>
-                            </tr>
-                        </>
-                    ) : (
+        <div className="buddy-detail-container">
+            {isAuthor && (
+                        <div className="buddy-detail-author-buttons">
+                            <button onClick={onClickBuddyUpdate} className="update-button">수정</button>
+                            <button onClick={onClickBuddyDelete} className="delete-button">삭제</button>
+                        </div>
+                )}
+            <div className="BuddyHeader">
+                <h2>게시글</h2>
+            </div>
+           
+            <div className="buddy-detail-table">
+                <table>
+                    <thead>
+                        {/* <tr>
+                            <th colSpan="4">버디매칭</th>
+                        </tr> */}
                         <tr>
-                            <td colSpan="2">로딩 중...</td>
+                            {/* <th>제목</th>
+                            <th>유형</th>
+                            <th>지역</th>
+                            <th>작성자</th> */}
+                            {/* <td>제목</td>
+                            <td>{data.buddyTitle}</td>
+                            <td>유형</td>
+                            <td>{data.buddyType ? data.buddyType.buddyTypeName : "없음"}</td>
+                            <td>지역</td>
+                            <td>{data.region ? data.region.regionName : "없음"}</td>
+                            <td>작성자</td>
+                            <td>{data.account ? data.account.memberName : "없음"}</td> */}
                         </tr>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {data ? (
+                            <>
+                                <tr className='tableHead'>
+                                    <td>제목</td>
+                                    <td className='tableHeadData'>{data.buddyTitle}</td>
+                                    <td>유형</td>
+                                    <td className='tableHeadData'>{data.buddyType ? data.buddyType.buddyTypeName : "없음"}</td>
+                                    <td>지역</td>
+                                    <td className='tableHeadData'>{data.region ? data.region.regionName : "없음"}</td>
+                                    <td>작성자</td>
+                                    <td className='tableHeadData'>{data.account ? data.account.memberName : "없음"}</td>
+                                </tr>
+
+                                <tr>
+                                    <td colSpan="8">
+                                        <div className="buddy-description">
+                                            {/* 본문 내용 */}
+                                            <div dangerouslySetInnerHTML={{ __html: data.buddyContents }} />
+                                            {/* 이미지가 있을 경우 본문에 포함되게 표시 */}
+                                            {data.buddyImg && (
+                                                <img
+                                                    src={data.buddyImg}
+                                                    alt='게시글 이미지'
+                                                    // style={{
+                                                    //     maxWidth: '400px',
+                                                    //     height: 'auto',
+                                                    //     margin: '10px 0'
+                                                    // }}
+                                                    className="buddy-img" 
+                                                />
+                                                )}
+                                    {/* </td> */}
+                                    {/* <td colSpan={data.buddyImg ? 4 : 5}>{data.buddyContents}</td> */}
+                                    {/* <td colSpan="4"> */}
+                                        {/* <div className="buddy-description">{data.buddyContents}</div> */}
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                {/* <tr>
+                                    <td colSpan="4"> */}
+                                        <div className="apply-button-container">
+                                            <button className="apply-button" onClick={onClickApplyButton} disabled={isApplied}>
+                                                {isApplied ? "신청완료" : "신청하기"}
+                                            </button>
+                                        </div>
+                                    {/* </td>
+                                </tr> */}
+                                        {/* <>
+                                            {isAuthor && (
+                                                <tr>
+                                                    <td colSpan="4">
+                                                        <div>
+                                                            <button onClick={onClickBuddyUpdate} className="update-button">수정</button> */}
+                                                        {/* </td>
+                                                    )}
+                                                    {isAuthor && (
+                                                        <td> */}
+                                                            {/* <button onClick={onClickBuddyDelete} className="delete-button">삭제</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </> */}
+                                
+                            </>
+                        ) : (
+                            <tr>
+                                <td colSpan="2">로딩 중...</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     );

@@ -67,10 +67,23 @@ function Header() {
     function AfterLogin() {
         return (
             <div>
-                <button onClick={onClickLogoutHandler}>로그아웃</button>
+                {/* <button onClick={onClickLogoutHandler}>로그아웃</button> */}
+                <a onClick={onClickLogoutHandler} style={{color: 'black'}}>로그아웃</a>
             </div>
         );
     }
+
+    const getMyPageLink = () => {
+        if (token?.auth && token.auth.includes('ROLE_ADMIN')) {
+            return { link: "/admin", text: "관리자페이지" };
+        }
+        return { link: "/mypage", text: "MY정보" };
+    };
+
+	// 메인으로
+	const onClickMain = () => {
+		navigate("/");
+	};
 
     return (
         <div className="HeaderContainer">
@@ -81,16 +94,17 @@ function Header() {
 					<h1>
 						<div class="header-click">
 							{/* <i class="fa-solid fa-globe"></i> */}
-							<a href="http://localhost:3000"><img src="/Img/TravelBuddy(128).png" alt="Main logo" style={{marginLeft: '20px'}}/></a>
+							{/* <a href="http://travel-buddy5.site:3000"> */}
+							<img src="/Img/TravelBuddy(256).png" alt="Main logo" style={{marginLeft: '20px', cursor: 'pointer'}} onClick={onClickMain}/>
 						</div>
 					</h1>
             <ul class="menu">
                 <li>
-                    {token ? (
-                        <NavLink to="/mypage" style={{ color: "black" }}>MY정보</NavLink>
-                    ) : (
-                        <NavLink to="/login" style={{ color: "black" }}>MY정보</NavLink>
-                    )}
+                    {/* <NavLink to="/mypage">MY정보</NavLink> */}
+                    {(() => {
+                            const myPage = getMyPageLink();
+                            return <NavLink to={myPage.link}>{myPage.text}</NavLink>;
+                        })()}
                 </li>
                 <li>
                     {/* <li onClick={handleLoginClick}>로그인</li> */}
@@ -101,7 +115,7 @@ function Header() {
                     )}
                 </li>
                 <li>
-                    <NavLink to="/cm">커뮤니티</NavLink>
+                    <NavLink to="/cm/buddies">커뮤니티</NavLink>
                 </li>
                 <li>
                     <NavLink to="/cs">고객지원</NavLink>

@@ -1,4 +1,4 @@
-.QnaContainer {
+.MyQnaContainer {
 
 	width: 1500px;
 	display: flexbox; /* flexbox 사용 */
@@ -6,38 +6,26 @@
 
 }
 
-.QnaContainer p {
+.header p {
 	font-family: 'Cafe24 Ssurround';
     font-size: 40px;
     font: bold;
     color: #1F709E;
-	margin-right: 610px;
-}
+	margin-right: 890px;
 
-.QnaContainer input {
-	font-family: 'Cafe24 Ssurround air';
-    font-size: 20px;
-    color: #8CC8EA;
-	border-radius: 15px;
-	margin-right: 5px;
-	width: 248px;
-	height: 50px;
-	text-align: center;
 }
 
 
-.QnaContainer .QnaHeader {
+.MyQnaContainer .header {
     display: flex; /* 수평 정렬을 위해 flexbox 사용 */
     align-items: center; /* 수직 가운데 정렬 */
-    justify-content: left;
+    justify-content: flex-end; /* 오른쪽으로 정렬 */
 	margin-top: 0;
 	margin-bottom: 0;
-	margin-right: 10px;
-	margin-left: 280px;
 	height: 91px;
 }
 
-.QnaContainer table {
+.MyQnaContainer table {
 	display: grid; /* grid 사용 */
 	/* 수평 및 수직 가운데 정렬 */
     place-items: center; 
@@ -46,15 +34,14 @@
 	/* 전체 화면 높이 */
     height: 100%; 
 	/* 테이블의 너비를 100%로 설정 (필요시) */
-	width: 1500px; 
-	margin-left: 270px;
-	justify-content: left;
+	width: 100%; 
 	/* 테이블 셀 간의 경계 제거 */
     border-collapse: collapse; 
 	margin-top: 0;
-
+	margin-left: 95px;
+	justify-content: center;
 }
-.QnaContainer button {
+.MyQnaContainer button {
 	font-family: 'Cafe24 Ssurround';
     font-size: 20px;
     color: #ffffff;
@@ -68,19 +55,19 @@
 	
 }
 
-.QnaContainer thead {
+.MyQnaContainer thead {
 	height: 60px;
 	
 }
 
 
-.QnaContainer tr:Hover:not(thead tr) {
+.MyQnaContainer tr:Hover {
 	background-color: #f3f2f2;
 	
 	
 }
 
-.QnaContainer th {
+.MyQnaContainer th {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
 	height: 60px;
@@ -90,51 +77,51 @@
 
 }
 
-.QnaContainer td {
+.MyQnaContainer td {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
-	height: 60px;
+	height: 50px;
     text-align: center; /* 텍스트 정렬 (필요시) */
     border-bottom: 1px solid #ccc; /* 하단 경계선 추가 (선택 사항) */
 	cursor: pointer;
 	transition: background-color 0.3s;	
 }
 
-.th1qna {
+.th1myqna {
     width: 110px;
 }
-.th2qna {
+.th2myqna {
     width: 110px;
 }
-.th3qna {
+.th3myqna {
     width: 500px;
 }
-.th4qna {
+.th4myqna {
     width: 220px;
 }
-.th5qna {
+.th5myqna {
     width: 165px;
 }
-.th6qna {
+.th6myqna {
 	width: 120px;
 }
 
-.td1qna {
-    width: 105px;
-}
-.td2qna {
-    width: 100px;
-}
-.td3qna {
-    width: 500px;
-}
-.td4qna {
-    width: 255px;
-}
-.td5qna {
+.td1myqna {
     width: 120px;
 }
-.td6qna {
+.td2myqna {
+    width: 80px;
+}
+.td3myqna {
+    width: 500px;
+}
+.td4myqna {
+    width: 255px;
+}
+.td5myqna {
+    width: 120px;
+}
+.td6myqna {
 	width: 150px;
 }
 
@@ -191,18 +178,17 @@
 	background-color: #1F709E;	
 }
 
+/* MyQnaDetail */
 
-/* QnaDetail */
 
-
-.QnaDetailContainer {
+.MyQnaDetailContainer {
 	width: 1500px;
 	display: flexbox; /* flexbox 사용 */
 	flex-direction: column; /* 세로 방향으로 정렬 */
 }
 
 
-.QnaDetailContainer p {
+.MyQnaDetailContainer p {
 	font-family: 'Cafe24 Ssurround';
     font-size: 40px;
     font: bold;
@@ -211,20 +197,20 @@
 	margin-left: 270px;
 }
 
-.QnaDetailHeader {
+.MyQnaDetailHeader {
     display: flex;
     align-items: center;
     justify-content: left;
 }
 
-.QnaDetailContainer table {
+.MyQnaDetailContainer table {
 	margin-top: 0;
 	margin-left: 270px;
 	border: 1px solid #8CC8EA;
 }
 
 
-.QnaDetailContainer button {
+.MyQnaDetailContainer button {
 	font-family: 'Cafe24 Ssurround';
     font-size: 20px;
     color: #ffffff;
@@ -238,17 +224,17 @@
 	/* margin-left: 150px; */
 }
 
-.QnaDetailContainer button:Hover {
+.MyQnaDetailContainer button:Hover {
 	background-color: #1F709E;	
 }
 
-.QnaDetailContainer .tr1myqnadetail {
+.MyQnaDetailContainer .tr1myqnadetail {
 	background-color: #8CC8EA;
 	height: 60px;
 	width: 1200px;
 }
 
-.QnaDetailContainer td {
+.MyQnaDetailContainer td {
 	font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
 	text-align: center;
@@ -256,15 +242,15 @@
 	border: 1px solid #8CC8EA;
 }
 
-.QnaDetailContainer .td1myqnadetail {
+.MyQnaDetailContainer .td1myqnadetail {
 	width: 100px;
 }
 
-.QnaDetailContainer .td2myqnadetail {
+.MyQnaDetailContainer .td2myqnadetail {
 	width: 400px;
 }
 
-.QnaDetailContainer .td3myqnadetail textarea {
+.MyQnaDetailContainer .td3myqnadetail textarea {
 	width: 800px;
 	min-width: 800px;
 	max-width: 800px;
@@ -277,7 +263,7 @@
 	border: none;
 }
 
-.QnaDetailContainer .td4myqnadetail textarea {
+.MyQnaDetailContainer .td4myqnadetail textarea {
 	width: 800px;
 	min-width: 800px;
 	max-width: 800px;
@@ -288,4 +274,101 @@
 	padding-left: 20px;
 	font-size: 20px;
 	border: none;
+}
+
+/* myQnacreate */
+
+
+
+.MyQnaCreateContainer {
+	width: 1500px;
+	display: flexbox; /* flexbox 사용 */
+	flex-direction: column; /* 세로 방향으로 정렬 */
+}
+
+
+.MyQnaCreateContainer p {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 40px;
+    font: bold;
+    color: #1F709E;
+	margin-right: 562px;
+	margin-left: 270px;
+}
+
+.MyQnaCreateHeader {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.MyQnaCreateContainer table {
+	margin-top: 0;
+	margin-left: 270px;
+	border: 1px solid #8CC8EA;
+}
+
+
+.MyQnaCreateContainer button {
+	font-family: 'Cafe24 Ssurround';
+    font-size: 20px;
+    color: #ffffff;
+	width: 124px;
+	height: 50px;
+	margin-right: 25px;
+	border-radius: 15px;
+	background-color: #8CC8EA;
+	border: none; /* 버튼의 테두리 제거 */
+	cursor: pointer;
+	/* margin-left: 150px; */
+}
+
+.MyQnaCreateContainer button:Hover {
+	background-color: #1F709E;	
+}
+
+.MyQnaCreateContainer .tr1myqnadetail {
+	background-color: #8CC8EA;
+	height: 60px;
+	width: 1200px;
+}
+
+.MyQnaCreateContainer td {
+	font-family: 'Cafe24 Ssurround air';
+    font-size: 20px;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid #8CC8EA;
+}
+
+.MyQnaCreateContainer .td1myqnacreate {
+	width: 100px;
+}
+
+.MyQnaCreateContainer .td2myqnacreate {
+	width: 400px;
+}
+
+.MyQnaCreateContainer .td3myqnacreate input {
+	width: 1010px;
+	height: 300px;
+	background-color: #ffffff;
+	padding-left: 20px;
+	font-size: 24px;
+}
+
+.MyQnaCreateContainer .td4myqnacreate input {
+	width: 800px;
+	height: 60px;
+	background-color: #ffffff;
+	padding-left: 20px;
+	font-size: 20px;
+}
+
+.MyQnaCreateContainer .td5myqnacreate select {
+	width: 120px;
+	height: 60px;
+	background-color: #ffffff;
+	padding-left: 20px;
+	font-size: 20px;
 }

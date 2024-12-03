@@ -4,6 +4,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import 'moment/locale/ko';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 // 모달 body 태그에 붙이기
 Modal.setAppElement('#root');
@@ -25,6 +26,10 @@ function DateSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, se
 	// const [startDate, setStartDate] = useState();
 	// const [endDate, setEndDate] = useState();
 	const [selectedRange, setSelectedRange] = useState([null, null]);
+
+	// 뒤로가기
+	const navigate = useNavigate();
+
 	// 페이지 오면 모달 자동으로 열리게
 	useEffect(
 		() => { setIsModalOpen(true); },
@@ -127,7 +132,9 @@ function DateSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, se
 							formatDay={(locale, date) => moment(date).format("DD")}
 						/>
 					</div>
-					<div style={{ textAlign: 'right', paddingRight: '50px', margin: '20px' }}>
+					{/* <div style={{ textAlign: 'right', paddingRight: '50px', margin: '20px' }}> */}
+					<div style={{ display: 'flex', justifyContent: 'space-between', padding:'0 50px', margin: '50px' }}>
+						<button className='date-button' onClick={() => navigate('/')}>뒤로가기</button>
 						<button className="date-button" onClick={closeModal} disabled={!startDate || !endDate}>선택완료</button>
 					</div>
 

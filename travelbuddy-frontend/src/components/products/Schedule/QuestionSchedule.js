@@ -116,12 +116,14 @@ function QuestionSchedule({ onNext, setTravelData }) {
 						<h2>질문 선택</h2>
 					</div>
 					<div class="tema-title">
+						{ !selectedQuestionTheme && (
 						<legend>선호하는 여행테마를 선택해주세요</legend>
+						)}
 					</div>
 					<div className="answer-container">
 					{/* <div> */}
 						{!selectedQuestionTheme && qTheme.map((qTheme) => (
-							<div className="answer-box" key={qTheme.questionTheme} onClick={() => handleQuestionThemeSelect(qTheme)}>
+							<div className="answer-box" key={qTheme.questionTheme} onClick={() => handleQuestionThemeSelect(qTheme)} style={{fontFamily: '카페24 써라운드 에어'}} >
 								{qTheme.questionTheme}
 							</div>
 						))}
@@ -134,7 +136,7 @@ function QuestionSchedule({ onNext, setTravelData }) {
 								{selectedAnswer
 									.filter((answer) => answer.questCode === currentQuestion.questCode)
 									.map((answer) => (
-										<div className="answer-box2" key={`${answer.questCode}-${answer.answerCode}`} onClick={() => handleAnswerSelect(answer)}>
+										<div className="answer-box2" key={`${answer.questCode}-${answer.answerCode}`} onClick={() => handleAnswerSelect(answer)} style={{fontFamily: '카페24 써라운드 에어'}} >
 											{answer.answer}
 										</div>
 									))}

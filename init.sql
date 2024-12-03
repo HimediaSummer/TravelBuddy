@@ -1,3 +1,17 @@
+-- --------------------------------------------------------
+-- db 생성 및 유저 권한 할당
+-- --------------------------------------------------------
+create database if not exists tbdb;
+
+create user if not exists 'travelbuddy'@'%' identified by 'travelbuddy';
+grant all privileges on tbdb.* to 'travelbuddy'@'%';
+
+use tbdb;
+
+
+-- --------------------------------------------------------
+-- ddl
+-- --------------------------------------------------------
 -- 테이블이 이미 존재하면 삭제
 DROP TABLE IF EXISTS tbl_qna_answer;
 

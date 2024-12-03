@@ -7,13 +7,36 @@
     justify-content: center;
     margin: 0;
     padding: 0;
-    /* background-image: url('/Img/seoul.PNG');
-    background-size: cover; */
+    /* background-image: url('/Img/seoul.PNG'); */
+    /* background-size: cover; */
 }
 
-.loginDiv{    
-    height: 640px;
-    width: 460px;
+.findIdDiv h1 {
+    margin-bottom: 5px;
+    /* margin-left: 80px; */
+}
+
+.findIdDiv h2 {
+    margin-bottom: 14px;
+    text-align: left;     
+    width: 85%;          
+    padding-left: 20px;   
+    font-size: 32px;      
+    font-weight: bold;    
+}
+
+.findIdDiv p {
+    margin-top: 0px;
+    margin-bottom: 24px;
+    text-align: center;
+    width: 100%;
+    font-size: 24px;
+    height: 24px;
+}
+
+.findIdDiv{    
+    height: 525px;
+    width: 465px;
     display: flex;
     flex-wrap: wrap;
 	/*수평 정렬*/
@@ -25,30 +48,31 @@
     background-color: white;
     border: solid 3px #8CC8EA;
     border-radius: 25px;    
+    /* 상대 위치 */
+    position: relative;         
 }
 
-.loginDiv .check img{    
-    height: 400px;
-    width: 400px;
-}
-
-.loginDiv input {
-    margin-top: 5px;
+.findIdDiv input {
+    margin-top: 0px;
     margin-bottom: 20px;
-	margin-left: 0px;
+	/* margin-left: 20px; */
+    align-items: center;
+    /* padding-right: 10px; */
     height: 70px;
     width: 380px;
     border-radius: 15px;
     text-indent: 30px;
 	font-size: 24px;
-	line-height: 70px;
+	line-height: 43px;
 	filter: drop-shadow(5px 4px 4px rgba(0, 0, 0, 0.25));
 	transition: background-color 0.3s ease;
 }
 
-.loginDiv button {
+
+.findIdDiv button {
     margin-top: 5px;
     margin-bottom: 5px;
+    margin-left: 20px;
     height: 70px;
     width: 380px;
     border-radius: 25px;
@@ -62,30 +86,8 @@
     cursor: pointer; /* 손가락 커서 */
 }
 
-.loginDiv button:hover {
+.findIdDiv button:hover {
     background-color: #31A3BE;
 	color: white;
-}
-
-.loginDiv .footer {
-    margin-top: 10px;
-    font-size: 20px;
-    color: #8CC8EA;
-    display: flex;
-    justify-content: space-around;
-}
-
-.loginDiv .footer a {
-	margin-left: 20px;
-	margin-right: 20px;
-	font-size: 20px;
-    text-decoration: none;
-    color: #8CC8EA;
-    cursor: pointer; /* 손가락 커서 */
-}
-
-.loginDiv .footer a:hover {
-    text-decoration: underline;
-	color: #31A3BE;
 }
 

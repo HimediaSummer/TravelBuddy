@@ -69,18 +69,25 @@ function NoticeDetail() {
     
     return (
         <>
-            <td style={{width:'50px'}}>제목</td>
-            <td style={{width:'350px'}}>{notice.noticeTitle}</td>
-            <td style={{width:'60px'}}>글번호</td>
+        <div className='UseinfoDetailContainer'>
+            <div className='useinfoDetailHeader'>
+            <p>공지사항</p>
+            <td><button onClick={onClickChangeHandlerUpdate}>수정</button></td>
+            <td><button onClick={onClickChangeHandlerDelete}>삭제</button></td>
+        </div>
+        <tr>
+            <td className='td1useinfoD'>제목</td>
+            <td className='td2useinfoD'>{notice.noticeTitle}</td>
+            <td className='td3useinfoD'></td>
+            {/* <td style={{width:'60px'}}>글번호</td>
             <td style={{width:'50px'}}>{notice.noticeCode}</td> 
-            <td style={{width:'50px'}}><button onClick={onClickChangeHandlerUpdate}>수정</button></td>
-            <td style={{width:'50px'}}><button onClick={onClickChangeHandlerDelete}>삭제</button></td><br/>
             <td style={{width:'60px'}}>작성일</td>
             <td style={{width:'200px'}}>{notice.noticeCreate}</td>
             <td style={{width:'60px'}}>조회수</td> 
-            <td style={{width:'80px'}}>{notice.noticeCount}</td>
-            <hr/>
-            <div>
+            <td style={{width:'80px'}}>{notice.noticeCount}</td> */}
+            </tr>
+            </div>
+            <div className='UseinfoDetailViewer'>
                 <Viewer
                     initialValue={noticeContents || notice.noticeContents}
                     key={noticeContents}

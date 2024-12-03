@@ -22,7 +22,7 @@
 }
 
 .faq-container {
-    max-width: 600px;
+    max-width: 1200px;
     margin: 0 auto;
     font-family: Arial, sans-serif;
   }
@@ -32,6 +32,7 @@
   }
   
   .faq-question {
+    font-family: 'Cafe24 Ssurround air';
     width: 100%;
     padding: 10px 15px;
     background-color: #f8f9fa;
@@ -39,7 +40,7 @@
     border-radius: 5px;
     text-align: left;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
   }
   
@@ -48,34 +49,46 @@
   }
   
   .faq-answer {
+    font-family: 'Cafe24 Ssurround air';
     margin-top: 5px;
     padding: 10px 15px;
+    padding-left: 50px;
     background-color: #f1f1f1;
     border-left: 3px solid #31708f;
-    font-size: 14px;
+    font-size: 20px;
     color: #333;
     border-radius: 0 5px 5px 5px;
   }
 
-  .categoryButtons {
-    margin: 20px 0;
-    display: flex;
-    gap: 10px;
-}
+  .categoryButtons{
+    display: flex; /* 추가된 부분 */
+    justify-content: left; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    margin-left: 400px;
+  }
 
 .categoryButtons button {
-    padding: 8px 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: white;
-    cursor: pointer;
-}
-
-.activeCategory {
-    background-color: skyBlue !important;
-    color: white;
+    font-family: 'Cafe24 Ssurround';
+    font-size: 20px;
+    color: #ffffff;
+    width: 124px;
+    height: 50px;
+    border-radius: 15px;
+    background-color: #8CC8EA;
+    border: none;
+	  cursor: pointer;
+	  margin-bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-right: 10px;
+    
+    margin-top: 26px;
+    
 }
 
 .categoryButtons button:hover {
-    background-color: #f0f0f0;
+    background-color: #2985ed;
 }

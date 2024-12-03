@@ -1,4 +1,4 @@
-import AdminAllCSS from '../../../components/common/AdminAllCSS.css';
+import NoticeCSS from './NoticeCSS.css';
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -94,8 +94,8 @@ useEffect(() => {
 
     return (
         <>
-         <div className='AdminAllContainer'>
-            <div className='header'>
+         <div className='NoticeContainer'>
+            <div className='NoticeHeader'>
                     <p>공지사항</p>
                     <input
                     type="text"
@@ -109,11 +109,11 @@ useEffect(() => {
                 <table>
                     <thead>
                         <tr>
-                            <th className='th1'>번호</th>
-                            <th className='th2'colSpan={3}>제목</th>
-                            <th className='th3'>조회</th>
-                            <th className='th4'>작성일</th>
-                            <th className='th5'>상태</th>
+                            <th className='th1notice'>번호</th>
+                            <th className='th2notice'colSpan={3}>제목</th>
+                            <th className='th3notice'>조회</th>
+                            <th className='th4notice'>작성일</th>
+                            <th className='th5notice'>상태</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -123,11 +123,11 @@ useEffect(() => {
                                     key={n.noticeCode}
                                     onClick={() => onClickTableTr(n.noticeCode)}
                                 >
-                                    <td className='td1'>{n.noticeCode}</td>
-                                    <td className='td2' colSpan={3}>{n.noticeTitle}</td>
-                                    <td className='td3'>{n.noticeCount}</td>
-                                    <td className='td4'>{n.noticeCreate}</td>
-                                    <td className='td5'>
+                                    <td className='td1notice'>{n.noticeCode}</td>
+                                    <td className='td2notice' colSpan={3}>{n.noticeTitle}</td>
+                                    <td className='td3notice'>{n.noticeCount}</td>
+                                    <td className='td4notice'>{n.noticeCreate}</td>
+                                    <td className='td5notice'>
                                             {n.noticeAt === "N" ? (
                                                 <button>공개</button>
                                             ) : (
@@ -139,9 +139,9 @@ useEffect(() => {
                     </tbody>
                 </table>
             </div>
-            <div style={{ listStyleType: "none", display: "flex" }}>
+            <div className='AdminAllCSSButtonList'>
                 { Array.isArray(filteredNoticeList) &&
-                <button 
+                <button
                     onClick={() => setCurrentPage(currentPage - 1)} 
                     disabled={currentPage === 1}
                 >
@@ -151,14 +151,17 @@ useEffect(() => {
                 {pageNumber.map((num) => (
                 <li key={num} onClick={() => setCurrentPage(num)}>
                     <button
-                        style={ currentPage === num ? {backgroundColor : 'skyblue' } : null}
-                    >
+                    style={
+                        currentPage === num
+                            ? { backgroundColor: "skyBlue" }
+                            : null
+                    }>
                         {num}
                     </button>
                 </li>
                 ))}
                 { Array.isArray(filteredNoticeList) &&
-                <button 
+                <button
                     onClick={() => setCurrentPage(currentPage + 1)} 
                     disabled={currentPage === pageInfo.pageEnd  || pageInfo.total == 0}
                 >
@@ -166,7 +169,9 @@ useEffect(() => {
                 </button>
                 }
             </div>
-            <button onClick={onClickNavigation}>작성</button>
+            <div className='InsertButton'>
+            <button  onClick={onClickNavigation}>작성</button>
+            </div>
         </>
     );
 }

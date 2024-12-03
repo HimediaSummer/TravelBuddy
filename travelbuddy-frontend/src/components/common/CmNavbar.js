@@ -1,27 +1,35 @@
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { NavLink, useLocation  } from 'react-router-dom';
 import { decodeJwt } from '../../utils/tokenUtils';
+import CmNavbarCSS from "./CmNavbarCSS.css";
 
 function CmNavbar() {
+	const location = useLocation();
+
     return (
-		<div>
+		<div className='adminNavBarContainer'>
 			<ul>
 				<li>
-					<NavLink to="/">홈으로</NavLink>
+					<NavLink to="/cm/mynotices"
+						end className={({ isActive }) => (location.pathname === '/cm/mynotices' || isActive) ? 'active-link' : ''}
+					>
+						공지사항
+					</NavLink>
 				</li>
 				<li>
-					<NavLink to="/cm/mynotices">공지사항</NavLink>
+					<NavLink to="/cm/myuseinfos"
+						end	className={({ isActive }) => (location.pathname === '/cm/myuseinfos' || isActive) ? 'active-link' : ''}
+					>
+						이용방법
+					</NavLink>
 				</li>
 				<li>
-					<NavLink to="/cm/myuseinfos">이용방법</NavLink>
+					<NavLink to="/cm/buddies"
+						end className={({ isActive }) => (location.pathname === '/cm/buddies' || isActive) ? 'active-link' : ''}
+					>
+						버디매칭
+					</NavLink>
 				</li>
-				<li>
-					<NavLink to="/cm/buddies">버디매칭</NavLink>
-				</li>
-				{/* {decoded === 'ROLE_ADMIN' && (
-					<li>
-						<NavLink to="/product-management">상품관리</NavLink>
-					</li>
-				)} */}
 			</ul>
 		</div>
     );

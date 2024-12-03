@@ -92,10 +92,8 @@ function QnaDetail () {
                 <tr>
                 <td>답변 작성</td>
                 <td colSpan={3}>
-                    <input
-                    type="text"
+                    <textarea
                     name='ansContents'
-                    style={{width: '500px', height: '100px'}}
                     onChange={handleInputChange}
                     value={answerState.ansContents || qnaAnswerDTO.ansContents}/>
                     </td>

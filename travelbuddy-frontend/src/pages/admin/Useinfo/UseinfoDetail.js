@@ -70,25 +70,31 @@ function UseinfoDetail () {
 
     return (
         <>
-            <td style={{width:'50px'}}>제목</td>
-            <td style={{width:'350px'}}>{useinfo.useinfoTitle}</td>
-            <td style={{width:'80px'}}>글번호</td>
-            <td style={{width:'50px'}}>{useinfo.useinfoCode}</td>
-            <td style={{width:'50px'}}><button onClick={onClickChangeHandlerUpdate}>수정</button></td>
-            <td style={{width:'50px'}}><button onClick={onClickChangeHandlerDelete}>삭제</button></td><br/>
-            <td style={{width:'80px'}}>작성일</td>
-            <td style={{width:'180px'}}>{useinfo.useinfoCreate}</td>
-            <td style={{width:'80px'}}>조회수</td> 
-            <td style={{width:'80px'}}>{useinfo.useinfoCount}</td>
-            <td style={{width:'80px'}}>은폐여부</td> 
-            <td style={{width:'80px'}}>{useinfo.useinfoAt}</td>
-            <hr/>
-                <div>
+        <div className='UseinfoDetailContainer'>
+            <div className='useinfoDetailHeader'>
+            <p>사용설명서</p>
+            <td><button onClick={onClickChangeHandlerUpdate}>수정</button></td>
+            <td><button onClick={onClickChangeHandlerDelete}>삭제</button></td>
+            </div>
+            <tr>
+            <td className='td1useinfoD'>제목</td>
+            <td className='td2useinfoD'>{useinfo.useinfoTitle}</td>
+            <td className='td3useinfoD'></td>
+            {/* <td>글번호</td>
+            <td>{useinfo.useinfoCode}</td>
+            <td>작성일</td>
+            <td>{useinfo.useinfoCreate}</td>
+            <td>조회수</td> 
+            <td>{useinfo.useinfoCount}</td>
+            <td>은폐여부</td> 
+            <td>{useinfo.useinfoAt}</td> */}
+            </tr>
+            </div>
+                <div className='UseinfoDetailViewer'>
                 <Viewer
                     initialValue={useinfoContents || useinfo.useinfoContents}
                     key={useinfoContents}
                     previewStyle="vertical"
-                    height="600px"
                     initialEditType="wysiwyg"
                     ref={editorRef}
                 />

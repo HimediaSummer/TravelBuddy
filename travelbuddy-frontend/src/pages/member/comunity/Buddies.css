@@ -1,127 +1,340 @@
-
-/* 전체 컨테이너 중앙 배치 */
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 0; /* 내부 여백 제거 */
-    box-sizing: border-box;
-    width: 100%; /* 화면 전체 너비 사용 */
+/* .BuddyContainer {
+width: 1500px;
+display: flexbox; 
+flex-direction: column; 
 }
 
-/* 제목 스타일 */
-h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #2c3e50; /* 짙은 색상으로 가독성 향상 */
+.BuddyContainer p {
+font-family: 'Cafe24 Ssurround';
+    font-size: 40px;
+    font: bold;
+    color: #1F709E;
+margin-right: 610px;
 }
 
-/* 게시글 작성 버튼 스타일 */
-.write-button {
-	/* 오른쪽 정렬 */
-    align-self: flex-end; 
-    margin: 10px 0;
-    background-color: rgba(140, 200, 234, 0.6); /* 8CC8EA 컬러 60% */
-    border: none;
-    border-radius: 15px;
-    padding: 0px 0px;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-	width: 124px;
-	height: 50px;
-	/* position: fixed; */
-	/* left: 1537px;
-	top: 866px; */
-    box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-    transition: background-color 0.3s ease;
+.BuddyContainer h2 {
+font-family: 'Cafe24 Ssurround';
+    font-size: 40px;
+    font: bold;
+    color: #1F709E;
+    margin-left: 380px;
 }
 
-
-.write-button:hover {
-    background-color: #1F709E; /* 마우스 오버 색상 */
-}
-
-/* 표 스타일 */
-table {
-    /* border-collapse: collapse; */
-	/* 부모 컨테이너의 너비 채우기 */
-    width: 100%; 
-	/* 최대 너비 제한 */
-    /* max-width: 3000px;  */
-    /* background-color: white; */
-	/* 제목과 간격 추가 */
-    margin-top: 20px; 
-    overflow: hidden;
-	/* position: fixed; */
-	width: 1404px;
-	height: 51px;
-	left: 255px;
-	top: 324px;
-	border-radius: 10px;
-
-}
-
-/* 헤더 스타일 */
-thead tr {
-    background-color: rgba(140, 200, 234, 0.6);
-    color: black;
-    /* font-weight: bold; */
-    text-align: center;
-}
-
-thead th {
-    padding: 2px;
+.BuddyContainer input {
+font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
-    /* text-transform: uppercase; */
+    color: #8CC8EA;
+border-radius: 15px;
+margin-right: 5px;
+width: 248px;
+height: 50px;
+text-align: center;
 }
 
-/* 본문 스타일 */
-tbody td {
-    padding: 10px;
-    /* border: 1px solid #ddd; */
-    text-align: center;
-    font-size: 15px;
+
+.BuddyContainer .header {
+    display: flex; 
+    align-items: center; 
+    justify-content: flex-end; 
+margin-top: 0;
+margin-bottom: 0;
+height: 91px;
 }
 
-tbody tr:nth-child(odd) {
-    /* background-color: #f9f9f9; */
+.BuddyContainer table {
+display: grid; 
+
+    place-items: center; 
+
+    align-items: center;
+
+    height: 100%; 
+
+width: 100%; 
+
+    border-collapse: collapse; 
+margin-top: 0;
+margin-left: 0px;
+justify-content: center;
 }
 
-tbody tr:nth-child(even) {
-    /* background-color: #fff; */
+.BuddyContainer button {
+font-family: 'Cafe24 Ssurround';
+    font-size: 20px;
+    color: #ffffff;
+width: 124px;
+height: 50px;
+margin-right: 25px;
+border-radius: 15px;
+background-color: #8CC8EA;
+border: none; 
+cursor: pointer;
+
 }
 
-/* 페이지네이션 스타일 */
-.pagination-container {
+.BuddyContainer thead {
+height: 60px;
+
+}
+
+
+.BuddyContainer tr:Hover:not(thead tr) {
+background-color: #f3f2f2;
+}
+
+
+.BuddyContainer th {
+    font-family: 'Cafe24 Ssurround air';
+    font-size: 20px;
+    height: 60px;
+    text-align: center; 
+    background-color: #8CC8EA;
+}
+
+.BuddyContainer td {
+font-family: 'Cafe24 Ssurround air';
+    font-size: 20px;
+    text-align: center; 
+    border-bottom: 1px solid #ccc; 
+cursor: pointer;
+transition: background-color 0.3s;   
+}
+
+.th1buddy {
+    width: 120px;
+}
+.th2buddy {
+    width: 120px;
+}
+.th3buddy {
+    width: 120px;
+}
+.th4buddy {
+    width: 500px;
+}
+.th5buddy {
+    width: 165px;
+}
+.th6buddy {
+    width: 165px;
+}
+.th7buddy {
+    width: 165px;
+}
+
+.td1buddy {
+    width: 120px;
+}
+.td2buddy {
+    width: 120px;
+}
+.td3buddy {
+    width: 120px;
+}
+.td4buddy {
+    width: 500px;
+}
+.td5buddy {
+    width: 165px;
+}
+.td6buddy {
+    width: 165px;
+}
+.td7buddy {
+    width: 165px;
+}
+
+.AdminAllCSSButtonList {
+list-style-type: none;
+display: flex;
+justify-content: center;
+width: 1750px;
+margin-top: 10px;
+margin-left: 150px;
+}
+
+.AdminAllCSSButtonList button {
+margin: 0 5px; 
+    padding: 10px 20px; 
+    border-radius: 50%; 
+    background-color: #8CC8EA;
+    color: #2e2d2d; 
+    border: #2e2d2d;
+    cursor: pointer; 
+}
+
+.CreateButton {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    justify-content: flex-end; 
+    margin-top: 20px; 
+    margin-right: 0px;
+}
+.CreateButton button {
+font-family: 'Cafe24 Ssurround';
+    font-size: 20px;
+    color: #ffffff;
+    width: 124px;
+    height: 50px;
+    margin-left: 300px;
+    border-radius: 15px;
+    background-color: #8CC8EA;
+    border: none;
+cursor: pointer;
+margin-bottom: 0;
 }
 
-.pagination button {
-    margin: 0 5px;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    background-color: white;
-    color: #333;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s ease;
+.BuddyContainer button:Hover {
+    background-color: #1F709E;   
+    transition: background-color 0.3s;   
 }
 
-.pagination button:hover {
+.BuddyContainer .tableTitle {
+    border-radius: 15px;
+}
+
+
+.InsertButton button {
+font-family: 'Cafe24 Ssurround';
+    font-size: 20px;
+    color: #ffffff;
+    width: 124px;
+    height: 50px;
+    border-radius: 15px;
+    background-color: #8CC8EA;
+    border: none;
+cursor: pointer;
+margin-left: 1260px;
+margin-top: 0;
+}
+.InsertButton button:Hover {
+background-color: #1F709E;   
+} */
+
+/* 전체 컨테이너 */
+.BuddyContainer {
+    width: 1500px;
+    display: flex;
+    position: relative;
+}
+
+/* 테이블 헤더 스타일 */
+.BuddyHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 270px;
+    font-weight: bold;
+    color: #1F709E;
+    margin-top: -15px;
+}
+  
+
+/* 테이블 래퍼 */
+.TableWrapper {
+    /* overflow-x: auto; */
+    margin-bottom: 20px;
+    margin-left: -65px;
+    margin-top: -35px;
+   
+}
+
+/* 테이블 스타일 */
+.TableWrapper table {
+    width: 1500px;
+    border-collapse: collapse;
+    text-align: center;
+    margin-right: 200px;
+}
+
+.TableWrapper th,
+.TableWrapper td {
+    /* padding: 10px; */
+    /* border: 1px solid #ddd; */
+    /* font-size: 16px; */
+}
+
+.TableWrapper th {
+    background-color: #8CC8EA;
+    /* color: #fff; */
+    font-weight: bold;
+}
+
+/* .TableWrapper tr:nth-child(even) {
+    background-color: #f9f9f9;
+} */
+
+/* 각 행 밑부분에 선 추가 */
+.TableWrapper tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.TableWrapper tr:hover {
+    background-color: #f1f1f1;
+}
+
+
+/* 게시글 작성 버튼 */
+.writeButton {
+    position: absolute;
+    right: -200px;
+    bottom: 0px;
     background-color: #8CC8EA;
     color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+
 }
 
-.pagination button:disabled {
-    background-color: #ddd;
-    color: #aaa;
+.writeButton:hover {
+    background-color: #1F709E;
+}
+
+/* 페이지네이션 */
+.Pagination {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.Pagination button {
+    background-color: #8CC8EA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.Pagination button.active {
+    background-color: #1F709E;
+}
+
+.Pagination button:disabled {
+    background-color: #ccc;
     cursor: not-allowed;
+}
+
+/* 반응형 */
+@media screen and (max-width: 768px) {
+    .Header h2 {
+        font-size: 20px;
+    }
+
+    .TableWrapper th, .TableWrapper td {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .ButtonWrapper button {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+
+    .Pagination button {
+        padding: 5px;
+        font-size: 12px;
+    }
 }

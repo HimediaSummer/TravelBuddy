@@ -18,13 +18,13 @@ function MemberDetail () {
     const dispatch = useDispatch();
     const params = useParams();
     const memberData = useSelector((state) => state.memberReducer);
-    const {data: member} = memberData;
+    const {data: member = {} } = memberData;
+    
  
     useEffect (
         () => {
             dispatch(callMemberDetailForAdminAPI(params))
-            
-        } , []
+        } , [dispatch]
     );
 
     useEffect (
@@ -33,8 +33,13 @@ function MemberDetail () {
                 setIsMemberSuspension(member.memberSuspension);
                 setIsMemberDeletion(member.memberDeletion); 
             }
-        }, [member.memberCode]
+        }, [dispatch]
     );
+
+     // 데이터가 없을 경우 로딩 메시지 렌더링
+     if (!memberData) {
+        return <div>로딩 중입니다...</div>;
+    }
 
     const onClickChangeHandlerSus = () => {
         const newSuspensionStatus = (memberSuspension === 'Y' ? 'Y':'N');
@@ -75,45 +80,43 @@ function MemberDetail () {
     };
 
     return (
-        <div>
+        <div className='MemberDetailContainer'>
         <table>
-            <thead>
+            <thead className='memberDetailThead'>
                 <th>회원정보</th>
             </thead>
             <tbody>
                 <tr>
-                <td rowSpan="7" >썸네일</td>
-                <td >아이디</td>
+                <td className="MemberDetailThumb" rowSpan={6}>썸네일</td>
+                <td colSpan={3}>아이디</td>
                 <td>{member.memberName}</td>
                 </tr>
                 <tr>
-                <td>이름</td>
+                <td colSpan={3}>이름</td>
                 <td>{member.memberFullName}</td>
                 </tr>
                 <tr>
-                <td>생년월일</td>
+                <td colSpan={3}>생년월일</td>
                 <td>{member.memberBirthday}</td>
                 </tr>
                 <tr>
-                <td>연락처</td>
+                <td colSpan={3}>연락처</td>
                 <td>{member.memberPhone}</td>
                 </tr>
                 <tr>
-                <td>이메일</td>
+                <td colSpan={3}>이메일</td>
                 <td>{member.memberEmail}</td>
                 </tr>
                 <tr>
-                <td>가입일</td>
+                <td colSpan={3}>가입일</td>
                 <td>{member.memberCreate}</td>
-                </tr>
-                <tr>
-                    <td>정지상태확인 : {member.memberSuspension}</td>
-                    <td>탈퇴상태확인 : {member.memberDeletion}</td>
-                    <td><button onClick={onClickChangeHandlerSus}>정지</button></td>
-                    <td><button onClick={onClickChangeHandlerDel}>정보삭제</button></td>
                 </tr>
             </tbody>
         </table>
+        <div className='MemberDetailbutton'>
+            <button onClick={onClickChangeHandlerSus}>정지</button>
+            <button onClick={onClickChangeHandlerDel}>정보삭제</button>
+        </div>
         </div>
     ) 
 }

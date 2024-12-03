@@ -1,4 +1,4 @@
-import MyFaqsCSS from "../../member/faq/MyFaqsCSS.css";
+import FaqsCSS from "./FaqsCSS.css";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -129,8 +129,9 @@ function Faqs() {
 
     return (
         <>
-            <div className={MyFaqsCSS.bodyDiv}>
-                <h2>FAQ</h2>
+            <div className="FaqContainer">
+            <div className='FaqHeader'>
+                <p>FAQ</p>
                 <input
                     type="text"
                     placeholder="검색어를 입력하세요"
@@ -139,19 +140,14 @@ function Faqs() {
                     onKeyDown={onChangeHandler}
                 ></input>
                 <button onClick={onClickSearch}>검색</button>
-                <table className={MyFaqsCSS.productTable}>
-                    <colgroup>
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="40%" />
-                        <col width="10%" />
-                    </colgroup>
+                </div>
+                <table className="AdminAllContainer">
                     <thead>
                         <tr>
-                            <th>게시글 번호</th>
-                            <th>유형</th>
-                            <th>제목</th>
-                            <th>은폐여부</th>
+                            <th className="th1faq">글 번호</th>
+                            <th className="th2faq">유형</th>
+                            <th className="th3faq">제목</th>
+                            <th className="th4faq">은폐여부</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -162,13 +158,13 @@ function Faqs() {
                                     onClick={() =>
                                         onClickTableTr(f.faqCode)
                                     }>
-                                        <td>{f.faqCode}</td>
-                                        <td> {
+                                        <td className="td1faq">{f.faqCode}</td>
+                                        <td className="td2faq"> {
                             // fqTypeMap에서 fqTypeCode에 해당하는 fqTypeName 찾기
                             fqTypeList.find(type => type.fqTypeCode === f.fqTypeCode)?.fqTypeName || "로딩중"
                         }</td>
-                                        <td>{f.faqTitle}</td>
-                                        <td>
+                                        <td className="td3faq">{f.faqTitle}</td>
+                                        <td className="td4faq">
                                             {f.faqAt === "N" ? (
                                                 <button>공개</button>
                                             ) : (
@@ -182,17 +178,12 @@ function Faqs() {
                 </table>
             </div>
             <div
-                style={{
-                    listStyleType: "none",
-                    display: "flex",
-                    justifyContent: "center",
-                }}
+                className='AdminAllCSSButtonList'
             >
                 {Array.isArray(filteredFaqList) && (
                     <button
                         onClick={() => setCurrentPage(currentPage - 1)}
                         disabled={currentPage === 1}
-                        className={MyFaqsCSS.pagingBtn}
                     >
                         &lt;
                     </button>
@@ -205,7 +196,6 @@ function Faqs() {
                                     ? { backgroundColor: "skyBlue" }
                                     : null
                             }
-                            className={MyFaqsCSS.pagingBtn}
                         >
                             {num}
                         </button>
@@ -213,7 +203,6 @@ function Faqs() {
                 ))}
                 {Array.isArray(filteredFaqList) && (
                     <button
-                        className={MyFaqsCSS.pagingBtn}
                         onClick={() => setCurrentPage(currentPage + 1)}
                         disabled={
                             currentPage === pageInfo.pageEnd ||
@@ -224,7 +213,9 @@ function Faqs() {
                     </button>
                 )}
             </div>
+            <div className='InsertButton'>
             <button onClick={onClickNavigation}>작성</button>
+            </div>
         </>
     );
 }

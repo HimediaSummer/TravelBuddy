@@ -61,21 +61,22 @@ function MyNoticeDetail () {
 
     return ( 
         <>
-            제목 :
-            {notice.noticeTitle} |
-            게시글번호 :
-            {notice.noticeCode} 
-            <br/>
-            <br/>
-            작성일 : {notice.noticeCreate} | 조회수 {notice.noticeCount}
-            <br/>
-            <hr/>
-        <div>
+        <div className='UseinfoDetailContainer'>
+        <div className='useinfoDetailHeader'>
+        <p>공지사항</p>
+        </div>
+        <tr>
+        <td className='td1useinfoD'>제목</td>
+            <td className='td2useinfoD'>{notice.noticeTitle}</td>
+            <td className='td3useinfoD'></td>
+            {/* 작성일 : {notice.noticeCreate} | 조회수 {notice.noticeCount} */}
+            </tr>
+            </div>
+            <div className='UseinfoDetailViewer'>
             <Viewer 
             initialValue={noticeContents || notice.noticeContents}
             key={noticeContents}
             previewStyle="vertical"
-            height="600px"
             initialEditType="wysiwyg"
             ref={editorRef}
         />

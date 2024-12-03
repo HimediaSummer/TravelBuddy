@@ -50,28 +50,19 @@ function Qnas() {
 
     return (
         <>
-            <div className={QnaCSS.bodyDiv}>
-                <h2>문의(Q&A)</h2>
-                <table className={QnaCSS.productTable}>
-                    <colgroup>
-                        <col width="5%" />
-                        <col width="5%" />
-                        <col width="10%" />
-                        <col width="15%" />
-                        <col width="15%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                    </colgroup>
+            <div className="QnaContainer">
+                <div className="QnaHeader">
+                <p>문의 Q&A</p>
+                </div>
+                <table>
                     <thead>
                         <tr>
-                            <th>번호</th>
-                            <th>유형</th>
-                            <th colSpan={5}>제목</th>
-                            <th>작성자</th>
-                            <th>답변상태</th>
-                            <th>작성일</th>
+                            <th className="th1qna">번호</th>
+                            <th className="th2qna">유형</th>
+                            <th className="th3qna" colSpan={5}>제목</th>
+                            <th className="th4qna">작성자</th>
+                            <th className="th5qna">답변상태</th>
+                            <th className="th6qna">작성일</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,35 +75,28 @@ function Qnas() {
                                         onClickTableTr(q.qnaDTO.qnaCode)
                                     }
                                 >
-                                    <td>{q.qnaDTO.qnaCode}</td>
-                                    <td>{Array.isArray(fqTypeList) 
+                                    <td className="td1qna">{q.qnaDTO.qnaCode}</td>
+                                    <td className="td2qna">{Array.isArray(fqTypeList) 
                                     ? fqTypeList.find(f => f.fqTypeCode === q.qnaDTO.fqTypeCode)
                                     ?.fqTypeName || "로딩중" : "로딩중"
                                     }</td>
-                                    <td colSpan={5}>{q.qnaDTO.qnaTitle}</td>
-                                    <td>{Array.isArray(memberList)
+                                    <td className="td3qna" colSpan={5}>{q.qnaDTO.qnaTitle}</td>
+                                    <td className="td4qna">{Array.isArray(memberList)
                                     ? memberList.find((m) => m.memberCode === q.qnaDTO.memberCode)
                                     ?.memberName || "로딩중" : "로딩중"
                                     }</td>
-                                    <td>{q.qnaAnswerDTO.ansContents ? "답변완료" : ""}</td>
-                                    <td>{q.qnaDTO.qnaCreate}</td>
+                                    <td className="td5qna">{q.qnaAnswerDTO.ansContents ? "답변완료" : ""}</td>
+                                    <td className="td6qna">{q.qnaDTO.qnaCreate}</td>
                                 </tr>
                             )})}
                     </tbody>
                 </table>
             </div>
-            <div
-                style={{
-                    listStyleType: "none",
-                    display: "flex",
-                    justifyContent: "center",
-                }}
-            >
+            <div className="AdminAllCSSButtonList">
                 {Array.isArray(qnaList) && (
                     <button
                         onClick={() => setCurrentPage(currentPage - 1)}
                         disabled={currentPage === 1}
-                        className={QnaCSS.pagingBtn}
                     >
                         &lt;
                     </button>

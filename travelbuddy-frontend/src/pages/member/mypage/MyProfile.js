@@ -18,7 +18,7 @@ function MyProfile() {
 
     return (
             <div className="my-profile-page">
-                <h1 className="page-title">내 정보</h1>
+                <h3 className="buddy-title">내 정보</h3>
                 <div className="line">
                         <div className="profile-container">
                         {profile.length > 0 ? (
@@ -77,15 +77,16 @@ function MyProfile() {
                                 <p>Loading...</p>
                             )}
                         </div>
-                            <div className="button-container">
-                                <button onClick={() => navigate('/mypage/updatemyprofile')}>
-                                    수정하기
-                                </button>
-                                <button onClick={() => navigate('/mypage/deletion')}>
-                                    탈퇴
-                                </button>
-                            </div>
+                
+                        <div className="button-container">
+                            <button onClick={() => navigate('/mypage/updatemyprofile')}>
+                                수정하기
+                            </button>
+                            <button onClick={() => navigate('/mypage/deletion')}>
+                                탈퇴
+                            </button>
                         </div>
+                    </div>
                 </div>
             );
         }

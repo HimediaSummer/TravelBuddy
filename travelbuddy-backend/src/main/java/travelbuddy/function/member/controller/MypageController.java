@@ -120,7 +120,7 @@ public class MypageController {
 
         mypageService.putDeleteAccount(memberCode);
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원숨김ㅃㅃ", null));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원 탈퇴가 완료되었습니다", null));
     }
     
     /* =========================================== My일정 =========================================== */

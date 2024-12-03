@@ -14,10 +14,11 @@
 
 /* 전체 페이지 스타일 */
 .deletion-page {
+    margin: 10px auto; /* 중앙 정렬 */
     max-width: 1408px;
-    margin: 50px auto;
     position: relative;
-    margin-top: 75px;
+    margin-left: 270px; /* 왼쪽 고정 */
+    font-family: 'Cafe24SsurroundAir', sans-serif;
 }
 
 /* 제목 스타일 */

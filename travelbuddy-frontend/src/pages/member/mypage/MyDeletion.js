@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { deletionProfileAPI } from '../../../apis/MypageAPICalls';
+import { callLogoutAPI } from "../../../apis/MemberAPICalls";
 import './MyDeletion.css';
 
 function MyDeletionProfile() {
@@ -14,6 +15,15 @@ function MyDeletionProfile() {
         setIsAgreed(!isAgreed);
     };
 
+    // 로그아웃 로직 가져오기 (Header.js 로직 활용)
+    const logoutHandler = () => {
+        window.localStorage.removeItem("accessToken"); // 토큰 삭제
+        dispatch(callLogoutAPI()); // 로그아웃 API 호출
+        alert("로그아웃이 되어 메인화면으로 이동합니다.");
+        navigate("/", { replace: true });
+        window.location.reload(); // 새로고침
+    };
+
     const handleDeleteAccount = () => {
         if (!isAgreed) {
             alert("회원탈퇴 시 처리사항 안내를 확인하고 동의해주세요.");
@@ -23,13 +33,22 @@ function MyDeletionProfile() {
         if (isSubmitting) return; // 중복 클릭 방지
         setIsSubmitting(true);
 
-        dispatch(deletionProfileAPI(navigate))
+        // 탈퇴 API 호출 후 로그아웃 처리
+        dispatch(deletionProfileAPI(navigate)) // navigate 전달
+            .then(() => {
+                alert("탈퇴 되었습니다.");
+                logoutHandler();
+            })
+            .catch((error) => {
+                console.error("회원탈퇴 처리 중 에러:", error);
+                alert("회원탈퇴 중 문제가 발생했습니다.");
+            })
             .finally(() => setIsSubmitting(false)); // 버튼 다시 활성화
     };
 
     return (
         <div className="deletion-page">
-            <h3 className="deletion-title">회원 탈퇴</h3>
+            <h3 className="buddy-title">회원 탈퇴</h3>
             <div className="deletion-box">
                 <h4 className="deletion-subtitle">* 회원탈퇴 전, 유의사항을 확인해 주시기 바랍니다.</h4>
                 <ul className="deletion-list">

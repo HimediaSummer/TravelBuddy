@@ -56,6 +56,14 @@ function Header() {
         window.location.reload();
     };
 
+    const handleMyPageClick = (e) => {
+        if (!token) {
+            e.preventDefault(); // 기본 링크 이동 방지
+            alert("로그인 시 사용 가능합니다.");
+            navigate("/login");
+        }
+    };
+
     function BeforeLogin() {
         return (
             <div>
@@ -103,8 +111,13 @@ function Header() {
                     {/* <NavLink to="/mypage">MY정보</NavLink> */}
                     {(() => {
                             const myPage = getMyPageLink();
-                            return <NavLink to={myPage.link}>{myPage.text}</NavLink>;
-                        })()}
+                            return <NavLink
+                                        to={myPage.link}
+                                        onClick={handleMyPageClick}
+                                    >
+                                        {myPage.text}
+                                    </NavLink>
+                    })()}
                 </li>
                 <li>
                     {/* <li onClick={handleLoginClick}>로그인</li> */}

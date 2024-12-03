@@ -73,7 +73,7 @@
 	height: 60px;
     text-align: center; /* 텍스트 정렬 (필요시) */
 	margin-top: 0;
-	background-color: #8CC8EA;
+	background-color: #badef2;
 
 }
 
@@ -349,9 +349,13 @@
 	width: 400px;
 }
 
-.MyQnaCreateContainer .td3myqnacreate input {
+.MyQnaCreateContainer .td3myqnacreate textarea {
 	width: 1010px;
+	min-width: 1010px;
+	max-width: 1010px;
 	height: 300px;
+	min-height: 300px;
+	max-height: 300px;
 	background-color: #ffffff;
 	padding-left: 20px;
 	font-size: 24px;
@@ -371,4 +375,16 @@
 	background-color: #ffffff;
 	padding-left: 20px;
 	font-size: 20px;
+}
+
+.FaqCreateContainer .td3myqnacreate textarea {
+	width: 980px;
+	min-width: 980px;
+	max-width: 980px;
+	height: 300px;
+	min-height: 300px;
+	max-height: 300px;
+	background-color: #ffffff;
+	padding-left: 20px;
+	font-size: 24px;
 }

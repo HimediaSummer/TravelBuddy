@@ -85,7 +85,7 @@
 	height: 60px;
     text-align: center; /* 텍스트 정렬 (필요시) */
 	margin-top: 0;
-	background-color: #8CC8EA;
+	background-color: #badef2;
 
 }
 
@@ -353,16 +353,20 @@
 	width: 400px;
 }
 
-.FaqCreateContainer .td3myqnacreate input {
-	width: 1010px;
+.FaqCreateContainer .td3myqnacreate textarea {
+	width: 980px;
+	min-width: 980px;
+	max-width: 980px;
 	height: 300px;
+	min-height: 300px;
+	max-height: 300px;
 	background-color: #ffffff;
 	padding-left: 20px;
 	font-size: 24px;
 }
 
 .FaqCreateContainer .td4myqnacreate input {
-	width: 800px;
+	width: 810px;
 	height: 60px;
 	background-color: #ffffff;
 	padding-left: 20px;

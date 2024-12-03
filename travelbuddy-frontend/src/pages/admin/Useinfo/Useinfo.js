@@ -124,6 +124,7 @@ function Useinfo() {
 
     return (
         <>
+        <div className="useinfoCreate">
             <button onClick={cancleQnaInsert}>취소</button>
             <button onClick={inserUseinfo}>작성완료</button>
             <input
@@ -151,6 +152,7 @@ function Useinfo() {
                 onChange={onChangeImageUpload}
                 ref={imageInput}
             />
+            </div>
             <Editor
                 initialValue=" "
                 placeholder="내용을 입력하세요."

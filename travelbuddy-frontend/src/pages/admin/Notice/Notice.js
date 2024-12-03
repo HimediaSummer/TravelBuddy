@@ -120,6 +120,7 @@ function Notice() {
 
     return (
         <>
+        <div className="noticeCreate">
             <button onClick={cancleNoticeInsert}>취소</button>
             <button onClick={insertNotice}>작성완료</button>
                         <input
@@ -146,6 +147,7 @@ function Notice() {
 							accept="image/jpg,image/png,image/jpeg,image/gif"
 							onChange={onChangeImageUpload}
 							ref={imageInput} />
+                            </div>
         <Editor
         initialValue=" "
         placeholder="내용을 입력하세요."

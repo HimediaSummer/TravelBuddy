@@ -82,6 +82,15 @@ function Notice() {
 
 
     const insertNotice = () => {
+        
+        if (noticeDTO.noticeTitle === "") {
+            alert('제목을 입력해주세요');
+            return;
+        } else if (noticeDTO.noticeContents == "") {
+            alert('문의 내용을 입력해주세요');
+            return;
+        }
+
         const now = new Date();
         const formattedDate = now
             .toLocaleString("ko-KR", {

@@ -81,6 +81,14 @@ function Useinfo() {
     }, []);
 
     const inserUseinfo = () => {
+
+        if (useinfoDTO.useinfoTitle === "") {
+            alert('제목을 입력해주세요');
+            return;
+        } else if (useinfoDTO.useinfoContents == "") {
+            alert('문의 내용을 입력해주세요');
+            return;
+        }
         const now = new Date();
         const formattedDate = now
             .toLocaleString("ko-KR", {

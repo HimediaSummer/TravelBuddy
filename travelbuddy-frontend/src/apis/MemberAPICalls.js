@@ -47,6 +47,14 @@ export const callLoginAPI = ({ form }) => {
 
 		console.log('[MemberAPICalls] callLoginAPI RESULT : ', result);
 		if (result.status === 200) {
+			if(result.data.memberLeave) {
+				alert("유저를 찾을 수 없습니다.")
+				return;
+			}
+			if(result.data.memberSuspension) {
+				alert("해당유저는 정지 상태 입니다.")
+				return;
+			}
 			window.localStorage.setItem('accessToken', result.data.accessToken);
 		} else if (result.status === 400) {
 			alert(result.message); // 로그인 실패 시 메시지를 alert로 표시

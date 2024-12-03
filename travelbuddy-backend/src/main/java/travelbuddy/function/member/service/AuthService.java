@@ -21,6 +21,7 @@ import travelbuddy.jwt.TokenProvider;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 @Service
@@ -55,6 +56,14 @@ public class AuthService {
         if(member == null) {
             log.info("[AuthService] login() Required User Not Found!");
             throw new LoginFailedException(accountDTO.getMemberName() + " 유저를 찾을 수 없습니다.");
+        }
+
+        if(member.getMemberLeave() != null) {
+            throw  new LoginFailedException(accountDTO.getMemberName() + "유저를 찾을 수 없습니다.");
+        }
+
+        if(!Objects.equals(member.getMemberSuspension(), "N")) {
+            throw  new LoginFailedException(accountDTO.getMemberName() + "정지 상태 입니다.");
         }
 
         /* 목차. 2. 비밀번호 매칭 */

@@ -177,7 +177,7 @@ function BuddyRegist() {
                 <button className="back-button" onClick={() => navigate(-1)}>돌아가기</button>
                 <button className="write-button" onClick={onClickBuddyRegistactionHandler}>작성 완료</button>                
             </div>
-            <div className="BuddyHeader">
+            <div className="BuddyRegistHeader">
                 <h2>게시글 작성</h2>
             </div>
             <div>
@@ -223,6 +223,19 @@ function BuddyRegist() {
                                         <option value="102">경기도</option>
                                         <option value="103">인천</option>
                                         <option value="104">강원도</option>
+                                        <option value="105">충청북도</option>
+                                        <option value="106">충청남도</option>
+                                        <option value="107">대전</option>
+                                        <option value="108">세종</option>
+                                        <option value="109">전라북도</option>
+                                        <option value="110">전라남도</option>
+                                        <option value="111">광주</option>
+                                        <option value="112">경상북도</option>
+                                        <option value="113">경상남도</option>
+                                        <option value="114">부산</option>
+                                        <option value="115">대구</option>
+                                        <option value="116">울산</option>
+                                        <option value="117">제주도</option>
                                     </select>
                                 </td>
                                 <td>

@@ -82,6 +82,15 @@ function Notice() {
 
 
     const insertNotice = () => {
+        
+        if (noticeDTO.noticeTitle === "") {
+            alert('제목을 입력해주세요');
+            return;
+        } else if (noticeDTO.noticeContents == "") {
+            alert('문의 내용을 입력해주세요');
+            return;
+        }
+
         const now = new Date();
         const formattedDate = now
             .toLocaleString("ko-KR", {
@@ -120,6 +129,7 @@ function Notice() {
 
     return (
         <>
+        <div className="noticeCreate">
             <button onClick={cancleNoticeInsert}>취소</button>
             <button onClick={insertNotice}>작성완료</button>
                         <input
@@ -146,6 +156,7 @@ function Notice() {
 							accept="image/jpg,image/png,image/jpeg,image/gif"
 							onChange={onChangeImageUpload}
 							ref={imageInput} />
+                            </div>
         <Editor
         initialValue=" "
         placeholder="내용을 입력하세요."

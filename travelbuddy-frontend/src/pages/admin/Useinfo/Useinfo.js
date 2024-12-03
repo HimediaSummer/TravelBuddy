@@ -81,6 +81,14 @@ function Useinfo() {
     }, []);
 
     const inserUseinfo = () => {
+
+        if (useinfoDTO.useinfoTitle === "") {
+            alert('제목을 입력해주세요');
+            return;
+        } else if (useinfoDTO.useinfoContents == "") {
+            alert('문의 내용을 입력해주세요');
+            return;
+        }
         const now = new Date();
         const formattedDate = now
             .toLocaleString("ko-KR", {
@@ -124,6 +132,7 @@ function Useinfo() {
 
     return (
         <>
+        <div className="useinfoCreate">
             <button onClick={cancleQnaInsert}>취소</button>
             <button onClick={inserUseinfo}>작성완료</button>
             <input
@@ -151,6 +160,7 @@ function Useinfo() {
                 onChange={onChangeImageUpload}
                 ref={imageInput}
             />
+            </div>
             <Editor
                 initialValue=" "
                 placeholder="내용을 입력하세요."

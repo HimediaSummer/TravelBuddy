@@ -23,6 +23,18 @@ function Faq() {
 
 
     const inserMyFaq = () => {
+
+        if (faqDTO.faqTitle === undefined) {
+            alert('제목을 입력해주세요');
+            return;
+        } else if (faqDTO.faqContents == null) {
+            alert('문의 내용을 입력해주세요');
+            return;
+        } else if (faqDTO.fqTypeCode == null) {
+            alert('문의 유형을 선택해주세요');
+            return;
+        }
+        
         dispatch(insertFaqAPI(faqDTO));
         alert('FAQ가 등록되었습니다.');
         navigate(`/admin/faqs`);
@@ -71,8 +83,7 @@ function Faq() {
                     <tr>
                         <td>내용</td>
                         <td className="td3myqnacreate" colSpan={3}>
-                            <input
-                                type="text"
+                            <textarea
                                 name="faqContents"
                                 value={faqDTO.faqContents}
                                 placeholder="내용을 입력하세요."

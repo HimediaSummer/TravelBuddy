@@ -23,7 +23,7 @@ font-family: 'Cafe24 Ssurround';
 .BuddyContainer input {
 font-family: 'Cafe24 Ssurround air';
     font-size: 20px;
-    color: #8CC8EA;
+    color: #BADEF2;
 border-radius: 15px;
 margin-right: 5px;
 width: 248px;
@@ -66,7 +66,7 @@ width: 124px;
 height: 50px;
 margin-right: 25px;
 border-radius: 15px;
-background-color: #8CC8EA;
+background-color: #BADEF2;
 border: none; 
 cursor: pointer;
 
@@ -88,7 +88,7 @@ background-color: #f3f2f2;
     font-size: 20px;
     height: 60px;
     text-align: center; 
-    background-color: #8CC8EA;
+    background-color: #BADEF2;
 }
 
 .BuddyContainer td {
@@ -157,7 +157,7 @@ margin-left: 150px;
 margin: 0 5px; 
     padding: 10px 20px; 
     border-radius: 50%; 
-    background-color: #8CC8EA;
+    background-color: #BADEF2;
     color: #2e2d2d; 
     border: #2e2d2d;
     cursor: pointer; 
@@ -177,7 +177,7 @@ font-family: 'Cafe24 Ssurround';
     height: 50px;
     margin-left: 300px;
     border-radius: 15px;
-    background-color: #8CC8EA;
+    background-color: #BADEF2;
     border: none;
 cursor: pointer;
 margin-bottom: 0;
@@ -200,7 +200,7 @@ font-family: 'Cafe24 Ssurround';
     width: 124px;
     height: 50px;
     border-radius: 15px;
-    background-color: #8CC8EA;
+    background-color: #BADEF2;
     border: none;
 cursor: pointer;
 margin-left: 1260px;
@@ -246,15 +246,15 @@ background-color: #1F709E;
     margin-right: 200px;
 }
 
-.TableWrapper th,
-.TableWrapper td {
+/* .TableWrapper th,
+.TableWrapper td { */
     /* padding: 10px; */
     /* border: 1px solid #ddd; */
     /* font-size: 16px; */
-}
+/* } */
 
 .TableWrapper th {
-    background-color: #8CC8EA;
+    background-color: #BADEF2;
     /* color: #fff; */
     font-weight: bold;
 }
@@ -276,15 +276,17 @@ background-color: #1F709E;
 /* 게시글 작성 버튼 */
 .writeButton {
     position: absolute;
-    right: -200px;
+    right: -150px;
     bottom: 0px;
-    background-color: #8CC8EA;
+    background-color: #BADEF2;
     color: white;
     border: none;
     border-radius: 20px;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 16px !important;
     cursor: pointer;
+    width: 150px;
+    margin-bottom: 20px;
 
 }
 
@@ -297,10 +299,12 @@ background-color: #1F709E;
     display: flex;
     justify-content: center;
     gap: 5px;
+    margin-bottom: 20px;
+    margin-left: 350px;
 }
 
 .Pagination button {
-    background-color: #8CC8EA;
+    background-color: #BADEF2;
     color: white;
     border: none;
     border-radius: 5px;

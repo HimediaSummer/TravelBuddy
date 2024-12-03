@@ -8,6 +8,21 @@
     position: relative;
 }
 
+.BuddyRegistHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.BuddyRegistHeader h2 {
+    font-family: 'Cafe24 Ssurround';
+    font-size: 40px;
+    font-weight: bold;
+    color: #1F709E;
+    margin: 0;
+}
+
 .buddy-regist-table {
     overflow-x: auto;
     margin-bottom: 20px;
@@ -31,12 +46,12 @@
 }
 
 .buddy-regist-table tr {
-    border: 1px solid #8CC8EA;
+    border: 1px solid #BADEF2;
     
 }
 
 .buddy-regist-table .tableHead {
-    background-color: #8CC8EA;
+    background-color: #BADEF2;
 }
 
 /* 게시글 제목과 입력 부분 비율 조정 */
@@ -69,8 +84,8 @@
 /* 드롭다운 스타일 */
 .buddy-regist-table select {
     appearance: none;
-    -webkit-appearance: none; /* Safari/Chrome */
-    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
     background-color: #f9f9f9;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='gray' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -88,7 +103,7 @@
 
 .buddy-detail-author-buttons {
     position: absolute;
-    top: 0px;
+    top: 30px;
     right: 20px;
 }
 
@@ -97,7 +112,7 @@
     font-family: 'Cafe24 Ssurround';
     padding: 5px 10px;
     margin-left: 10px;
-    background-color: #8CC8EA;
+    background-color: #BADEF2;
     color: white;
     border: none;
     border-radius: 15px;
@@ -139,7 +154,7 @@
     position: absolute;
     bottom: 20px; 
     right: 20px;
-    background-color: #8CC8EA; 
+    background-color: #BADEF2; 
     padding: 15px;
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -186,6 +201,6 @@
 }
 
 .image-upload-area {
-    background-color: #8CC8EA;
+    background-color: #BADEF2;
     height: 110px;
 }

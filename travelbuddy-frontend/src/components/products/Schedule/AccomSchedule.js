@@ -120,7 +120,7 @@ const handleSearchSubmit = () => {
 						<button type='button' onClick={() => { if(!selectedAccom) {alert('숙소 타입을 먼저 선택해주세요.');} else {tabChange('search');}}} >숙소 상세 검색</button>
 					</div>
 					</div>
-					<div class="tema-title" style={{fontFamily: '카페24 써라운드 에어'}} >
+					<div class="tema-title" style={{fontFamily: 'Cafe24SsurroundAir'}} >
 					{ accomTab === 'select' ? (<legend>원하는 숙소 테마를 선택해주세요.</legend>) : (<legend>숙소 상세 주소를 검색해주세요.</legend>)}
 						{/* <legend>선호하는 숙소형태를 선택해주세요.</legend> */}
 					</div>
@@ -165,7 +165,7 @@ const handleSearchSubmit = () => {
 								{/* <img src={`/Img/${selectedAccomDetails.accomThumbnailImg}`} alt={selectedAccomDetails.accomName} width={'50px'} height={'50px'}/> */}
 								{selectedAccomDetails.accomType}</p>
 							{/* <p>{selectedAccomDetails.accomName}</p> */}
-							<p style={{fontFamily: '카페24 써라운드 에어'}} ㄴ>{selectedAccomDetails.accomAddres}</p>
+							<p style={{fontFamily: 'Cafe24SsurroundAir'}} ㄴ>{selectedAccomDetails.accomAddres}</p>
 							<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 								<button className='accom-button2' onClick={onNext}>다음</button>
 							</div>

@@ -87,7 +87,15 @@ function MemberDetail () {
             </thead>
             <tbody>
                 <tr>
-                <td className="MemberDetailThumb" rowSpan={6}>썸네일</td>
+                <td className="MemberDetailThumb" rowSpan={6}>{member.memberImg ? (
+                                        <img 
+                                            src={member.memberImg} 
+                                            alt={`${member.memberName}의 프로필 이미지`} 
+                                            className='profile-img' 
+                                        />
+                                    ) : (
+                                        <p>No Image</p>
+                                    )}</td>
                 <td colSpan={3}>아이디</td>
                 <td>{member.memberName}</td>
                 </tr>

@@ -79,7 +79,7 @@ function FindPw() {
 
 
     return (
-        <div className="backgroundDiv">
+        <div className="findPwBackgroundDiv">
             <div className="findPwDiv">
                 <h1>
                     <div class="header-click">

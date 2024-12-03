@@ -9,7 +9,7 @@ function Faq() {
     const dispatch = useDispatch();
 
     const [faqDTO, setFaqDTO] = useState({});
-    console.log('FaqDTO 에는?',faqDTO);
+
 
     const cancleQnaInsert = () => {
         navigate(`/admin/faqs`);
@@ -17,7 +17,6 @@ function Faq() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        console.log(`${name}:${value}`);
         setFaqDTO((prevState) => ({ ...prevState, [name]: value }));
 };
 

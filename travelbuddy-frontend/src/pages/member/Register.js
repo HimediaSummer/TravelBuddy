@@ -25,7 +25,6 @@ function Register() {
     });
     useEffect(() => {
         if(member.status == 201){
-            console.log("[Login] Register SUCCESS {}", member);
             // navigate("/login", { replace: true })
         }
     },

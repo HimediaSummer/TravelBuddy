@@ -33,7 +33,7 @@ function Members() {
     }, [currentPage, dispatch]);
 
     useEffect(() => {
-      console.log("memberList 업데이트 됨 :",memberList);
+
       if (Array.isArray(memberList)) {
         setFilteredMemberList(memberList);
     } else if (Array.isArray(memberList.data)) {
@@ -43,7 +43,6 @@ function Members() {
 
     // 디버깅을 위한 useEffect 추가
 useEffect(() => {
-  console.log("filteredMemberList 업데이트됨:", filteredMemberList);
 }, [filteredMemberList]);
 
 

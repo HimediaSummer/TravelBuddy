@@ -24,7 +24,7 @@ const actions = createActions({
 const memberReducer = handleActions(
 	{
 		[GET_MEMBERS]: (state, { payload }) => {
-			console.log('백엔드에서의 응답',payload);
+
 			if (Array.isArray(payload)) {
 				return {
 					data: payload,
@@ -37,11 +37,11 @@ const memberReducer = handleActions(
 			return payload;
 		},
 		[GET_MEMBER]: (state, { payload }) => {
-			console.log("멤버모듈", payload)
+
 			return payload;
 		},
 		[POST_MEMBER]: (state, { payload }) => {
-			console.log('정보삭제 의 값 확인',payload);
+
 			return payload;
 		},
 		[POST_LOGIN]: (state, { payload }) => {

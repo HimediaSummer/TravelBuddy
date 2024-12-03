@@ -27,8 +27,6 @@ function QnaDetail () {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        console.log(`${name}:${value}`);
-        console.log(answerState);
         setAnswerState((state) => ({ ...state, [name]: value }));
     }
     const onClickChangeHandlerInsert = () => {

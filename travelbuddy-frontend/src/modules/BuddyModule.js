@@ -20,7 +20,7 @@ const actions = createActions({
 const buddiesReducer = handleActions(
 	{
 		[GET_BUDDIES]: (state, { payload }) => {
-			// console.log("리듀서에서 받은 payload", payload);
+
 			if (Array.isArray(payload)) {
 				return {
 					data: payload,
@@ -33,11 +33,11 @@ const buddiesReducer = handleActions(
 			return payload;
 		},
 		[GET_BUDDY]: (state, { payload }) => {
-			console.log("리듀서에서 받은 payload", payload);
+
 			return payload;
 		},
 		[POST_BUDDY]: (state, { payload }) => {
-			console.log("리듀서에서 받은 payload", payload);
+
 			return payload;
 		},
 		[PUT_BUDDY]: (state, { payload }) => {

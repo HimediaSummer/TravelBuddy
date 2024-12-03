@@ -1,18 +1,22 @@
 services:
   # Front-end : React App
   web-server:
-    build:
-      context: ./travelbuddy-frontend
-      dockerfile: Dockerfile
+  # 자신이 만든 이미지 이름을 정확히 기입. (아마도 dockerhub 에 올려져있는 이미지 이름임)
+    image: kimhodong/travelbuddy-frontend
+    # build:
+    #   context: ./travelbuddy-frontend
+    #   dockerfile: Dockerfile
     container_name: travelbuddy-frontend
     ports:
-      - "3000:3000"
+      - "80:3000"
 
   # Back-end : SpringBoot REST API Server
   backend-server:
-    build:
-      context: ./travelbuddy-backend
-      dockerfile: Dockerfile
+  # 자신이 만든 이미지 이름을 정확히 기입. (아마도 dockerhub 에 올려져있는 이미지 이름임)
+    image: kimhodong/travelbuddy-backend
+    # build:
+    #   context: ./travelbuddy-backend
+    #   dockerfile: Dockerfile
     container_name: travelbuddy-backend
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tbdb

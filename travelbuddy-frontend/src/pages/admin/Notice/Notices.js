@@ -15,8 +15,6 @@ function Notices() {
     const noticeList = notice.data || {};
     const pageInfo = notice.pageInfo || {};
 
-    console.log('noticeList는 ?',noticeList);
-    console.log('pageInfo ?',pageInfo);
 
     
     const [currentPage, setCurrentPage] = useState(1);
@@ -38,7 +36,7 @@ function Notices() {
     );
 
     useEffect(() => {
-        console.log("faqList 업데이트 됨 :",noticeList);
+
         if (Array.isArray(noticeList)) {
             setFilteredNoticeList(noticeList);
       } else if (Array.isArray(noticeList.data)) {
@@ -49,7 +47,6 @@ function Notices() {
       
           // 디버깅을 위한 useEffect 추가
 useEffect(() => {
-    console.log("filteredFaqList 업데이트됨:", filteredNoticeList);
   }, [filteredNoticeList]);
 
   const onClickSearch = async () => {

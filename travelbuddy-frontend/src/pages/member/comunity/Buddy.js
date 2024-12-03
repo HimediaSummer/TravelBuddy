@@ -9,21 +9,18 @@ function Buddies() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const buddy = useSelector((state) => state.buddiesReducer) || {};
-	console.log("buddy에 뭐가 담김?", buddy)
 
     const buddyList = buddy.data || {};
-	console.log("buddyList에 뭐가 담김?", buddyList)
     const pageInfo = buddy.pageInfo || {};
 
     // const region = useSelector(state => state.regionBuddyTypeReducer) || {};
-    // console.log("region에 뭐가 담김? ", region);
+
 
     // const regionList = region.data || {};
-    // console.log("regionList에 뭐가 담김?", regionList);
+
 
 
     // const { data = {}, pageInfo = {} } = buddyList;
-    // console.log("한번에 하나만 담기나?", data);
 
     // const [start, setStart] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -58,7 +55,6 @@ function Buddies() {
     //                 return acc;
     //             }, {});
     //             setRegionMap(mappedRegion);
-    //             console.log("mappedRegion", mappedRegion);
     //         } catch(error) {
     //             console.error("Region 유형 데이터 로드 오류", error);
     //         }
@@ -67,7 +63,6 @@ function Buddies() {
     // },[]);
 
     // useEffect(() => {
-    //     console.log("regionList 업데이트 됨 : ", regionList);
     //     if (Array.isArray(regionList)) {
     //         setFiterRegionList(regionList);
     //     }else if (Array.isArray(regionList.data)) {
@@ -77,7 +72,6 @@ function Buddies() {
 
     // 디버깅을 위한 useEffect
     // useEffect(() => {
-    //     console.log("filteredRegionList 업데이트됨 : ", filteredRegionList);
     // }, [filteredRegionList]);
 
 

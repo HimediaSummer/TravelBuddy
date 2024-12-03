@@ -7,7 +7,7 @@ import { getSchedule, deleteSchedule } from '../modules/MypageModule';
 export const callMyProfileAPI = () => {
     return async (dispatch) => {
         try {
-            const response = await fetch('/mypage/myprofile', {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/myprofile`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -22,7 +22,6 @@ export const callMyProfileAPI = () => {
             }
 
             const data = await response.json();
-            console.log('Fetched Data from API!!!!!!!!!!!!!!!!!!!!!!!:', data);
 
             if (Array.isArray(data)) {
                 dispatch(getProfile(data)); // Redux 액션 디스패치
@@ -42,13 +41,12 @@ export const callMyProfileAPI = () => {
 export const updateProfileAPI = (formData, navigate) => {
     return async (dispatch) => {
         try {
-            console.log("FormData to be sent:", formData);
-            console.log("FormData entries열받아서오락실에들어가!!!!!!!!!:");
+
             for (let [key, value] of formData.entries()) {
-                console.log(`${key}:`, value); // 모든 키와 값을 출력
+
             }
 
-            const response = await fetch('/mypage/updatemyprofile', {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/updatemyprofile`, {
                 method: "PUT",
                 body: formData,
                 headers: {
@@ -63,7 +61,6 @@ export const updateProfileAPI = (formData, navigate) => {
             }
 
             const data = await response.json();
-            console.log("Updated profile data열받아서오락실에들어갔어:", data);
 
             dispatch(putProfile(data));
             alert("회원정보가 수정되었습니다.");
@@ -84,15 +81,13 @@ export const deletionProfileAPI = (navigate) => {
                 throw new Error('navigate가 올바르지 않습니다.');
             }
 
-            const response = await fetch('/mypage/deletion', {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/deletion`, {
                 method: "PUT",
                 headers: {
                     Accept: '*/*',
                     Authorization: 'Bearer ' + window.localStorage.getItem('accessToken')
                 },
             });
-
-            console.log("회원탈퇴 API 대답대답대답대답대답:", response);
 
             // 1. 상태 코드 확인
             if (!response.ok) {
@@ -107,11 +102,9 @@ export const deletionProfileAPI = (navigate) => {
             let data = null;
             try {
                 const responseBody = await response.text();
-                console.log("응답 텍스트 원본:", responseBody);
 
                 if (responseBody.trim()) {
                     data = JSON.parse(responseBody);
-                    console.log("JSON 응답 데이터:", data);
                 } else {
                     console.warn("응답 본문이 비어 있습니다.");
                     data = { message: "회원탈퇴가 완료되었습니다." };
@@ -151,7 +144,7 @@ export const deletionProfileAPI = (navigate) => {
 // 일정조회
 export const callMyScheduleAPI = (currentPage = 1) => async (dispatch) => {
     try {
-        const response = await fetch(`/mypage/myschedule?offset=${currentPage}`, {
+        const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/myschedule?offset=${currentPage}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -160,7 +153,6 @@ export const callMyScheduleAPI = (currentPage = 1) => async (dispatch) => {
         });
         const result = await response.json();
 
-        console.log("API Response for currentPage:", currentPage, result); // API 응답 확인
 
         dispatch(getSchedule(result.data)); // Redux 상태에 데이터 저장
     } catch (error) {
@@ -171,7 +163,7 @@ export const callMyScheduleAPI = (currentPage = 1) => async (dispatch) => {
 export const deleteMyScheduleAPI = (selectedRows) => {
     return async (dispatch) => {
         try {
-            const response = await fetch(`/mypage/myschedule/delete`, {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/myschedule/delete`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -185,7 +177,6 @@ export const deleteMyScheduleAPI = (selectedRows) => {
             }
 
             const data = await response.json();
-            console.log('Deleted Schedules Data:', data);
 
             dispatch(deleteSchedule(selectedRows));
             alert('일정이 삭제되었습니다.');
@@ -202,7 +193,7 @@ export const deleteMyScheduleAPI = (selectedRows) => {
 export const callMyBuddyListAPI = (page) => {
     return async (dispatch) => {
         try {
-            const response = await fetch(`/mypage/mybuddy?offset=${page}`, {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/mybuddy?offset=${page}`, {
                 method: 'GET',
                 headers: {
                     Accept: '*/*',
@@ -226,7 +217,7 @@ export const callMyBuddyListAPI = (page) => {
 export const deleteBuddyAPI = (selectedRows, callback) => {
     return async () => {
         try {
-            const response = await fetch(`/mypage/mybuddy/delete`, {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/mybuddy/delete`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -251,7 +242,7 @@ export const deleteBuddyAPI = (selectedRows, callback) => {
 export const callMyMatchDetailsAPI = () => {
     return async (dispatch) => {
         try {
-            const response = await fetch('/mypage/mymatch', {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/mymatch`, {
                 method: 'GET',
                 headers: {
                     Accept: '*/*',
@@ -264,7 +255,6 @@ export const callMyMatchDetailsAPI = () => {
             }
 
             const data = await response.json();
-            console.log('Fetched My Match Details:', data);
 
             dispatch(getMyMatch(data.data));
         } catch (error) {
@@ -277,7 +267,7 @@ export const callMyMatchDetailsAPI = () => {
 export const cancelMatchAPI = (buddyMatchCode) => {
     return async (dispatch) => {
         try {
-            const response = await fetch('/mypage/mymatch', {
+            const response = await fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/mypage/mymatch`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

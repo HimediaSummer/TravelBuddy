@@ -39,7 +39,6 @@ export const callSearchFaqListAPI = ( search ) => {
     if (search !== undefined && search !== null) {
         requestURL =`http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/faqs/search?f=${encodeURIComponent(search)}`;
     }
-    console.log('키워드가 뭡니까?',search);
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'GET',
@@ -105,7 +104,6 @@ export const updateFaqAPI = (faqCode, updateData) => {
         // 관리자가 FAQ 를 삭제한다.
 export const deleteFaqAPI = (faqCode) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/faqs/${faqCode}/deletefaq`;
-    console.log('내가 받은 faqCode 는?',faqCode);
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'DELETE',

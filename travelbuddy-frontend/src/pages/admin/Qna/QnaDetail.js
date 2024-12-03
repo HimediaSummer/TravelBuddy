@@ -26,7 +26,7 @@ function QnaDetail () {
     useEffect (
         () => {
             dispatch(callQnaDetailForAdminAPI(qnaCode))
-        } , [fqTypeList,dispatch]
+        } , [dispatch]
     );
 
     const handleInputChange = (e) => {
@@ -86,8 +86,7 @@ function QnaDetail () {
                 <tr>
                     <td>문의 내용</td>
                 <td className="td3myqnadetail" colSpan={5}>
-                <input
-                    type="text"
+                <textarea
                     readOnly
                     value={qnaDTO.qnaContents}/></td>
                 </tr>
@@ -95,8 +94,7 @@ function QnaDetail () {
                 <tr>
                 <td>답변 작성</td>
                 <td className="td4myqnadetail" colSpan={5}>
-                    <input
-                    type="text"
+                    <textarea
                     name='ansContents'
                     onChange={handleInputChange}
                     value={answerState.ansContents || qnaAnswerDTO.ansContents}/>

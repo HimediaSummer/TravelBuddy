@@ -18,13 +18,13 @@ function MemberDetail () {
     const dispatch = useDispatch();
     const params = useParams();
     const memberData = useSelector((state) => state.memberReducer);
-    const {data: member} = memberData;
+    const {data: member = {} } = memberData;
+    
  
     useEffect (
         () => {
             dispatch(callMemberDetailForAdminAPI(params))
-            
-        } , []
+        } , [dispatch]
     );
 
     useEffect (
@@ -33,8 +33,13 @@ function MemberDetail () {
                 setIsMemberSuspension(member.memberSuspension);
                 setIsMemberDeletion(member.memberDeletion); 
             }
-        }, [member.memberCode]
+        }, [dispatch]
     );
+
+     // 데이터가 없을 경우 로딩 메시지 렌더링
+     if (!memberData) {
+        return <div>로딩 중입니다...</div>;
+    }
 
     const onClickChangeHandlerSus = () => {
         const newSuspensionStatus = (memberSuspension === 'Y' ? 'Y':'N');

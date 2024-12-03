@@ -264,18 +264,26 @@
 	width: 400px;
 }
 
-.QnaDetailContainer .td3myqnadetail input {
+.QnaDetailContainer .td3myqnadetail textarea {
 	width: 800px;
+	min-width: 800px;
+	max-width: 800px;
 	height: 300px;
+	min-height: 300px;
+	max-height: 300px;
 	background-color: #ffffff;
 	padding-left: 20px;
 	font-size: 24px;
 	border: none;
 }
 
-.QnaDetailContainer .td4myqnadetail input {
+.QnaDetailContainer .td4myqnadetail textarea {
 	width: 800px;
-	height: 200px;
+	min-width: 800px;
+	max-width: 800px;
+	height: 300px;
+	min-height: 300px;
+	max-height: 300px;
 	background-color: #ffffff;
 	padding-left: 20px;
 	font-size: 20px;

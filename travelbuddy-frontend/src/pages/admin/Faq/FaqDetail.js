@@ -16,12 +16,12 @@ function FaqDetail() {
     const faqData = useSelector((state) => state.faqReducer) || {};
     const fqType = useSelector((state) => state.fqTypeReducer) || {};
     const fqTypeList = fqType.data || {};
-    const faq = faqData.data;
+    const faq = faqData.data || {};
 
     useEffect (
         () => {
             dispatch(callFaqDetailForAdminAPI(faqCode))
-        } , []
+        } , [faqCode]
     );
 
     useEffect(() => {
@@ -29,6 +29,11 @@ function FaqDetail() {
             setFaqContents(faq.faqContents || ""); // API 데이터 로드 후 상태 초기화
         }
     }, [faq]);
+
+     // 데이터가 없을 경우 로딩 메시지 렌더링
+     if (!faq) {
+        return <div>로딩 중입니다...</div>;
+    }
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -61,7 +66,8 @@ function FaqDetail() {
                 <td className="td1myqnadetail">제목</td>
                 <td className="td2myqnadetail">{faq.faqTitle}</td>
                 <td>유형</td>
-                <td>{fqTypeList.find(f=>f.fqTypeCode === faq.fqTypeCode)?.fqTypeName || "알수없음"}</td>
+                <td>{ Array.isArray(fqTypeList)
+                ?fqTypeList.find(f => f.fqTypeCode === faq.fqTypeCode)?.fqTypeName || "로딩중" : "로딩중"}</td>
                 </tr>
 
                 <tr>

@@ -58,8 +58,7 @@ function MyQnaDetail() {
                             <tr>
                                 <td>문의 내용</td>
                                 <td className="td3myqnadetail" colSpan={5}>
-                                    <input
-                                        type="text"
+                                    <textarea
                                         readOnly
                                         value={qnaDTO.qnaContents}
                                     />
@@ -68,8 +67,7 @@ function MyQnaDetail() {
 
                             <tr>
                                 <td>답변 내용</td>
-                                <td className="td4myqnadetail" colSpan={5}><input
-                    type="text"
+                                <td className="td4myqnadetail" colSpan={5}><textarea
                     name='ansContents'
                     readOnly
                     value={qnaAnswerDTO.ansContents}/></td>

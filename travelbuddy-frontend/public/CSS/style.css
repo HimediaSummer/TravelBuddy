@@ -94,10 +94,6 @@ footer div {
 
 /* 로그인 페이지 */
 
-#login-button {
-	font-family: 'Cafe24Ssurround';
-}
-
 .login {
 	width: 380px;
 	margin: 100px auto;
@@ -920,9 +916,9 @@ select,
     border-radius: 5px; /* 모서리 둥글게 */
 }
 
-.order-title:hover {
-    background-color: #e0f7fa; /* 호버 시 배경색 변경 */
-}
+/* .order-title:hover {
+    background-color: #e0f7fa; 호버 시 배경색 변경
+} */
 
 .order-title .step {
     font-weight: bold; /* 글씨 두껍게 */

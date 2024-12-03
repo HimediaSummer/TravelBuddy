@@ -1,20 +1,18 @@
 services:
   # Front-end : React App
   web-server:
-    image: l2ej/travelbuddy-frontend
-    # build:
-    #   context: ./travelbuddy-frontend
-    #   dockerfile: Dockerfile
+    build:
+      context: ./travelbuddy-frontend
+      dockerfile: Dockerfile
     container_name: travelbuddy-frontend
     ports:
-      - "80:3000"
+      - "3000:3000"
 
   # Back-end : SpringBoot REST API Server
   backend-server:
-    image: l2ej/travelbuddy-backend
-    # build:
-    #   context: ./travelbuddy-backend
-    #   dockerfile: Dockerfile
+    build:
+      context: ./travelbuddy-backend
+      dockerfile: Dockerfile
     container_name: travelbuddy-backend
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tbdb

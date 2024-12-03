@@ -122,7 +122,7 @@ public class MypageController {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원숨김ㅃㅃ", null));
     }
-    
+
     /* =========================================== My일정 =========================================== */
     /* 내 일정 목록 조회 */
     @Operation(summary = "일정조회", description = "일정목록페이지조회", tags = {"MypageController"})

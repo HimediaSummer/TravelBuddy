@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { callMyScheduleAPI, deleteMyScheduleAPI } from '../../../apis/MypageAPICalls';
+import './MySchedule.css';
 
 function MySchedule() {
     const navigate = useNavigate();
@@ -82,8 +83,9 @@ function MySchedule() {
     console.log("Rendering MySchedule component...되는거 맞음?????");
 
     return (
-        <div>
-            <table>
+        <div className="schedule-page">
+            <h2 className="schedule-title">MY 일정</h2>
+            <table className="schedule-table">
                 <thead>
                     <tr>
                         <th>
@@ -136,11 +138,11 @@ function MySchedule() {
                         </tbody>
                     </table>
                     {schedule?.data?.length > 0 && (
-                        <button onClick={handleDeleteSelected}>삭제</button>
+                         <button className="delete-button" onClick={handleDeleteSelected}>삭제</button>
                     )}
                 <br />
                 {/* 페이지네이션 */}
-                <div style={{ marginTop: '20px' }}>
+                <div className="pagination">
                     <button
                         onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                         disabled={currentPage === 1}
@@ -150,11 +152,13 @@ function MySchedule() {
                     {[...Array(totalPages).keys()].map((_, index) => (
                         <button
                             key={index}
+                            className={`pagination-button ${currentPage === index + 1 ? "active" : ""}`} // 여기 추가
                             onClick={() => {
                                 console.log(`Navigating to page기분나쁘게듣지말아줘그럼넌이제부터파퓰러ㅓ어어ㅓ ${index + 1}`);
-                                setCurrentPage(index + 1)}}
+                                setCurrentPage(index + 1);
+                            }}
                             disabled={currentPage === index + 1}
-                        >
+                            >
                             {index + 1}
                         </button>
                     ))}

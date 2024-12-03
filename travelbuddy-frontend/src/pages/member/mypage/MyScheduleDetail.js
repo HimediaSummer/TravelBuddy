@@ -105,8 +105,6 @@ function MyScheduleDetail() {
                             <p>여행종료일 : {scheDetail.scheEndDate}</p> 
                             <p>여행시작시간 : {scheDetail.scheStartTime}</p> 
                             <p>여행종료시간 : {scheDetail.scheEndTime}</p>  
-                            <p>여행시간 : {scheDetail.travelTime}</p>  
-                            <p>여행시간 : {scheDetail.scheTime}</p> 
                         </li>
                     </ul>
                     ) : (

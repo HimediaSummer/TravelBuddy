@@ -1524,6 +1524,11 @@ select,
 	text-align: center;
 	}
 
+	textarea {
+		font-family: 'Cafe24 Ssurround air';
+		font-size: 20px;
+	}
+
 
 	.BuddyContainer .header {
 		display: flex; /* 수평 정렬을 위해 flexbox 사용 */

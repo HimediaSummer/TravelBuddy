@@ -93,8 +93,7 @@ function MyQna() {
                     <tr>
                         <td>내용</td>
                         <td className="td3myqnacreate" colSpan={3}>
-                            <input
-                                type="text"
+                            <textarea
                                 name="qnaContents"
                                 value={qnaDTO.qnaContents}
                                 placeholder="내용을 입력하세요."
@@ -104,9 +103,6 @@ function MyQna() {
                             />
                         </td>
                     </tr>
-                    <tr>
-                    </tr>
-                    <tr></tr>
                 </tbody>
             </table>
         </div>

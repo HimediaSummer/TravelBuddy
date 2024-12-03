@@ -49,7 +49,6 @@ function RegionSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, 
 					regionThumbnailImg: region.regionThumbnailImg,
 					regionUserDetail: region.regionUserDetail
 				}));
-				console.log("가져왓냐?", data);
 				setRegion(regions);
 			})
 			.catch(error => console.error('Error fetching data:', error));
@@ -63,7 +62,7 @@ function RegionSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, 
 			// regions: [...prevData.regions, region]
 			regions: [region]
 		}));
-		console.log("이건 뭐임 정보가", setTravelData);
+
 
 		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/region/${region.regionCode}`)
 			.then(response => response.json())
@@ -71,7 +70,7 @@ function RegionSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, 
 				setSelectedRegionDetails(data.data);
 			})
 			.catch(error => console.error('Error fetching data:', error));
-		console.log("Selected Region:", region);
+
 	};
 
 	// 엔터키 처리 이벤트

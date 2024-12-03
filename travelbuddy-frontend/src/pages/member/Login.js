@@ -26,7 +26,6 @@ function Login() {
 
     useEffect(() => {
         if (loginMember.status === 200) {
-            console.log("[Login] Login SUCCESS", loginMember);
             navigate("/", { replace: true });
         }
 
@@ -35,8 +34,7 @@ function Login() {
         }  
     }, [loginMember, navigate, dispatch]);
     
-    if (loginMember.status === 200) {
-        console.log("[Login] Login is already authenticated by the server");        
+    if (loginMember.status === 200) {    
         return <Navigate to="/" />;
     }
 

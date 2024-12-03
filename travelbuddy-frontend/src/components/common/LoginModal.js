@@ -21,7 +21,6 @@ function LoginModal({ setLoginModal }) {
 	};
 
 	const onClickLoginHandler = () => {
-		console.log('[LoginModal] Login Process Start!!');
 		window.localStorage.removeItem('accessToken');
 
 		dispatch(
@@ -33,7 +32,6 @@ function LoginModal({ setLoginModal }) {
 		
 		handleLogin(form)
 		setLoginModal(false);
-		console.log('[LoginModal] Login Process End!!');
 		alert('로그인이 완료되었습니다.');
 		window.location.reload();
 	};

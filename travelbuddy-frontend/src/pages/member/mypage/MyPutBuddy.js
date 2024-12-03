@@ -32,11 +32,6 @@ function MyPutBuddy() {
                 const data = await response.json();
                 const { getBuddyDetail, regions, buddyTypes } = data.data;
 
-                console.log("getBuddyDetailllllll:", getBuddyDetail);
-                console.log("Regions from APIIIIIIII:", regions);
-                console.log("BuddyTypes from APIIIIIIII:", buddyTypes);
-
-                console.log("Fetched data:꾸짖을갈!!!!!!!", data);
 
                 // 폼 데이터 설정
                 setFormData({
@@ -51,9 +46,6 @@ function MyPutBuddy() {
                 setRegions(regions || []);
                 setBuddyTypes(buddyTypes || []);
 
-                console.log('setFormData 붙어라붙어라붙어라붙어라붙어라', formData);
-                console.log('regions 너빈칸이냐', regions);
-                console.log('buddyTypes 너빈칸이냐', buddyTypes);
 
             } catch (error) {
                 console.error("Error fetching data:", error);

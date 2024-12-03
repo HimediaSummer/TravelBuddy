@@ -39,7 +39,6 @@ function MyUseinfos() {
     );
 
     useEffect(() => {
-        console.log("UseinfoList 업데이트 됨 :",useinfoList);
         if (Array.isArray(useinfoList)) {
             setFilteredUseinfoList(useinfoList);
       } else if (Array.isArray(useinfoList.data)) {
@@ -50,7 +49,6 @@ function MyUseinfos() {
       
     // 디버깅을 위한 useEffect 추가
     useEffect(() => {
-        console.log("filteredFaqList 업데이트됨:", filteredUseinfoList);
     }, [filteredUseinfoList]);
 
 

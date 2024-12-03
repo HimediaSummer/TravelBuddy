@@ -16,12 +16,7 @@ function Header() {
     const loginMember = useSelector((state) => state.memberReducer); // 저장소에서 가져온 loginMember 정보
     const token = decodeJwt(window.localStorage.getItem("accessToken"));
     const [loginModal, setLoginModal] = useState(false);
-
-    console.log("loginMember =" , loginMember);
-    console.log("loginMember type", typeof loginMember);
-
-    console.log("token = ", token)
-    console.log("token type", typeof token);
+    const isLoggedIn = !!token;
 
     useEffect(() => {
         if(token) {
@@ -132,6 +127,13 @@ function Header() {
                 </li>
                 <li>
                     <NavLink to="/cs">고객지원</NavLink>
+                </li>
+                <li>
+                    {isLoggedIn && (
+                    <label style={{ color: 'black' }}>
+                        {token.sub} {/* 로그인한 아이디 표시 */}
+                    </label>
+                    )}
                 </li>
             </ul>
             <button class="header_toogleBtn">

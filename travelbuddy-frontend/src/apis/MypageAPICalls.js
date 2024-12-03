@@ -22,7 +22,6 @@ export const callMyProfileAPI = () => {
             }
 
             const data = await response.json();
-            console.log('Fetched Data from API!!!!!!!!!!!!!!!!!!!!!!!:', data);
 
             if (Array.isArray(data)) {
                 dispatch(getProfile(data)); // Redux 액션 디스패치
@@ -42,10 +41,9 @@ export const callMyProfileAPI = () => {
 export const updateProfileAPI = (formData, navigate) => {
     return async (dispatch) => {
         try {
-            console.log("FormData to be sent:", formData);
-            console.log("FormData entries열받아서오락실에들어가!!!!!!!!!:");
+
             for (let [key, value] of formData.entries()) {
-                console.log(`${key}:`, value); // 모든 키와 값을 출력
+
             }
 
             const response = await fetch('/mypage/updatemyprofile', {
@@ -63,7 +61,6 @@ export const updateProfileAPI = (formData, navigate) => {
             }
 
             const data = await response.json();
-            console.log("Updated profile data열받아서오락실에들어갔어:", data);
 
             dispatch(putProfile(data));
             alert("회원정보가 수정되었습니다.");
@@ -92,8 +89,6 @@ export const deletionProfileAPI = (navigate) => {
                 },
             });
 
-            console.log("회원탈퇴 API 대답대답대답대답대답:", response);
-
             // 1. 상태 코드 확인
             if (!response.ok) {
                 console.error("API 호출 실패:", response.status, response.statusText);
@@ -107,11 +102,9 @@ export const deletionProfileAPI = (navigate) => {
             let data = null;
             try {
                 const responseBody = await response.text();
-                console.log("응답 텍스트 원본:", responseBody);
 
                 if (responseBody.trim()) {
                     data = JSON.parse(responseBody);
-                    console.log("JSON 응답 데이터:", data);
                 } else {
                     console.warn("응답 본문이 비어 있습니다.");
                     data = { message: "회원탈퇴가 완료되었습니다." };
@@ -160,7 +153,6 @@ export const callMyScheduleAPI = (currentPage = 1) => async (dispatch) => {
         });
         const result = await response.json();
 
-        console.log("API Response for currentPage:", currentPage, result); // API 응답 확인
 
         dispatch(getSchedule(result.data)); // Redux 상태에 데이터 저장
     } catch (error) {
@@ -185,7 +177,6 @@ export const deleteMyScheduleAPI = (selectedRows) => {
             }
 
             const data = await response.json();
-            console.log('Deleted Schedules Data:', data);
 
             dispatch(deleteSchedule(selectedRows));
             alert('일정이 삭제되었습니다.');
@@ -264,7 +255,6 @@ export const callMyMatchDetailsAPI = () => {
             }
 
             const data = await response.json();
-            console.log('Fetched My Match Details:', data);
 
             dispatch(getMyMatch(data.data));
         } catch (error) {

@@ -16,8 +16,6 @@ function AccomSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, s
 	const [searchResults, setSearchResults] =  useState([]);
 	const [searchAddress, setSearchAddress] = useState('');
 
-	console.log('지역 가져왓냐!!!!!!!', selectedRegion);
-	console.log('이름이머에여!!!!!!!!!!!!', selectedRegion.regionName);
 	// 숙소
 	useEffect(() => {
 		fetch(`http://${process.env.REACT_APP_RESTAPI_IP}:8080/schedule/accom`)
@@ -32,7 +30,6 @@ function AccomSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, s
 					accomThumbnailImg: accom.accomThumbnailImg,
 					accomUserDetail: accom.accomUserDetail
 				}));
-				console.log("가져왓냐?", data);
 				setAccom(accommodations);
 			})
 			.catch(error => console.error('Error fetching data:', error));
@@ -53,7 +50,6 @@ function AccomSchedule({ onNext, startDate, setStartDate, endDate, setEndDate, s
 				setSelectedAccomDetails(data.data);
 			})
 			.catch(error => console.error('Error fetching data:', error));
-		console.log("Selected Accommodation:", accom);
 	};
 
 	// 엔터키 처리 이벤트

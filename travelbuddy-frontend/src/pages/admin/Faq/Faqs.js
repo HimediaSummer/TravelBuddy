@@ -17,8 +17,7 @@ function Faqs() {
     const faqList = faq.data || {};
     const { data = {}, pageInfo = {} } = faqList;
 
-    console.log('나 또 다른 리듀서!',fqTypeList);
-    console.log('나 faqList 리듀서!',faqList);
+
 
 
     // 상태관리
@@ -47,10 +46,9 @@ function Faqs() {
 
     useEffect(() => {
         const fetchFaqTypes = async () => {
-            console.log('fqTypeMap 을 위한 여행')
             try {
                 const response = await dispatch(callFqTypeNameAPI());
-                console.log('나 뭐야',response);
+   
                 const mappedTypes = response.reduce((acc, item) => {
                     acc[item.fqTypeCode] = item.fqTypeName;
                     return acc;
@@ -70,7 +68,7 @@ function Faqs() {
       } else if (Array.isArray(faqList.data)) {
         setFilteredFaqList(faqList.data);
       }
-      console.log('필터faq리스트에 담겼나!',filteredFaqList);
+
       }, [faqList]);
 
       useEffect(() => {
@@ -79,17 +77,17 @@ function Faqs() {
       } else if (Array.isArray(fqTypeList.data)) {
         setFaqTypeMap(fqTypeList.data);
       }
-      console.log('faqTypeMap에 담겼나!@',faqTypeMap);
+
       }, [setFaqTypeMap]);
 
           // 디버깅을 위한 useEffect 추가
     useEffect(() => {
-        console.log('updated filteredFaqList',filteredFaqList);
+
   }, [filteredFaqList]);
 
 //   상태정보 확인을 위한 useEffect 추가
   useEffect(() => {
-    console.log("Updated faqTypeMap:", faqTypeMap);
+
 }, [faqTypeMap]);
 
 

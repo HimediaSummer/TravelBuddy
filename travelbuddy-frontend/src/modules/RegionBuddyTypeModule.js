@@ -25,11 +25,10 @@ const regionBuddyTypeReducer = handleActions(
 							}
 						}
 					}
-			console.log("리듀서에서 받은 payload", payload);
+
 			return payload;
 		},
 		[GET_BUDDYTYPE]: (state, { payload }) => {
-			// console.log("리듀서에서 받은 payload", payload);
 			return payload;
 		}
 	},

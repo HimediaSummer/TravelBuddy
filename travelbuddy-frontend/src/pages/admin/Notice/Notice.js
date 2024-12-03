@@ -46,7 +46,7 @@ function Notice() {
             return;
         }
         setImage(image);
-        console.log('이 이미지는?', image);
+
     };
 
     const onClickImageUpload = () => {
@@ -59,7 +59,7 @@ function Notice() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        console.log(`${name}:${value}`);
+
         setNoticeDTO({ ...noticeDTO, [name]: value });
     };
 
@@ -116,7 +116,7 @@ function Notice() {
             formData.append('noticeAt', viewAt);
             
             if (image) {formData.append('noticeImage', image)}
-            console.log('이미지가 있으면 이거 있어야 돼',image)
+    
 
             try {
                 dispatch(insertNoticeAPI({ noticeDTO: formData }));

@@ -20,13 +20,13 @@ function MyBuddy() {
 
     // API로 목록 가져오기
     useEffect(() => {
-        console.log("현재 페이지:", currentPage);
+
         dispatch(callMyBuddyListAPI(currentPage)); // 현재 페이지로 API 호출
     }, [dispatch, currentPage]);
 
     // 데이터 상태 확인 로그
     useEffect(() => {
-        console.log("Redux 상태에서 가져온 buddyList:", buddyList);
+
     }, [buddyList]);
 
     // 전체 체크박스 선택

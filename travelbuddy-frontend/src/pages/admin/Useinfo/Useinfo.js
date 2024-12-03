@@ -46,7 +46,6 @@ function Useinfo() {
             return;
         }
         setImage(image);
-        console.log("이 이미지는?", image);
     };
 
     const onClickImageUpload = () => {
@@ -59,7 +58,6 @@ function Useinfo() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        console.log(`${name}:${value}`);
         setUseinfoDTO({...useinfoDTO, [name]: value});
     };
 
@@ -119,7 +117,6 @@ function Useinfo() {
         if (image) {
             formData.append("useinfoImage", image);
         }
-        console.log("이미지가 있으면 이거 있어야 돼", image);
 
         try {
             dispatch(insertUseinfoAPI({ useinfoDTO: formData }));

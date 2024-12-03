@@ -5,10 +5,10 @@ export const callUseinfoListAPI = ({currentPage}) => {
     let requestURL;
     if (currentPage !== undefined || currentPage !== null) {
         requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/cs/useinfos?offset=${currentPage}`;
-        console.log('지금 나의 주소는?',requestURL);
+
     } else {
         requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/cs/useinfos`;
-        console.log('지금 나의 주소는?',requestURL);
+
     }
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
@@ -74,7 +74,7 @@ export const callSearchUseinfoListAPI = ( search ) => {
     if (search !== undefined && search !== null) {
         requestURL =`http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/useinfos/search?u=${encodeURIComponent(search)}`;
     }
-    console.log('키워드가 뭡니까?',search);
+
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'GET',
@@ -108,9 +108,7 @@ export const callSearchUseinfoListAPI = ( search ) => {
            // 관리자가 USEINFO 1개를 작성한다.
 export const insertUseinfoAPI = ({useinfoDTO}) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/useinfos/insertuseinfo`;
-    for (const pair of useinfoDTO.entries()) {
-        console.log(`${pair[0]}: ${pair[1]}`);
-    }
+
     return async (dispatch, getState) => {
         try {
             if (!process.env.REACT_APP_RESTAPI_IP) {
@@ -127,7 +125,7 @@ export const insertUseinfoAPI = ({useinfoDTO}) => {
             body: useinfoDTO
         }).then((response) => response.json());
         dispatch({type: POST_USEINFO, payload: result });
-        console.log('백엔드에서 가져온 값',result);
+
         
     } catch (error) {
         console.error('useinfo 등록 중 오류 발생: ', error);
@@ -137,7 +135,6 @@ export const insertUseinfoAPI = ({useinfoDTO}) => {
                // 관리자가 USEINFO 1개를 수정한다.
 export const updateUseinfoAPI = (useinfoCode, updateData) => {
     const requestURL = `http://${process.env.REACT_APP_RESTAPI_IP}:8080/admin/useinfos/${useinfoCode}/updateuseinfo`;
-    console.log('내가 받은 거',updateData);
     return async (dispatch, getState) => {
         const result = await fetch(requestURL, {
             method: 'PUT',

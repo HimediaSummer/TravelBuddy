@@ -533,7 +533,6 @@ useEffect(() => {
 
   const processScheduleData = () => {
     // 데이터 확인을 위한 로그
-    console.log('Received scheduleData:', scheduleData);
 
     // 날짜별로 데이터 그룹화
     const groupedByDate = scheduleData.reduce((acc, item) => {
@@ -569,7 +568,6 @@ useEffect(() => {
     }, {});
 
     // 그룹화된 데이터 확인
-    console.log('Grouped data:', groupedByDate);
 
     // 유효한 데이터가 있는 경우에만 처리
     if (Object.keys(groupedByDate).length > 0) {

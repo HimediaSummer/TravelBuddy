@@ -11,7 +11,6 @@ function MyFaqs() {
     const faq = useSelector((state) => state.faqReducer) || {};
     const { data } = faq;
     
-    console.log('FAQ 데이터:', data);
 
     const [openIndex, setOpenIndex] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -25,11 +24,10 @@ function MyFaqs() {
 
          // 카테고리 선택 핸들러
     const handleCategorySelect = (category) => {
-        console.log('선택된 카테고리:', category);
+
         setSelectedCategory(category);
     };
 
-    console.log('필터링된 데이터:', filteredData);
 
 
     useEffect(

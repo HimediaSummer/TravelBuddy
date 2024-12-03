@@ -1,0 +1,75 @@
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('/font/Cafe24Ssurround-v2.0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cafe24SsurroundAir';
+    src: url('/font/Cafe24SsurroundAir-v2.0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.page-container {
+    margin-left: 255px;
+    margin-right: 255px;
+    box-sizing: border-box;
+}
+
+.main-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    table-layout: fixed;
+}
+
+.main-table thead td {
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+}
+
+.main-table tbody td {
+    padding: 10px;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+}
+
+.left-cell {
+    vertical-align: top;
+    padding: 20px;
+    font-family: 'Cafe24SsurroundAir', sans-serif;
+}
+
+.buddy-img img {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.buddy-contents {
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 18px;
+    white-space: pre-line;
+}
+
+.cancel-button {
+    background-color: #8CC8EA;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: 'Cafe24Ssurround', sans-serif;
+}
+
+.cancel-button:hover {
+    background-color: #1F709E;
+}
